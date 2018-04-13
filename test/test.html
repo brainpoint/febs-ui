@@ -1,0 +1,55 @@
+<html>
+  <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="stylesheet" type="text/css" href="../dist/febsui/febsui.mobile.css" />
+    <script charset='UTF-8' type="text/javascript" src="./jquery-1.11.3.min.js"></script>
+    <script charset='UTF-8' type="text/javascript" src="../dist/febs/febs.min.js"></script>
+    <script charset='UTF-8' type="text/javascript" src="../dist/febsui/febsui.js"></script>
+  </head>
+  <body>
+    <div id='page'></div>
+    <script type="text/javascript">
+    // var assert = console.assert;
+    // var trace  = console.log;
+
+    // assert.
+    function febs_assert(fooName, valueCB, call) {
+      console.log(fooName, call());
+      if (!febs.utils.isNull(valueCB)) {
+        // assert(valueCB(call()), fooName);
+      }
+    }
+
+    // page.
+    febsui.page_init($('#page'), 12, 20, 25, function(page){  
+      febsui.dialog_showToast({content:'page ' + page, icon:'ok'});
+    });
+
+    // loading.
+    febsui.dialog_showToast({content:'即将显示 loading', icon:'ok'});
+    febs.utils.sleep(1000)
+    .then(function(){
+      febsui.loading_show('123');
+      return febs.utils.sleep(3000);
+    })
+    .then(function(){ 
+      febsui.loading_hide(); 
+    })
+    // dialog.
+    .then(function(){ 
+      febsui.dialog_showToast({content:'即将显示 alert', icon:'warn'});
+      return febs.utils.sleep(3000);
+    })
+    .then(function(){ 
+      febsui.dialog_showAlert({title:'将要显示confirm对话框', content:'关闭 alert sdfsgeg的 dfdfdfdf', confirm:function(){
+        febsui.dialog_showConfirm({title:'要显示输入对话框吗?', content:'sdfd alert', confirm:function(){
+          febsui.dialog_showConfirmEdit({title:'提示', content:'输入你的信息', editText:'1212', confirm:function(text){
+            febsui.dialog_showToast({content:text, icon:'error'});
+          }});
+        }});
+      }});
+    })
+    
+    </script>
+  </body>
+</html>
