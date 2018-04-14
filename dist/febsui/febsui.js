@@ -1541,6 +1541,8 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 var escape = __webpack_require__(38);
 
+var toastHideTimer;
+
 exports.hide = hide;
 exports.showAlert = showAlert;
 exports.showToast = showToast;
@@ -1656,14 +1658,18 @@ function showToast(ctx) {
 		t = ctx.time;
 	}
 	if (t > 0) {
-		setTimeout(function () {
+		if (toastHideTimer) {
+			clearTimeout(toastHideTimer);
+		}
+
+		toastHideTimer = setTimeout(function () {
 			if (typeof $("#febsui_dlg_cd_notice").fadeOut !== 'function') {
 				console.log('febs-ui controls need function fadeIn/fadeOut');
 				$("#febsui_dlg_cd_notice").css("display", "none");
 			} else {
 				$("#febsui_dlg_cd_notice").fadeOut(200);
 			}
-
+			toastHideTimer = null;
 			if (null != ctx.callback) {
 				ctx.callback();
 			}

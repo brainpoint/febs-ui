@@ -16,9 +16,15 @@ spinner.start()
 var root = path.resolve(__dirname, '../');
 var febs = require('febs');
 febs.file.dirRemoveRecursive(path.join(root, 'dist/febsui'));
-febs.file.fileCopy(path.join(root, 'febsui.css'), path.join(root, 'dist/febsui/febsui.css'));
-febs.file.fileCopy(path.join(root, 'febsui.mobile.css'), path.join(root, 'dist/febsui/febsui.mobile.css'));
-febs.file.fileCopy(path.join(root, 'README.md'), path.join(root, 'dist/febsui/README.md'));
+febs.file.fileCopy(path.join(root, 'febsui.css'),         path.join(root, 'dist/febsui/febsui.css'));
+febs.file.fileCopy(path.join(root, 'febsui.mobile.css'),  path.join(root, 'dist/febsui/febsui.mobile.css'));
+
+febs.file.fileRemove(path.join(root, 'dist/febsui/README.md'));
+febs.file.fileRemove(path.join(root, 'dist/jquery-1.11.3.min.js'));
+febs.file.fileRemove(path.join(root, 'dist/test.html'));
+febs.file.fileCopy(path.join(root, 'README.md'),          path.join(root, 'dist/febsui/README.md'));
+febs.file.fileCopy(path.join(root, 'test/jquery-1.11.3.min.js'), path.join(root, 'dist/jquery-1.11.3.min.js'));
+febs.file.fileCopy(path.join(root, 'test/test.html'),     path.join(root, 'dist/test.html'));
 
 function buildSrc(cbStop, cbSuccess) {
   webpack(webpackConfig, function (err, stats) {
