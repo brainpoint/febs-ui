@@ -1,5 +1,5 @@
 febs-ui 库是一些常用的ui的合集;
-febs-ui 库依赖 febs 库
+febs-ui 库依赖 febs-browser 库
 
 # Install
 
@@ -13,7 +13,7 @@ npm install febs-ui --save
 
 以下列方式使用
 
-> copy directory `node_modules/febs/dist/febs` to client
+> copy directory `node_modules/febs-browser/dist/febs` to client
 
 > copy directory `node_modules/febs-ui/dist/febsui` to client
 
