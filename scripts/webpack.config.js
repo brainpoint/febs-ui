@@ -7,7 +7,7 @@ function resolve (dir) {
 }
 
 module.exports = {
-  entry:  resolve('client/index.js'),
+  entry:  resolve('browser/index.js'),
   output: {
     path: resolve('dist/febsui'),
     filename: 'febsui.js'
@@ -17,7 +17,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('client'), resolve('client/controls'), resolve('third-party'), resolve('dist/febsui')],
+        include: [resolve('browser'), resolve('browser/controls'), resolve('third-party'), resolve('dist/febsui')],
         query: {
           presets:['es2015', 'stage-0', 'es2015-loose'],
           plugins: [
@@ -30,7 +30,7 @@ module.exports = {
       },
       {
         test: /.js$/,
-        include: [resolve('client'), resolve('client/controls'), resolve('third-party'), resolve('dist/febsui')],
+        include: [resolve('browser'), resolve('browser/controls'), resolve('third-party'), resolve('dist/febsui')],
         enforce: 'post', // post-loader处理
         loader: 'es3ify-loader'
       }

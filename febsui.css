@@ -208,9 +208,9 @@ dl, dt, dd, ol, ul, li {
   width: 76%;
   max-width: 300px;
   margin: 9em auto;
-  background-color: rgba(255,255,255,0.92);
+  background-color: rgba(255,255,255,0.99);
   text-align: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   -webkit-transform: translateY(-40px);
   -moz-transform: translateY(-40px);
   -ms-transform: translateY(-40px);
@@ -230,14 +230,14 @@ dl, dt, dd, ol, ul, li {
   padding: 3em 1em;
 }
 
-.febsui-popup-container .cd-title {
+.febsui-popup-container .febsui-popup-title {
   font-size: 18px;
   font-weight: 600;
   padding-top: 20px;
   padding-bottom: 10px;
 }
 
-.febsui-popup-container .cd-content {
+.febsui-popup-container .febsui-popup-content {
   font-size: 15px;
   font-weight: 400;
   padding-bottom: 20px;
@@ -245,13 +245,13 @@ dl, dt, dd, ol, ul, li {
   padding-right: 30px;
 }
 
-.febsui-popup-container .cd-edit {
+.febsui-popup-container .febsui-popup-edit {
   width: 100%;
   height: 30px;
   padding-bottom: 20px;
 }
 
-.febsui-popup-container  .cd-edit .cd-input-text {
+.febsui-popup-container  .febsui-popup-edit .febsui-popup-input-text {
   border: #e1e5ea70 1px solid;
   height: 100%;
   width: 86%;
@@ -295,12 +295,12 @@ dl, dt, dd, ol, ul, li {
   /* background-color: #c5ccd8; */
 }
 
-.febsui-popup-container .febsui-popup-buttons li:first-child a {
+.febsui-popup-container .febsui-popup-buttons li:nth-child(2) a {
   /* background: #fc7169; */
   border-radius: 0 0 0 .25em;
-  border-right-color: rgba(215, 221, 228, 0.77);
-  border-right-style: solid;
-  border-right-width: 1px;
+  border-left-color: rgba(215, 221, 228, 0.77);
+  border-left-style: solid;
+  border-left-width: 1px;
 }
 .febsui-popup-container .febsui-popup-buttons li:first-child a:hover {
   /* background-color: #fc8982; */

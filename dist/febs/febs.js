@@ -228,7 +228,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(13);
+var aFunction = __webpack_require__(14);
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -254,7 +254,7 @@ module.exports = function (fn, that, length) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(5);
-var createDesc = __webpack_require__(18);
+var createDesc = __webpack_require__(19);
 module.exports = __webpack_require__(6) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
@@ -300,6 +300,33 @@ module.exports = function (exec) {
 
 /***/ }),
 /* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _iterator = __webpack_require__(54);
+
+var _iterator2 = _interopRequireDefault(_iterator);
+
+var _symbol = __webpack_require__(32);
+
+var _symbol2 = _interopRequireDefault(_symbol);
+
+var _typeof = typeof _symbol2['default'] === "function" && typeof _iterator2['default'] === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2['default'] === "function" && obj.constructor === _symbol2['default'] && obj !== _symbol2['default'].prototype ? "symbol" : typeof obj; };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+exports['default'] = typeof _symbol2['default'] === "function" && _typeof(_iterator2['default']) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
+} : function (obj) {
+  return obj && typeof _symbol2['default'] === "function" && obj.constructor === _symbol2['default'] && obj !== _symbol2['default'].prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
+};
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -309,7 +336,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -320,7 +347,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ctx = __webpack_require__(8);
@@ -351,14 +378,14 @@ exports.RETURN = RETURN;
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = {};
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // most Object methods by ES6 should accept primitives
@@ -374,7 +401,7 @@ module.exports = function (KEY, exec) {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = function (bitmap, value) {
@@ -388,7 +415,7 @@ module.exports = function (bitmap, value) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var def = __webpack_require__(5).f;
@@ -401,7 +428,7 @@ module.exports = function (it, tag, stat) {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
@@ -412,7 +439,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -434,33 +461,6 @@ __webpack_require__(38)(String, 'String', function (iterated) {
   return { value: point, done: false };
 });
 
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _iterator = __webpack_require__(54);
-
-var _iterator2 = _interopRequireDefault(_iterator);
-
-var _symbol = __webpack_require__(32);
-
-var _symbol2 = _interopRequireDefault(_symbol);
-
-var _typeof = typeof _symbol2['default'] === "function" && typeof _iterator2['default'] === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2['default'] === "function" && obj.constructor === _symbol2['default'] && obj !== _symbol2['default'].prototype ? "symbol" : typeof obj; };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-exports['default'] = typeof _symbol2['default'] === "function" && _typeof(_iterator2['default']) === "symbol" ? function (obj) {
-  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
-} : function (obj) {
-  return obj && typeof _symbol2['default'] === "function" && obj.constructor === _symbol2['default'] && obj !== _symbol2['default'].prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
-};
 
 /***/ }),
 /* 23 */
@@ -618,7 +618,7 @@ module.exports = function (key) {
 __webpack_require__(136);
 var global = __webpack_require__(2);
 var hide = __webpack_require__(9);
-var Iterators = __webpack_require__(16);
+var Iterators = __webpack_require__(17);
 var TO_STRING_TAG = __webpack_require__(3)('toStringTag');
 
 var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
@@ -692,7 +692,7 @@ module.exports = function (it, Constructor, name, forbiddenField) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
-var cof = __webpack_require__(14);
+var cof = __webpack_require__(15);
 var TAG = __webpack_require__(3)('toStringTag');
 // ES3 wrong here
 var ARG = cof(function () { return arguments; }()) == 'Arguments';
@@ -760,9 +760,9 @@ var LIBRARY = __webpack_require__(23);
 var $export = __webpack_require__(1);
 var redefine = __webpack_require__(71);
 var hide = __webpack_require__(9);
-var Iterators = __webpack_require__(16);
+var Iterators = __webpack_require__(17);
 var $iterCreate = __webpack_require__(127);
-var setToStringTag = __webpack_require__(19);
+var setToStringTag = __webpack_require__(20);
 var getPrototypeOf = __webpack_require__(67);
 var ITERATOR = __webpack_require__(3)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
@@ -833,7 +833,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 "use strict";
 
 // 25.4.1.5 NewPromiseCapability(C)
-var aFunction = __webpack_require__(13);
+var aFunction = __webpack_require__(14);
 
 function PromiseCapability(C) {
   var resolve, reject;
@@ -941,7 +941,7 @@ if (!setTask || !clearTask) {
     delete queue[id];
   };
   // Node.js 0.8-
-  if (__webpack_require__(14)(process) == 'process') {
+  if (__webpack_require__(15)(process) == 'process') {
     defer = function (id) {
       process.nextTick(ctx(run, id, 1));
     };
@@ -1042,7 +1042,7 @@ exports.f = __webpack_require__(3);
 
 var classof = __webpack_require__(34);
 var ITERATOR = __webpack_require__(3)('iterator');
-var Iterators = __webpack_require__(16);
+var Iterators = __webpack_require__(17);
 module.exports = __webpack_require__(0).getIteratorMethod = function (it) {
   if (it != undefined) return it[ITERATOR]
     || it['@@iterator']
@@ -1069,17 +1069,9 @@ module.exports = __webpack_require__(0).getIteratorMethod = function (it) {
  * Desc:
  */
 
-var _Number$isInteger = __webpack_require__(85)['default'];
-
-var _Number$isNaN = __webpack_require__(86)['default'];
-
 var _Number$MAX_SAFE_INTEGER = __webpack_require__(87)['default'];
 
-var _Promise = __webpack_require__(31)['default'];
-
-var PromiseLib = _Promise;
-// var BigNumber = require('../third-party/bignumber.min.js');
-var BigNumber = __webpack_require__(95);
+var utils = __webpack_require__(161);
 
 /**
  * @desc: 模拟sleep.
@@ -1090,65 +1082,124 @@ var BigNumber = __webpack_require__(95);
           //1000ms之后resolve.
        });
  */
-exports.sleep = function (ms) {
-  return new PromiseLib(function (resolve, reject) {
-    try {
-      setTimeout(function () {
-        resolve();
-      }, ms);
-    } catch (err) {
-      reject(err);
-    }
-  });
-};
+exports.sleep = utils.sleep;
 
 /**
  * @desc: the browser is mobile.
  * @param userAgent: the browser user agent string.
  */
-exports.browserIsMobile = function () {
-  var agent = window.navigator.userAgent;
-  var platforms = ['Android', 'webOS', 'iPhone', 'iPad', 'iPod', 'Blackberry', 'Windows Phone'];
-  var expression = new RegExp(platforms.join('|'), 'i');
-
-  return agent.match(expression) != null;
-};
+exports.browserIsMobile = utils.browserIsMobile;
 
 /**
  * @desc: the browser is ios.
  * @param userAgent: the browser user agent string.
  */
-exports.browserIsIOS = function () {
-  var agent = window.navigator.userAgent;
-  var platforms = ['iPhone', 'iPad', 'iPod'];
-  var expression = new RegExp(platforms.join('|'), 'i');
-
-  return agent.match(expression) != null;
-};
+exports.browserIsIOS = utils.browserIsIOS;
 
 /**
  * @desc: the browser is phone.
  * @param userAgent: the browser user agent string.
  */
-exports.browserIsPhone = function () {
-  var agent = window.navigator.userAgent;
-  var platforms = ['Android', 'iPhone', 'iPod', 'Blackberry', 'Windows Phone'];
-  var expression = new RegExp(platforms.join('|'), 'i');
-
-  return agent.match(expression) != null;
-};
+exports.browserIsPhone = utils.browserIsPhone;
 
 /**
  * @desc: the browser is weixin.
  */
-exports.browserIsWeixin = function () {
-  var agent = window.navigator.userAgent;
-  if (agent.match(/MicroMessenger/i) == "MicroMessenger") {
-    return true;
-  } else {
-    return false;
-  }
-};
+exports.browserIsWeixin = utils.browserIsWeixin;
+
+/**
+ * @desc: 获取时间的string.
+ * @param time: ms.
+ * @param fmt: 格式化, 默认为 'HH:mm:ss'
+ *             年(y)、月(M)、日(d)、12小时(h)、24小时(H)、分(m)、秒(s)、周(E)、季度(q)
+ *              'yyyy-MM-dd hh:mm:ss.S' ==> 2006-07-02 08:09:04.423
+ *              'yyyy-MM-dd E HH:mm:ss' ==> 2009-03-10 星期二 20:09:04
+ *              'yyyy-M-d h:m:s.S'      ==> 2006-7-2 8:9:4.18
+ * @param weekFmt: 星期的文字格式, 默认为 {'0':'星期天', '1': '星期一', ..., '6':'星期六'}
+ * @return: string.
+ */
+exports.getTimeString = utils.getTimeString;
+
+/**
+ * @desc: 获取指定时间距离现在的时间描述.
+ *        例如, 昨天, 1小时前等.
+ * @param time: ms. 小于当前时间, 大于当前时间将显示为 '刚刚';
+ * @param strFmt: 需要显示的文字. 
+ *                默认为 {
+ *                        now:    '刚刚',           // 3秒钟以内将显示此信息.
+ *                        second: '秒前',
+ *                        minute: '分钟前',
+ *                        hour:   '小时前',
+ *                        day_yesterday: '昨天',
+ *                        day:    '天前',
+ *                        month:  '个月前',          // 6个月内将显示此信息.
+ *                        time:   'yyyy-M-d h:m:s'  // 超过6个月将使用此格式格式化时间
+ *                       }
+ * @return: string.
+ */
+exports.getTimeStringFromNow = utils.getTimeStringFromNow;
+
+/**
+ * @desc: getDate('2012-05-09')
+ * @return: Date.
+ */
+exports.getDate = utils.getDate;
+
+/**
+ * @desc: getDate2('20120509')
+ * @return: Date.
+ */
+exports.getDate2 = utils.getDate2;
+
+/**
+ * @desc: 合并多个map.
+ * @return: {}
+ */
+exports.mergeMap = utils.mergeMap;
+
+/**
+* @desc: 判断参数是否是null,undefined,NaN
+* @return: boolean
+*/
+exports.isNull = utils.isNull;
+
+/**
+ * @desc: 判断是否是bigint.
+ */
+exports.bigint_check = utils.bigint_check;
+
+/**
+* @desc: calc bigint
+* @return: bigint.
+*/
+exports.bigint_add = utils.bigint_add;
+
+exports.bigint_minus = utils.bigint_minus;
+
+exports.bigint_dividedBy = utils.bigint_dividedBy;
+
+exports.bigint_mul = utils.bigint_mul;
+
+/**
+* @desc: compare with bigint.
+* @return: boolean.
+*/
+exports.bigint_equal = utils.bigint_equal;
+
+exports.bigint_more_than = utils.bigint_more_than;
+
+exports.bigint_more_than_e = utils.bigint_more_than_e;
+
+exports.bigint_less_than = utils.bigint_less_than;
+
+exports.bigint_less_than_e = utils.bigint_less_than_e;
+
+/**
+* @desc: 转换bigint->string.
+* @param fixed: 小数位个数, 默认为0.
+* @return: string.
+*/
+exports.bigint_toFixed = utils.bigint_toFixed;
 
 /**
 * @desc: 判断是否是ie.
@@ -1187,251 +1238,6 @@ exports.browserIsSupportHtml5 = function () {
   } else {
     return false;
   }
-};
-
-/**
- * @desc: 获取时间的string.
- * @param time: ms.
- * @param fmt: 格式化, 默认为 'HH:mm:ss'
- *             年(y)、月(M)、日(d)、12小时(h)、24小时(H)、分(m)、秒(s)、周(E)、季度(q)
- *              'yyyy-MM-dd hh:mm:ss.S' ==> 2006-07-02 08:09:04.423
- *              'yyyy-MM-dd E HH:mm:ss' ==> 2009-03-10 星期二 20:09:04
- *              'yyyy-M-d h:m:s.S'      ==> 2006-7-2 8:9:4.18
- * @param weekFmt: 星期的文字格式, 默认为 {'0':'星期天', '1': '星期一', ..., '6':'星期六'}
- * @return: string.
- */
-function getTimeString(time, fmt, weekFmt) {
-  if (typeof time !== "number") return "";
-
-  fmt = fmt || 'HH:mm:ss';
-
-  var t = new Date(time);
-  var o = {
-    "M+": t.getMonth() + 1, //月份         
-    "d+": t.getDate(), //日         
-    "h+": t.getHours() % 12 == 0 ? 12 : t.getHours() % 12, //小时         
-    "H+": t.getHours(), //小时         
-    "m+": t.getMinutes(), //分         
-    "s+": t.getSeconds(), //秒         
-    "q+": Math.floor((t.getMonth() + 3) / 3), //季度         
-    "S": t.getMilliseconds() //毫秒         
-  };
-  var week = weekFmt || {
-    "0": "星期天",
-    "1": "星期一",
-    "2": "星期二",
-    "3": "星期三",
-    "4": "星期四",
-    "5": "星期五",
-    "6": "星期六"
-  };
-  if (/(y+)/.test(fmt)) {
-    fmt = fmt.replace(RegExp.$1, (t.getFullYear() + "").substr(4 - RegExp.$1.length));
-  }
-  if (/(E+)/.test(fmt)) {
-    fmt = fmt.replace(RegExp.$1, week[t.getDay() + ""]);
-  }
-  for (var k in o) {
-    if (new RegExp("(" + k + ")").test(fmt)) {
-      fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
-    }
-  }
-  return fmt;
-};
-exports.getTimeString = getTimeString;
-
-/**
- * @desc: 获取指定时间距离现在的时间描述.
- *        例如, 昨天, 1小时前等.
- * @param time: ms. 小于当前时间, 大于当前时间将显示为 '刚刚';
- * @param strFmt: 需要显示的文字. 
- *                默认为 {
- *                        now:    '刚刚',           // 3秒钟以内将显示此信息.
- *                        second: '秒前',
- *                        minute: '分钟前',
- *                        hour:   '小时前',
- *                        day_yesterday: '昨天',
- *                        day:    '天前',
- *                        month:  '个月前',          // 6个月内将显示此信息.
- *                        time:   'yyyy-M-d h:m:s'  // 超过6个月将使用此格式格式化时间
- *                       }
- * @return: string.
- */
-exports.getTimeStringFromNow = function (time, strFmt) {
-  strFmt = strFmt || {};
-  strFmt.now = strFmt.now || '刚刚';
-  strFmt.second = strFmt.second || '秒前';
-  strFmt.minute = strFmt.minute || '分钟前';
-  strFmt.hour = strFmt.hour || '小时前';
-  strFmt.day_yesterday = strFmt.day_yesterday || '昨天';
-  strFmt.day = strFmt.day || '天前';
-  strFmt.month = strFmt.month || '个月前';
-  strFmt.time = strFmt.time || 'yyyy-M-d h:m:s';
-
-  var now = Math.ceil(Date.now() / 1000);
-  time = Math.ceil(time / 1000);
-
-  if (now > time) {
-    var s = now - time;
-    if (s < 3) {
-      return strFmt.now;
-    }
-
-    if (s < 60) {
-      return s.toString() + strFmt.second;
-    }
-
-    if (s < 60 * 60) {
-      return Math.ceil(s / 60).toString() + strFmt.minute;
-    }
-
-    if (s < 60 * 60 * 24) {
-      return Math.ceil(s / 60 / 60).toString() + strFmt.hour;
-    }
-
-    if (s < 60 * 60 * 24 * 30) {
-      var dNow = new Date(now * 1000);
-
-      dNow.setHours(0, 0, 1);
-      if (dNow.getTime() - time <= 60 * 60 * 24) {
-        return strFmt.day_yesterday;
-      }
-
-      return Math.ceil(s / 60 / 60 / 24).toString() + strFmt.day;
-    }
-
-    if (s < 60 * 60 * 24 * 30 * 6) {
-      return Math.ceil(s / 60 / 60 / 24 / 30).toString() + strFmt.month;
-    }
-
-    return getTimeString(time, strFmt.time);
-  }
-
-  return strFmt.now;
-};
-
-/**
- * @desc: getDate('2012-05-09')
- * @return: Date.
- */
-exports.getDate = function (strDate) {
-  var date = new Date(parseInt(strDate.substr(0, 4)), parseInt(strDate.substr(5, 2), 10) - 1, parseInt(strDate.substr(8, 2)));
-  return date;
-};
-
-/**
- * @desc: getDate2('20120509')
- * @return: Date.
- */
-exports.getDate2 = function (strDate) {
-  var date = new Date(parseInt(strDate.substr(0, 4)), parseInt(strDate.substr(4, 2), 10) - 1, parseInt(strDate.substr(6, 2)));
-  return date;
-};
-
-/**
- * @desc: 合并多个map.
- * @return: {}
- */
-exports.mergeMap = function () {
-  var map0 = {};
-  var map2;
-  for (var i = 0; i < arguments.length; i++) {
-    map2 = arguments[i];
-    if (map2) {
-      for (var k in map2) {
-        map0[k] = map2[k];
-      }
-    }
-  }
-
-  return map0;
-};
-
-/**
-* @desc: 判断参数是否是null,undefined,NaN
-* @return: boolean
-*/
-exports.isNull = function (e) {
-  return e === null || e === undefined || _Number$isNaN(e);
-};
-
-/**
- * @desc: 判断是否是bigint.
- */
-exports.bigint_check = function (v) {
-  if (_Number$isInteger(v)) return true;
-  if (!v) return false;
-
-  if (typeof v === 'string') {
-    if (v.length > 22 || v.length < 1) return false;
-
-    for (var j = 1; j < v.length; j++) {
-      if (v[j] < '0' || v[j] > '9') return false;
-    }
-
-    if (v[0] == '-') {
-      if (v.length < 2 || v[1] < '1' || v[1] > '9') return false;
-    } else {
-      if (v[j] < '1' || v[j] > '9') return false;
-    }
-
-    return true;
-  } else {
-    return false;
-  }
-};
-
-/**
-* @desc: calc bigint
-* @return: bigint.
-*/
-exports.bigint_add = function (a, b) {
-  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.plus(b);
-};
-
-exports.bigint_minus = function (a, b) {
-  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.minus(b);
-};
-
-exports.bigint_dividedBy = function (a, b) {
-  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.dividedBy(b);
-};
-
-exports.bigint_mul = function (a, b) {
-  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.times(b);
-};
-
-/**
-* @desc: compare with bigint.
-* @return: boolean.
-*/
-exports.bigint_equal = function (a, b) {
-  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.equals(b);
-};
-
-exports.bigint_more_than = function (a, b) {
-  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.greaterThan(b);
-};
-
-exports.bigint_more_than_e = function (a, b) {
-  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.greaterThanOrEqualTo(b);
-};
-
-exports.bigint_less_than = function (a, b) {
-  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.lessThan(b);
-};
-
-exports.bigint_less_than_e = function (a, b) {
-  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.lessThanOrEqualTo(b);
-};
-
-/**
-* @desc: 转换bigint->string.
-* @param fixed: 小数位个数, 默认为0.
-* @return: string.
-*/
-exports.bigint_toFixed = function (a, fixed) {
-  fixed = fixed || 0;if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.toFixed(fixed);
 };
 
 /***/ }),
@@ -1495,7 +1301,7 @@ module.exports = !__webpack_require__(6) && !__webpack_require__(12)(function ()
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(14);
+var cof = __webpack_require__(15);
 // eslint-disable-next-line no-prototype-builtins
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
   return cof(it) == 'String' ? it.split('') : Object(it);
@@ -1507,7 +1313,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
-var Iterators = __webpack_require__(16);
+var Iterators = __webpack_require__(17);
 var ITERATOR = __webpack_require__(3)('iterator');
 var ArrayProto = Array.prototype;
 
@@ -1521,7 +1327,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
-var cof = __webpack_require__(14);
+var cof = __webpack_require__(15);
 module.exports = Array.isArray || function isArray(arg) {
   return cof(arg) == 'Array';
 };
@@ -1587,7 +1393,7 @@ module.exports = function (done, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var pIE = __webpack_require__(40);
-var createDesc = __webpack_require__(18);
+var createDesc = __webpack_require__(19);
 var toIObject = __webpack_require__(11);
 var toPrimitive = __webpack_require__(46);
 var has = __webpack_require__(10);
@@ -1655,7 +1461,7 @@ exports.f = Object.getOwnPropertySymbols;
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(10);
-var toObject = __webpack_require__(20);
+var toObject = __webpack_require__(21);
 var IE_PROTO = __webpack_require__(42)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
@@ -1756,7 +1562,7 @@ module.exports = function (KEY) {
 
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
 var anObject = __webpack_require__(7);
-var aFunction = __webpack_require__(13);
+var aFunction = __webpack_require__(14);
 var SPECIES = __webpack_require__(3)('species');
 module.exports = function (O, D) {
   var C = anObject(O).constructor;
@@ -1808,7 +1614,7 @@ module.exports = function (it, TYPE) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {
 
-var _typeof = __webpack_require__(22)["default"];
+var _typeof = __webpack_require__(13)["default"];
 
 // window.requestAnimationFrame / window.cancelAnimationFrame
 
@@ -1882,22 +1688,23 @@ var _typeof = __webpack_require__(22)["default"];
  *  crc32_file(file, function(crc32Value) {})
  */
 
-var crc32_table = [0x00000000, 0x77073096, 0xEE0E612C, 0x990951BA, 0x076DC419, 0x706AF48F, 0xE963A535, 0x9E6495A3, 0x0EDB8832, 0x79DCB8A4, 0xE0D5E91E, 0x97D2D988, 0x09B64C2B, 0x7EB17CBD, 0xE7B82D07, 0x90BF1D91, 0x1DB71064, 0x6AB020F2, 0xF3B97148, 0x84BE41DE, 0x1ADAD47D, 0x6DDDE4EB, 0xF4D4B551, 0x83D385C7, 0x136C9856, 0x646BA8C0, 0xFD62F97A, 0x8A65C9EC, 0x14015C4F, 0x63066CD9, 0xFA0F3D63, 0x8D080DF5, 0x3B6E20C8, 0x4C69105E, 0xD56041E4, 0xA2677172, 0x3C03E4D1, 0x4B04D447, 0xD20D85FD, 0xA50AB56B, 0x35B5A8FA, 0x42B2986C, 0xDBBBC9D6, 0xACBCF940, 0x32D86CE3, 0x45DF5C75, 0xDCD60DCF, 0xABD13D59, 0x26D930AC, 0x51DE003A, 0xC8D75180, 0xBFD06116, 0x21B4F4B5, 0x56B3C423, 0xCFBA9599, 0xB8BDA50F, 0x2802B89E, 0x5F058808, 0xC60CD9B2, 0xB10BE924, 0x2F6F7C87, 0x58684C11, 0xC1611DAB, 0xB6662D3D, 0x76DC4190, 0x01DB7106, 0x98D220BC, 0xEFD5102A, 0x71B18589, 0x06B6B51F, 0x9FBFE4A5, 0xE8B8D433, 0x7807C9A2, 0x0F00F934, 0x9609A88E, 0xE10E9818, 0x7F6A0DBB, 0x086D3D2D, 0x91646C97, 0xE6635C01, 0x6B6B51F4, 0x1C6C6162, 0x856530D8, 0xF262004E, 0x6C0695ED, 0x1B01A57B, 0x8208F4C1, 0xF50FC457, 0x65B0D9C6, 0x12B7E950, 0x8BBEB8EA, 0xFCB9887C, 0x62DD1DDF, 0x15DA2D49, 0x8CD37CF3, 0xFBD44C65, 0x4DB26158, 0x3AB551CE, 0xA3BC0074, 0xD4BB30E2, 0x4ADFA541, 0x3DD895D7, 0xA4D1C46D, 0xD3D6F4FB, 0x4369E96A, 0x346ED9FC, 0xAD678846, 0xDA60B8D0, 0x44042D73, 0x33031DE5, 0xAA0A4C5F, 0xDD0D7CC9, 0x5005713C, 0x270241AA, 0xBE0B1010, 0xC90C2086, 0x5768B525, 0x206F85B3, 0xB966D409, 0xCE61E49F, 0x5EDEF90E, 0x29D9C998, 0xB0D09822, 0xC7D7A8B4, 0x59B33D17, 0x2EB40D81, 0xB7BD5C3B, 0xC0BA6CAD, 0xEDB88320, 0x9ABFB3B6, 0x03B6E20C, 0x74B1D29A, 0xEAD54739, 0x9DD277AF, 0x04DB2615, 0x73DC1683, 0xE3630B12, 0x94643B84, 0x0D6D6A3E, 0x7A6A5AA8, 0xE40ECF0B, 0x9309FF9D, 0x0A00AE27, 0x7D079EB1, 0xF00F9344, 0x8708A3D2, 0x1E01F268, 0x6906C2FE, 0xF762575D, 0x806567CB, 0x196C3671, 0x6E6B06E7, 0xFED41B76, 0x89D32BE0, 0x10DA7A5A, 0x67DD4ACC, 0xF9B9DF6F, 0x8EBEEFF9, 0x17B7BE43, 0x60B08ED5, 0xD6D6A3E8, 0xA1D1937E, 0x38D8C2C4, 0x4FDFF252, 0xD1BB67F1, 0xA6BC5767, 0x3FB506DD, 0x48B2364B, 0xD80D2BDA, 0xAF0A1B4C, 0x36034AF6, 0x41047A60, 0xDF60EFC3, 0xA867DF55, 0x316E8EEF, 0x4669BE79, 0xCB61B38C, 0xBC66831A, 0x256FD2A0, 0x5268E236, 0xCC0C7795, 0xBB0B4703, 0x220216B9, 0x5505262F, 0xC5BA3BBE, 0xB2BD0B28, 0x2BB45A92, 0x5CB36A04, 0xC2D7FFA7, 0xB5D0CF31, 0x2CD99E8B, 0x5BDEAE1D, 0x9B64C2B0, 0xEC63F226, 0x756AA39C, 0x026D930A, 0x9C0906A9, 0xEB0E363F, 0x72076785, 0x05005713, 0x95BF4A82, 0xE2B87A14, 0x7BB12BAE, 0x0CB61B38, 0x92D28E9B, 0xE5D5BE0D, 0x7CDCEFB7, 0x0BDBDF21, 0x86D3D2D4, 0xF1D4E242, 0x68DDB3F8, 0x1FDA836E, 0x81BE16CD, 0xF6B9265B, 0x6FB077E1, 0x18B74777, 0x88085AE6, 0xFF0F6A70, 0x66063BCA, 0x11010B5C, 0x8F659EFF, 0xF862AE69, 0x616BFFD3, 0x166CCF45, 0xA00AE278, 0xD70DD2EE, 0x4E048354, 0x3903B3C2, 0xA7672661, 0xD06016F7, 0x4969474D, 0x3E6E77DB, 0xAED16A4A, 0xD9D65ADC, 0x40DF0B66, 0x37D83BF0, 0xA9BCAE53, 0xDEBB9EC5, 0x47B2CF7F, 0x30B5FFE9, 0xBDBDF21C, 0xCABAC28A, 0x53B39330, 0x24B4A3A6, 0xBAD03605, 0xCDD70693, 0x54DE5729, 0x23D967BF, 0xB3667A2E, 0xC4614AB8, 0x5D681B02, 0x2A6F2B94, 0xB40BBE37, 0xC30C8EA1, 0x5A05DF1B, 0x2D02EF8D];
+var crypt = __webpack_require__(159);
 
 /**
  * @desc: 计算字符串的crc32值
  * @param crc: 可以在这个值得基础上继续计算
  * @return: number.
  */
-exports.crc32 = function ( /* String */str, /* Number */crc) {
+function crc32( /* String */str, /* Number */crc) {
     if (!crc) crc = 0;
     crc = crc ^ -1;
 
     for (var i = 0, iTop = str.length; i < iTop; i++) {
-        crc = crc >>> 8 ^ crc32_table[(crc ^ str.charCodeAt(i)) & 0xFF];
+        crc = crc >>> 8 ^ crypt.crc32_table[(crc ^ str.charCodeAt(i)) & 0xFF];
     }
     return crc ^ -1;
-};
+}
+exports.crc32 = crc32;
 
 /**
  * @desc:
@@ -1927,7 +1734,7 @@ exports.crc32_file = function (file, cb) {
 
     //每块文件读取完毕之后的处理.
     fileReader.onload = function (e) {
-        crc = febs.crypt.crc32(e.target.result, crc);
+        crc = crc32(e.target.result, crc);
         // append binary string
         currentChunk++;
 
@@ -1946,37 +1753,7 @@ exports.crc32_file = function (file, cb) {
 * @param arrByte: 字节数组.
 * @return: string.
 */
-exports.base64_encode = function (arrByte) {
-    var base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    var out, i, len;
-    var c1, c2, c3;
-    len = arrByte.length;
-    i = 0;
-    out = "";
-    while (i < len) {
-        c1 = arrByte[i++] & 0xff;
-        if (i == len) {
-            out += base64EncodeChars.charAt(c1 >> 2);
-            out += base64EncodeChars.charAt((c1 & 0x3) << 4);
-            out += "==";
-            break;
-        }
-        c2 = arrByte[i++];
-        if (i == len) {
-            out += base64EncodeChars.charAt(c1 >> 2);
-            out += base64EncodeChars.charAt((c1 & 0x3) << 4 | (c2 & 0xF0) >> 4);
-            out += base64EncodeChars.charAt((c2 & 0xF) << 2);
-            out += "=";
-            break;
-        }
-        c3 = arrByte[i++];
-        out += base64EncodeChars.charAt(c1 >> 2);
-        out += base64EncodeChars.charAt((c1 & 0x3) << 4 | (c2 & 0xF0) >> 4);
-        out += base64EncodeChars.charAt((c2 & 0xF) << 2 | (c3 & 0xC0) >> 6);
-        out += base64EncodeChars.charAt(c3 & 0x3F);
-    }
-    return out;
-};
+exports.base64_encode = crypt.base64_encode;
 
 /**
 * @desc: base64解码.
@@ -2041,7 +1818,7 @@ var _Promise = __webpack_require__(31)["default"];
 
 var _Symbol = __webpack_require__(32)["default"];
 
-var _typeof = __webpack_require__(22)["default"];
+var _typeof = __webpack_require__(13)["default"];
 
 /**
  * Copyright (c) 2017 Copyright brainpoint All Rights Reserved.
@@ -2694,93 +2471,31 @@ var febsUtils = __webpack_require__(51);
  * Desc:
  */
 
+var string = __webpack_require__(160);
+
 /**
 * @desc: 判断是否是手机号码.
 * @return: boolean.
 */
-
-exports.isPhoneMobile = function (str) {
-  if (!str) return false;
-  if (/^0?1[2|3|4|5|6|7|8][0-9]\d{8}$/.test(str)) {
-    return true;
-  }
-  return false;
-};
+exports.isPhoneMobile = string.isPhoneMobile;
 
 /**
  * @desc: 是否为空串.
  * @return: boolean.
  */
-exports.isEmpty = function (s) {
-
-  if (!s) {
-    return true;
-  }
-
-  if (typeof s !== 'string') {
-    return true;
-  }
-
-  if (s.length == 0) return true;
-
-  return false;
-};
+exports.isEmpty = string.isEmpty;
 
 /**
  * @desc: 获得字符串utf8编码后的字节长度.
  * @return: u32.
  */
-exports.getByteSize = function (s) {
-  if (!s) return 0;
-
-  var totalLength = 0;
-  var i;
-  var charCode;
-  for (i = 0; i < s.length; i++) {
-    charCode = s.charCodeAt(i);
-    if (charCode < 0x007f) {
-      totalLength = totalLength + 1;
-    } else if (0x0080 <= charCode && charCode <= 0x07ff) {
-      totalLength += 2;
-    } else if (0x0800 <= charCode && charCode <= 0xffff) {
-      totalLength += 3;
-    } else if (0x10000 <= charCode) {
-      totalLength += 4;
-    }
-  }
-  //alert(totalLength);
-  return totalLength;
-};
+exports.getByteSize = string.getByteSize;
 
 /**
  * @desc: 替换字符串中所有的strSrc->strDest.
  * @return: string.
  */
-exports.replace = function (str, strSrc, strDest) {
-  if (!str || !strSrc) return str;
-
-  if (str.length == 0) return str;
-
-  var s = '';
-
-  var endPos = str.length;
-  var i = 0;
-  var j = 0;
-  do {
-    i = str.indexOf(strSrc, j);
-    if (-1 != i && i < endPos) {
-      if (i != j) s += str.slice(j, i);
-
-      s += strDest;
-      j = i + strSrc.length;
-    } else {
-      s += str.slice(j);
-      break;
-    }
-  } while (i < endPos); // while
-
-  return s;
-};
+exports.replace = string.replace;
 
 /***/ }),
 /* 80 */
@@ -2819,7 +2534,7 @@ var _Object$create = __webpack_require__(88)["default"];
 
 var _Promise = __webpack_require__(31)["default"];
 
-var _typeof = __webpack_require__(22)["default"];
+var _typeof = __webpack_require__(13)["default"];
 
 /* @preserve
  * The MIT License (MIT)
@@ -4746,7 +4461,7 @@ var _typeof = __webpack_require__(22)["default"];
       }e.exports = B;
     }, { "./es5": 13 }] }, {}, [4])(4);
 }), "undefined" != typeof window && null !== window ? window.P = window.Promise : "undefined" != typeof self && null !== self && (self.P = self.Promise);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(159), __webpack_require__(52)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(162), __webpack_require__(52)))
 
 /***/ }),
 /* 81 */
@@ -7577,7 +7292,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*! bignumber.js v4.1.0 https://github.com/Mik
 /* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(21);
+__webpack_require__(22);
 __webpack_require__(135);
 module.exports = __webpack_require__(0).Array.from;
 
@@ -7587,7 +7302,7 @@ module.exports = __webpack_require__(0).Array.from;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(29);
-__webpack_require__(21);
+__webpack_require__(22);
 module.exports = __webpack_require__(134);
 
 
@@ -7607,7 +7322,7 @@ module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(50);
-__webpack_require__(21);
+__webpack_require__(22);
 __webpack_require__(29);
 __webpack_require__(137);
 __webpack_require__(152);
@@ -7713,7 +7428,7 @@ module.exports = __webpack_require__(0).Object.keys;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(50);
-__webpack_require__(21);
+__webpack_require__(22);
 __webpack_require__(29);
 __webpack_require__(148);
 __webpack_require__(153);
@@ -7744,7 +7459,7 @@ module.exports = __webpack_require__(0).Symbol;
 /* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(21);
+__webpack_require__(22);
 __webpack_require__(29);
 module.exports = __webpack_require__(48).f('iterator');
 
@@ -7760,7 +7475,7 @@ module.exports = function () { /* empty */ };
 /* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var forOf = __webpack_require__(15);
+var forOf = __webpack_require__(16);
 
 module.exports = function (iter, ITERATOR) {
   var result = [];
@@ -7811,7 +7526,7 @@ module.exports = function (IS_INCLUDES) {
 // 6 -> Array#findIndex
 var ctx = __webpack_require__(8);
 var IObject = __webpack_require__(57);
-var toObject = __webpack_require__(20);
+var toObject = __webpack_require__(21);
 var toLength = __webpack_require__(27);
 var asc = __webpack_require__(119);
 module.exports = function (TYPE, $create) {
@@ -7893,7 +7608,7 @@ var create = __webpack_require__(25);
 var redefineAll = __webpack_require__(41);
 var ctx = __webpack_require__(8);
 var anInstance = __webpack_require__(33);
-var forOf = __webpack_require__(15);
+var forOf = __webpack_require__(16);
 var $iterDefine = __webpack_require__(38);
 var step = __webpack_require__(62);
 var setSpecies = __webpack_require__(72);
@@ -8060,10 +7775,10 @@ var meta = __webpack_require__(24);
 var fails = __webpack_require__(12);
 var hide = __webpack_require__(9);
 var redefineAll = __webpack_require__(41);
-var forOf = __webpack_require__(15);
+var forOf = __webpack_require__(16);
 var anInstance = __webpack_require__(33);
 var isObject = __webpack_require__(4);
-var setToStringTag = __webpack_require__(19);
+var setToStringTag = __webpack_require__(20);
 var dP = __webpack_require__(5).f;
 var each = __webpack_require__(117)(0);
 var DESCRIPTORS = __webpack_require__(6);
@@ -8121,7 +7836,7 @@ module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
 "use strict";
 
 var $defineProperty = __webpack_require__(5);
-var createDesc = __webpack_require__(18);
+var createDesc = __webpack_require__(19);
 
 module.exports = function (object, index, value) {
   if (index in object) $defineProperty.f(object, index, createDesc(0, value));
@@ -8191,8 +7906,8 @@ module.exports = function isInteger(it) {
 "use strict";
 
 var create = __webpack_require__(25);
-var descriptor = __webpack_require__(18);
-var setToStringTag = __webpack_require__(19);
+var descriptor = __webpack_require__(19);
+var setToStringTag = __webpack_require__(20);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
@@ -8213,7 +7928,7 @@ var macrotask = __webpack_require__(44).set;
 var Observer = global.MutationObserver || global.WebKitMutationObserver;
 var process = global.process;
 var Promise = global.Promise;
-var isNode = __webpack_require__(14)(process) == 'process';
+var isNode = __webpack_require__(15)(process) == 'process';
 
 module.exports = function () {
   var head, last, notify;
@@ -8305,9 +8020,9 @@ module.exports = __webpack_require__(6) ? Object.defineProperties : function def
 
 // https://tc39.github.io/proposal-setmap-offrom/
 var $export = __webpack_require__(1);
-var aFunction = __webpack_require__(13);
+var aFunction = __webpack_require__(14);
 var ctx = __webpack_require__(8);
-var forOf = __webpack_require__(15);
+var forOf = __webpack_require__(16);
 
 module.exports = function (COLLECTION) {
   $export($export.S, COLLECTION, { from: function from(source /* , mapFn, thisArg */) {
@@ -8408,7 +8123,7 @@ module.exports = __webpack_require__(0).getIterator = function (it) {
 
 var ctx = __webpack_require__(8);
 var $export = __webpack_require__(1);
-var toObject = __webpack_require__(20);
+var toObject = __webpack_require__(21);
 var call = __webpack_require__(60);
 var isArrayIter = __webpack_require__(58);
 var toLength = __webpack_require__(27);
@@ -8452,7 +8167,7 @@ $export($export.S + $export.F * !__webpack_require__(61)(function (iter) { Array
 
 var addToUnscopables = __webpack_require__(114);
 var step = __webpack_require__(62);
-var Iterators = __webpack_require__(16);
+var Iterators = __webpack_require__(17);
 var toIObject = __webpack_require__(11);
 
 // 22.1.3.4 Array.prototype.entries()
@@ -8572,7 +8287,7 @@ $export($export.S + $export.F * !__webpack_require__(6), 'Object', { definePrope
 var isObject = __webpack_require__(4);
 var meta = __webpack_require__(24).onFreeze;
 
-__webpack_require__(17)('freeze', function ($freeze) {
+__webpack_require__(18)('freeze', function ($freeze) {
   return function freeze(it) {
     return $freeze && isObject(it) ? $freeze(meta(it)) : it;
   };
@@ -8587,7 +8302,7 @@ __webpack_require__(17)('freeze', function ($freeze) {
 var toIObject = __webpack_require__(11);
 var $getOwnPropertyDescriptor = __webpack_require__(63).f;
 
-__webpack_require__(17)('getOwnPropertyDescriptor', function () {
+__webpack_require__(18)('getOwnPropertyDescriptor', function () {
   return function getOwnPropertyDescriptor(it, key) {
     return $getOwnPropertyDescriptor(toIObject(it), key);
   };
@@ -8599,7 +8314,7 @@ __webpack_require__(17)('getOwnPropertyDescriptor', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 Object.getOwnPropertyNames(O)
-__webpack_require__(17)('getOwnPropertyNames', function () {
+__webpack_require__(18)('getOwnPropertyNames', function () {
   return __webpack_require__(64).f;
 });
 
@@ -8609,10 +8324,10 @@ __webpack_require__(17)('getOwnPropertyNames', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 Object.getPrototypeOf(O)
-var toObject = __webpack_require__(20);
+var toObject = __webpack_require__(21);
 var $getPrototypeOf = __webpack_require__(67);
 
-__webpack_require__(17)('getPrototypeOf', function () {
+__webpack_require__(18)('getPrototypeOf', function () {
   return function getPrototypeOf(it) {
     return $getPrototypeOf(toObject(it));
   };
@@ -8624,10 +8339,10 @@ __webpack_require__(17)('getPrototypeOf', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 Object.keys(O)
-var toObject = __webpack_require__(20);
+var toObject = __webpack_require__(21);
 var $keys = __webpack_require__(26);
 
-__webpack_require__(17)('keys', function () {
+__webpack_require__(18)('keys', function () {
   return function keys(it) {
     return $keys(toObject(it));
   };
@@ -8646,9 +8361,9 @@ var ctx = __webpack_require__(8);
 var classof = __webpack_require__(34);
 var $export = __webpack_require__(1);
 var isObject = __webpack_require__(4);
-var aFunction = __webpack_require__(13);
+var aFunction = __webpack_require__(14);
 var anInstance = __webpack_require__(33);
-var forOf = __webpack_require__(15);
+var forOf = __webpack_require__(16);
 var speciesConstructor = __webpack_require__(73);
 var task = __webpack_require__(44).set;
 var microtask = __webpack_require__(128)();
@@ -8852,7 +8567,7 @@ if (!USE_NATIVE) {
 }
 
 $export($export.G + $export.W + $export.F * !USE_NATIVE, { Promise: $Promise });
-__webpack_require__(19)($Promise, PROMISE);
+__webpack_require__(20)($Promise, PROMISE);
 __webpack_require__(72)(PROMISE);
 Wrapper = __webpack_require__(0)[PROMISE];
 
@@ -8933,7 +8648,7 @@ var redefine = __webpack_require__(71);
 var META = __webpack_require__(24).KEY;
 var $fails = __webpack_require__(12);
 var shared = __webpack_require__(43);
-var setToStringTag = __webpack_require__(19);
+var setToStringTag = __webpack_require__(20);
 var uid = __webpack_require__(28);
 var wks = __webpack_require__(3);
 var wksExt = __webpack_require__(48);
@@ -8944,7 +8659,7 @@ var anObject = __webpack_require__(7);
 var isObject = __webpack_require__(4);
 var toIObject = __webpack_require__(11);
 var toPrimitive = __webpack_require__(46);
-var createDesc = __webpack_require__(18);
+var createDesc = __webpack_require__(19);
 var _create = __webpack_require__(25);
 var gOPNExt = __webpack_require__(64);
 var $GOPD = __webpack_require__(63);
@@ -9264,7 +8979,7 @@ $export($export.G + $export.B, {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global, module) {
 
-var _typeof = __webpack_require__(22)['default'];
+var _typeof = __webpack_require__(13)['default'];
 
 // require('es5-shim');
 // require('es5-shim/es5-sham');
@@ -9340,6 +9055,524 @@ __webpack_require__(80);
 
 /***/ }),
 /* 159 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright (c) 2017 Copyright brainpoint All Rights Reserved.
+ * Author: lipengxiang
+ * Desc:
+ */
+
+var crc32_table = [0x00000000, 0x77073096, 0xEE0E612C, 0x990951BA, 0x076DC419, 0x706AF48F, 0xE963A535, 0x9E6495A3, 0x0EDB8832, 0x79DCB8A4, 0xE0D5E91E, 0x97D2D988, 0x09B64C2B, 0x7EB17CBD, 0xE7B82D07, 0x90BF1D91, 0x1DB71064, 0x6AB020F2, 0xF3B97148, 0x84BE41DE, 0x1ADAD47D, 0x6DDDE4EB, 0xF4D4B551, 0x83D385C7, 0x136C9856, 0x646BA8C0, 0xFD62F97A, 0x8A65C9EC, 0x14015C4F, 0x63066CD9, 0xFA0F3D63, 0x8D080DF5, 0x3B6E20C8, 0x4C69105E, 0xD56041E4, 0xA2677172, 0x3C03E4D1, 0x4B04D447, 0xD20D85FD, 0xA50AB56B, 0x35B5A8FA, 0x42B2986C, 0xDBBBC9D6, 0xACBCF940, 0x32D86CE3, 0x45DF5C75, 0xDCD60DCF, 0xABD13D59, 0x26D930AC, 0x51DE003A, 0xC8D75180, 0xBFD06116, 0x21B4F4B5, 0x56B3C423, 0xCFBA9599, 0xB8BDA50F, 0x2802B89E, 0x5F058808, 0xC60CD9B2, 0xB10BE924, 0x2F6F7C87, 0x58684C11, 0xC1611DAB, 0xB6662D3D, 0x76DC4190, 0x01DB7106, 0x98D220BC, 0xEFD5102A, 0x71B18589, 0x06B6B51F, 0x9FBFE4A5, 0xE8B8D433, 0x7807C9A2, 0x0F00F934, 0x9609A88E, 0xE10E9818, 0x7F6A0DBB, 0x086D3D2D, 0x91646C97, 0xE6635C01, 0x6B6B51F4, 0x1C6C6162, 0x856530D8, 0xF262004E, 0x6C0695ED, 0x1B01A57B, 0x8208F4C1, 0xF50FC457, 0x65B0D9C6, 0x12B7E950, 0x8BBEB8EA, 0xFCB9887C, 0x62DD1DDF, 0x15DA2D49, 0x8CD37CF3, 0xFBD44C65, 0x4DB26158, 0x3AB551CE, 0xA3BC0074, 0xD4BB30E2, 0x4ADFA541, 0x3DD895D7, 0xA4D1C46D, 0xD3D6F4FB, 0x4369E96A, 0x346ED9FC, 0xAD678846, 0xDA60B8D0, 0x44042D73, 0x33031DE5, 0xAA0A4C5F, 0xDD0D7CC9, 0x5005713C, 0x270241AA, 0xBE0B1010, 0xC90C2086, 0x5768B525, 0x206F85B3, 0xB966D409, 0xCE61E49F, 0x5EDEF90E, 0x29D9C998, 0xB0D09822, 0xC7D7A8B4, 0x59B33D17, 0x2EB40D81, 0xB7BD5C3B, 0xC0BA6CAD, 0xEDB88320, 0x9ABFB3B6, 0x03B6E20C, 0x74B1D29A, 0xEAD54739, 0x9DD277AF, 0x04DB2615, 0x73DC1683, 0xE3630B12, 0x94643B84, 0x0D6D6A3E, 0x7A6A5AA8, 0xE40ECF0B, 0x9309FF9D, 0x0A00AE27, 0x7D079EB1, 0xF00F9344, 0x8708A3D2, 0x1E01F268, 0x6906C2FE, 0xF762575D, 0x806567CB, 0x196C3671, 0x6E6B06E7, 0xFED41B76, 0x89D32BE0, 0x10DA7A5A, 0x67DD4ACC, 0xF9B9DF6F, 0x8EBEEFF9, 0x17B7BE43, 0x60B08ED5, 0xD6D6A3E8, 0xA1D1937E, 0x38D8C2C4, 0x4FDFF252, 0xD1BB67F1, 0xA6BC5767, 0x3FB506DD, 0x48B2364B, 0xD80D2BDA, 0xAF0A1B4C, 0x36034AF6, 0x41047A60, 0xDF60EFC3, 0xA867DF55, 0x316E8EEF, 0x4669BE79, 0xCB61B38C, 0xBC66831A, 0x256FD2A0, 0x5268E236, 0xCC0C7795, 0xBB0B4703, 0x220216B9, 0x5505262F, 0xC5BA3BBE, 0xB2BD0B28, 0x2BB45A92, 0x5CB36A04, 0xC2D7FFA7, 0xB5D0CF31, 0x2CD99E8B, 0x5BDEAE1D, 0x9B64C2B0, 0xEC63F226, 0x756AA39C, 0x026D930A, 0x9C0906A9, 0xEB0E363F, 0x72076785, 0x05005713, 0x95BF4A82, 0xE2B87A14, 0x7BB12BAE, 0x0CB61B38, 0x92D28E9B, 0xE5D5BE0D, 0x7CDCEFB7, 0x0BDBDF21, 0x86D3D2D4, 0xF1D4E242, 0x68DDB3F8, 0x1FDA836E, 0x81BE16CD, 0xF6B9265B, 0x6FB077E1, 0x18B74777, 0x88085AE6, 0xFF0F6A70, 0x66063BCA, 0x11010B5C, 0x8F659EFF, 0xF862AE69, 0x616BFFD3, 0x166CCF45, 0xA00AE278, 0xD70DD2EE, 0x4E048354, 0x3903B3C2, 0xA7672661, 0xD06016F7, 0x4969474D, 0x3E6E77DB, 0xAED16A4A, 0xD9D65ADC, 0x40DF0B66, 0x37D83BF0, 0xA9BCAE53, 0xDEBB9EC5, 0x47B2CF7F, 0x30B5FFE9, 0xBDBDF21C, 0xCABAC28A, 0x53B39330, 0x24B4A3A6, 0xBAD03605, 0xCDD70693, 0x54DE5729, 0x23D967BF, 0xB3667A2E, 0xC4614AB8, 0x5D681B02, 0x2A6F2B94, 0xB40BBE37, 0xC30C8EA1, 0x5A05DF1B, 0x2D02EF8D];
+exports.crc32_table = crc32_table;
+
+/**
+* @desc: base64编码.
+* @param arrByte: 字节数组.
+* @return: string.
+*/
+exports.base64_encode = function (arrByte) {
+  var base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  var out, i, len;
+  var c1, c2, c3;
+  len = arrByte.length;
+  i = 0;
+  out = "";
+  while (i < len) {
+    c1 = arrByte[i++] & 0xff;
+    if (i == len) {
+      out += base64EncodeChars.charAt(c1 >> 2);
+      out += base64EncodeChars.charAt((c1 & 0x3) << 4);
+      out += "==";
+      break;
+    }
+    c2 = arrByte[i++];
+    if (i == len) {
+      out += base64EncodeChars.charAt(c1 >> 2);
+      out += base64EncodeChars.charAt((c1 & 0x3) << 4 | (c2 & 0xF0) >> 4);
+      out += base64EncodeChars.charAt((c2 & 0xF) << 2);
+      out += "=";
+      break;
+    }
+    c3 = arrByte[i++];
+    out += base64EncodeChars.charAt(c1 >> 2);
+    out += base64EncodeChars.charAt((c1 & 0x3) << 4 | (c2 & 0xF0) >> 4);
+    out += base64EncodeChars.charAt((c2 & 0xF) << 2 | (c3 & 0xC0) >> 6);
+    out += base64EncodeChars.charAt(c3 & 0x3F);
+  }
+  return out;
+};
+
+/***/ }),
+/* 160 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright (c) 2017 Copyright brainpoint All Rights Reserved.
+ * Author: lipengxiang
+ * Desc:
+ */
+
+/**
+* @desc: 判断是否是手机号码.
+* @return: boolean.
+*/
+
+exports.isPhoneMobile = function (str) {
+  if (!str) return false;
+  if (/^0?1[2|3|4|5|6|7|8][0-9]\d{8}$/.test(str)) {
+    return true;
+  }
+  return false;
+};
+
+/**
+ * @desc: 是否为空串.
+ * @return: boolean.
+ */
+exports.isEmpty = function (s) {
+
+  if (!s) {
+    return true;
+  }
+
+  if (typeof s !== 'string') {
+    return true;
+  }
+
+  if (s.length == 0) return true;
+
+  return false;
+};
+
+/**
+ * @desc: 获得字符串utf8编码后的字节长度.
+ * @return: u32.
+ */
+exports.getByteSize = function (s) {
+  if (!s) return 0;
+
+  var totalLength = 0;
+  var i;
+  var charCode;
+  for (i = 0; i < s.length; i++) {
+    charCode = s.charCodeAt(i);
+    if (charCode < 0x007f) {
+      totalLength = totalLength + 1;
+    } else if (0x0080 <= charCode && charCode <= 0x07ff) {
+      totalLength += 2;
+    } else if (0x0800 <= charCode && charCode <= 0xffff) {
+      totalLength += 3;
+    } else if (0x10000 <= charCode) {
+      totalLength += 4;
+    }
+  }
+  //alert(totalLength);
+  return totalLength;
+};
+
+/**
+ * @desc: 替换字符串中所有的strSrc->strDest.
+ * @return: string.
+ */
+exports.replace = function (str, strSrc, strDest) {
+  if (!str || !strSrc) return str;
+
+  if (str.length == 0) return str;
+
+  var s = '';
+
+  var endPos = str.length;
+  var i = 0;
+  var j = 0;
+  do {
+    i = str.indexOf(strSrc, j);
+    if (-1 != i && i < endPos) {
+      if (i != j) s += str.slice(j, i);
+
+      s += strDest;
+      j = i + strSrc.length;
+    } else {
+      s += str.slice(j);
+      break;
+    }
+  } while (i < endPos); // while
+
+  return s;
+};
+
+/***/ }),
+/* 161 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright (c) 2017 Copyright brainpoint All Rights Reserved.
+ * Author: lipengxiang
+ * Desc:
+ */
+
+var _Number$isInteger = __webpack_require__(85)['default'];
+
+var _Number$isNaN = __webpack_require__(86)['default'];
+
+var _typeof = __webpack_require__(13)['default'];
+
+var _Promise = __webpack_require__(31)['default'];
+
+var PromiseLib = _Promise;
+// var BigNumber = require('../third-party/bignumber.min.js');
+var BigNumber = __webpack_require__(95);
+
+/**
+ * @desc: 模拟sleep.
+ * @return: Promise.
+ *     在ms时间后执行.
+ * @e.g.
+ *     febs.utils.sleep(1000).then(()=>{
+          //1000ms之后resolve.
+       });
+ */
+exports.sleep = function (ms) {
+  return new PromiseLib(function (resolve, reject) {
+    try {
+      setTimeout(function () {
+        resolve();
+      }, ms);
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+
+/**
+ * @desc: the browser is mobile.
+ * @param userAgent: the browser user agent string.
+ */
+exports.browserIsMobile = function (userAgent) {
+
+  if (!userAgent) {
+    if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) !== undefined) {
+      userAgent = window.navigator.userAgent;
+    }
+  }
+
+  var agent = userAgent;
+  var platforms = ['Android', 'webOS', 'iPhone', 'iPad', 'iPod', 'Blackberry', 'Windows Phone'];
+  var expression = new RegExp(platforms.join('|'), 'i');
+
+  return agent.match(expression) != null;
+};
+
+/**
+ * @desc: the browser is ios.
+ * @param userAgent: the browser user agent string.
+ */
+exports.browserIsIOS = function (userAgent) {
+  if (!userAgent) {
+    if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) !== undefined) {
+      userAgent = window.navigator.userAgent;
+    }
+  }
+
+  var agent = userAgent;
+  var platforms = ['iPhone', 'iPad', 'iPod'];
+  var expression = new RegExp(platforms.join('|'), 'i');
+
+  return agent.match(expression) != null;
+};
+
+/**
+ * @desc: the browser is phone.
+ * @param userAgent: the browser user agent string.
+ */
+exports.browserIsPhone = function (userAgent) {
+  if (!userAgent) {
+    if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) !== undefined) {
+      userAgent = window.navigator.userAgent;
+    }
+  }
+
+  var agent = userAgent;
+  var platforms = ['Android', 'iPhone', 'iPod', 'Blackberry', 'Windows Phone'];
+  var expression = new RegExp(platforms.join('|'), 'i');
+
+  return agent.match(expression) != null;
+};
+
+/**
+ * @desc: the browser is weixin.
+ */
+exports.browserIsWeixin = function (userAgent) {
+  if (!userAgent) {
+    if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) !== undefined) {
+      userAgent = window.navigator.userAgent;
+    }
+  }
+
+  var agent = userAgent;
+  if (agent.match(/MicroMessenger/i) == "MicroMessenger") {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+/**
+ * @desc: 获取时间的string.
+ * @param time: ms.
+ * @param fmt: 格式化, 默认为 'HH:mm:ss'
+ *             年(y)、月(M)、日(d)、12小时(h)、24小时(H)、分(m)、秒(s)、周(E)、季度(q)
+ *              'yyyy-MM-dd hh:mm:ss.S' ==> 2006-07-02 08:09:04.423
+ *              'yyyy-MM-dd E HH:mm:ss' ==> 2009-03-10 星期二 20:09:04
+ *              'yyyy-M-d h:m:s.S'      ==> 2006-7-2 8:9:4.18
+ * @param weekFmt: 星期的文字格式, 默认为 {'0':'星期天', '1': '星期一', ..., '6':'星期六'}
+ * @return: string.
+ */
+function getTimeString(time, fmt, weekFmt) {
+  if (typeof time !== "number") return "";
+
+  fmt = fmt || 'HH:mm:ss';
+
+  var t = new Date(time);
+  var o = {
+    "M+": t.getMonth() + 1, //月份         
+    "d+": t.getDate(), //日         
+    "h+": t.getHours() % 12 == 0 ? 12 : t.getHours() % 12, //小时         
+    "H+": t.getHours(), //小时         
+    "m+": t.getMinutes(), //分         
+    "s+": t.getSeconds(), //秒         
+    "q+": Math.floor((t.getMonth() + 3) / 3), //季度         
+    "S": t.getMilliseconds() //毫秒         
+  };
+  var week = weekFmt || {
+    "0": "星期天",
+    "1": "星期一",
+    "2": "星期二",
+    "3": "星期三",
+    "4": "星期四",
+    "5": "星期五",
+    "6": "星期六"
+  };
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(RegExp.$1, (t.getFullYear() + "").substr(4 - RegExp.$1.length));
+  }
+  if (/(E+)/.test(fmt)) {
+    fmt = fmt.replace(RegExp.$1, week[t.getDay() + ""]);
+  }
+  for (var k in o) {
+    if (new RegExp("(" + k + ")").test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+    }
+  }
+  return fmt;
+};
+exports.getTimeString = getTimeString;
+
+/**
+ * @desc: 获取指定时间距离现在的时间描述.
+ *        例如, 昨天, 1小时前等.
+ * @param time: ms. 小于当前时间, 大于当前时间将显示为 '刚刚';
+ * @param strFmt: 需要显示的文字. 
+ *                默认为 {
+ *                        now:    '刚刚',           // 3秒钟以内将显示此信息.
+ *                        second: '秒前',
+ *                        minute: '分钟前',
+ *                        hour:   '小时前',
+ *                        day_yesterday: '昨天',
+ *                        day:    '天前',
+ *                        month:  '个月前',          // 6个月内将显示此信息.
+ *                        time:   'yyyy-M-d h:m:s'  // 超过6个月将使用此格式格式化时间
+ *                       }
+ * @return: string.
+ */
+exports.getTimeStringFromNow = function (time, strFmt) {
+  strFmt = strFmt || {};
+  strFmt.now = strFmt.now || '刚刚';
+  strFmt.second = strFmt.second || '秒前';
+  strFmt.minute = strFmt.minute || '分钟前';
+  strFmt.hour = strFmt.hour || '小时前';
+  strFmt.day_yesterday = strFmt.day_yesterday || '昨天';
+  strFmt.day = strFmt.day || '天前';
+  strFmt.month = strFmt.month || '个月前';
+  strFmt.time = strFmt.time || 'yyyy-M-d h:m:s';
+
+  var now = Math.ceil(Date.now() / 1000);
+  time = Math.ceil(time / 1000);
+
+  if (now > time) {
+    var s = now - time;
+    if (s < 3) {
+      return strFmt.now;
+    }
+
+    if (s < 60) {
+      return s.toString() + strFmt.second;
+    }
+
+    if (s < 60 * 60) {
+      return Math.ceil(s / 60).toString() + strFmt.minute;
+    }
+
+    if (s < 60 * 60 * 24) {
+      return Math.ceil(s / 60 / 60).toString() + strFmt.hour;
+    }
+
+    if (s < 60 * 60 * 24 * 30) {
+      var dNow = new Date(now * 1000);
+
+      dNow.setHours(0, 0, 1);
+      if (dNow.getTime() - time <= 60 * 60 * 24) {
+        return strFmt.day_yesterday;
+      }
+
+      return Math.ceil(s / 60 / 60 / 24).toString() + strFmt.day;
+    }
+
+    if (s < 60 * 60 * 24 * 30 * 6) {
+      return Math.ceil(s / 60 / 60 / 24 / 30).toString() + strFmt.month;
+    }
+
+    return getTimeString(time, strFmt.time);
+  }
+
+  return strFmt.now;
+};
+
+/**
+ * @desc: getDate('2012-05-09')
+ * @return: Date.
+ */
+exports.getDate = function (strDate) {
+  var date = new Date(parseInt(strDate.substr(0, 4)), parseInt(strDate.substr(5, 2), 10) - 1, parseInt(strDate.substr(8, 2)));
+  return date;
+};
+
+/**
+ * @desc: getDate2('20120509')
+ * @return: Date.
+ */
+exports.getDate2 = function (strDate) {
+  var date = new Date(parseInt(strDate.substr(0, 4)), parseInt(strDate.substr(4, 2), 10) - 1, parseInt(strDate.substr(6, 2)));
+  return date;
+};
+
+/**
+ * @desc: 合并多个map.
+ * @return: {}
+ */
+exports.mergeMap = function () {
+  var map0 = {};
+  var map2;
+  for (var i = 0; i < arguments.length; i++) {
+    map2 = arguments[i];
+    if (map2) {
+      for (var k in map2) {
+        map0[k] = map2[k];
+      }
+    }
+  }
+
+  return map0;
+};
+
+/**
+* @desc: 判断参数是否是null,undefined,NaN
+* @return: boolean
+*/
+exports.isNull = function (e) {
+  return e === null || e === undefined || _Number$isNaN(e);
+};
+
+/**
+ * @desc: 判断是否是bigint.
+ */
+exports.bigint_check = function (v) {
+  if (_Number$isInteger(v)) return true;
+  if (!v) return false;
+
+  if (typeof v === 'string') {
+    if (v.length > 22 || v.length < 1) return false;
+
+    for (var j = 1; j < v.length; j++) {
+      if (v[j] < '0' || v[j] > '9') return false;
+    }
+
+    if (v[0] == '-') {
+      if (v.length < 2 || v[1] < '1' || v[1] > '9') return false;
+    } else {
+      if (v[j] < '1' || v[j] > '9') return false;
+    }
+
+    return true;
+  } else {
+    return false;
+  }
+};
+
+/**
+* @desc: calc bigint
+* @return: bigint.
+*/
+exports.bigint_add = function (a, b) {
+  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.plus(b);
+};
+
+exports.bigint_minus = function (a, b) {
+  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.minus(b);
+};
+
+exports.bigint_dividedBy = function (a, b) {
+  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.dividedBy(b);
+};
+
+exports.bigint_mul = function (a, b) {
+  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.times(b);
+};
+
+/**
+* @desc: compare with bigint.
+* @return: boolean.
+*/
+exports.bigint_equal = function (a, b) {
+  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.equals(b);
+};
+
+exports.bigint_more_than = function (a, b) {
+  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.greaterThan(b);
+};
+
+exports.bigint_more_than_e = function (a, b) {
+  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.greaterThanOrEqualTo(b);
+};
+
+exports.bigint_less_than = function (a, b) {
+  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.lessThan(b);
+};
+
+exports.bigint_less_than_e = function (a, b) {
+  if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.lessThanOrEqualTo(b);
+};
+
+/**
+* @desc: 转换bigint->string.
+* @param fixed: 小数位个数, 默认为0.
+* @return: string.
+*/
+exports.bigint_toFixed = function (a, fixed) {
+  fixed = fixed || 0;if (!(a instanceof BigNumber)) a = new BigNumber(a);return a.toFixed(fixed);
+};
+
+/***/ }),
+/* 162 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser

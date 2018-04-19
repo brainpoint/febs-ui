@@ -19,9 +19,9 @@ npm install febs-ui --save
 
 ```html
 <link rel="stylesheet" type="text/css" href="path/febsui/febsui.css" />
-<!-- 使用jquery 或 zepto -->
-<script charset='UTF-8' type="text/javascript" src="path/jquery.js"></script>
-<script charset='UTF-8' type="text/javascript" src="path/jquery.form.min.js"></script> <!-- upload 方法需要使用此库 -->
+<!-- multipart/form-data方式上传 方法需要使用此库; 如不使用此方式上传则不需要jquery库. -->
+<script charset='UTF-8' type="text/javascript" src="path/jquery.js"></script> <!-- 使用jquery 或 zepto -->
+<script charset='UTF-8' type="text/javascript" src="path/jquery.form.min.js"></script> 
 
 <script charset='UTF-8' type="text/javascript" src="path/febs/febs.min.js"></script>
 <script charset='UTF-8' type="text/javascript" src="path/febsui/febsui.min.js"></script>
@@ -244,7 +244,8 @@ exports.upload = async function(ctx, next)
 前台:
 ```js
 <script type="text/javascript" charset="utf-8" src="/jquery/jquery.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="/jquery/jquery.form.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/jquery/jquery.form.min.js"></script> <!--  -->
+
 <script type="text/javascript" charset="utf-8" src="/febs/febs.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="/febsui/febsui.min.js"></script>
 
@@ -326,8 +327,8 @@ exports.uploadByBase64 = async function (ctx) {
 ```
 前台:
 ```js
-<script type="text/javascript" charset="utf-8" src="/jquery/jquery.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="/febs/febs.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/febsui/febsui.min.js"></script>
 
 <script type="text/javascript">
   febsui.uploadBase64({

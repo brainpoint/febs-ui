@@ -32,10 +32,6 @@
 // Pass this if window is not defined yet
 } )( typeof window !== "undefined" ? window : this, function( window, noGlobal ) {
 
-if (!window['$']) {
-  throw new Error( "febsui requires jquery or zepto" );
-}
-
 var febsui = require('./controls');
 window['febsui'] = febsui;
 
