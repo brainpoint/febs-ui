@@ -93,6 +93,12 @@ export function dialog_showConfirmEdit( ctx: { title?:string, content?:string, e
 */
 export function page_init(elem: any, curPage: number, pageCount: number, totalCount: number, pageCallback: (page: any) => void): void;
 
+/**
+ * @desc 初始化页面上所有switch控件
+ *       默认在页面加载完成时会调用一次; 加入新的switch控件时需调用一次.
+ */
+export function switch_init():void;
+
 /** [客户端调用] 需要 jquery,jquery.form 库支持.
 * 并且 <input type="file" name="file"... 中, 必须存在name属性.
 * 使用post方式上传文件.

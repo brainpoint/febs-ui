@@ -4,7 +4,6 @@
  * Desc:
  */
 var escape = require('../escape');
-var dom = require('../dom');
 
 function escape_string(str) {
   // 转义.
@@ -57,9 +56,12 @@ controls.loading_isVisiable = function() {
   if (control_loading_timer)
     return true;
   
-  var e1 = dom.getElementById(loading_tag_name);
-  var ee = e1 ? e1.innerHTML : null;
+  var ee = $('#'+loading_tag_name).html();
   return ee && ee.length>0;
+
+  // var e1 = dom.getElementById(loading_tag_name);
+  // var ee = e1 ? e1.innerHTML : null;
+  // return ee && ee.length>0;
 }
 
 
@@ -73,18 +75,10 @@ function loading_show(text, timeout) {
 
   text = escape_string(text);
 
-  {
-    var _body = dom.getElementsByTagName('body')[0];
-    if (!dom.getElementById(loading_tag_name)) {
-      var elem = dom.createElement('span');
-      dom.setAttribute(elem, 'id', loading_tag_name);
-      dom.prependChild(_body, elem);
-    }
+  var e = $('body').children('#' + loading_tag_name);
+  if (!e || e.length == 0) {
+    $('body').prepend(('<span id="' + loading_tag_name + '"></span>'));
   }
-  // var e = $('body').children('#' + loading_tag_name);
-  // if (!e || e.length == 0) {
-  //   $('body').prepend(('<span id="' + loading_tag_name + '"></span>'));
-  // }
 
   if (control_loading_timer)
     window.clearInterval(control_loading_timer);
@@ -94,13 +88,7 @@ function loading_show(text, timeout) {
     }, timeout);
   }
   else {
-    {
-      var elem = dom.getElementById(loading_tag_name);
-      if (elem) {
-        elem.innerHTML = '<div class="febsui-loading-c"><div class="febsui-loading"><div class="febsui-loading-spin"></div><p style="margin-left:auto;margin-right:auto;text-align:center;max-width:200px;">' + (text ? text : '') + '</p></div></div>';
-      }
-    }
-    // $('#' + loading_tag_name).html('<div class="febsui-loading-c"><div class="febsui-loading"><div class="febsui-loading-spin"></div><p style="margin-left:auto;margin-right:auto;text-align:center;max-width:200px;">' + (text ? text : '') + '</p></div></div>');
+    $('#' + loading_tag_name).html('<div class="febsui-loading-c"><div class="febsui-loading"><div class="febsui-loading-spin"></div><p style="margin-left:auto;margin-right:auto;text-align:center;max-width:200px;">' + (text ? text : '') + '</p></div></div>');
   }
 }
 controls.loading_show = loading_show;
@@ -114,18 +102,10 @@ controls.loading_show = loading_show;
 */
 controls.loading_show_text = function(textArray, changeTextCB, hideCB) {
 
-  {
-    var _body = dom.getElementsByTagName('body')[0];
-    if (!dom.getElementById(loading_tag_name)) {
-      var elem = dom.createElement('span');
-      dom.setAttribute(elem, 'id', loading_tag_name);
-      dom.prependChild(_body, elem);
-    }
+  var e = $('body').children('#' + loading_tag_name);
+  if (!e || e.length == 0) {
+    $('body').prepend(('<span id="' + loading_tag_name + '"></span>'));
   }
-  // var e = $('body').children('#' + loading_tag_name);
-  // if (!e || e.length == 0) {
-  //   $('body').prepend(('<span id="' + loading_tag_name + '"></span>'));
-  // }
 
   if (control_loading_text_elemFunc) {
     if (control_loading_text_hideFunc) control_loading_text_hideFunc();
@@ -156,18 +136,10 @@ controls.loading_show_text = function(textArray, changeTextCB, hideCB) {
 * @return: 
 */
 controls.loading_hide = function() {
-  {
-    var _body = dom.getElementsByTagName('body')[0];
-    if (!dom.getElementById(loading_tag_name)) {
-      var elem = dom.createElement('span');
-      dom.setAttribute(elem, 'id', loading_tag_name);
-      dom.prependChild(_body, elem);
-    }
+  var e = $('body').children('#' + loading_tag_name);
+  if (!e || e.length == 0) {
+    $('body').prepend(('<span id="' + loading_tag_name + '"></span>'));
   }
-  // var e = $('body').children('#' + loading_tag_name);
-  // if (!e || e.length == 0) {
-  //   $('body').prepend(('<span id="' + loading_tag_name + '"></span>'));
-  // }
 
   if (control_loading_timer) {
     window.clearInterval(control_loading_timer);
@@ -185,13 +157,7 @@ controls.loading_hide = function() {
     }
   }
 
-  {
-    var elem = dom.getElementById(loading_tag_name);
-    if (elem) {
-      elem.innerHTML = '';
-    }
-  }
-  // $('#' + loading_tag_name).html('');
+  $('#' + loading_tag_name).html('');
 }
 
 return controls;

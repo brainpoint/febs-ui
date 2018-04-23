@@ -89,6 +89,28 @@
         });
       }
 
+
+      $(function(){
+        $('switch').switch(function(){
+          var isSwitch = $(this).isSwitchOn();
+          febsui.dialog_showToast('switch is: ' + (isSwitch ? 'on' : 'off'));
+        });
+      });
+      
+      function switchAll() {
+        var switchs = $('switch');
+        for (var i = 0; i < switchs.length; i++) {
+          switchs[i].switchOn(!$(switchs[i]).isSwitchOn());
+        }
+      }
+
+      function switchDisable() {
+        var switchs = $('switch');
+        for (var i = 0; i < switchs.length; i++) {
+          switchs[i].switchDisable(!$(switchs[i]).isSwitchDisable());
+        }
+      }
+
   </script>
 
   <h2>Loading:</h2>
@@ -107,6 +129,15 @@
   <button onclick="showDialogConfirm()">dialog confirm</button>
   <button onclick="showDialogText()">dialog confirm text input</button>
   <button onclick="showDialogText('<script>alert(1)</script>')">dialog confirm text input 转义</button>
+  
+
+  <h2>Switch:</h2>
+  <switch></switch>
+  <switch class="febsui-switch-off"></switch>
+  <switch class="febsui-switch-on"></switch>
+  <br>
+  <button onclick="switchAll()">switch all</button>
+  <button onclick="switchDisable()">switch disable</button>
   
   </body>
 </html>

@@ -48,6 +48,8 @@ var controls = {};
 */
 function page_init(elem, curPage, pageCount, totalCount, pageCallback) {
 
+  elem = $(elem);
+
   var foo = 'page'+crypt.uuid();
   window['febscontrolspage_map'][foo] = pageCallback;
   foo = 'javascript:window[\'febscontrolspage_map\'][\''+foo+'\']';
@@ -65,8 +67,9 @@ function page_init(elem, curPage, pageCount, totalCount, pageCallback) {
   var pageNext = '';
   if (pageCount > curPage)
   {
+    var pages = febs.utils.browserIsPhone() ? 2 : 5;
     var i = 1+curPage;
-    for (; i < 5+curPage && i <= pageCount; i++)
+    for (; i < pages+curPage && i <= pageCount; i++)
     {
       pageNext += '<li class="febsui-paginItem"><a href="'+foo+'('+i+')">'+i+'</a></li>';
     }

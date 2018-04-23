@@ -80,6 +80,16 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function (it, key) {
+  return hasOwnProperty.call(it, key);
+};
+
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87,11 +97,11 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 
 exports.__esModule = true;
 
-var _iterator = __webpack_require__(43);
+var _iterator = __webpack_require__(42);
 
 var _iterator2 = _interopRequireDefault(_iterator);
 
-var _symbol = __webpack_require__(42);
+var _symbol = __webpack_require__(41);
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
@@ -106,7 +116,7 @@ exports['default'] = typeof _symbol2['default'] === "function" && _typeof(_itera
 };
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -130,16 +140,6 @@ module.exports = function(module) {
 		module.webpackPolyfill = 1;
 	}
 	return module;
-};
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
 };
 
 
@@ -194,7 +194,7 @@ exports.f = __webpack_require__(4) ? Object.defineProperty : function defineProp
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(53);
+var IObject = __webpack_require__(52);
 var defined = __webpack_require__(15);
 module.exports = function (it) {
   return IObject(defined(it));
@@ -344,7 +344,7 @@ exports.f = {}.propertyIsEnumerable;
 /***/ (function(module, exports, __webpack_require__) {
 
 var def = __webpack_require__(6).f;
-var has = __webpack_require__(3);
+var has = __webpack_require__(1);
 var TAG = __webpack_require__(8)('toStringTag');
 
 module.exports = function (it, tag, stat) {
@@ -457,9 +457,9 @@ module.exports = function (it) {
 
 var global = __webpack_require__(0);
 var core = __webpack_require__(11);
-var ctx = __webpack_require__(50);
+var ctx = __webpack_require__(49);
 var hide = __webpack_require__(5);
-var has = __webpack_require__(3);
+var has = __webpack_require__(1);
 var PROTOTYPE = 'prototype';
 
 var $export = function (type, name, source) {
@@ -539,9 +539,9 @@ var $export = __webpack_require__(30);
 var redefine = __webpack_require__(37);
 var hide = __webpack_require__(5);
 var Iterators = __webpack_require__(17);
-var $iterCreate = __webpack_require__(55);
+var $iterCreate = __webpack_require__(54);
 var setToStringTag = __webpack_require__(21);
-var getPrototypeOf = __webpack_require__(61);
+var getPrototypeOf = __webpack_require__(60);
 var ITERATOR = __webpack_require__(8)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
@@ -610,7 +610,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject = __webpack_require__(10);
-var dPs = __webpack_require__(58);
+var dPs = __webpack_require__(57);
 var enumBugKeys = __webpack_require__(16);
 var IE_PROTO = __webpack_require__(22)('IE_PROTO');
 var Empty = function () { /* empty */ };
@@ -625,7 +625,7 @@ var createDict = function () {
   var gt = '>';
   var iframeDocument;
   iframe.style.display = 'none';
-  __webpack_require__(52).appendChild(iframe);
+  __webpack_require__(51).appendChild(iframe);
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
@@ -675,9 +675,9 @@ exports.f = Object.getOwnPropertySymbols;
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(3);
+var has = __webpack_require__(1);
 var toIObject = __webpack_require__(7);
-var arrayIndexOf = __webpack_require__(49)(false);
+var arrayIndexOf = __webpack_require__(48)(false);
 var IE_PROTO = __webpack_require__(22)('IE_PROTO');
 
 module.exports = function (object, names) {
@@ -708,147 +708,7 @@ module.exports = __webpack_require__(5);
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {
 
-var _typeof = __webpack_require__(1)["default"];
-
-(function (global, factory) {
-
-  "use strict";
-
-  if (( false ? "undefined" : _typeof(module)) === "object" && _typeof(module.exports) === "object") {
-
-    // For CommonJS and CommonJS-like environments where a proper `window`
-    // For environments that do not have a `window` with a `document`
-    // (such as Node.js), expose a factory as module.exports.
-    // This accentuates the need for the creation of a real `window`.
-    module.exports = global.document ? factory(global, true) : function (w) {
-      if (!w.document) {
-        throw new Error("febsui requires a window with a document");
-      }
-      return factory(w);
-    };
-  } else {
-    factory(global);
-  }
-
-  // Pass this if window is not defined yet
-})(typeof window !== "undefined" ? window : undefined, function (window, noGlobal) {
-
-  /**
-   * getElemsByClassName
-   */
-  function getElementsByClassName(className) {
-    return window.document.getElementsByClassName(className);
-  }
-
-  /**
-   * getElementsByTagName
-   */
-  function getElementsByTagName(name) {
-    return window.document.getElementsByTagName(name);
-  }
-
-  /**
-   * getElemsByClassName
-   */
-  function getElementById(idName) {
-    return window.document.getElementById(idName);
-  }
-
-  /**
-   * hasClass
-   */
-  function hasClass(element, cName) {
-    return !!element.className.match(new RegExp("(\\s|^)" + cName + "(\\s|$)")); // ( \\s|^ ) 判断前面是否有空格 （\\s | $ ）判断后面是否有空格 两个感叹号为转换为布尔值 以方便做判断  
-  }
-
-  /**
-   * addClass
-   */
-  function addClass(element, cName) {
-    if (!hasClass(element, cName)) {
-      element.className += " " + cName;
-    };
-  }
-
-  /**
-   * removeClass
-   */
-  function removeClass(element, cName) {
-    if (hasClass(element, cName)) {
-      element.className = element.className.replace(new RegExp("(\\s|^)" + cName + "(\\s|$)"), " "); // replace方法是替换  
-    };
-  }
-  /**
-   * removeElement
-   */
-  function removeElement(element) {
-    var _parentElement = element.parentNode;
-    if (_parentElement) {
-      _parentElement.removeChild(element);
-    }
-  }
-
-  /**
-   * appendChild
-   */
-  function appendChild(element, node) {
-    element.appendChild(node);
-  }
-
-  function prependChild(element, node) {
-    if (element.hasChildNodes()) {
-      element.insertBefore(node, element.firstChild);
-    } else {
-      element.appendChild(node);
-    }
-  }
-
-  /**
-   * setAttribute
-   */
-  function setAttribute(element, name, value) {
-    element.setAttribute(name, value);
-  }
-
-  /**
-   * createElement
-   */
-  function createElement(tag) {
-    return window.document.createElement(tag);
-  }
-
-  /**
-   * createTextNode
-   */
-  function createTextNode(text) {
-    return window.document.createTextNode(text);
-  }
-
-  return {
-    getElementsByClassName: getElementsByClassName,
-    getElementsByTagName: getElementsByTagName,
-    getElementById: getElementById,
-    hasClass: hasClass,
-    addClass: addClass,
-    removeClass: removeClass,
-    removeElement: removeElement,
-    appendChild: appendChild,
-    prependChild: prependChild,
-    setAttribute: setAttribute,
-    createElement: createElement,
-    createTextNode: createTextNode
-  };
-});
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(module) {
-
-var _typeof = __webpack_require__(1)["default"];
+var _typeof = __webpack_require__(2)["default"];
 
 (function (global, factory) {
 
@@ -890,31 +750,49 @@ var _typeof = __webpack_require__(1)["default"];
 
 	return escape_string;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var loading = __webpack_require__(74);
+// import { $ } from 'febs-browser';
+
+if (!$) {
+  throw new Error('must import febs first');
+}
+
+var loading = __webpack_require__(73);
 exports.loading_isVisiable = loading.loading_isVisiable;
 exports.loading_show = loading.loading_show;
 exports.loading_show_text = loading.loading_show_text;
 exports.loading_hide = loading.loading_hide;
 
-exports.page_init = __webpack_require__(75).page_init;
+exports.page_init = __webpack_require__(74).page_init;
 exports.uploadBase64 = __webpack_require__(76).uploadBase64;
 exports.upload = __webpack_require__(77).upload;
 
-var dialog = __webpack_require__(73);
+var dialog = __webpack_require__(72);
 exports.dialog_hide = dialog.hide;
 exports.dialog_showAlert = dialog.showAlert;
 exports.dialog_showToast = dialog.showToast;
 exports.dialog_showConfirm = dialog.showConfirm;
 exports.dialog_showConfirmEdit = dialog.showConfirmEdit;
+
+var switcha = __webpack_require__(75);
+exports.switch_init = switcha.switch_init;
+$(document).ready(function () {
+  switcha.switch_init();
+});
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(43), __esModule: true };
 
 /***/ }),
 /* 41 */
@@ -932,12 +810,6 @@ module.exports = { "default": __webpack_require__(45), __esModule: true };
 /* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(46), __esModule: true };
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var core = __webpack_require__(11);
 var $JSON = core.JSON || (core.JSON = { stringify: JSON.stringify });
 module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
@@ -946,27 +818,27 @@ module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
 
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(68);
+__webpack_require__(66);
 __webpack_require__(69);
-__webpack_require__(67);
 __webpack_require__(70);
-__webpack_require__(71);
 module.exports = __webpack_require__(11).Symbol;
 
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(68);
-__webpack_require__(72);
+__webpack_require__(67);
+__webpack_require__(71);
 module.exports = __webpack_require__(27).f('iterator');
 
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -976,21 +848,21 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, exports) {
 
 module.exports = function () { /* empty */ };
 
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = __webpack_require__(7);
-var toLength = __webpack_require__(64);
-var toAbsoluteIndex = __webpack_require__(63);
+var toLength = __webpack_require__(63);
+var toAbsoluteIndex = __webpack_require__(62);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIObject($this);
@@ -1012,11 +884,11 @@ module.exports = function (IS_INCLUDES) {
 
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(47);
+var aFunction = __webpack_require__(46);
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -1038,7 +910,7 @@ module.exports = function (fn, that, length) {
 
 
 /***/ }),
-/* 51 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
@@ -1059,7 +931,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 52 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var document = __webpack_require__(0).document;
@@ -1067,7 +939,7 @@ module.exports = document && document.documentElement;
 
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
@@ -1079,7 +951,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
@@ -1090,7 +962,7 @@ module.exports = Array.isArray || function isArray(arg) {
 
 
 /***/ }),
-/* 55 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1110,7 +982,7 @@ module.exports = function (Constructor, NAME, next) {
 
 
 /***/ }),
-/* 56 */
+/* 55 */
 /***/ (function(module, exports) {
 
 module.exports = function (done, value) {
@@ -1119,12 +991,12 @@ module.exports = function (done, value) {
 
 
 /***/ }),
-/* 57 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var META = __webpack_require__(14)('meta');
 var isObject = __webpack_require__(9);
-var has = __webpack_require__(3);
+var has = __webpack_require__(1);
 var setDesc = __webpack_require__(6).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
@@ -1178,7 +1050,7 @@ var meta = module.exports = {
 
 
 /***/ }),
-/* 58 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(6);
@@ -1197,14 +1069,14 @@ module.exports = __webpack_require__(4) ? Object.defineProperties : function def
 
 
 /***/ }),
-/* 59 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var pIE = __webpack_require__(20);
 var createDesc = __webpack_require__(13);
 var toIObject = __webpack_require__(7);
 var toPrimitive = __webpack_require__(25);
-var has = __webpack_require__(3);
+var has = __webpack_require__(1);
 var IE8_DOM_DEFINE = __webpack_require__(31);
 var gOPD = Object.getOwnPropertyDescriptor;
 
@@ -1219,7 +1091,7 @@ exports.f = __webpack_require__(4) ? gOPD : function getOwnPropertyDescriptor(O,
 
 
 /***/ }),
-/* 60 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
@@ -1244,12 +1116,12 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 
 /***/ }),
-/* 61 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(3);
-var toObject = __webpack_require__(65);
+var has = __webpack_require__(1);
+var toObject = __webpack_require__(64);
 var IE_PROTO = __webpack_require__(22)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
@@ -1263,7 +1135,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 /***/ }),
-/* 62 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(24);
@@ -1286,7 +1158,7 @@ module.exports = function (TO_STRING) {
 
 
 /***/ }),
-/* 63 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(24);
@@ -1299,7 +1171,7 @@ module.exports = function (index, length) {
 
 
 /***/ }),
-/* 64 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
@@ -1311,7 +1183,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 65 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
@@ -1322,13 +1194,13 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 66 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(48);
-var step = __webpack_require__(56);
+var addToUnscopables = __webpack_require__(47);
+var step = __webpack_require__(55);
 var Iterators = __webpack_require__(17);
 var toIObject = __webpack_require__(7);
 
@@ -1363,18 +1235,18 @@ addToUnscopables('entries');
 
 
 /***/ }),
-/* 67 */
+/* 66 */
 /***/ (function(module, exports) {
 
 
 
 /***/ }),
-/* 68 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var $at = __webpack_require__(62)(true);
+var $at = __webpack_require__(61)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
 __webpack_require__(32)(String, 'String', function (iterated) {
@@ -1393,18 +1265,18 @@ __webpack_require__(32)(String, 'String', function (iterated) {
 
 
 /***/ }),
-/* 69 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // ECMAScript 6 symbols shim
 var global = __webpack_require__(0);
-var has = __webpack_require__(3);
+var has = __webpack_require__(1);
 var DESCRIPTORS = __webpack_require__(4);
 var $export = __webpack_require__(30);
 var redefine = __webpack_require__(37);
-var META = __webpack_require__(57).KEY;
+var META = __webpack_require__(56).KEY;
 var $fails = __webpack_require__(12);
 var shared = __webpack_require__(23);
 var setToStringTag = __webpack_require__(21);
@@ -1412,16 +1284,16 @@ var uid = __webpack_require__(14);
 var wks = __webpack_require__(8);
 var wksExt = __webpack_require__(27);
 var wksDefine = __webpack_require__(26);
-var enumKeys = __webpack_require__(51);
-var isArray = __webpack_require__(54);
+var enumKeys = __webpack_require__(50);
+var isArray = __webpack_require__(53);
 var anObject = __webpack_require__(10);
 var isObject = __webpack_require__(9);
 var toIObject = __webpack_require__(7);
 var toPrimitive = __webpack_require__(25);
 var createDesc = __webpack_require__(13);
 var _create = __webpack_require__(33);
-var gOPNExt = __webpack_require__(60);
-var $GOPD = __webpack_require__(59);
+var gOPNExt = __webpack_require__(59);
+var $GOPD = __webpack_require__(58);
 var $DP = __webpack_require__(6);
 var $keys = __webpack_require__(19);
 var gOPD = $GOPD.f;
@@ -1634,24 +1506,24 @@ setToStringTag(global.JSON, 'JSON', true);
 
 
 /***/ }),
-/* 70 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(26)('asyncIterator');
 
 
 /***/ }),
-/* 71 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(26)('observable');
 
 
 /***/ }),
-/* 72 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(66);
+__webpack_require__(65);
 var global = __webpack_require__(0);
 var hide = __webpack_require__(5);
 var Iterators = __webpack_require__(17);
@@ -1673,14 +1545,13 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 
 /***/ }),
-/* 73 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var escape = __webpack_require__(39);
-var dom = __webpack_require__(38);
+var escape = __webpack_require__(38);
 
 var toastHideTimer;
 
@@ -1691,47 +1562,39 @@ exports.showConfirm = showConfirm;
 exports.showConfirmEdit = showConfirmEdit;
 
 function escape_string(ctx) {
-  // 转义.
-  if (ctx.title) {
-    ctx.title = escape(ctx.title);
-  }
-  if (ctx.content) {
-    ctx.content = escape(ctx.content);
-  }
-  if (ctx.msg) {
-    ctx.msg = escape(ctx.msg);
-  }
-  if (ctx.editText) {
-    ctx.editText = escape(ctx.editText);
-  }
-  if (ctx.okText) {
-    ctx.okText = escape(ctx.okText);
-  }
-  if (ctx.cancelText) {
-    ctx.cancelText = escape(ctx.cancelText);
-  }
+	// 转义.
+	if (ctx.title) {
+		ctx.title = escape(ctx.title);
+	}
+	if (ctx.content) {
+		ctx.content = escape(ctx.content);
+	}
+	if (ctx.msg) {
+		ctx.msg = escape(ctx.msg);
+	}
+	if (ctx.editText) {
+		ctx.editText = escape(ctx.editText);
+	}
+	if (ctx.okText) {
+		ctx.okText = escape(ctx.okText);
+	}
+	if (ctx.cancelText) {
+		ctx.cancelText = escape(ctx.cancelText);
+	}
 }
 
 function hide() {
-  var elems = dom.getElementsByClassName('febsui-popup');
-  if (elems) {
-    for (var i = 0; i < elems.length; i++) {
-      dom.removeClass(elems[i], 'febsui-visible');
-      dom.addClass(elems[i], 'febsui-invisible');
-    }
-  }
-
-  // $('.febsui-popup').removeClass('febsui-visible');
-  // if ($('.febsui-popup').length > 0) {
-  //   $('.febsui-popup').addClass('febsui-invisible');
-  // }
+	$('.febsui-dialog').removeClass('febsui-visible');
+	if ($('.febsui-dialog').length > 0) {
+		$('.febsui-dialog').addClass('febsui-invisible');
+	}
 }
 
 // add keyup.
 document.addEventListener('keyup', function (event) {
-  if (event.which == '27') {
-    hide();
-  }
+	if (event.which == '27') {
+		hide();
+	}
 });
 
 /**
@@ -1742,79 +1605,43 @@ document.addEventListener('keyup', function (event) {
 */
 function showAlert(ctx) {
 
-  if (typeof ctx === 'string') {
-    ctx = { content: ctx };
-  }
+	if (typeof ctx === 'string') {
+		ctx = { content: ctx };
+	}
 
-  if (!ctx.okText) ctx.okText = "确认";
-  escape_string(ctx);
+	if (!ctx.okText) ctx.okText = "确认";
+	escape_string(ctx);
 
-  {
-    var elems = dom.getElementsByClassName('febsui-popup');
-    if (elems) {
-      for (var i = 0; i < elems.length; i++) {
-        dom.removeElement(elems[i]);
-      }
-    }
-  }
-  // if ($('.febsui-popup').length > 0) {
-  // 	$('.febsui-popup').remove();
-  // }
+	if ($('.febsui-dialog').length > 0) {
+		$('.febsui-dialog').remove();
+	}
 
-  {
-    var _body = dom.getElementsByTagName('body')[0];
-    var elemPopup = dom.createElement('div');
-    dom.addClass(elemPopup, 'febsui-popup');
-    dom.setAttribute(elemPopup, 'role', alert);
-    elemPopup.innerHTML = '<div class="febsui-popup-container">' + (ctx.title ? '<div class="febsui-popup-title">' + ctx.title + '</div>' : '') + '<div class="febsui-popup-content">' + ctx.content + '</div><ul class="febsui-popup-buttons"><li style="width:100%"><a href="#0" class="febsui-popup-ok">' + ctx.okText + '</a></li></ul></div>';
-    dom.appendChild(_body, elemPopup);
-  } // $("body").append($('<div class="febsui-popup" role="alert"><div class="febsui-popup-container">' + (ctx.title?('<div class="febsui-popup-title">' + ctx.title + '</div>'):'') + '<div class="febsui-popup-content">' + ctx.content + '</div><ul class="febsui-popup-buttons"><li style="width:100%"><a href="#0" class="febsui-popup-ok">' + ctx.okText + '</a></li></ul></div></div>'));
+	$("body").append($('<div class="febsui-dialog" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li style="width:100%"><a href="#0" class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>'));
 
+	setTimeout(function () {
+		$('.febsui-dialog').addClass('febsui-visible');
+	}, 10);
 
-  setTimeout(function () {
-    var elems = dom.getElementsByClassName('febsui-popup');
-    if (elems) {
-      for (var i = 0; i < elems.length; i++) {
-        dom.addClass(elems[i], 'febsui-visible');
-      }
-    }
-    // $('.febsui-popup').addClass('febsui-visible');
-  }, 10);
+	//close popup
+	$('.febsui-dialog').on('click', function (event) {
+		if ($(event.target).hasClass('febsui-dialog-ok') /*|| $(event.target).hasClass('febsui-dialog')*/) {
+				event.preventDefault();
+				hide();
+				if (ctx.confirm) ctx.confirm();
+			}
+	});
 
-  //close popup
-  {
-    var elems = dom.getElementsByClassName('febsui-popup');
-    if (elems) {
-      for (var i = 0; i < elems.length; i++) {
-        elems[i].addEventListener('click', function (event) {
-          if (dom.hasClass(event.target, 'febsui-popup-ok') /*|| $(event.target).is('.febsui-popup')*/) {
-              event.preventDefault();
-              hide();
-              if (ctx.confirm) ctx.confirm();
-            }
-        });
-      }
-    }
-  }
-  // $('.febsui-popup').on('click', function (event) {
-  // 	if ($(event.target).is('.febsui-popup-ok') /*|| $(event.target).is('.febsui-popup')*/) {
-  // 		event.preventDefault();
-  // 		hide();
-  // 		if (ctx.confirm) ctx.confirm();
-  // 	}
-  // });
-
-  //close popup when clicking the esc keyboard button
-  // (document).addEventListener('keyup', function (event) {
-  // 	if (event.which == '27') {
-  // 		hide();
-  // 	}
-  // });
-  // $(document).keyup(function (event) {
-  // 	if (event.which == '27') {
-  // 		hide();
-  // 	}
-  // });
+	//close popup when clicking the esc keyboard button
+	// (document).addEventListener('keyup', function (event) {
+	// 	if (event.which == '27') {
+	// 		hide();
+	// 	}
+	// });
+	// $(document).keyup(function (event) {
+	// 	if (event.which == '27') {
+	// 		hide();
+	// 	}
+	// });
 }
 
 /**
@@ -1824,106 +1651,59 @@ function showAlert(ctx) {
  * ctx.callback  function(){}	// 对话框消失后的回调.
  */
 function showToast(ctx) {
-  if (typeof ctx === 'string') {
-    ctx = { content: ctx };
-  }
+	if (typeof ctx === 'string') {
+		ctx = { content: ctx };
+	}
 
-  escape_string(ctx);
+	escape_string(ctx);
 
-  ctx.msg = ctx.content;
+	ctx.msg = ctx.content;
 
-  {
-    var elems = dom.getElementsByClassName('febsui-popup-notice');
-    if (elems) {
-      for (var i = 0; i < elems.length; i++) {
-        dom.removeElement(elems[i]);
-      }
-    }
-  }
-  // if ($('.febsui-popup-notice').length > 0) {
-  // 	$('.febsui-popup-notice').remove();
-  // }
+	if ($('.febsui-dialog-notice').length > 0) {
+		$('.febsui-dialog-notice').remove();
+	}
 
-  {
-    var _body = dom.getElementsByTagName('body')[0];
-    var elemPopup = dom.createElement('div');
-    dom.setAttribute(elemPopup, 'id', 'febsui_dlg_cd_notice');
-    dom.setAttribute(elemPopup, 'style', 'display:none');
-    dom.setAttribute(elemPopup, 'role', 'alert');
-    dom.addClass(elemPopup, 'febsui-popup-notice');
+	var html = '<div id="febsui_dlg_cd_notice" class="febsui-dialog-notice" style="display:none" role="alert"><div class="febsui-dialog-notice-container">';
+	if (null != ctx.icon) {
+		html += "<div class='febsui-icon febsui-icon-" + ctx.icon + "'></div>";
+		html += '<div class="febsui-dialog-msg" style="padding-left:30px;">' + ctx.msg + '</div></div></div>';
+	} else {
+		html += '<div class="febsui-dialog-msg">' + ctx.msg + '</div></div></div>';
+	}
+	$("body").append($(html));
 
-    var html = '<div class="febsui-popup-notice-container">';
-    if (null != ctx.icon) {
-      html += "<div class='febsui-icon febsui-icon-" + ctx.icon + "'></div>";
-      html += '<div class="febsui-popup-msg" style="padding-left:30px;">' + ctx.msg + '</div></div>';
-    } else {
-      html += '<div class="febsui-popup-msg">' + ctx.msg + '</div></div>';
-    }
+	if (typeof $("#febsui_dlg_cd_notice").fadeIn !== 'function') {
+		// console.log('febs-ui controls need function fadeIn/fadeOut');
+		$("#febsui_dlg_cd_notice").css("display", "inherit");
+		$("#febsui_dlg_cd_notice").removeClass('febsui-invisible').addClass('febsui-visible');
+	} else {
+		$("#febsui_dlg_cd_notice").fadeIn(200);
+	}
 
-    elemPopup.innerHTML = html;
-    dom.appendChild(_body, elemPopup);
-  }
-  // var html = '<div id="febsui_dlg_cd_notice" class="febsui-popup-notice" style="display:none" role="alert"><div class="febsui-popup-notice-container">'
-  // if (null != ctx.icon) {
-  // 	html += "<div class='febsui-icon febsui-icon-" + ctx.icon + "'></div>";
-  // 	html += '<div class="febsui-popup-msg" style="padding-left:30px;">' + ctx.msg + '</div></div></div>';
-  // }
-  // else{
-  // 	html += '<div class="febsui-popup-msg">' + ctx.msg + '</div></div></div>';
-  // }
-  // $("body").append($(html));
+	var t = 3000;
+	if (null != ctx.time) {
+		t = ctx.time;
+	}
+	if (t > 0) {
+		if (toastHideTimer) {
+			clearTimeout(toastHideTimer);
+		}
 
-  {
-    var elem = dom.getElementById('febsui_dlg_cd_notice');
-    if (elem) {
-      if (typeof elem.fadeIn !== 'function') {
-        console.log('febs-ui controls need function fadeIn/fadeOut');
-        elem.style.display = 'inherit';
-      } else {
-        elem.fadeIn(200);
-      }
-    }
-  }
-  // if (typeof $("#febsui_dlg_cd_notice").fadeIn !== 'function') {
-  //   console.log('febs-ui controls need function fadeIn/fadeOut');
-  //   $("#febsui_dlg_cd_notice").css("display", "inherit");
-  // } else {
-  //   $("#febsui_dlg_cd_notice").fadeIn(200);
-  // }
+		toastHideTimer = setTimeout(function () {
+			if (typeof $("#febsui_dlg_cd_notice").fadeOut !== 'function') {
+				// console.log('febs-ui controls need function fadeIn/fadeOut');
+				// $("#febsui_dlg_cd_notice").css("display", "none");
+				$("#febsui_dlg_cd_notice").removeClass('febsui-visible').addClass('febsui-invisible');
+			} else {
+				$("#febsui_dlg_cd_notice").fadeOut(200);
+			}
 
-  var t = 3000;
-  if (null != ctx.time) {
-    t = ctx.time;
-  }
-  if (t > 0) {
-    if (toastHideTimer) {
-      clearTimeout(toastHideTimer);
-    }
-
-    toastHideTimer = setTimeout(function () {
-      {
-        var elem = dom.getElementById('febsui_dlg_cd_notice');
-        if (elem) {
-          if (typeof elem.fadeOut !== 'function') {
-            console.log('febs-ui controls need function fadeIn/fadeOut');
-            elem.style.display = 'none';
-          } else {
-            elem.fadeOut(200);
-          }
-        }
-      }
-      // if (typeof $("#febsui_dlg_cd_notice").fadeOut !== 'function') {
-      //   console.log('febs-ui controls need function fadeIn/fadeOut');
-      //   $("#febsui_dlg_cd_notice").css("display", "none");
-      // } else {
-      //   $("#febsui_dlg_cd_notice").fadeOut(200);
-      // }
-      toastHideTimer = null;
-      if (null != ctx.callback) {
-        ctx.callback();
-      }
-    }, t);
-  }
+			toastHideTimer = null;
+			if (null != ctx.callback) {
+				ctx.callback();
+			}
+		}, t);
+	}
 }
 
 /**
@@ -1935,104 +1715,50 @@ function showToast(ctx) {
 * ctx.cancelText:
 */
 function showConfirm(ctx) {
-  if (!ctx.okText) ctx.okText = "确认";
-  if (!ctx.cancelText) ctx.cancelText = "取消";
+	if (!ctx.okText) ctx.okText = "确认";
+	if (!ctx.cancelText) ctx.cancelText = "取消";
 
-  escape_string(ctx);
+	escape_string(ctx);
 
-  {
-    var elems = dom.getElementsByClassName('febsui-popup');
-    if (elems) {
-      for (var i = 0; i < elems.length; i++) {
-        dom.removeElement(elems[i]);
-      }
-    }
-  }
-  // if ($('.febsui-popup').length > 0) {
-  // 	$('.febsui-popup').remove();
-  // }
+	if ($('.febsui-dialog').length > 0) {
+		$('.febsui-dialog').remove();
+	}
 
-  {
-    var _body = dom.getElementsByTagName('body')[0];
-    var elemPopup = dom.createElement('div');
-    dom.setAttribute(elemPopup, 'role', 'alert');
-    dom.addClass(elemPopup, 'febsui-popup');
+	$("body").append($('<div class="febsui-dialog" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li><a href="#0" class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li><a href="#0" class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul><a href="#0" class="febsui-dialog-close img-replace">Close</a></div></div>'));
+	setTimeout(function () {
+		$('.febsui-dialog').addClass('febsui-visible');
+	}, 10);
 
-    var html = '<div class="febsui-popup-notice-container">';
-    if (null != ctx.icon) {
-      html += "<div class='febsui-icon febsui-icon-" + ctx.icon + "'></div>";
-      html += '<div class="febsui-popup-msg" style="padding-left:30px;">' + ctx.msg + '</div></div>';
-    } else {
-      html += '<div class="febsui-popup-msg">' + ctx.msg + '</div></div>';
-    }
+	//close popup
+	$('.febsui-dialog').on('click', function (event) {
+		if ($(event.target).hasClass('febsui-dialog-close') /*|| $(event.target).hasClass('febsui-dialog')*/) {
+				event.preventDefault();
+				hide();
+				if (ctx.cancel) ctx.cancel();
+			} else if ($(event.target).hasClass('febsui-dialog-ok')) {
+			event.preventDefault();
+			if (ctx.confirm) ctx.confirm();
+		} else if ($(event.target).hasClass('febsui-dialog-cancel')) {
+			event.preventDefault();
+			hide();
+			if (ctx.cancel) ctx.cancel();
+		}
+	});
 
-    elemPopup.innerHTML = '<div class="febsui-popup-container">' + (ctx.title ? '<div class="febsui-popup-title">' + ctx.title + '</div>' : '') + '<div class="febsui-popup-content">' + ctx.content + '</div><ul class="febsui-popup-buttons"><li><a href="#0" class="febsui-popup-cancel">' + ctx.cancelText + '</a></li><li><a href="#0" class="febsui-popup-ok">' + ctx.okText + '</a></li></ul><a href="#0" class="febsui-popup-close img-replace">Close</a></div>';
-    dom.appendChild(_body, elemPopup);
-  }
-  // $("body").append($('<div class="febsui-popup" role="alert"><div class="febsui-popup-container">' + (ctx.title?('<div class="febsui-popup-title">' + ctx.title + '</div>'):'') + '<div class="febsui-popup-content">' + ctx.content + '</div><ul class="febsui-popup-buttons"><li><a href="#0" class="febsui-popup-cancel">' + ctx.cancelText + '</a></li><li><a href="#0" class="febsui-popup-ok">' + ctx.okText + '</a></li></ul><a href="#0" class="febsui-popup-close img-replace">Close</a></div></div>'));
-  setTimeout(function () {
-    var elems = dom.getElementsByClassName('febsui-popup');
-    if (elems) {
-      for (var i = 0; i < elems.length; i++) {
-        dom.addClass(elems[i], 'febsui-visible');
-      }
-    }
-    // $('.febsui-popup').addClass('febsui-visible');
-  }, 10);
-
-  //close popup
-  {
-    var elems = dom.getElementsByClassName('febsui-popup');
-    if (elems) {
-      for (var i = 0; i < elems.length; i++) {
-        elems[i].addEventListener('click', function (event) {
-          if (dom.hasClass(event.target, 'febsui-popup-close') /*|| $(event.target).is('.febsui-popup')*/) {
-              event.preventDefault();
-              hide();
-              if (ctx.cancel) ctx.cancel();
-            } else if (dom.hasClass(event.target, 'febsui-popup-ok')) {
-            event.preventDefault();
-            if (ctx.confirm) ctx.confirm();
-          } else if (dom.hasClass(event.target, 'febsui-popup-cancel')) {
-            event.preventDefault();
-            hide();
-            if (ctx.cancel) ctx.cancel();
-          }
-        });
-      }
-    }
-  }
-  // $('.febsui-popup').on('click', function (event) {
-  // 	if ($(event.target).is('.febsui-popup-close') /*|| $(event.target).is('.febsui-popup')*/) {
-  // 		event.preventDefault();
-  // 		hide();
-  // 		if (ctx.cancel) ctx.cancel();
-  // 	}
-  // 	else if ($(event.target).is('.febsui-popup-ok')) {
-  // 		event.preventDefault();
-  // 		if (ctx.confirm) ctx.confirm();
-  // 	}
-  // 	else if ($(event.target).is('.febsui-popup-cancel')) {
-  // 		event.preventDefault();
-  // 		hide();
-  // 		if (ctx.cancel) ctx.cancel();
-  // 	}
-  // });
-
-  //close popup when clicking the esc keyboard button
-  document.addEventListener('keyup', function (event) {
-    if (event.which == '27') {
-      hide();
-      if (ctx.cancel) ctx.cancel();
-      document.removeEventListener('keyup', this);
-    }
-  });
-  // $(document).keyup(function (event) {
-  // 	if (event.which == '27') {
-  // 		hide();
-  // 		if (ctx.cancel) ctx.cancel();
-  // 	}
-  // });
+	//close popup when clicking the esc keyboard button
+	// (document).addEventListener('keyup', function (event) {
+	// 	if (event.which == '27') {
+	//     hide();
+	//     if (ctx.cancel) ctx.cancel();
+	//     (document).removeEventListener('keyup', this);
+	// 	}
+	// });
+	$(document).one('keyup', function (event) {
+		if (event.which == '27') {
+			hide();
+			if (ctx.cancel) ctx.cancel();
+		}
+	});
 }
 
 /**
@@ -2045,126 +1771,71 @@ function showConfirm(ctx) {
 * ctx.cancelText:
 */
 function showConfirmEdit(ctx) {
-  if (!ctx.okText) ctx.okText = "确认";
-  if (!ctx.cancelText) ctx.cancelText = "取消";
+	if (!ctx.okText) ctx.okText = "确认";
+	if (!ctx.cancelText) ctx.cancelText = "取消";
 
-  // 转义.
-  escape_string(ctx);
+	// 转义.
+	escape_string(ctx);
 
-  {
-    var elems = dom.getElementsByClassName('febsui-popup');
-    if (elems) {
-      for (var i = 0; i < elems.length; i++) {
-        dom.removeElement(elems[i]);
-      }
-    }
-  }
-  // if ($('.febsui-popup').length > 0) {
-  // 	$('.febsui-popup').remove();
-  // }
+	if ($('.febsui-dialog').length > 0) {
+		$('.febsui-dialog').remove();
+	}
 
-  {
-    var _body = dom.getElementsByTagName('body')[0];
-    var elemPopup = dom.createElement('div');
-    dom.setAttribute(elemPopup, 'role', 'alert');
-    dom.addClass(elemPopup, 'febsui-popup');
+	var elems = '<div class="febsui-dialog" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + ctx.content + '</div>' + '<div class="febsui-dialog-edit"><input class="febsui-dialog-input-text" type="text" value="' + (ctx.editText ? ctx.editText : '') + '">' + '</div>' + '<ul class="febsui-dialog-buttons"><li><a href="#0" class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li><a href="#0" class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul><a href="#0" class="febsui-dialog-close img-replace">Close</a></div></div>';
 
-    var elems = '<div class="febsui-popup-container">' + (ctx.title ? '<div class="febsui-popup-title">' + ctx.title + '</div>' : '') + '<div class="febsui-popup-content">' + ctx.content + '</div>' + '<div class="febsui-popup-edit"><input class="febsui-popup-input-text" type="text" value="' + (ctx.editText ? ctx.editText : '') + '">' + '</div>' + '<ul class="febsui-popup-buttons"><li><a href="#0" class="febsui-popup-cancel">' + ctx.cancelText + '</a></li><li><a href="#0" class="febsui-popup-ok">' + ctx.okText + '</a></li></ul><a href="#0" class="febsui-popup-close img-replace">Close</a></div>';
+	$("body").append($(elems));
 
-    elemPopup.innerHTML = elems;
-    dom.appendChild(_body, elemPopup);
-  }
-  // var elems = '<div class="febsui-popup" role="alert"><div class="febsui-popup-container">' 
-  // + (ctx.title?('<div class="febsui-popup-title">' + ctx.title + '</div>'):'') 
-  // + '<div class="febsui-popup-content">' + ctx.content + '</div>' 
-  // + '<div class="febsui-popup-edit"><input class="febsui-popup-input-text" type="text" value="' + (ctx.editText?ctx.editText:'') + '">' + '</div>' 
-  // + '<ul class="febsui-popup-buttons"><li><a href="#0" class="febsui-popup-cancel">' + ctx.cancelText + '</a></li><li><a href="#0" class="febsui-popup-ok">' + ctx.okText + '</a></li></ul><a href="#0" class="febsui-popup-close img-replace">Close</a></div></div>';
+	setTimeout(function () {
+		$('.febsui-dialog').addClass('febsui-visible');
+	}, 10);
 
-  // $("body").append($(elems));
+	//close popup
+	$('.febsui-dialog').on('click', function (event) {
+		if ($(event.target).hasClass('febsui-dialog-close') /*|| $(event.target).hasClass('febsui-dialog')*/) {
+				event.preventDefault();
+				hide();
+				if (ctx.cancel) ctx.cancel();
+			} else if ($(event.target).hasClass('febsui-dialog-ok')) {
+			event.preventDefault();
+			if (ctx.confirm) ctx.confirm($('.febsui-dialog-container .febsui-dialog-edit .febsui-dialog-input-text').val());
+		} else if ($(event.target).hasClass('febsui-dialog-cancel')) {
+			event.preventDefault();
+			hide();
+			if (ctx.cancel) ctx.cancel();
+		}
+	});
 
-  setTimeout(function () {
-    var elems = dom.getElementsByClassName('febsui-popup');
-    if (elems) {
-      for (var i = 0; i < elems.length; i++) {
-        dom.addClass(elems[i], 'febsui-visible');
-      }
-    }
-    // $('.febsui-popup').addClass('febsui-visible');
-  }, 10);
-
-  //close popup
-  {
-    var elems = dom.getElementsByClassName('febsui-popup');
-    if (elems) {
-      for (var i = 0; i < elems.length; i++) {
-        elems[i].addEventListener('click', function (event) {
-          if (dom.hasClass(event.target, 'febsui-popup-close') /*|| $(event.target).is('.febsui-popup')*/) {
-              event.preventDefault();
-              hide();
-              if (ctx.cancel) ctx.cancel();
-            } else if (dom.hasClass(event.target, 'febsui-popup-ok')) {
-            event.preventDefault();
-            var ee = dom.getElementsByClassName('febsui-popup-input-text')[0];
-
-            if (ctx.confirm) ctx.confirm(ee ? ee.value : '');
-          } else if (dom.hasClass(event.target, 'febsui-popup-cancel')) {
-            event.preventDefault();
-            hide();
-            if (ctx.cancel) ctx.cancel();
-          }
-        });
-      }
-    }
-  }
-  // $('.febsui-popup').on('click', function (event) {
-  // 	if ($(event.target).is('.febsui-popup-close') /*|| $(event.target).is('.febsui-popup')*/) {
-  // 		event.preventDefault();
-  // 		hide();
-  // 		if (ctx.cancel) ctx.cancel();
-  // 	}
-  // 	else if ($(event.target).is('.febsui-popup-ok')) {
-  // 		event.preventDefault();
-  // 		if (ctx.confirm) ctx.confirm( $('.febsui-popup-container  .febsui-popup-edit .febsui-popup-input-text').val() );
-  // 	}
-  // 	else if ($(event.target).is('.febsui-popup-cancel')) {
-  // 		event.preventDefault();
-  // 		hide();
-  // 		if (ctx.cancel) ctx.cancel();
-  // 	}
-  // });
-
-  //close popup when clicking the esc keyboard button
-  document.addEventListener('keyup', function (event) {
-    if (event.which == '27') {
-      hide();
-      if (ctx.cancel) ctx.cancel();
-      document.removeEventListener('keyup', this);
-    }
-  });
-  // $(document).keyup(function (event) {
-  // 	if (event.which == '27') {
-  // 		hide();
-  // 		if (ctx.cancel) ctx.cancel();
-  // 	}
-  // });
+	//close popup when clicking the esc keyboard button
+	// (document).addEventListener('keyup', function (event) {
+	// 	if (event.which == '27') {
+	//     hide();
+	//     if (ctx.cancel) ctx.cancel();
+	//     (document).removeEventListener('keyup', this);
+	// 	}
+	// });
+	$(document).one('keyup', function (event) {
+		if (event.which == '27') {
+			hide();
+			if (ctx.cancel) ctx.cancel();
+		}
+	});
 }
 
 /***/ }),
-/* 74 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {
 
-var _typeof = __webpack_require__(1)['default'];
+var _typeof = __webpack_require__(2)["default"];
 
 /**
  * Copyright (c) 2017 Copyright brainpoint All Rights Reserved.
  * Author: lipengxiang
  * Desc:
  */
-var escape = __webpack_require__(39);
-var dom = __webpack_require__(38);
+var escape = __webpack_require__(38);
 
 function escape_string(str) {
   // 转义.
@@ -2178,7 +1849,7 @@ function escape_string(str) {
 
   "use strict";
 
-  if (( false ? 'undefined' : _typeof(module)) === "object" && _typeof(module.exports) === "object") {
+  if (( false ? "undefined" : _typeof(module)) === "object" && _typeof(module.exports) === "object") {
 
     // For CommonJS and CommonJS-like environments where a proper `window`
     // For environments that do not have a `window` with a `document`
@@ -2214,9 +1885,12 @@ function escape_string(str) {
   controls.loading_isVisiable = function () {
     if (control_loading_timer) return true;
 
-    var e1 = dom.getElementById(loading_tag_name);
-    var ee = e1 ? e1.innerHTML : null;
+    var ee = $('#' + loading_tag_name).html();
     return ee && ee.length > 0;
+
+    // var e1 = dom.getElementById(loading_tag_name);
+    // var ee = e1 ? e1.innerHTML : null;
+    // return ee && ee.length>0;
   };
 
   /**
@@ -2229,18 +1903,10 @@ function escape_string(str) {
 
     text = escape_string(text);
 
-    {
-      var _body = dom.getElementsByTagName('body')[0];
-      if (!dom.getElementById(loading_tag_name)) {
-        var elem = dom.createElement('span');
-        dom.setAttribute(elem, 'id', loading_tag_name);
-        dom.prependChild(_body, elem);
-      }
+    var e = $('body').children('#' + loading_tag_name);
+    if (!e || e.length == 0) {
+      $('body').prepend('<span id="' + loading_tag_name + '"></span>');
     }
-    // var e = $('body').children('#' + loading_tag_name);
-    // if (!e || e.length == 0) {
-    //   $('body').prepend(('<span id="' + loading_tag_name + '"></span>'));
-    // }
 
     if (control_loading_timer) window.clearInterval(control_loading_timer);
     if (timeout) {
@@ -2248,13 +1914,7 @@ function escape_string(str) {
         loading_show(text);
       }, timeout);
     } else {
-      {
-        var elem = dom.getElementById(loading_tag_name);
-        if (elem) {
-          elem.innerHTML = '<div class="febsui-loading-c"><div class="febsui-loading"><div class="febsui-loading-spin"></div><p style="margin-left:auto;margin-right:auto;text-align:center;max-width:200px;">' + (text ? text : '') + '</p></div></div>';
-        }
-      }
-      // $('#' + loading_tag_name).html('<div class="febsui-loading-c"><div class="febsui-loading"><div class="febsui-loading-spin"></div><p style="margin-left:auto;margin-right:auto;text-align:center;max-width:200px;">' + (text ? text : '') + '</p></div></div>');
+      $('#' + loading_tag_name).html('<div class="febsui-loading-c"><div class="febsui-loading"><div class="febsui-loading-spin"></div><p style="margin-left:auto;margin-right:auto;text-align:center;max-width:200px;">' + (text ? text : '') + '</p></div></div>');
     }
   }
   controls.loading_show = loading_show;
@@ -2268,18 +1928,10 @@ function escape_string(str) {
   */
   controls.loading_show_text = function (textArray, changeTextCB, hideCB) {
 
-    {
-      var _body = dom.getElementsByTagName('body')[0];
-      if (!dom.getElementById(loading_tag_name)) {
-        var elem = dom.createElement('span');
-        dom.setAttribute(elem, 'id', loading_tag_name);
-        dom.prependChild(_body, elem);
-      }
+    var e = $('body').children('#' + loading_tag_name);
+    if (!e || e.length == 0) {
+      $('body').prepend('<span id="' + loading_tag_name + '"></span>');
     }
-    // var e = $('body').children('#' + loading_tag_name);
-    // if (!e || e.length == 0) {
-    //   $('body').prepend(('<span id="' + loading_tag_name + '"></span>'));
-    // }
 
     if (control_loading_text_elemFunc) {
       if (control_loading_text_hideFunc) control_loading_text_hideFunc();
@@ -2310,18 +1962,10 @@ function escape_string(str) {
   * @return: 
   */
   controls.loading_hide = function () {
-    {
-      var _body = dom.getElementsByTagName('body')[0];
-      if (!dom.getElementById(loading_tag_name)) {
-        var elem = dom.createElement('span');
-        dom.setAttribute(elem, 'id', loading_tag_name);
-        dom.prependChild(_body, elem);
-      }
+    var e = $('body').children('#' + loading_tag_name);
+    if (!e || e.length == 0) {
+      $('body').prepend('<span id="' + loading_tag_name + '"></span>');
     }
-    // var e = $('body').children('#' + loading_tag_name);
-    // if (!e || e.length == 0) {
-    //   $('body').prepend(('<span id="' + loading_tag_name + '"></span>'));
-    // }
 
     if (control_loading_timer) {
       window.clearInterval(control_loading_timer);
@@ -2339,27 +1983,21 @@ function escape_string(str) {
       }
     }
 
-    {
-      var elem = dom.getElementById(loading_tag_name);
-      if (elem) {
-        elem.innerHTML = '';
-      }
-    }
-    // $('#' + loading_tag_name).html('');
+    $('#' + loading_tag_name).html('');
   };
 
   return controls;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
-/* 75 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {
 
-var _typeof = __webpack_require__(1)["default"];
+var _typeof = __webpack_require__(2)["default"];
 
 /**
  * Copyright (c) 2017 Copyright brainpoint All Rights Reserved.
@@ -2409,6 +2047,8 @@ var crypt = __webpack_require__(79);
   */
   function page_init(elem, curPage, pageCount, totalCount, pageCallback) {
 
+    elem = $(elem);
+
     var foo = 'page' + crypt.uuid();
     window['febscontrolspage_map'][foo] = pageCallback;
     foo = 'javascript:window[\'febscontrolspage_map\'][\'' + foo + '\']';
@@ -2423,8 +2063,9 @@ var crypt = __webpack_require__(79);
 
     var pageNext = '';
     if (pageCount > curPage) {
+      var pages = febs.utils.browserIsPhone() ? 2 : 5;
       var i = 1 + curPage;
-      for (; i < 5 + curPage && i <= pageCount; i++) {
+      for (; i < pages + curPage && i <= pageCount; i++) {
         pageNext += '<li class="febsui-paginItem"><a href="' + foo + '(' + i + ')">' + i + '</a></li>';
       }
       if (i < pageCount) {
@@ -2465,7 +2106,200 @@ var crypt = __webpack_require__(79);
 
   return controls;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.switch_init = switch_init;
+
+$.fn.isSwitchOn = function () {
+  return !this.hasClass("febsui-switch-off");
+};
+
+$.fn["switch"] = function (cb) {
+  if (cb) {
+    if (this.length > 1) {
+      for (var i = 0; i < this.length; i++) {
+        var elem = this[i];
+
+        if (elem._swtichEvents) {
+          elem._swtichEvents.push(cb);
+        } // if.
+      } // for.
+    } else {
+      var elem = this._elem;
+      if (elem._swtichEvents) {
+        elem._swtichEvents.push(cb);
+      } // if.
+    }
+  }
+  // trigger.
+  else {
+      if (this.length > 1) {
+        for (var i = 0; i < this.length; i++) {
+          var elem = this[i];
+          var ee = elem._swtichEvents;
+          if (ee) {
+            for (var i = 0; i < ee.length; i++) {
+              ee[i].bind(elem)();
+            }
+          }
+        } // for.
+      } else {
+        var elem = this._elem;
+        var ee = elem._swtichEvents;
+        if (ee) {
+          for (var i = 0; i < ee.length; i++) {
+            ee[i].bind(elem)();
+          }
+        }
+      }
+    } // if..else.
+};
+
+$.fn.isSwitchDisable = function () {
+  return this.hasClass("febsui-switch-disabled");
+};
+
+$.fn.switchDisable = function (isDisable) {
+  if (this.length > 1) {
+    for (var i = 0; i < this.length; i++) {
+      var elem = this[i];
+
+      if (elem._swtichEvents) {
+        if (isDisable) elem.addClass("febsui-switch-disabled");else elem.removeClass("febsui-switch-disabled");
+      } // if.
+    } // for.
+  } else {
+    var elem = this;
+    if (elem._swtichEvents) {
+      if (isDisable) elem.addClass("febsui-switch-disabled");else elem.removeClass("febsui-switch-disabled");
+    } // if.
+  }
+};
+
+$.fn.switchOn = function (isOn, trigger) {
+  if (this.length > 1) {
+    for (var i = 0; i < this.length; i++) {
+      var elem = this[i];
+
+      if (elem._swtichEvents) {
+        if (isOn) {
+          if (elem.hasClass("febsui-switch-off")) {
+            elem.removeClass("febsui-switch-off").addClass("febsui-switch-on");
+            if (trigger) {
+              elem["switch"]();
+            }
+          }
+        } else {
+          if (!elem.hasClass("febsui-switch-off")) {
+            elem.removeClass("febsui-switch-on").addClass("febsui-switch-off");
+            if (trigger) {
+              elem["switch"]();
+            }
+          }
+        }
+      } // if.
+    } // for.
+  } else {
+    var elem = this;
+    if (elem._swtichEvents) {
+      if (isOn) {
+        if (elem.hasClass("febsui-switch-off")) {
+          elem.removeClass("febsui-switch-off").addClass("febsui-switch-on");
+          if (trigger) {
+            elem["switch"]();
+          }
+        }
+      } else {
+        if (!elem.hasClass("febsui-switch-off")) {
+          elem.removeClass("febsui-switch-on").addClass("febsui-switch-off");
+          if (trigger) {
+            elem["switch"]();
+          }
+        }
+      }
+    } // if.
+  }
+};
+
+/**
+* @desc: 初始化switch控件.
+*        对页面上 class 为 febsui-switch-on 已经 febsui-switch-off 的所有元素初始化为switch控件.
+*/
+function switch_init() {
+  var elems = $('switch');
+  // elems.append("<span class='febsui-switch-slider'></span>");
+  for (var i = 0; i < elems.length; i++) {
+    var dom = $(elems[i]);
+    if (!dom.children().hasClass('febsui-switch-slider')) {
+      dom.append("<span class='febsui-switch-slider'></span>");
+      dom.click(function () {
+        var ee = $(this);
+        if (ee.hasClass("febsui-switch-disabled")) {
+          return;
+        }
+        if (!ee.hasClass("febsui-switch-off")) {
+          ee.removeClass("febsui-switch-on").addClass("febsui-switch-off");
+        } else {
+          ee.removeClass("febsui-switch-off").addClass("febsui-switch-on");
+        }
+
+        ee["switch"]();
+      });
+
+      elems[i]._swtichEvents = elems[i]._swtichEvents || [];
+
+      // elems[i]._switchOn = elems[i].on;
+      // elems[i].on = function(event, cb) {
+      //   if (event == 'change') {
+      //     $(this)._swtichEvents.push(cb);
+      //   } else {
+      //     $(this)._switchOn(event, cb);
+      //   }
+      // }.bind(elems[i]);
+      // elems[i]._switchOff = elems[i].off;
+      // elems[i].off = function(event, cb) {
+      //   if (event == 'change') {
+      //     var ee = $(this)._swtichEvents;
+      //     if (!cb) {
+      //       $(this)._swtichEvents = [];
+      //     } else {
+      //       for (var i = 0; i < ee.length; i++) {
+      //         if (ee[i] === cb) {
+      //           ee.splice(i, 1);
+      //           break;
+      //         }
+      //       }
+      //     }
+      //   } else {
+      //     $(this)._switchOff(event, cb);
+      //   }
+      // }.bind(elems[i]);
+
+      // elems[i]._switchOn('change', function(e){
+      //   var ee = $(this)._swtichEvents;
+      //   for (var i = 0; o < ee.length; i++) {
+      //     ee[i](e);
+      //   }
+      // });
+
+      // elems[i]._switchTrigger = elems[i].trigger;
+      // elems[i].trigger = function(event) {
+      //   if (event == 'change') {
+      //     $(this).switch(!$(this).isSwitchOn(), true);
+      //   } else {
+      //     $(this)._switchTrigger(event);
+      //   }
+      // }.bind(elems[i]);
+    }
+  } // for.
+}
 
 /***/ }),
 /* 76 */
@@ -2474,9 +2308,9 @@ var crypt = __webpack_require__(79);
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {
 
-var _JSON$stringify = __webpack_require__(41)["default"];
+var _JSON$stringify = __webpack_require__(40)["default"];
 
-var _typeof = __webpack_require__(1)["default"];
+var _typeof = __webpack_require__(2)["default"];
 
 /**
  * Copyright (c) 2017 Copyright brainpoint All Rights Reserved.
@@ -2644,7 +2478,7 @@ var _typeof = __webpack_require__(1)["default"];
 
   return { uploadBase64: uploadBase64 };
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
 /* 77 */
@@ -2653,7 +2487,7 @@ var _typeof = __webpack_require__(1)["default"];
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {
 
-var _typeof = __webpack_require__(1)["default"];
+var _typeof = __webpack_require__(2)["default"];
 
 /**
  * Copyright (c) 2017 Copyright brainpoint All Rights Reserved.
@@ -2791,7 +2625,7 @@ var _typeof = __webpack_require__(1)["default"];
 
   return { upload: upload };
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
 /* 78 */
@@ -2800,7 +2634,7 @@ var _typeof = __webpack_require__(1)["default"];
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {
 
-var _typeof = __webpack_require__(1)["default"];
+var _typeof = __webpack_require__(2)["default"];
 
 // require('es5-shim');
 // require('es5-shim/es5-sham');
@@ -2833,12 +2667,12 @@ var _typeof = __webpack_require__(1)["default"];
 	// Pass this if window is not defined yet
 })(typeof window !== "undefined" ? window : undefined, function (window, noGlobal) {
 
-	var febsui = __webpack_require__(40);
+	var febsui = __webpack_require__(39);
 	window['febsui'] = febsui;
 
 	return febsui;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
 /* 79 */

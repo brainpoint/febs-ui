@@ -1,6 +1,10 @@
 febs-ui 库是一些常用的ui的合集;
 febs-ui 库依赖 febs-browser 库
 
+- 尽量使用js方法的方式来构建ui.
+- 可以通过修改 `febsui.css` 来个性化ui样式.
+- 默认样式为iOS样式
+
 # Install
 
 Use npm to install:
@@ -52,6 +56,7 @@ febsui.dialog_showToast({content:'即将开始', icon:'ok'});
   - [confirm dialog](#dialog)
   - [edit dialog](#dialog)
   - [paging](#page)
+  - [switch](#switch)
   - [upload](#upload)
 
 ### loading
@@ -175,6 +180,72 @@ febsui.dialog_showConfirmEdit( ctx );
 febsui.page_init(elem, curPage, pageCount, totalCount, pageCallback)
 
 ```
+
+### switch
+![](doc/ui/control-switch.png)
+
+示例
+
+```html
+<html>
+
+<!-- 默认是on状态. -->
+<switch></switch> 
+<switch class="febsui-switch-on"></switch> 
+
+<!-- off状态. -->
+<switch class="febsui-switch-off"></switch> 
+
+<!-- disabled状态. -->
+<switch class="febsui-switch-disabled"></switch> 
+
+</html>
+```
+
+```js
+/**
+ * @desc 初始化页面上所有switch控件
+ *       默认在页面加载完成时会调用一次; 加入新的switch控件时需调用一次.
+ */
+febsui.switch_init();
+```
+```js
+/**
+ * @desc 监听变化事件
+ */
+$('switch').switch(function(){
+  // 
+});
+
+/**
+ * @desc 手动触发事件
+ */
+$('switch').switch();
+
+/**
+ * @desc 改变状态
+ * @param isOn: 设置控件的状态.
+ * @param trigger: 可选, 是否触发事件监听.
+ */
+$('switch').switchOn(isOn, trigger);
+
+/**
+ * @desc 返回当前控件的状态.
+ */
+$('switch').isSwitchOn();
+
+/**
+ * @desc 设置为disable.
+ */
+$('switch').switchDisable(isDisable);
+
+/**
+ * @desc 返回当前控件是否为disable状态.
+ */
+$('switch').isSwitchDisable();
+```
+
+
 
 ### upload
 

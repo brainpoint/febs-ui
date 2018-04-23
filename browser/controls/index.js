@@ -1,3 +1,8 @@
+// import { $ } from 'febs-browser';
+
+if (!$) {
+  throw new Error('must import febs first');
+}
 
 var loading = require('./loading');
 exports.loading_isVisiable = loading.loading_isVisiable;
@@ -15,4 +20,10 @@ exports.dialog_showAlert = dialog.showAlert;
 exports.dialog_showToast = dialog.showToast;
 exports.dialog_showConfirm = dialog.showConfirm;
 exports.dialog_showConfirmEdit = dialog.showConfirmEdit;
+
+var switcha = require('./switch');
+exports.switch_init = switcha.switch_init;
+$(document).ready(function(){
+  switcha.switch_init();
+});
 
