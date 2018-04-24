@@ -36,11 +36,6 @@ if ( !window.febs ) {
   throw new Error( "febs-ui requires febs" );
 }
 
-if (!window['$']) {
-  throw new Error( "febs-ui upload requires jquery or zepto" );
-}
-
-
 var crypt = window.febs.crypt;
 
 /**

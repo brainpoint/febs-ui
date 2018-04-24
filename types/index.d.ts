@@ -49,10 +49,11 @@ export function dialog_showAlert( ctx: { title?:string, content?:string, confirm
   * ctx.content:  提示内容.
   * ctx.time:	持续的时间 ms.
   * ctx.icon: 前置图标.
+  * ctx.center: 默认为false; 是否使用居中的显示方式.
   * ctx.callback: function(){}	// 对话框消失后的回调.
   * }
   */
-  export function dialog_showToast( ctx: { content?:string, time?:number, icon?:'ok'|'error'|'warn', callback?:()=>void } ): void;
+  export function dialog_showToast( ctx: { content?:string, time?:number, icon?:'ok'|'error'|'warn', center?:boolean, callback?:()=>void } ): void;
 
 /**
  * @desc: 显示确认对话框.

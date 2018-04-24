@@ -97,6 +97,7 @@ function showAlert(ctx) {
  * ctx.time
  * ctx.icon  // "ok" "warn" "error" 默认null, 没有图标
  * ctx.callback  function(){}	// 对话框消失后的回调.
+ * ctx.center: 默认为false; 是否使用居中的显示方式.
  */
 function showToast(ctx) {
   if (typeof ctx === 'string') {
@@ -105,28 +106,35 @@ function showToast(ctx) {
 
   escape_string(ctx);
 
+  ctx.center = !!ctx.center;
+
   ctx.msg = ctx.content;
 
-	if ($('.febsui-dialog-notice').length > 0) {
-		$('.febsui-dialog-notice').remove();
+	if ($('.febsui-toast').length > 0) {
+		$('.febsui-toast').remove();
 	}
 
-	var html = '<div id="febsui_dlg_cd_notice" class="febsui-dialog-notice" style="display:none" role="alert"><div class="febsui-dialog-notice-container">'
+	var html = '<div class="febsui-toast' + (ctx.center?' febsui-toast-center': '') + '" style="display:none" role="alert"><div class="febsui-toast-container">'
 	if (null != ctx.icon) {
-		html += "<div class='febsui-icon febsui-icon-" + ctx.icon + "'></div>";
-		html += '<div class="febsui-dialog-msg" style="padding-left:30px;">' + ctx.msg + '</div></div></div>';
-	}
+    html += "<div class='febsui-icon febsui-icon-" + ctx.icon + "'></div>";
+
+    if (ctx.center) {
+      html += '<div class="febsui-dialog-msg">' + ctx.msg + '</div></div></div>';
+    } else {
+      html += '<div class="febsui-dialog-msg" style="padding-left:30px;">' + ctx.msg + '</div></div></div>';
+    }
+  }
 	else{
 		html += '<div class="febsui-dialog-msg">' + ctx.msg + '</div></div></div>';
 	}
   $("body").append($(html));
 
-  if (typeof $("#febsui_dlg_cd_notice").fadeIn !== 'function') {
+  if (typeof $(".febsui-toast").fadeIn !== 'function') {
     // console.log('febs-ui controls need function fadeIn/fadeOut');
-    $("#febsui_dlg_cd_notice").css("display", "inherit");
-    $("#febsui_dlg_cd_notice").removeClass('febsui-invisible').addClass('febsui-visible');
+    $(".febsui-toast").css("display", "inherit");
+    $(".febsui-toast").removeClass('febsui-invisible').addClass('febsui-visible');
   } else {
-    $("#febsui_dlg_cd_notice").fadeIn(200);
+    $(".febsui-toast").fadeIn(200);
   }
 	
 	var t = 3000;
@@ -139,12 +147,12 @@ function showToast(ctx) {
     }
 
 		toastHideTimer = setTimeout(function () {
-      if (typeof $("#febsui_dlg_cd_notice").fadeOut !== 'function') {
+      if (typeof $(".febsui-toast").fadeOut !== 'function') {
         // console.log('febs-ui controls need function fadeIn/fadeOut');
-        // $("#febsui_dlg_cd_notice").css("display", "none");
-        $("#febsui_dlg_cd_notice").removeClass('febsui-visible').addClass('febsui-invisible');
+        // $("#febsui-dialog-cd-toast").css("display", "none");
+        $(".febsui-toast").removeClass('febsui-visible').addClass('febsui-invisible');
       } else {
-        $("#febsui_dlg_cd_notice").fadeOut(200);
+        $(".febsui-toast").fadeOut(200);
       }
 
       toastHideTimer = null;

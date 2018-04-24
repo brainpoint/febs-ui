@@ -1,7 +1,7 @@
 {
   "description": "Some UI in common use",
   "dependencies": {
-    "febs-browser": "^0.7.14"
+    "febs-browser": "^0.7.19"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -29,6 +29,18 @@
     "uglify-js": "^3.2.1",
     "webpack": "^2.6.1"
   },
+  "keywords": [
+    "jquery",
+    "zepto",
+    "switch",
+    "dialog",
+    "toast",
+    "alert",
+    "loading",
+    "upload",
+    "page",
+    "ui"
+  ],
   "directories": {},
   "homepage": "https://github.com/brainpoint/febs-ui#readme",
   "repository": {

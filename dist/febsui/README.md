@@ -1,9 +1,17 @@
 febs-ui 库是一些常用的ui的合集;
 febs-ui 库依赖 febs-browser 库
 
-- 尽量使用js方法的方式来构建ui.
+设计上
+
 - 可以通过修改 `febsui.css` 来个性化ui样式.
+- 尽量使用js方法的方式来构建ui.
 - 默认样式为iOS样式
+
+febs-ui 引入了febs-browser(实现了jquery的部分接口), 估无需额外引入jquery;
+
+如果需要jquery, 请在febs-ui,febs之前引用
+
+可以查看 [demo](./dist/test.html)
 
 # Install
 
@@ -23,10 +31,6 @@ npm install febs-ui --save
 
 ```html
 <link rel="stylesheet" type="text/css" href="path/febsui/febsui.css" />
-<!-- multipart/form-data方式上传 方法需要使用此库; 如不使用此方式上传则不需要jquery库. -->
-<script charset='UTF-8' type="text/javascript" src="path/jquery.js"></script> <!-- 使用jquery 或 zepto -->
-<script charset='UTF-8' type="text/javascript" src="path/jquery.form.min.js"></script> 
-
 <script charset='UTF-8' type="text/javascript" src="path/febs/febs.min.js"></script>
 <script charset='UTF-8' type="text/javascript" src="path/febsui/febsui.min.js"></script>
 
@@ -52,6 +56,7 @@ febsui.dialog_showToast({content:'即将开始', icon:'ok'});
 目前实现了如下控件.
 
   - [loading](#loading)
+  - [toast](#dialog)
   - [alert dialog](#dialog)
   - [confirm dialog](#dialog)
   - [edit dialog](#dialog)
@@ -133,6 +138,7 @@ febsui.dialog_showAlert( ctx );
   * ctx.time:	持续的时间 ms.
   * ctx.icon: 前置图标.
   * ctx.callback: function(){}	// 对话框消失后的回调.
+  * ctx.center: 默认为false; 是否使用居中的显示方式.
   * }
   */
 febsui.dialog_showToast( ctx );
@@ -269,7 +275,7 @@ $('switch').isSwitchDisable();
  */
 
  客户端调用如下接口上传文件.
- /** 需要 jquery,jquery.form 库支持.
+ /** 
   * 并且 <input type="file" name="file"... 中, 必须存在name属性.
   * 使用post方式上传文件.
   * @param cfg:  object, 其中
@@ -314,9 +320,6 @@ exports.upload = async function(ctx, next)
 ```
 前台:
 ```js
-<script type="text/javascript" charset="utf-8" src="/jquery/jquery.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="/jquery/jquery.form.min.js"></script> <!--  -->
-
 <script type="text/javascript" charset="utf-8" src="/febs/febs.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="/febsui/febsui.min.js"></script>
 

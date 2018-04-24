@@ -35,6 +35,11 @@
 var febsui = require('./controls');
 window['febsui'] = febsui;
 
+/**
+ * jquery plugins.
+ */
+require('./plugins/jquery-form/jquery.form')(window);
+
 return febsui;
 }
 );

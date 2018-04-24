@@ -1,5 +1,7 @@
 // import { $ } from 'febs-browser';
 
+// require('febs-browser');
+
 if (!$) {
   throw new Error('must import febs first');
 }

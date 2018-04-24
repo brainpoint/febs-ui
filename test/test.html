@@ -1,15 +1,10 @@
 <html>
   <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <link rel="stylesheet" type="text/css" href="../dist/febsui/febsui.css" />
     <script charset='UTF-8' type="text/javascript" src="../dist/febs/febs.min.js"></script>
     <script charset='UTF-8' type="text/javascript" src="../dist/febsui/febsui.js"></script>
-    <style>
-      button {
-        display: block;
-      }
-    </style>
   </head>
   <body>
       <br>
@@ -17,19 +12,52 @@
       <br>
     <h2>page:</h2>
     <div id='page'></div>
+
+    <!-- page -->
     <script type="text/javascript">
 
       // page.
       febsui.page_init($('#page'), 12, 20, 25, function(page){  
         febsui.dialog_showToast({content:'page ' + page, icon:'ok'});
       });
-  
+    </script>
+
+    <!-- toast -->
+    <script type="text/javascript">
       // toast.
       function showToast()      { febsui.dialog_showToast({content:'这是一个toast提示'}); }
       function showToastOk()    { febsui.dialog_showToast({content:'这是一个toast提示', icon:'ok'}); }
       function showToastError() { febsui.dialog_showToast({content:'这是一个toast提示', icon:'error'}); }
       function showToastWarn()  { febsui.dialog_showToast({content:'这是一个toast提示', icon:'warn'}); }
       
+      var toastStyle = 0;
+      function showToastCenter(){ 
+        var icon;
+        var msg;
+        if (toastStyle == 0) {
+          icon = 'ok';
+          msg = '完成';
+        } else if (toastStyle == 1) {
+          icon = 'error';
+          msg = '失败';
+        } else if (toastStyle == 2) {
+          icon = 'warn';
+          msg = '操作错误';
+        } else if (toastStyle == 3) {
+          icon = 'ok';
+          msg = '这是一个很长的消息: jdskfhsg sgwegn wgegjw weg wgwg gwegw gwgw';
+        } else {
+          icon = null;
+          msg = '这是一个很长的消息: jdskfhsg sgwegn wgegjw weg wgwg gwegw gwgw';
+        }
+        toastStyle = (++toastStyle)%5;
+        febsui.dialog_showToast({content:msg, icon:icon, center:true});
+      }
+      
+    </script>
+
+    <!-- loading -->
+    <script type="text/javascript">
       // laoding.
       function showLoading() { 
         febsui.loading_show('3秒后关闭');
@@ -46,8 +74,10 @@
           febsui.loading_hide();
         })
       }
-            
+    </script>
 
+    <!-- dialog -->
+    <script type="text/javascript">
       // dialog.
       function showDialogAlert() {
         febsui.dialog_showAlert({
@@ -89,7 +119,10 @@
         });
       }
 
+    </script>
 
+    <!-- switch -->
+    <script type="text/javascript">
       $(function(){
         $('switch').switch(function(){
           var isSwitch = $(this).isSwitchOn();
@@ -110,8 +143,15 @@
           switchs[i].switchDisable(!$(switchs[i]).isSwitchDisable());
         }
       }
-
   </script>
+
+  <h2>button:</h2>
+  <div>
+    <button class="btn-primary">primary</button>
+    <button class="btn-secondary">secondary</button>
+    <button class="btn-warning">warning</button>
+    <button class="btn-danger">danger</button>
+  </div>
 
   <h2>Loading:</h2>
   <button onclick="showLoading()">loading</button>
@@ -122,6 +162,7 @@
   <button onclick="showToastOk()">Toast icon ok</button>
   <button onclick="showToastError()">Toast icon error</button>
   <button onclick="showToastWarn()">Toast icon warn</button>
+  <button onclick="showToastCenter()">Toast in center</button>
   <br>
 
   <h2>Dialog modal:</h2>
@@ -138,6 +179,20 @@
   <br>
   <button onclick="switchAll()">switch all</button>
   <button onclick="switchDisable()">switch disable</button>
+
+  <h2>Upload:</h2>
+  <div class="febsui-upload">
+    <button onclick='$("#fileObj")[0].click()'>上传图片</button>
+    <form id="fileForm" method="post" role="form" enctype="multipart/form-data" style="display:none">
+      <input id="fileObj" type="file" name="file" onchange="javascript:SetupWebUploader('/api/users/upload_image', $('#fileForm'), $('#fileObj'))" multiple>
+    </form>
+    <div class="febsui-upload-progress">
+      <div class="febsui-upload-progress-bg"></div>
+      <span>10%</span>
+      <div class="febsui-upload-progress-cancel"><div class="febsui-icon febsui-icon-error"></div></div>
+    </div>
+  </div>
   
+
   </body>
 </html>
