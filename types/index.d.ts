@@ -2,6 +2,8 @@
 
 /// <reference types="node" />
 
+
+
 /**
 * @desc: 使用延时显示加载框.
 * @param text: 提示文本.
@@ -25,24 +27,6 @@ export function loading_show_text(textArray: Array<string>, changeTextCB: (text:
 */
 export function loading_hide(): void;
 
-
-/**
-* @desc: 隐藏对话框
-* @return: 
-*/
-export function dialog_hide(): void;
-
-/**
- * @desc: 显示警告对话框.
- * @param ctx: {
-* ctx.title:    标题.
-* ctx.content:	内容文字.
-* ctx.confirm: function(){}	// 点击确认键的回调.
-* ctx.okText
-* }
-*/
-export function dialog_showAlert( ctx: { title?:string, content?:string, confirm?:()=>void, okText?:string } ): void;
-
 /**
  * @desc: 显示提示.
  * @param ctx: {
@@ -53,10 +37,29 @@ export function dialog_showAlert( ctx: { title?:string, content?:string, confirm
   * ctx.callback: function(){}	// 对话框消失后的回调.
   * }
   */
-  export function dialog_showToast( ctx: { content?:string, time?:number, icon?:'ok'|'error'|'warn', center?:boolean, callback?:()=>void } ): void;
+ export function toast( ctx: { content?:string, time?:number, icon?:'ok'|'error'|'warn', center?:boolean, callback?:()=>void } ): void;
+
 
 /**
- * @desc: 显示确认对话框.
+* @desc: 隐藏对话框
+* @param selector: 关闭指定的窗口; null则关闭所有.
+* @return: 
+*/
+export function dialog_hide(selector?:any): void;
+
+/**
+ * @desc: 显示警告对话框. (回调函数的上下文为当前窗口)
+ * @param ctx: {
+* ctx.title:    标题.
+* ctx.content:	内容文字.
+* ctx.confirm: function(){}	// 点击确认键的回调.
+* ctx.okText
+* }
+*/
+export function dialog_showAlert( ctx: { title?:string, content?:string, confirm?:()=>void, okText?:string } ): void;
+
+/**
+ * @desc: 显示确认对话框. (回调函数的上下文为当前窗口)
  * @param ctx: {
 * ctx.title:    标题.
 * ctx.content:	内容文字.
@@ -70,7 +73,7 @@ export function dialog_showConfirm( ctx: { title?:string, content?:string, confi
 
 
 /**
- * @desc: 显示文本输入确认对话框.
+ * @desc: 显示文本输入确认对话框. (回调函数的上下文为当前窗口)
  * @param ctx: {
 * ctx.title:    标题.
 * ctx.content:		 内容文字.
@@ -99,6 +102,13 @@ export function page_init(elem: any, curPage: number, pageCount: number, totalCo
  *       默认在页面加载完成时会调用一次; 加入新的switch控件时需调用一次.
  */
 export function switch_init():void;
+
+/**
+* @desc: 初始化popover控件.
+*        对页面上 的所有 <popover> 元素进行初始化.
+*        在增加新的popover到页面后, 需要手动调用此方法.
+*/
+export function popover_init();
 
 /** [客户端调用] 需要 jquery,jquery.form 库支持.
 * 并且 <input type="file" name="file"... 中, 必须存在name属性.

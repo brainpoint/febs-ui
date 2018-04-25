@@ -3,7 +3,7 @@
 exports.switch_init = switch_init;
 
 
-$.fn.isSwitchOn = function() {
+$.fn.switchIsOn = function() {
   return !this.hasClass("febsui-switch-off");
 }
 
@@ -50,7 +50,7 @@ $.fn.switch = function(cb) {
   } // if..else.
 }
 
-$.fn.isSwitchDisable = function() {
+$.fn.switchIsDisable = function() {
   return this.hasClass("febsui-switch-disabled");
 }
 
@@ -126,7 +126,7 @@ $.fn.switchOn = function(isOn, trigger) {
 
 /**
 * @desc: 初始化switch控件.
-*        对页面上 class 为 febsui-switch-on 已经 febsui-switch-off 的所有元素初始化为switch控件.
+*        对页面上 class 为 febsui-switch-on 以及 febsui-switch-off 的所有元素初始化为switch控件.
 */
 function switch_init() {
   var elems = $('switch');
@@ -188,7 +188,7 @@ function switch_init() {
       // elems[i]._switchTrigger = elems[i].trigger;
       // elems[i].trigger = function(event) {
       //   if (event == 'change') {
-      //     $(this).switch(!$(this).isSwitchOn(), true);
+      //     $(this).switch(!$(this).switchIsOn(), true);
       //   } else {
       //     $(this)._switchTrigger(event);
       //   }

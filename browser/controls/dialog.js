@@ -1,4 +1,5 @@
 var escape = require('../escape');
+var uuid = require('../uuid');
 
 var toastHideTimer;
 
@@ -7,6 +8,26 @@ exports.showAlert = showAlert;
 exports.showToast = showToast;
 exports.showConfirm = showConfirm;
 exports.showConfirmEdit = showConfirmEdit;
+
+/**
+* @desc: 屏幕旋转事件.
+*/
+function resizeDialog(){
+  var elem = $('.febsui-dialog-container');
+  for (var i = 0; i < elem.length; i++) {
+    elem.css('margin-top', parseInt((document.body.clientHeight - elem[i].clientHeight) / 2) + 'px');
+  }
+}
+
+// 是否支持orientationchange事件
+if ('orientation' in window && 'onorientationchange' in window)
+{
+  $(window).on('orientationchange', resizeDialog);
+}
+else {
+  $(window).on('resize', resizeDialog);
+}
+
 
 function escape_string(ctx) {
   // 转义.
@@ -30,10 +51,22 @@ function escape_string(ctx) {
   }
 }
 
-function hide() {
-	$('.febsui-dialog').removeClass('febsui-visible');
-  if ($('.febsui-dialog').length > 0) {
-    $('.febsui-dialog').addClass('febsui-invisible');
+function hide(selector) {
+  if (selector) {
+    $(selector).removeClass('febsui-visible').addClass('febsui-invisible');
+    if ($(selector)[0]) {
+      setTimeout(function(){
+        $(selector).remove();
+      }, 300);
+    }
+  }
+  else {
+    $('.febsui-dialog').removeClass('febsui-visible').addClass('febsui-invisible');
+    if ($('.febsui-dialog')[0]) {
+      setTimeout(function(){
+        $('.febsui-dialog').remove();
+      }, 300);
+    }
   }
 }
 
@@ -59,23 +92,31 @@ function showAlert(ctx) {
 	if (!ctx.okText) ctx.okText = "确认";
   escape_string(ctx);
 
-	if ($('.febsui-dialog').length > 0) {
-		$('.febsui-dialog').remove();
+	// if ($('.febsui-dialog').length > 0) {
+	// 	$('.febsui-dialog').remove();
+  // }
+
+  var uid = 'febs-'+uuid.uuid();
+
+  var style = '';
+  if ($('.febsui-dialog')[0]) {
+    style = ' style="background-color:rgba(0,0,0,0);" ';
   }
 
-  $("body").append($('<div class="febsui-dialog" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li style="width:100%"><a href="#0" class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>'));
-	
+  $("body").append($('<div' + ' id="' + uid + '"' + style + ' class="febsui-dialog" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li style="width:100%"><a href="#0" class="febsui-dialog-cancel">' + ctx.okText + '</a></li></ul></div></div>'));
+	resizeDialog();
 
 	setTimeout(function () {
-		$('.febsui-dialog').addClass('febsui-visible');
+		$('#'+uid).addClass('febsui-visible');
 	}, 10);
 
   //close popup
-	$('.febsui-dialog').on('click', function (event) {
-		if ($(event.target).hasClass('febsui-dialog-ok') /*|| $(event.target).hasClass('febsui-dialog')*/) {
+  var ele = $('#'+uid);
+	ele.on('click', function (event) {
+		if ($(event.target).hasClass('febsui-dialog-cancel') /*|| $(event.target).hasClass('febsui-dialog')*/) {
 			event.preventDefault();
-			hide();
-			if (ctx.confirm) ctx.confirm();
+			if (ctx.confirm) ctx.confirm.bind(ele)();
+			hide(ele);
 		}
   });
   
@@ -178,30 +219,40 @@ function showConfirm(ctx) {
   
   escape_string(ctx);
 
-	if ($('.febsui-dialog').length > 0) {
-		$('.febsui-dialog').remove();
-	}
+	// if ($('.febsui-dialog').length > 0) {
+	// 	$('.febsui-dialog').remove();
+	// }
 
-	$("body").append($('<div class="febsui-dialog" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li><a href="#0" class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li><a href="#0" class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul><a href="#0" class="febsui-dialog-close img-replace">Close</a></div></div>'));
-	setTimeout(function () {
-		$('.febsui-dialog').addClass('febsui-visible');
+  var uid = 'febs-'+uuid.uuid();
+
+  var style = '';
+  if ($('.febsui-dialog')[0]) {
+    style = ' style="background-color:rgba(0,0,0,0);" ';
+  }
+
+	$("body").append($('<div' + ' id="' + uid + '"' + style + ' class="febsui-dialog" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li><a href="#0" class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li><a href="#0" class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul><a href="#0" class="febsui-dialog-close img-replace">Close</a></div></div>'));
+  resizeDialog();
+
+  setTimeout(function () {
+		$('#'+uid).addClass('febsui-visible');
 	}, 10);
 
   //close popup
-	$('.febsui-dialog').on('click', function (event) {
+  var ele = $('#'+uid);
+	ele.on('click', function (event) {
 		if ($(event.target).hasClass('febsui-dialog-close') /*|| $(event.target).hasClass('febsui-dialog')*/) {
 			event.preventDefault();
-			hide();
-			if (ctx.cancel) ctx.cancel();
+			if (ctx.cancel) ctx.cancel.bind(ele)();
+			hide(ele);
 		}
 		else if ($(event.target).hasClass('febsui-dialog-ok')) {
 			event.preventDefault();
-			if (ctx.confirm) ctx.confirm();
+			if (ctx.confirm) ctx.confirm.bind(ele)();
 		}
 		else if ($(event.target).hasClass('febsui-dialog-cancel')) {
 			event.preventDefault();
-			hide();
-			if (ctx.cancel) ctx.cancel();
+			if (ctx.cancel) ctx.cancel.bind(ele)();
+			hide(ele);
 		}
   });
   
@@ -215,8 +266,8 @@ function showConfirm(ctx) {
 	// });
 	$(document).one('keyup', function (event) {
 		if (event.which == '27') {
-			hide();
-			if (ctx.cancel) ctx.cancel();
+			if (ctx.cancel) ctx.cancel.bind(ele)();
+			hide(ele);
 		}
 	});
 }
@@ -238,37 +289,46 @@ function showConfirmEdit(ctx) {
   // 转义.
   escape_string(ctx);
 
-	if ($('.febsui-dialog').length > 0) {
-		$('.febsui-dialog').remove();
-	}
+	// if ($('.febsui-dialog').length > 0) {
+	// 	$('.febsui-dialog').remove();
+	// }
 
-  var elems = '<div class="febsui-dialog" role="alert"><div class="febsui-dialog-container">' 
+  var uid = 'febs-'+uuid.uuid();
+
+  var style = '';
+  if ($('.febsui-dialog')[0]) {
+    style = ' style="background-color:rgba(0,0,0,0);" ';
+  }
+
+  var elems = '<div' + ' id="' + uid + '"' + style + ' class="febsui-dialog" role="alert"><div class="febsui-dialog-container">' 
   + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') 
   + '<div class="febsui-dialog-content">' + ctx.content + '</div>' 
   + '<div class="febsui-dialog-edit"><input class="febsui-dialog-input-text" type="text" value="' + (ctx.editText?ctx.editText:'') + '">' + '</div>' 
   + '<ul class="febsui-dialog-buttons"><li><a href="#0" class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li><a href="#0" class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul><a href="#0" class="febsui-dialog-close img-replace">Close</a></div></div>';
 
   $("body").append($(elems));
-  
+  resizeDialog();
+
 	setTimeout(function () {
-		$('.febsui-dialog').addClass('febsui-visible');
+		$('#'+uid).addClass('febsui-visible');
 	}, 10);
 
   //close popup
-	$('.febsui-dialog').on('click', function (event) {
+  var ele = $('#'+uid);
+	ele.on('click', function (event) {
 		if ($(event.target).hasClass('febsui-dialog-close') /*|| $(event.target).hasClass('febsui-dialog')*/) {
 			event.preventDefault();
-			hide();
-			if (ctx.cancel) ctx.cancel();
+			if (ctx.cancel) ctx.cancel.bind(ele)();
+			hide(ele);
 		}
 		else if ($(event.target).hasClass('febsui-dialog-ok')) {
 			event.preventDefault();
-			if (ctx.confirm) ctx.confirm( $('.febsui-dialog-container .febsui-dialog-edit .febsui-dialog-input-text').val() );
+			if (ctx.confirm) ctx.confirm.bind(ele)( $('#'+uid + ' .febsui-dialog-edit .febsui-dialog-input-text').val() );
 		}
 		else if ($(event.target).hasClass('febsui-dialog-cancel')) {
 			event.preventDefault();
-			hide();
-			if (ctx.cancel) ctx.cancel();
+			if (ctx.cancel) ctx.cancel.bind(ele)();
+			hide(ele);
 		}
   });
   
@@ -282,8 +342,8 @@ function showConfirmEdit(ctx) {
 	// });
 	$(document).one('keyup', function (event) {
 		if (event.which == '27') {
-			hide();
-			if (ctx.cancel) ctx.cancel();
+			if (ctx.cancel) ctx.cancel.bind(ele)();
+			hide(ele);
 		}
 	});
 }

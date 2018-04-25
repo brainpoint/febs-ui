@@ -17,15 +17,20 @@ exports.uploadBase64  = require('./upload.base64').uploadBase64;
 exports.upload  = require('./upload').upload;
 
 var dialog = require('./dialog');
+exports.toast = dialog.showToast;
 exports.dialog_hide = dialog.hide;
 exports.dialog_showAlert = dialog.showAlert;
-exports.dialog_showToast = dialog.showToast;
 exports.dialog_showConfirm = dialog.showConfirm;
 exports.dialog_showConfirmEdit = dialog.showConfirmEdit;
 
 var switcha = require('./switch');
 exports.switch_init = switcha.switch_init;
+
+var popovera = require('./popover');
+exports.popover_init = popovera.popover_init;
+
+
 $(document).ready(function(){
   switcha.switch_init();
+  popovera.popover_init();
 });
-

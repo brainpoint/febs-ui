@@ -56,12 +56,13 @@ febsui.dialog_showToast({content:'即将开始', icon:'ok'});
 目前实现了如下控件.
 
   - [loading](#loading)
-  - [toast](#dialog)
+  - [toast](#toast)
   - [alert dialog](#dialog)
   - [confirm dialog](#dialog)
   - [edit dialog](#dialog)
   - [paging](#page)
   - [switch](#switch)
+  - [popover](#popover)
   - [upload](#upload)
 
 ### loading
@@ -102,35 +103,15 @@ febsui.loading_show_text(textArray, changeTextCB, hideCB)
 */
 febsui.loading_hide()
 ```
-### dialog
+
+### toast
 
 已经对需要显示的信息进行了转义
 
-![](doc/ui/control-dialog.png)
-
 ![](doc/ui/control-toast.png)
-
-![](doc/ui/control-confirm.png)
 
 
 ```js
-/**
-* @desc: 隐藏对话框
-* @return: 
-*/
-febsui.dialog_hide();
-
-/**
- * @desc: 显示警告对话框.
- * @param ctx: {
-* ctx.title:    标题.
-* ctx.content:	内容文字.
-* ctx.confirm: function(){}	// 点击确认键的回调.
-* ctx.okText
-* }
-*/
-febsui.dialog_showAlert( ctx );
-
 /**
  * @desc: 显示提示.
  * @param ctx: {
@@ -141,10 +122,39 @@ febsui.dialog_showAlert( ctx );
   * ctx.center: 默认为false; 是否使用居中的显示方式.
   * }
   */
-febsui.dialog_showToast( ctx );
+febsui.toast( ctx );
+```
+
+### dialog
+
+已经对需要显示的信息进行了转义
+
+![](doc/ui/control-dialog.png)
+
+![](doc/ui/control-confirm.png)
+
+
+```js
+/**
+* @desc: 隐藏对话框
+* @param selector: 关闭指定的窗口; null则关闭所有.
+* @return: 
+*/
+febsui.dialog_hide( selector?:any );
 
 /**
- * @desc: 显示确认对话框.
+ * @desc: 显示警告对话框. (回调函数的上下文为当前窗口)
+ * @param ctx: {
+* ctx.title:    标题.
+* ctx.content:	内容文字.
+* ctx.confirm: function(){}	// 点击确认键的回调.
+* ctx.okText
+* }
+*/
+febsui.dialog_showAlert( ctx );
+
+/**
+ * @desc: 显示确认对话框. (回调函数的上下文为当前窗口)
  * @param ctx: {
 * ctx.title:    标题.
 * ctx.content:	内容文字.
@@ -157,7 +167,7 @@ febsui.dialog_showToast( ctx );
 febsui.dialog_showConfirm( ctx );
 
   /**
-   * @desc: 显示文本输入确认对话框.
+   * @desc: 显示文本输入确认对话框. (回调函数的上下文为当前窗口)
    * @param ctx: {
   * ctx.title:    标题.
   * ctx.content:		 内容文字.
@@ -238,7 +248,7 @@ $('switch').switchOn(isOn, trigger);
 /**
  * @desc 返回当前控件的状态.
  */
-$('switch').isSwitchOn();
+$('switch').switchIsOn();
 
 /**
  * @desc 设置为disable.
@@ -248,7 +258,7 @@ $('switch').switchDisable(isDisable);
 /**
  * @desc 返回当前控件是否为disable状态.
  */
-$('switch').isSwitchDisable();
+$('switch').switchIsDisable();
 ```
 
 

@@ -56,12 +56,13 @@ febsui.dialog_showToast({content:'即将开始', icon:'ok'});
 目前实现了如下控件.
 
   - [loading](#loading)
-  - [toast](#dialog)
+  - [toast](#toast)
   - [alert dialog](#dialog)
   - [confirm dialog](#dialog)
   - [edit dialog](#dialog)
   - [paging](#page)
   - [switch](#switch)
+  - [popover](#popover)
   - [upload](#upload)
 
 ### loading
@@ -102,35 +103,15 @@ febsui.loading_show_text(textArray, changeTextCB, hideCB)
 */
 febsui.loading_hide()
 ```
-### dialog
+
+### toast
 
 已经对需要显示的信息进行了转义
 
-![](doc/ui/control-dialog.png)
-
 ![](doc/ui/control-toast.png)
-
-![](doc/ui/control-confirm.png)
 
 
 ```js
-/**
-* @desc: 隐藏对话框
-* @return: 
-*/
-febsui.dialog_hide();
-
-/**
- * @desc: 显示警告对话框.
- * @param ctx: {
-* ctx.title:    标题.
-* ctx.content:	内容文字.
-* ctx.confirm: function(){}	// 点击确认键的回调.
-* ctx.okText
-* }
-*/
-febsui.dialog_showAlert( ctx );
-
 /**
  * @desc: 显示提示.
  * @param ctx: {
@@ -141,10 +122,39 @@ febsui.dialog_showAlert( ctx );
   * ctx.center: 默认为false; 是否使用居中的显示方式.
   * }
   */
-febsui.dialog_showToast( ctx );
+febsui.toast( ctx );
+```
+
+### dialog
+
+已经对需要显示的信息进行了转义
+
+![](doc/ui/control-dialog.png)
+
+![](doc/ui/control-confirm.png)
+
+
+```js
+/**
+* @desc: 隐藏对话框
+* @param selector: 关闭指定的窗口; null则关闭所有.
+* @return: 
+*/
+febsui.dialog_hide( selector?:any );
 
 /**
- * @desc: 显示确认对话框.
+ * @desc: 显示警告对话框. (回调函数的上下文为当前窗口)
+ * @param ctx: {
+* ctx.title:    标题.
+* ctx.content:	内容文字.
+* ctx.confirm: function(){}	// 点击确认键的回调.
+* ctx.okText
+* }
+*/
+febsui.dialog_showAlert( ctx );
+
+/**
+ * @desc: 显示确认对话框. (回调函数的上下文为当前窗口)
  * @param ctx: {
 * ctx.title:    标题.
 * ctx.content:	内容文字.
@@ -157,7 +167,7 @@ febsui.dialog_showToast( ctx );
 febsui.dialog_showConfirm( ctx );
 
   /**
-   * @desc: 显示文本输入确认对话框.
+   * @desc: 显示文本输入确认对话框. (回调函数的上下文为当前窗口)
    * @param ctx: {
   * ctx.title:    标题.
   * ctx.content:		 内容文字.
@@ -208,6 +218,17 @@ febsui.page_init(elem, curPage, pageCount, totalCount, pageCallback)
 </html>
 ```
 
+类
+
+| 类名| 说明 |
+|----|----|
+| febsui-switch-on |  此类表示switch为on状态.  |
+| febsui-switch-off |  此类表示switch为off状态.  |
+| febsui-switch-disabled |  此类表示switch为disabled状态  |
+
+
+方法
+
 ```js
 /**
  * @desc 初始化页面上所有switch控件
@@ -238,7 +259,7 @@ $('switch').switchOn(isOn, trigger);
 /**
  * @desc 返回当前控件的状态.
  */
-$('switch').isSwitchOn();
+$('switch').switchIsOn();
 
 /**
  * @desc 设置为disable.
@@ -248,7 +269,64 @@ $('switch').switchDisable(isDisable);
 /**
  * @desc 返回当前控件是否为disable状态.
  */
-$('switch').isSwitchDisable();
+$('switch').switchIsDisable();
+```
+
+### popover
+![](doc/ui/control-popover.png)
+
+示例
+
+```html
+<html>
+
+<!-- 使用 top, left 样式来指定位置 -->
+<popover style="top:50px; left:50px;">
+  <!-- {{ children nodes }} -->
+</popover>
+
+<!-- 使用 data-attach 来固定位置到指定元素 -->
+<popover id="popover" data-attach="#popoverAttach" data-direction="bottom" data-offset="5">
+  <!-- {{ children nodes }} -->
+</popover>
+<button id="popoverAttach" onclick="$('#popover').popoverShow();">show</button>
+
+</html>
+```
+
+属性
+
+| 属性 | 说明 | 值 |
+|----|----|----|
+| data-direction | 表明popover的方向. | 允许的值为: left, right, top, bottom  |
+| data-offset |  表明提示位置(三角尖)的偏移像素. | 允许的值: 只能为数值  |
+| data-attach |  表明显示时自动显示在此元素的指定位置.  | 例如: #btn1  |
+
+方法
+
+```js
+/**
+* @desc: 初始化popover控件.
+*        对页面上 的所有 <popover> 元素进行初始化.
+*        在增加新的popover到页面后, 需要手动调用此方法.
+*/
+febsui.popover_init();
+```
+```js
+/**
+ * @desc 显示popover
+ */
+$('popover').popoverShow();
+
+/**
+ * @desc 隐藏popover; 显示后点击也会隐藏.
+ */
+$('popover').popoverHide();
+
+/**
+ * @desc 判断popover是否可见.
+ */
+$('popover').popoverIsVisibile();
 ```
 
 

@@ -15,20 +15,22 @@
 
     <!-- page -->
     <script type="text/javascript">
+      function onPage(page){
+        febsui.toast({content:'page ' + page, icon:'ok'});
+        febsui.page_init($('#page'), page, 20, 25, onPage);
+      }
 
       // page.
-      febsui.page_init($('#page'), 12, 20, 25, function(page){  
-        febsui.dialog_showToast({content:'page ' + page, icon:'ok'});
-      });
+      febsui.page_init($('#page'), 12, 20, 25, onPage);
     </script>
 
     <!-- toast -->
     <script type="text/javascript">
       // toast.
-      function showToast()      { febsui.dialog_showToast({content:'这是一个toast提示'}); }
-      function showToastOk()    { febsui.dialog_showToast({content:'这是一个toast提示', icon:'ok'}); }
-      function showToastError() { febsui.dialog_showToast({content:'这是一个toast提示', icon:'error'}); }
-      function showToastWarn()  { febsui.dialog_showToast({content:'这是一个toast提示', icon:'warn'}); }
+      function showToast()      { febsui.toast({content:'这是一个toast提示'}); }
+      function showToastOk()    { febsui.toast({content:'这是一个toast提示', icon:'ok'}); }
+      function showToastError() { febsui.toast({content:'这是一个toast提示', icon:'error'}); }
+      function showToastWarn()  { febsui.toast({content:'这是一个toast提示', icon:'warn'}); }
       
       var toastStyle = 0;
       function showToastCenter(){ 
@@ -51,7 +53,7 @@
           msg = '这是一个很长的消息: jdskfhsg sgwegn wgegjw weg wgwg gwegw gwgw';
         }
         toastStyle = (++toastStyle)%5;
-        febsui.dialog_showToast({content:msg, icon:icon, center:true});
+        febsui.toast({content:msg, icon:icon, center:true});
       }
       
     </script>
@@ -85,21 +87,29 @@
           content:'这是一个alert', 
           okText: '这是确定',
           confirm:function(){
-            febsui.dialog_showToast('你点击了确定按钮');
+            febsui.toast('你点击了确定按钮');
             febsui.dialog_hide();
           }
         });
       }
       function showDialogConfirm() {
         febsui.dialog_showConfirm({
-          title:'提示', 
-          content:'这是一个confirm',
-          confirm:function(){
-            febsui.dialog_showToast('你点击了确定按钮');
-            febsui.dialog_hide();
+          title: '提示',
+          content: '这是一个confirm',
+          confirm: function () {
+            febsui.toast('将弹出新的一个对话框');
+            febsui.dialog_showConfirm({
+              title: '提示',
+              content: '这是第二个对话框',
+              okText: '确定',
+              confirm: function () {
+                febsui.toast('你点击了确定按钮');
+                febsui.dialog_hide(this);
+              }
+            });
           },
-          cancel:function() {
-            febsui.dialog_showToast('你点击了取消按钮');  
+          cancel: function () {
+            febsui.toast('你点击了取消按钮');
           }
         });
       }
@@ -110,11 +120,11 @@
           content:'这是一个confirm edit',
           editText: str ? str : '这是输入的内容',
           confirm:function(text){
-            febsui.dialog_showToast('你输入了: ' + text);
+            febsui.toast('你输入了: ' + text);
             febsui.dialog_hide();
           },
           cancel:function() {
-            febsui.dialog_showToast('你点击了取消按钮');  
+            febsui.toast('你点击了取消按钮');  
           }
         });
       }
@@ -125,22 +135,22 @@
     <script type="text/javascript">
       $(function(){
         $('switch').switch(function(){
-          var isSwitch = $(this).isSwitchOn();
-          febsui.dialog_showToast('switch is: ' + (isSwitch ? 'on' : 'off'));
+          var isSwitch = $(this).switchIsOn();
+          febsui.toast('switch is: ' + (isSwitch ? 'on' : 'off'));
         });
       });
       
       function switchAll() {
         var switchs = $('switch');
         for (var i = 0; i < switchs.length; i++) {
-          switchs[i].switchOn(!$(switchs[i]).isSwitchOn());
+          switchs[i].switchOn(!$(switchs[i]).switchIsOn());
         }
       }
 
       function switchDisable() {
         var switchs = $('switch');
         for (var i = 0; i < switchs.length; i++) {
-          switchs[i].switchDisable(!$(switchs[i]).isSwitchDisable());
+          switchs[i].switchDisable(!$(switchs[i]).switchIsDisable());
         }
       }
   </script>
@@ -179,6 +189,14 @@
   <br>
   <button onclick="switchAll()">switch all</button>
   <button onclick="switchDisable()">switch disable</button>
+
+  <h2>Popover:</h2>
+  <popover id="dfdf" style="top:50px; left:50px;" data-attach="#popoverAttach" data-direction="bottom" data-offset="5">
+    <button class="btn-empty febsui-border-bottom" style="text-align: left; width: 100%;">menu 1</button>
+    <button class="btn-empty febsui-border-bottom" style="text-align: left; width: 100%;">menu 2</button>
+    <button class="btn-empty" style="text-align: left; width: 100%;">menu 3</button>
+  </popover>
+  <button id="popoverAttach" onclick="$('popover').popoverShow()">show</button>
 
   <h2>Upload:</h2>
   <div class="febsui-upload">
