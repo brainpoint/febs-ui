@@ -1,172 +1,66 @@
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <link rel="stylesheet" type="text/css" href="../dist/febsui/febsui.css" />
-    <script charset='UTF-8' type="text/javascript" src="../dist/febs/febs.min.js"></script>
-    <script charset='UTF-8' type="text/javascript" src="../dist/febsui/febsui.js"></script>
-  </head>
-  <body>
-      <br>
-      <br>
-      <br>
-    <h2>page:</h2>
-    <div id='page'></div>
 
-    <!-- page -->
-    <script type="text/javascript">
-      function onPage(page){
-        febsui.toast({content:'page ' + page, icon:'ok'});
-        febsui.page_init($('#page'), page, 20, 25, onPage);
-      }
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <link rel="stylesheet" type="text/css" href="../dist/febsui/febsui.css" />
+  <script charset='UTF-8' type="text/javascript" src="../dist/febs/febs.min.js"></script>
+  <script charset='UTF-8' type="text/javascript" src="../dist/febsui/febsui.js"></script>
+</head>
 
-      // page.
-      febsui.page_init($('#page'), 12, 20, 25, onPage);
-    </script>
+<body>
+  <br>
+  <br>
+  <br>
 
-    <!-- toast -->
-    <script type="text/javascript">
-      // toast.
-      function showToast()      { febsui.toast({content:'这是一个toast提示'}); }
-      function showToastOk()    { febsui.toast({content:'这是一个toast提示', icon:'ok'}); }
-      function showToastError() { febsui.toast({content:'这是一个toast提示', icon:'error'}); }
-      function showToastWarn()  { febsui.toast({content:'这是一个toast提示', icon:'warn'}); }
-      
-      var toastStyle = 0;
-      function showToastCenter(){ 
-        var icon;
-        var msg;
-        if (toastStyle == 0) {
-          icon = 'ok';
-          msg = '完成';
-        } else if (toastStyle == 1) {
-          icon = 'error';
-          msg = '失败';
-        } else if (toastStyle == 2) {
-          icon = 'warn';
-          msg = '操作错误';
-        } else if (toastStyle == 3) {
-          icon = 'ok';
-          msg = '这是一个很长的消息: jdskfhsg sgwegn wgegjw weg wgwg gwegw gwgw';
-        } else {
-          icon = null;
-          msg = '这是一个很长的消息: jdskfhsg sgwegn wgegjw weg wgwg gwegw gwgw';
-        }
-        toastStyle = (++toastStyle)%5;
-        febsui.toast({content:msg, icon:icon, center:true});
-      }
-      
-    </script>
+  <!-- page -->
+  <h2>page:</h2>
+  <div id='page'></div>
 
-    <!-- loading -->
-    <script type="text/javascript">
-      // laoding.
-      function showLoading() { 
-        febsui.loading_show('3秒后关闭');
-        febs.utils.sleep(1000)
-        .then(function() {
-          febsui.loading_show('2秒后关闭');
-          return febs.utils.sleep(1000)
-        })
-        .then(function() {
-          febsui.loading_show('1秒后关闭');
-          return febs.utils.sleep(1000)
-        })
-        .then(function() {
-          febsui.loading_hide();
-        })
-      }
-    </script>
-
-    <!-- dialog -->
-    <script type="text/javascript">
-      // dialog.
-      function showDialogAlert() {
-        febsui.dialog_showAlert({
-          title:'提示', 
-          content:'这是一个alert', 
-          okText: '这是确定',
-          confirm:function(){
-            febsui.toast('你点击了确定按钮');
-            febsui.dialog_hide();
-          }
-        });
-      }
-      function showDialogConfirm() {
-        febsui.dialog_showConfirm({
-          title: '提示',
-          content: '这是一个confirm',
-          confirm: function () {
-            febsui.toast('将弹出新的一个对话框');
-            febsui.dialog_showConfirm({
-              title: '提示',
-              content: '这是第二个对话框',
-              okText: '确定',
-              confirm: function () {
-                febsui.toast('你点击了确定按钮');
-                febsui.dialog_hide(this);
-              }
-            });
-          },
-          cancel: function () {
-            febsui.toast('你点击了取消按钮');
-          }
-        });
-      }
-
-      function showDialogText(str) {
-        febsui.dialog_showConfirmEdit({
-          title:'提示', 
-          content:'这是一个confirm edit',
-          editText: str ? str : '这是输入的内容',
-          confirm:function(text){
-            febsui.toast('你输入了: ' + text);
-            febsui.dialog_hide();
-          },
-          cancel:function() {
-            febsui.toast('你点击了取消按钮');  
-          }
-        });
-      }
-
-    </script>
-
-    <!-- switch -->
-    <script type="text/javascript">
-      $(function(){
-        $('switch').switch(function(){
-          var isSwitch = $(this).switchIsOn();
-          febsui.toast('switch is: ' + (isSwitch ? 'on' : 'off'));
-        });
-      });
-      
-      function switchAll() {
-        var switchs = $('switch');
-        for (var i = 0; i < switchs.length; i++) {
-          switchs[i].switchOn(!$(switchs[i]).switchIsOn());
-        }
-      }
-
-      function switchDisable() {
-        var switchs = $('switch');
-        for (var i = 0; i < switchs.length; i++) {
-          switchs[i].switchDisable(!$(switchs[i]).switchIsDisable());
-        }
-      }
+  <script type="text/javascript">
+    function onPage(page) {
+      febsui.toast({ content: 'page ' + page, icon: 'ok' });
+      febsui.page_init($('#page'), page, 20, 25, onPage);
+    }
+    // page.
+    febsui.page_init($('#page'), 12, 20, 25, onPage);
   </script>
 
   <h2>button:</h2>
   <div>
+    <button >default</button>
     <button class="btn-primary">primary</button>
     <button class="btn-secondary">secondary</button>
     <button class="btn-warning">warning</button>
     <button class="btn-danger">danger</button>
+    <button disabled="disabled" class="btn-primary" onclick="console.log(23123);">disabled</button>
   </div>
 
+  <!-- loading -->
   <h2>Loading:</h2>
   <button onclick="showLoading()">loading</button>
   <br>
 
+  <script type="text/javascript">
+    // laoding.
+    function showLoading() {
+      febsui.loading_show('3秒后关闭');
+      febs.utils.sleep(1000)
+        .then(function () {
+          febsui.loading_show('2秒后关闭');
+          return febs.utils.sleep(1000)
+        })
+        .then(function () {
+          febsui.loading_show('1秒后关闭');
+          return febs.utils.sleep(1000)
+        })
+        .then(function () {
+          febsui.loading_hide();
+        })
+    }
+  </script>
+
+  <!-- toast -->
   <h2>Dialog Toast:</h2>
   <button onclick="showToast()">Toast</button>
   <button onclick="showToastOk()">Toast icon ok</button>
@@ -175,13 +69,100 @@
   <button onclick="showToastCenter()">Toast in center</button>
   <br>
 
+  <script type="text/javascript">
+    // toast.
+    function showToast() { febsui.toast({ content: '这是一个toast提示' }); }
+    function showToastOk() { febsui.toast({ content: '这是一个toast提示', icon: 'ok' }); }
+    function showToastError() { febsui.toast({ content: '这是一个toast提示', icon: 'error' }); }
+    function showToastWarn() { febsui.toast({ content: '这是一个toast提示', icon: 'warn' }); }
+
+    var toastStyle = 0;
+    function showToastCenter() {
+      var icon;
+      var msg;
+      if (toastStyle == 0) {
+        icon = 'ok';
+        msg = '完成';
+      } else if (toastStyle == 1) {
+        icon = 'error';
+        msg = '失败';
+      } else if (toastStyle == 2) {
+        icon = 'warn';
+        msg = '操作错误';
+      } else if (toastStyle == 3) {
+        icon = 'ok';
+        msg = '这是一个很长的消息: jdskfhsg sgwegn wgegjw weg wgwg gwegw gwgw';
+      } else {
+        icon = null;
+        msg = '这是一个很长的消息: jdskfhsg sgwegn wgegjw weg wgwg gwegw gwgw';
+      }
+      toastStyle = (++toastStyle) % 5;
+      febsui.toast({ content: msg, icon: icon, center: true });
+    }
+
+  </script>
+
+  <!-- dialog -->
   <h2>Dialog modal:</h2>
   <button onclick="showDialogAlert()">dialog alert</button>
   <button onclick="showDialogConfirm()">dialog confirm</button>
   <button onclick="showDialogText()">dialog confirm text input</button>
   <button onclick="showDialogText('<script>alert(1)</script>')">dialog confirm text input 转义</button>
-  
 
+  <script type="text/javascript">
+    // dialog.
+    function showDialogAlert() {
+      febsui.dialog_showAlert({
+        title: '提示',
+        content: '这是一个alert',
+        okText: '这是确定',
+        confirm: function () {
+          febsui.toast('你点击了确定按钮');
+          febsui.dialog_hide();
+        }
+      });
+    }
+    function showDialogConfirm() {
+      febsui.dialog_showConfirm({
+        title: '提示',
+        content: '这是一个confirm',
+        confirm: function () {
+          febsui.toast('将弹出新的一个对话框');
+          febsui.dialog_showConfirm({
+            title: '提示',
+            content: '这是第二个对话框',
+            okText: '确定',
+            confirm: function () {
+              febsui.toast('你点击了确定按钮');
+              febsui.dialog_hide(this);
+            }
+          });
+        },
+        cancel: function () {
+          febsui.toast('你点击了取消按钮');
+        }
+      });
+    }
+
+    function showDialogText(str) {
+      febsui.dialog_showConfirmEdit({
+        title: '提示',
+        content: '这是一个confirm edit',
+        editText: str ? str : '这是输入的内容',
+        confirm: function (text) {
+          febsui.toast('你输入了: ' + text);
+          febsui.dialog_hide();
+        },
+        cancel: function () {
+          febsui.toast('你点击了取消按钮');
+        }
+      });
+    }
+
+  </script>
+
+
+  <!-- switch -->
   <h2>Switch:</h2>
   <switch></switch>
   <switch class="febsui-switch-off"></switch>
@@ -190,27 +171,63 @@
   <button onclick="switchAll()">switch all</button>
   <button onclick="switchDisable()">switch disable</button>
 
+  <script type="text/javascript">
+    $(function () {
+      $('switch').switch(function () {
+        var isSwitch = $(this).switchIsOn();
+        febsui.toast('switch is: ' + (isSwitch ? 'on' : 'off'));
+      });
+    });
+
+    function switchAll() {
+      var switchs = $('switch');
+      for (var i = 0; i < switchs.length; i++) {
+        switchs[i].switchOn(!$(switchs[i]).switchIsOn());
+      }
+    }
+
+    function switchDisable() {
+      var switchs = $('switch');
+      for (var i = 0; i < switchs.length; i++) {
+        switchs[i].disabled(!$(switchs[i]).isDisabled());
+      }
+    }
+  </script>
+
+  <!-- Popover -->
   <h2>Popover:</h2>
-  <popover id="dfdf" style="top:50px; left:50px;" data-attach="#popoverAttach" data-direction="bottom" data-offset="5">
-      <button class="btn-empty" style="text-align: left; border-bottom: #d8d8d8 solid 1px; display: block;width: 100%;">sdfdfdf</button>
-      <button class="btn-empty" style="text-align: left; border-bottom: #d8d8d8 solid 1px; display: block;width: 100%;">sdfdfdf</button>
-      <button class="btn-empty" style="text-align: left; display: block;width: 100%;">sdfdfdf</button>
+  <popover style="top:50px; left:50px;" data-attach="#popoverAttach1" data-direction="bottom" data-offset="5">
+    <div class="febsui-popover-cell">Call History</div>
+    <div class="febsui-popover-cell">Scan QR</div>
+    <div class="febsui-popover-cell">Pay</div>
   </popover>
-  <button id="popoverAttach" onclick="$('popover').popoverShow()">show</button>
+  <button id="popoverAttach1" onclick="$('popover').popoverShow(true)">show</button>
+  <button id="popoverAttach2" onclick="$('popover').popoverShow(false, '#popoverAttach2')">show without mask</button>
+
+  <!-- ActionSheet -->
+  <h2>ActionSheet:<h2>
+  <actionsheet>
+    
+  </actionsheet>
+
 
   <h2>Upload:</h2>
   <div class="febsui-upload">
     <button onclick='$("#fileObj")[0].click()'>上传图片</button>
     <form id="fileForm" method="post" role="form" enctype="multipart/form-data" style="display:none">
-      <input id="fileObj" type="file" name="file" onchange="javascript:SetupWebUploader('/api/users/upload_image', $('#fileForm'), $('#fileObj'))" multiple>
+      <input id="fileObj" type="file" name="file" onchange="javascript:SetupWebUploader('/api/users/upload_image', $('#fileForm'), $('#fileObj'))"
+        multiple>
     </form>
     <div class="febsui-upload-progress">
       <div class="febsui-upload-progress-bg"></div>
       <span>10%</span>
-      <div class="febsui-upload-progress-cancel"><div class="febsui-icon febsui-icon-error"></div></div>
+      <div class="febsui-upload-progress-cancel">
+        <div class="febsui-icon febsui-icon-error"></div>
+      </div>
     </div>
   </div>
-  
 
-  </body>
+
+</body>
+
 </html>

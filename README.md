@@ -213,7 +213,7 @@ febsui.page_init(elem, curPage, pageCount, totalCount, pageCallback)
 <switch class="febsui-switch-off"></switch> 
 
 <!-- disabled状态. -->
-<switch class="febsui-switch-disabled"></switch> 
+<switch disabled="disabled"></switch> 
 
 </html>
 ```
@@ -224,7 +224,6 @@ febsui.page_init(elem, curPage, pageCount, totalCount, pageCallback)
 |----|----|
 | febsui-switch-on |  此类表示switch为on状态.  |
 | febsui-switch-off |  此类表示switch为off状态.  |
-| febsui-switch-disabled |  此类表示switch为disabled状态  |
 
 
 方法
@@ -237,6 +236,19 @@ febsui.page_init(elem, curPage, pageCount, totalCount, pageCallback)
 febsui.switch_init();
 ```
 ```js
+/**
+ * @desc 判断是否是switch
+ */
+$('switch').isSwitch();
+/**
+ * @desc 设置为disable.
+ */
+$('switch').disabled(isDisable);
+
+/**
+ * @desc 返回当前控件是否为disable状态.
+ */
+$('switch').isDisable();
 /**
  * @desc 监听变化事件
  */
@@ -260,16 +272,6 @@ $('switch').switchOn(isOn, trigger);
  * @desc 返回当前控件的状态.
  */
 $('switch').switchIsOn();
-
-/**
- * @desc 设置为disable.
- */
-$('switch').switchDisable(isDisable);
-
-/**
- * @desc 返回当前控件是否为disable状态.
- */
-$('switch').switchIsDisable();
 ```
 
 ### popover
@@ -314,19 +316,24 @@ febsui.popover_init();
 ```
 ```js
 /**
- * @desc 显示popover
+ * @desc 判断是否是popover
  */
-$('popover').popoverShow();
+$('popover').isPopover();
+/**
+ * @desc 判断popover是否可见.
+ */
+$('popover').isVisibile();
+/**
+ * @desc 显示popover
+ * @param mask 是否显示掩码背景.
+ * @param attachNode 附加到此节点上显示. 如果不存在, 则查询 data-attach 属性.
+ */
+$('popover').popoverShow(mask?:boolean, attachNode?:selector);
 
 /**
  * @desc 隐藏popover; 显示后点击也会隐藏.
  */
 $('popover').popoverHide();
-
-/**
- * @desc 判断popover是否可见.
- */
-$('popover').popoverIsVisibile();
 ```
 
 

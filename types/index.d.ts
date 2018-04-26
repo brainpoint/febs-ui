@@ -1,7 +1,26 @@
 // Type definitions for febs
 
 /// <reference types="node" />
+/// <reference path="febs-browser" />
 
+export class dom {
+
+  /** common */
+  disabled(isDisable:boolean):dom;
+  isDisabled():boolean;
+  isVisibile():boolean;
+
+  /** switch */
+  isSwitch():boolean;
+  switchIsOn():boolean;
+  switch(cb?:(e:any)=>void):dom;
+  switchOn(isOn:boolean, trigger?:boolean):dom;
+
+  /** popover */
+  isPopover():boolean;
+  popoverShow(mask?:boolean, attachNode?:any) : dom;
+  popoverHide(): dom;
+};
 
 
 /**
@@ -86,30 +105,6 @@ export function dialog_showConfirm( ctx: { title?:string, content?:string, confi
 */
 export function dialog_showConfirmEdit( ctx: { title?:string, content?:string, editText?:string, confirm?:(text:string)=>void, cancel?:()=>void, okText?:string, cancelText?:string } ): void;
 
-/**
-* @desc: 初始化page控件.
-* @param elem: 将控件插入到elem中, elem是一个jquery的对象.
-* @param curPage: 当前页
-* @param pageCount: 总页数
-* @param totalCount: 总条数
-* @param pageCallback: 页面跳转函数, function(page) {}
-* @return: 
-*/
-export function page_init(elem: any, curPage: number, pageCount: number, totalCount: number, pageCallback: (page: any) => void): void;
-
-/**
- * @desc 初始化页面上所有switch控件
- *       默认在页面加载完成时会调用一次; 加入新的switch控件时需调用一次.
- */
-export function switch_init():void;
-
-/**
-* @desc: 初始化popover控件.
-*        对页面上 的所有 <popover> 元素进行初始化.
-*        在增加新的popover到页面后, 需要手动调用此方法.
-*/
-export function popover_init();
-
 /** [客户端调用] 需要 jquery,jquery.form 库支持.
 * 并且 <input type="file" name="file"... 中, 必须存在name属性.
 * 使用post方式上传文件.
@@ -185,3 +180,27 @@ export function uploadBase64(cfg: {
   crossDomain: boolean,
   withCredentials: boolean,
 }): void;
+
+/**
+* @desc: 初始化page控件.
+* @param elem: 将控件插入到elem中, elem是一个jquery的对象.
+* @param curPage: 当前页
+* @param pageCount: 总页数
+* @param totalCount: 总条数
+* @param pageCallback: 页面跳转函数, function(page) {}
+* @return: 
+*/
+export function page_init(elem: any, curPage: number, pageCount: number, totalCount: number, pageCallback: (page: any) => void): void;
+
+/**
+ * @desc 初始化页面上所有switch控件
+ *       默认在页面加载完成时会调用一次; 加入新的switch控件时需调用一次.
+ */
+export function switch_init():void;
+
+/**
+* @desc: 初始化popover控件.
+*        对页面上 的所有 <popover> 元素进行初始化.
+*        在增加新的popover到页面后, 需要手动调用此方法.
+*/
+export function popover_init();

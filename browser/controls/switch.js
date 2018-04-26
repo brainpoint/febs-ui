@@ -2,108 +2,62 @@
 
 exports.switch_init = switch_init;
 
+$.fn.isSwitch = function() {
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
+
+  if (_this.length >= 1) {
+    var elem = _this[0]._swtichEvents;
+    if (!!elem) {
+      return true;
+    }
+
+    if (_this[0].nodeName.toLowerCase() == 'switch') {
+      return true;
+    }
+  }
+  
+  return false;
+}
 
 $.fn.switchIsOn = function() {
   return !this.hasClass("febsui-switch-off");
 }
 
 $.fn.switch = function(cb) {
+
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
+
   if (cb) {
-    if (this.length > 1) {
-      for (var i = 0; i < this.length; i++) {
-        var elem = this[i];
-    
-        if (elem._swtichEvents) {
-          elem._swtichEvents.push(cb);
-        } // if.
-      } // for.
-    }
-    else {
-      var elem = this._elem;
+    for (var i = 0; i < _this.length; i++) {
+      var elem = _this[i];
+  
       if (elem._swtichEvents) {
         elem._swtichEvents.push(cb);
       } // if.
-    }
+    } // for.
   }
   // trigger.
   else {
-    if (this.length > 1) {
-      for (var i = 0; i < this.length; i++) {
-        var elem = this[i];
-        var ee = elem._swtichEvents;
-        if (ee) {
-          for (var i = 0; i < ee.length; i++) {
-            ee[i].bind(elem)();
-          }
-        }
-      } // for.
-    }
-    else {
-      var elem = this._elem;
+    for (var i = 0; i < _this.length; i++) {
+      var elem = _this[i];
       var ee = elem._swtichEvents;
       if (ee) {
         for (var i = 0; i < ee.length; i++) {
           ee[i].bind(elem)();
         }
       }
-    }
-  } // if..else.
-}
-
-$.fn.switchIsDisable = function() {
-  return this.hasClass("febsui-switch-disabled");
-}
-
-$.fn.switchDisable = function(isDisable) {
-  if (this.length > 1) {
-    for (var i = 0; i < this.length; i++) {
-      var elem = this[i];
-  
-      if (elem._swtichEvents) {
-        if (isDisable)
-          elem.addClass("febsui-switch-disabled");
-        else
-          elem.removeClass("febsui-switch-disabled");
-      } // if.
     } // for.
-  }
-  else {
-    var elem = this;
-    if (elem._swtichEvents) {
-      if (isDisable)
-        elem.addClass("febsui-switch-disabled");
-      else
-        elem.removeClass("febsui-switch-disabled");
-    } // if.
-  }
+  } // if..else.
+  return this;
 }
 
 $.fn.switchOn = function(isOn, trigger) {
-  if (this.length > 1) {
-    for (var i = 0; i < this.length; i++) {
-      var elem = this[i];
-  
-      if (elem._swtichEvents) {
-        if (isOn) {
-          if (elem.hasClass("febsui-switch-off")) {
-            elem.removeClass("febsui-switch-off").addClass("febsui-switch-on");
-            if (trigger) {
-              elem.switch();
-            }
-          }
-        } else {
-          if (!elem.hasClass("febsui-switch-off")) {
-            elem.removeClass("febsui-switch-on").addClass("febsui-switch-off");
-            if (trigger) {
-              elem.switch();
-            }
-          }
-        }
-      } // if.
-    } // for.
-  }
-  else {
-    var elem = this;
+
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
+
+  for (var i = 0; i < _this.length; i++) {
+    var elem = _this[i];
+
     if (elem._swtichEvents) {
       if (isOn) {
         if (elem.hasClass("febsui-switch-off")) {
@@ -121,8 +75,31 @@ $.fn.switchOn = function(isOn, trigger) {
         }
       }
     } // if.
-  }
+  } // for.
+  return this;
 };
+
+$.fn.switchIsDisabled = function() {
+  return this.hasClass("febsui-switch-disabled");
+}
+
+$.fn.switchDisabled = function(isDisable) {
+
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
+
+  for (var i = 0; i < _this.length; i++) {
+    var elem = _this[i];
+
+    if (elem._swtichEvents) {
+      if (isDisable)
+        elem.addClass("febsui-switch-disabled");
+      else
+        elem.removeClass("febsui-switch-disabled");
+    } // if.
+  } // for.
+  return this;
+}
+
 
 /**
 * @desc: 初始化switch控件.
@@ -150,50 +127,6 @@ function switch_init() {
       });
 
       elems[i]._swtichEvents = elems[i]._swtichEvents||[];
-
-      // elems[i]._switchOn = elems[i].on;
-      // elems[i].on = function(event, cb) {
-      //   if (event == 'change') {
-      //     $(this)._swtichEvents.push(cb);
-      //   } else {
-      //     $(this)._switchOn(event, cb);
-      //   }
-      // }.bind(elems[i]);
-      // elems[i]._switchOff = elems[i].off;
-      // elems[i].off = function(event, cb) {
-      //   if (event == 'change') {
-      //     var ee = $(this)._swtichEvents;
-      //     if (!cb) {
-      //       $(this)._swtichEvents = [];
-      //     } else {
-      //       for (var i = 0; i < ee.length; i++) {
-      //         if (ee[i] === cb) {
-      //           ee.splice(i, 1);
-      //           break;
-      //         }
-      //       }
-      //     }
-      //   } else {
-      //     $(this)._switchOff(event, cb);
-      //   }
-      // }.bind(elems[i]);
-
-      // elems[i]._switchOn('change', function(e){
-      //   var ee = $(this)._swtichEvents;
-      //   for (var i = 0; o < ee.length; i++) {
-      //     ee[i](e);
-      //   }
-      // });
-
-      // elems[i]._switchTrigger = elems[i].trigger;
-      // elems[i].trigger = function(event) {
-      //   if (event == 'change') {
-      //     $(this).switch(!$(this).switchIsOn(), true);
-      //   } else {
-      //     $(this)._switchTrigger(event);
-      //   }
-      // }.bind(elems[i]);
-
     }
   } // for.
 }

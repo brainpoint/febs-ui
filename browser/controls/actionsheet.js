@@ -4,28 +4,9 @@ var uuid = require('../uuid');
 exports.popover_init = popover_init;
 
 
-$.fn.isPopover = function() {
-
-  var _this = (typeof this.length === 'undefined') ? $(this) : this;
-
-  if (_this.length >= 1) {
-    if (_this[0].nodeName.toLowerCase() == 'popover') {
-      return true;
-    }
-    else {
-      return $(_this[0]).hasClass('febsui-popover');
-    }
-  }
-  
-  return false;
-}
-
-$.fn.popoverShow = function(mask, attachNode) {
-
-  var _this = (typeof this.length === 'undefined') ? $(this) : this;
-
-  for (var i = 0; i < _this.length; i++) {
-    var ee = $(_this[i]);
+$.fn.actionsheetShow = function() {
+  for (var i = 0; i < this.length; i++) {
+    var ee = $(this[i]);
     if (ee[0].nodeName.toLowerCase() == 'popover') {
       ee = ee.parent();
     }
@@ -89,24 +70,19 @@ $.fn.popoverShow = function(mask, attachNode) {
       }
     }
   }
-  return this;
 }
 
-$.fn.popoverIsVisibile = function() {
+$.fn.actionsheetIsVisibile = function() {
   return this.hasClass("febsui-visible");
 }
 
-$.fn.popoverHide = function() {
-
-  var _this = (typeof this.length === 'undefined') ? $(this) : this;
-
-  for (var i = 0; i < _this.length; i++) {
-    var ee = $(_this[i]);
+$.fn.actionsheetHide = function() {
+  for (var i = 0; i < this.length; i++) {
+    var ee = $(this[i]);
     if (ee.hasClass('febsui-popover')) {
       ee.removeClass('febsui-visible').addClass('febsui-invisible');
     }
   }
-  return this;
 }
 
 /**

@@ -32,13 +32,17 @@
 // Pass this if window is not defined yet
 } )( typeof window !== "undefined" ? window : this, function( window, noGlobal ) {
 
+
 var febsui = require('./controls');
 window['febsui'] = febsui;
+
 
 /**
  * jquery plugins.
  */
 require('./plugins/jquery-form/jquery.form')(window);
+require('./plugins/disabled');
+require('./plugins/isVisibile');
 
 return febsui;
 }
