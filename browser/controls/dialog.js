@@ -1,11 +1,7 @@
-var escape = require('../escape');
 var uuid = require('../uuid');
-
-var toastHideTimer;
 
 exports.hide = hide;
 exports.showAlert = showAlert;
-exports.showToast = showToast;
 exports.showConfirm = showConfirm;
 exports.showConfirmEdit = showConfirmEdit;
 
@@ -15,7 +11,7 @@ exports.showConfirmEdit = showConfirmEdit;
 function resizeDialog(){
   var elem = $('.febsui-dialog-container');
   for (var i = 0; i < elem.length; i++) {
-    elem.css('margin-top', parseInt((document.body.clientHeight - elem[i].clientHeight) / 2) + 'px');
+    $(elem[i]).css('margin-top', parseInt((document.body.clientHeight - elem[i].clientHeight) / 2) + 'px');
   }
 }
 
@@ -32,22 +28,22 @@ else {
 function escape_string(ctx) {
   // 转义.
   if (ctx.title) {
-    ctx.title = escape(ctx.title);
+    ctx.title = window.febs.string.escapeHtml(ctx.title);
   }
   if (ctx.content) {
-    ctx.content = escape(ctx.content);
+    ctx.content = window.febs.string.escapeHtml(ctx.content);
   }
   if (ctx.msg) {
-    ctx.msg = escape(ctx.msg);
+    ctx.msg = window.febs.string.escapeHtml(ctx.msg);
   }
   if (ctx.editText) {
-    ctx.editText = escape(ctx.editText);
+    ctx.editText = window.febs.string.escapeHtml(ctx.editText);
   }
   if (ctx.okText) {
-    ctx.okText = escape(ctx.okText);
+    ctx.okText = window.febs.string.escapeHtml(ctx.okText);
   }
   if (ctx.cancelText) {
-    ctx.cancelText = escape(ctx.cancelText);
+    ctx.cancelText = window.febs.string.escapeHtml(ctx.cancelText);
   }
 }
 
@@ -55,18 +51,33 @@ function hide(selector) {
   if (selector) {
     $(selector).removeClass('febsui-visible').addClass('febsui-invisible');
     if ($(selector)[0]) {
-      setTimeout(function(){
-        $(selector).remove();
-      }, 300);
+
+      // 移除临时弹出的窗口.
+      if (!selector.hasClass('febsui-dialog-init')) {
+        setTimeout(function(){
+          $(selector).remove();
+        }, 300);
+      }
     }
   }
   else {
-    $('.febsui-dialog').removeClass('febsui-visible').addClass('febsui-invisible');
-    if ($('.febsui-dialog')[0]) {
-      setTimeout(function(){
-        $('.febsui-dialog').remove();
-      }, 300);
-    }
+    var ee = $('.febsui-dialog');
+    ee.removeClass('febsui-visible').addClass('febsui-invisible');
+
+    var ees = [];
+    // 移除临时弹出的窗口.
+    for (var i = 0; i < ee.length; i++) {
+      var eee = $(ee[i]);
+      if (!eee.hasClass('febsui-dialog-init')) {
+        ees.push(eee);
+      }
+    } // for.
+
+    setTimeout(function(){
+      for (var i = 0; i < ees.length; i++) {
+        ees[i].remove();
+      }
+    }, 300);
   }
 }
 
@@ -98,12 +109,12 @@ function showAlert(ctx) {
 
   var uid = 'febs-'+uuid.uuid();
 
-  var style = '';
-  if ($('.febsui-dialog')[0]) {
-    style = ' style="background-color:rgba(0,0,0,0);" ';
+  var mask = '';
+  if (!$('.febsui-mask').hasVisibile()) {
+    mask = ' febsui-mask';
   }
 
-  $("body").append($('<div' + ' id="' + uid + '"' + style + ' class="febsui-dialog" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li style="width:100%"><a href="#0" class="febsui-dialog-cancel">' + ctx.okText + '</a></li></ul></div></div>'));
+  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li style="width:100%"><a href="#0" class="febsui-dialog-cancel">' + ctx.okText + '</a></li></ul></div></div>'));
 	resizeDialog();
 
 	setTimeout(function () {
@@ -134,78 +145,6 @@ function showAlert(ctx) {
 }
 
 /**
- * ctx.content
- * ctx.time
- * ctx.icon  // "ok" "warn" "error" 默认null, 没有图标
- * ctx.callback  function(){}	// 对话框消失后的回调.
- * ctx.center: 默认为false; 是否使用居中的显示方式.
- */
-function showToast(ctx) {
-  if (typeof ctx === 'string') {
-    ctx = {content:ctx};
-  }
-
-  escape_string(ctx);
-
-  ctx.center = !!ctx.center;
-
-  ctx.msg = ctx.content;
-
-	if ($('.febsui-toast').length > 0) {
-		$('.febsui-toast').remove();
-	}
-
-	var html = '<div class="febsui-toast' + (ctx.center?' febsui-toast-center': '') + '" style="display:none" role="alert"><div class="febsui-toast-container">'
-	if (null != ctx.icon) {
-    html += "<div class='febsui-icon febsui-icon-" + ctx.icon + "'></div>";
-
-    if (ctx.center) {
-      html += '<div class="febsui-dialog-msg">' + ctx.msg + '</div></div></div>';
-    } else {
-      html += '<div class="febsui-dialog-msg" style="padding-left:30px;">' + ctx.msg + '</div></div></div>';
-    }
-  }
-	else{
-		html += '<div class="febsui-dialog-msg">' + ctx.msg + '</div></div></div>';
-	}
-  $("body").append($(html));
-
-  if (typeof $(".febsui-toast").fadeIn !== 'function') {
-    // console.log('febs-ui controls need function fadeIn/fadeOut');
-    $(".febsui-toast").css("display", "inherit");
-    $(".febsui-toast").removeClass('febsui-invisible').addClass('febsui-visible');
-  } else {
-    $(".febsui-toast").fadeIn(200);
-  }
-	
-	var t = 3000;
-	if (null != ctx.time) {
-		t = ctx.time;
-	}
-	if (t > 0) {
-    if (toastHideTimer) {
-      clearTimeout(toastHideTimer);
-    }
-
-		toastHideTimer = setTimeout(function () {
-      if (typeof $(".febsui-toast").fadeOut !== 'function') {
-        // console.log('febs-ui controls need function fadeIn/fadeOut');
-        // $("#febsui-dialog-cd-toast").css("display", "none");
-        $(".febsui-toast").removeClass('febsui-visible').addClass('febsui-invisible');
-      } else {
-        $(".febsui-toast").fadeOut(200);
-      }
-
-      toastHideTimer = null;
-			if (null != ctx.callback) {
-				ctx.callback();
-			}
-		}, t);
-	}
-}
-
-
-/**
 * ctx.title:    标题.
 * ctx.content:		 内容文字.
 * ctx.confirm: function(){}	// 点击确认键的回调.
@@ -225,12 +164,12 @@ function showConfirm(ctx) {
 
   var uid = 'febs-'+uuid.uuid();
 
-  var style = '';
-  if ($('.febsui-dialog')[0]) {
-    style = ' style="background-color:rgba(0,0,0,0);" ';
+  var mask = '';
+  if (!$('.febsui-mask').hasVisibile()) {
+    mask = ' febsui-mask';
   }
 
-	$("body").append($('<div' + ' id="' + uid + '"' + style + ' class="febsui-dialog" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li><a href="#0" class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li><a href="#0" class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul><a href="#0" class="febsui-dialog-close img-replace">Close</a></div></div>'));
+	$("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li><a href="#0" class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li><a href="#0" class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul><a href="#0" class="febsui-dialog-close img-replace">Close</a></div></div>'));
   resizeDialog();
 
   setTimeout(function () {
@@ -295,12 +234,12 @@ function showConfirmEdit(ctx) {
 
   var uid = 'febs-'+uuid.uuid();
 
-  var style = '';
-  if ($('.febsui-dialog')[0]) {
-    style = ' style="background-color:rgba(0,0,0,0);" ';
+  var mask = '';
+  if (!$('.febsui-mask').hasVisibile()) {
+    mask = ' febsui-mask';
   }
 
-  var elems = '<div' + ' id="' + uid + '"' + style + ' class="febsui-dialog" role="alert"><div class="febsui-dialog-container">' 
+  var elems = '<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' 
   + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') 
   + '<div class="febsui-dialog-content">' + ctx.content + '</div>' 
   + '<div class="febsui-dialog-edit"><input class="febsui-dialog-input-text" type="text" value="' + (ctx.editText?ctx.editText:'') + '">' + '</div>' 
@@ -347,3 +286,94 @@ function showConfirmEdit(ctx) {
 		}
 	});
 }
+
+
+/**
+ * jquery plugin.
+ */
+
+
+exports.dialog_init = dialog_init;
+
+$.fn.isDialog = function() {
+
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
+
+  if (_this.length >= 1) {
+    if (_this[0].nodeName.toLowerCase() == 'dialog') {
+      return true;
+    }
+    else {
+      return $(_this[0]).hasClass('febsui-dialog');
+    }
+  }
+  
+  return false;
+}
+
+$.fn.dialogShow = function() {
+
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
+
+  for (var i = 0; i < _this.length; i++) {
+    var ee = $(_this[i]);
+    if (ee[0].nodeName.toLowerCase() == 'dialog') {
+      ee = ee.parent();
+    }
+    if (ee.hasClass('febsui-dialog')) {
+
+      if (!$('.febsui-mask').hasVisibile()) {
+        ee.addClass('febsui-mask');
+      }
+      else {
+        ee.removeClass('febsui-mask');
+      }
+
+      ee.removeClass('febsui-invisible').addClass('febsui-visible');
+    }
+  }
+
+  resizeDialog();
+  return this;
+}
+
+$.fn.dialogHide = function() {
+
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
+
+  for (var i = 0; i < _this.length; i++) {
+    var ee = $(_this[i]);
+    if (ee[0].nodeName.toLowerCase() == 'dialog') {
+      ee = ee.parent();
+    }
+    if (ee.hasClass('febsui-dialog-init')) {
+      ee.removeClass('febsui-visible').addClass('febsui-invisible');
+    }
+  }
+  return this;
+}
+
+/**
+* @desc: 初始化dialog控件.
+*        对页面上 的所有 <dialog> 元素进行初始化.
+*/
+function dialog_init() {
+  var elems = $('dialog');
+  for (var i = 0; i < elems.length; i++) {
+    var dom = $(elems[i]);
+
+    if (!dom.hasClass('febsui-dialog-container')) {
+      dom.addClass('febsui-dialog-container');
+
+      var dd = $("<div class='febsui-dialog febsui-dialog-init' role='alert'></div>");
+      $('body').append(dd);
+      var did = dom.attr('id');
+      if (did) {
+        dd.attr('id', did);
+        dom.removeAttr('id');
+      }
+      dd.append(dom);
+    }
+  } // for.
+}
+

@@ -55,21 +55,65 @@ febsui.dialog_showToast({content:'即将开始', icon:'ok'});
 
 目前实现了如下控件.
 
+  - [jquery extend](#extend)
+  - [button](#button)
   - [loading](#loading)
   - [toast](#toast)
   - [alert dialog](#dialog)
   - [confirm dialog](#dialog)
   - [edit dialog](#dialog)
+  - [custom dialog](#custom-dialog)
   - [paging](#page)
   - [switch](#switch)
   - [popover](#popover)
+  - [actionSheet](#actionsheet)
   - [upload](#upload)
+
+### extend
+
+引入了 如下几个jquery插件方法. (febsui无需额外使用jquery库)
+
+```js
+
+/**
+ * @desc 设置为disable (对input, button等元素有效).
+ */
+$('').disabled(isDisable);
+
+/**
+ * @desc 返回当前控件是否为disable状态.
+ */
+$('').isDisable();
+/**
+ * @desc 判断第一个元素是否可见.
+ */
+$('').isVisibile();
+/**
+ * @desc 判断是否存在可见元素.
+ */
+$('').hasVisibile();
+
+```
+
+### button
+
+![](doc/ui/control-button.png)
+
+```html
+  <button >default</button>
+  <button class="btn-primary">primary</button>
+  <button class="btn-secondary">secondary</button>
+  <button class="btn-warning">warning</button>
+  <button class="btn-danger">danger</button>
+  <button class="btn-primary" disabled="disabled" onclick="console.log(23123);">disabled</button>
+```
+
 
 ### loading
 
 已经对需要显示的信息进行了转义
 
-![](doc/ui/control-loadding.jpg)
+![](doc/ui/control-loadding.png)
 
 ```js
 /**
@@ -116,13 +160,17 @@ febsui.loading_hide()
  * @desc: 显示提示.
  * @param ctx: {
   * ctx.title:    标题.
-  * ctx.time:	持续的时间 ms.
+  * ctx.durable:	持续的时间 ms.
   * ctx.icon: 前置图标.
   * ctx.callback: function(){}	// 对话框消失后的回调.
   * ctx.center: 默认为false; 是否使用居中的显示方式.
   * }
   */
 febsui.toast( ctx );
+/**
+* @desc 手动隐藏toast.
+*/
+febsui.toast_hide();
 ```
 
 ### dialog
@@ -197,6 +245,46 @@ febsui.page_init(elem, curPage, pageCount, totalCount, pageCallback)
 
 ```
 
+### custom dialog
+
+可以自行定义dialog的内容
+
+```html
+
+<dialog style="width: 100px; height:400px;">
+  ...
+</dialog>
+
+```
+
+方法
+
+```js
+/**
+* @desc: 初始化dialog控件. (页面加载完成后会自动调用一次)
+*        对页面上 的所有 <dialog> 元素进行初始化.
+*        在增加新的dialog到页面后, 需要手动调用此方法.
+*/
+febsui.dialog_init();
+```
+```js
+/**
+ * @desc 判断是否是popover
+ */
+$('dialog').isDialog();
+/**
+ * @desc 显示dialog
+ */
+$('dialog').dialogShow();
+
+/**
+ * @desc 隐藏dialog;
+ */
+$('dialog').dialogHide();
+```
+
+
+
 ### switch
 ![](doc/ui/control-switch.png)
 
@@ -230,22 +318,12 @@ febsui.page_init(elem, curPage, pageCount, totalCount, pageCallback)
 
 ```js
 /**
- * @desc 初始化页面上所有switch控件
+ * @desc 初始化页面上所有switch控件 (页面加载完成后会自动调用一次)
  *       默认在页面加载完成时会调用一次; 加入新的switch控件时需调用一次.
  */
 febsui.switch_init();
 ```
 ```js
-/**
- * @desc 设置为disable.
- */
-$('switch').disabled(isDisable);
-
-/**
- * @desc 返回当前控件是否为disable状态.
- */
-$('switch').isDisable();
-
 /**
  * @desc 判断是否是switch
  */
@@ -285,7 +363,9 @@ $('switch').switchIsOn();
 
 <!-- 使用 top, left 样式来指定位置 -->
 <popover style="top:50px; left:50px;">
-  <!-- {{ children nodes }} -->
+  <div class="febsui-popover-cell">cell1</div>
+  <div class="febsui-popover-cell">cell2</div>
+  <div class="febsui-popover-cell">cell3</div>
 </popover>
 
 <!-- 使用 data-attach 来固定位置到指定元素 -->
@@ -301,7 +381,7 @@ $('switch').switchIsOn();
 
 | 属性 | 说明 | 值 |
 |----|----|----|
-| data-direction | 表明popover的方向. | 允许的值为: left, right, top, bottom  |
+| data-direction | 表明popover的方向. | 允许的值为: left, right, top, bottom, auto  |
 | data-offset |  表明提示位置(三角尖)的偏移像素. | 允许的值: 只能为数值  |
 | data-attach |  表明显示时自动显示在此元素的指定位置.  | 例如: #btn1  |
 
@@ -309,7 +389,7 @@ $('switch').switchIsOn();
 
 ```js
 /**
-* @desc: 初始化popover控件.
+* @desc: 初始化popover控件. (页面加载完成后会自动调用一次)
 *        对页面上 的所有 <popover> 元素进行初始化.
 *        在增加新的popover到页面后, 需要手动调用此方法.
 */
@@ -320,10 +400,6 @@ febsui.popover_init();
  * @desc 判断是否是popover
  */
 $('popover').isPopover();
-/**
- * @desc 判断popover是否可见.
- */
-$('popover').popoverIsVisibile();
 /**
  * @desc 显示popover
  * @param mask 是否显示掩码背景.
@@ -337,6 +413,57 @@ $('popover').popoverShow(mask?:boolean, attachNode?:selector);
 $('popover').popoverHide();
 ```
 
+### actionsheet
+
+![](doc/ui/control-actionsheet.png)
+
+示例
+
+```html
+<html>
+
+<actionsheet>
+  <div class="febsui-actionsheet-cell">cell1</div>
+  <div class="febsui-actionsheet-cell">cell2</div>
+  <div class="febsui-actionsheet-cell">cell3</div>
+</actionsheet>
+
+</html>
+```
+
+属性
+
+| 属性 | 说明 | 值 |
+|----|----|----|
+| data-direction | 表明popover的方向. | 允许的值为: left, right, top, bottom, auto  |
+| data-offset |  表明提示位置(三角尖)的偏移像素. | 允许的值: 只能为数值  |
+| data-attach |  表明显示时自动显示在此元素的指定位置.  | 例如: #btn1  |
+
+方法
+
+```js
+/**
+* @desc: 初始化actionsheet控件. (页面加载完成后会自动调用一次)
+*        对页面上 的所有 <actionsheet> 元素进行初始化.
+*        在增加新的actionsheet到页面后, 需要手动调用此方法.
+*/
+febsui.actionsheet_init();
+```
+```js
+/**
+ * @desc 判断是否是actionsheet
+ */
+$('actionsheet').isActionsheet();
+/**
+ * @desc 显示actionsheet
+ */
+$('actionsheet').actionsheetShow();
+
+/**
+ * @desc 隐藏actionsheet; 显示后点击也会隐藏.
+ */
+$('actionsheet').actionsheetHide();
+```
 
 
 ### upload

@@ -1,127 +1,130 @@
-var escape = require('../escape');
 var uuid = require('../uuid');
 
-exports.popover_init = popover_init;
+exports.actionsheet_init = actionsheet_init;
 
 
-$.fn.actionsheetShow = function() {
-  for (var i = 0; i < this.length; i++) {
-    var ee = $(this[i]);
-    if (ee[0].nodeName.toLowerCase() == 'popover') {
-      ee = ee.parent();
-    }
-    if (ee.hasClass('febsui-popover')) {
+/**
+* @desc: 屏幕旋转事件.
+*/
+function resizeActionsheet(){
+  var elem = $('actionsheet');
+  
+  for (var i = 0; i < elem.length; i++) {
+    var span = (document.body.clientWidth - elem[i].clientWidth) / 2;
+    span = Math.min(span, 15);
 
-      ee.one('click', function(){
-        $(this).popoverHide();
-      });
-
-      if (mask) {
-        ee.css('background-color', 'rgba(0,0,0,.2)');
-      } else {
-        ee.css('background-color', 'rgba(0,0,0,0)');
-      }
-
-      ee.removeClass('febsui-invisible').addClass('febsui-visible');
-
-      var eee = ee.children('popover');
-      if (eee.length > 0) {
-        // data-attach.
-        var attrAttach = attachNode ? attachNode : $(eee[0]).attr('data-attach');
-        var attach = $(attrAttach)[0];
-        if (attach) {
-          
-          var top = (attach.offsetTop - attach.offsetParent.scrollTop);
-          var left = (attach.offsetLeft - attach.offsetParent.scrollLeft);
-          var width = attach.offsetWidth;
-          var height = attach.offsetHeight;
-
-          var width2 = eee[0].offsetWidth;
-          var height2 = eee[0].offsetHeight;
-
-          var offset = $(eee[0]).attr('data-offset');
-          offset = window.febs.string.isEmpty(offset) ? 0 : parseInt(offset);
-
-          var attrDirection = $(eee[0]).attr('data-direction');
-          attrDirection = attrDirection ? attrDirection.toLowerCase() : 'top';
-          var dis2 = 11;
-          var dis = dis2 + 4;
-          
-          if (attrDirection == 'left') {
-            top = parseInt(top + height/2 - offset - dis);
-            left = left + width + dis;
-          }
-          else if (attrDirection == 'right') {
-            top = parseInt(top + height/2 - offset - dis);
-            left = left - width2 - dis;
-          }
-          else if (attrDirection == 'top') {
-            top = parseInt(top + height + dis);
-            left = parseInt(left + width/2 - offset - dis);
-          }
-          else if (attrDirection == 'bottom') {
-            top = parseInt(top - height2 - dis);
-            left = parseInt(left + width/2 - offset - dis);
-          }
-
-          $(eee[0]).css('top', top+'px');
-          $(eee[0]).css('left', left+'px');
-        }
-      }
-    }
+    $(elem[i]).css('margin-top', parseInt((document.body.clientHeight - elem[i].clientHeight) - span) + 'px');
   }
 }
 
-$.fn.actionsheetIsVisibile = function() {
-  return this.hasClass("febsui-visible");
+// 是否支持orientationchange事件
+if ('orientation' in window && 'onorientationchange' in window)
+{
+  $(window).on('orientationchange', resizeActionsheet);
+}
+else {
+  $(window).on('resize', resizeActionsheet);
+}
+
+
+$.fn.isActionsheet = function() {
+
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
+
+  if (_this.length >= 1) {
+    if (_this[0].nodeName.toLowerCase() == 'actionsheet') {
+      return true;
+    }
+    else {
+      return $(_this[0]).hasClass('febsui-actionsheet');
+    }
+  }
+  
+  return false;
+}
+
+$.fn.actionsheetShow = function() {
+
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
+
+  for (var i = 0; i < _this.length; i++) {
+    var ee = $(_this[i]);
+    if (ee[0].nodeName.toLowerCase() == 'actionsheet') {
+      ee = ee.parent();
+    }
+    if (ee.hasClass('febsui-actionsheet')) {
+
+      if (ee.isVisibile())
+        continue;
+
+      var mask = '';
+      if (!$('.febsui-mask').hasVisibile()) {
+        ee.addClass('febsui-mask');
+      }
+      else {
+        ee.removeClass('febsui-mask');
+      }
+
+      ee.one('click', function(){
+        $(this).actionsheetHide();
+      });
+
+      ee.removeClass('febsui-invisible').addClass('febsui-visible');
+    }
+  }
+
+  resizeActionsheet();
+  return this;
 }
 
 $.fn.actionsheetHide = function() {
-  for (var i = 0; i < this.length; i++) {
-    var ee = $(this[i]);
-    if (ee.hasClass('febsui-popover')) {
+
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
+
+  for (var i = 0; i < _this.length; i++) {
+    var ee = $(_this[i]);
+    if (ee[0].nodeName.toLowerCase() == 'actionsheet') {
+      ee = ee.parent();
+    }
+    if (ee.hasClass('febsui-actionsheet')) {
       ee.removeClass('febsui-visible').addClass('febsui-invisible');
     }
   }
+  return this;
 }
 
 /**
 * @desc: 初始化popover控件.
-*        对页面上 的所有 <popover> 元素进行初始化.
+*        对页面上 的所有 <actionsheet> 元素进行初始化.
 */
-function popover_init() {
-  var elems = $('popover');
+function actionsheet_init() {
+  var elems = $('actionsheet');
   for (var i = 0; i < elems.length; i++) {
     var dom = $(elems[i]);
 
-    if (!dom.hasClass('febsui-popover-inited') && !dom.children().hasClass('febsui-popover-arrow')) {
-      
-      // data-direction
-      var direction = dom.attr('data-direction');
-      direction = window.febs.string.isEmpty(direction) ? 'top' : direction;
-      direction = direction.toLowerCase();
-      var direction2;
-      if (direction != 'top' && direction != 'left' && direction != 'right' && direction != 'bottom') {
-        throw new Error('popover attribute data-direction only can be top/left/right/bottom');
-      }
-      if (direction == 'top' || direction == 'bottom') {
-        direction2 = 'left';
-      }
-      if (direction == 'left' || direction == 'right') {
-        direction2 = 'top';
+    if (!dom.hasClass('febsui-actionsheet-inited')) {
+
+      dom.addClass('febsui-actionsheet-inited');
+
+      var domChildren = dom.children();
+      var ddChildren;
+      if (domChildren[0]) {
+        ddChildren = $("<div class='febsui-actionsheet-group'></div>");
+        ddChildren.append(domChildren);
+        dom.append(ddChildren);
       }
 
-      // data-offset
-      var offset = dom.attr('data-offset');
-      offset = window.febs.string.isEmpty(offset) ? '10' : offset;
-      if (parseInt(offset) != offset) {
-        throw new Error('popover attribute data-offset only can be number');
+      if (ddChildren) {
+        var domCancel = ddChildren.children('.febsui-actionsheet-cancel');
+        if (domCancel[0]) {
+          domCancel.addClass('febsui-actionsheet-cell');
+          var ddCancel = $("<div class='febsui-actionsheet-group' style='margin-top:5px;'></div>");
+          ddCancel.append(domCancel);
+          dom.append(ddCancel);
+        }
       }
 
-      dom.append('<div class="febsui-popover-arrow febsui-popover-arrow-'+direction+'" style="'+direction2+': '+offset+';"></div>');
-      dom.addClass('febsui-popover-inited');
-
-      var dd = $("<div class='febsui-popover'></div>");
+      var dd = $("<div class='febsui-actionsheet'></div>");
       $('body').append(dd);
       var did = dom.attr('id');
       if (did) {
@@ -137,7 +140,15 @@ function popover_init() {
           }
         }
       }
+
       dd.append(dom);
+
+      // // 动画设置.
+      // dom.css('-webkit-transform', 'translateY('+dom[0].clientHeight+'px)');
+      // dom.css('-moz-transform', 'translateY('+dom[0].clientHeight+'px)');
+      // dom.css('-ms-transform', 'translateY('+dom[0].clientHeight+'px)');
+      // dom.css('-o-transform', 'translateY('+dom[0].clientHeight+'px)');
+      // dom.css('transform', 'translateY('+dom[0].clientHeight+'px)');
     }
   } // for.
 }

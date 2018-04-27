@@ -8,7 +8,19 @@ export class dom {
   /** common */
   disabled(isDisable:boolean):dom;
   isDisabled():boolean;
+  /**
+   * 判断第一个元素是否可见.
+   */
   isVisibile():boolean;
+  /**
+   * 判断是否存在可见元素.
+   */
+  hasVisibile():boolean;
+
+  /** dialog */
+  isDialog():boolean;
+  dialogShow():void;
+  dialogHide():void;
 
   /** switch */
   isSwitch():boolean;
@@ -20,6 +32,11 @@ export class dom {
   isPopover():boolean;
   popoverShow(mask?:boolean, attachNode?:any) : dom;
   popoverHide(): dom;
+
+  /** actionsheet */
+  isActionsheet():boolean;
+  actionsheetShow():void;
+  actionsheetHide():void;
 };
 
 
@@ -50,14 +67,18 @@ export function loading_hide(): void;
  * @desc: 显示提示.
  * @param ctx: {
   * ctx.content:  提示内容.
-  * ctx.time:	持续的时间 ms.
+  * ctx.durable:	持续的时间 ms.
   * ctx.icon: 前置图标.
   * ctx.center: 默认为false; 是否使用居中的显示方式.
   * ctx.callback: function(){}	// 对话框消失后的回调.
   * }
   */
- export function toast( ctx: { content?:string, time?:number, icon?:'ok'|'error'|'warn', center?:boolean, callback?:()=>void } ): void;
+ export function toast( ctx: { content?:string, durable?:number, icon?:'ok'|'error'|'warn', center?:boolean, callback?:()=>void } ): void;
 
+ /**
+  * @desc 手动隐藏toast.
+  */
+ export function toast_hide();
 
 /**
 * @desc: 隐藏对话框
@@ -204,3 +225,10 @@ export function switch_init():void;
 *        在增加新的popover到页面后, 需要手动调用此方法.
 */
 export function popover_init();
+
+/**
+* @desc: 初始化actionSheet控件.
+*        对页面上 的所有 <actionsheet> 元素进行初始化.
+*        在增加新的actionsheet到页面后, 需要手动调用此方法.
+*/
+export function actionSheet_init();

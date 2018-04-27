@@ -61,18 +61,19 @@
   </script>
 
   <!-- toast -->
-  <h2>Dialog Toast:</h2>
+  <h2>Toast:</h2>
   <button onclick="showToast()">Toast</button>
   <button onclick="showToastOk()">Toast icon ok</button>
   <button onclick="showToastError()">Toast icon error</button>
   <button onclick="showToastWarn()">Toast icon warn</button>
   <button onclick="showToastCenter()">Toast in center</button>
+  <button onclick="febsui.toast_hide()">hide</button>
   <br>
 
   <script type="text/javascript">
     // toast.
     function showToast() { febsui.toast({ content: '这是一个toast提示' }); }
-    function showToastOk() { febsui.toast({ content: '这是一个toast提示', icon: 'ok' }); }
+    function showToastOk() { febsui.toast_hide(); }  //febsui.toast({ content: '这是一个toast提示', icon: 'ok' }); }
     function showToastError() { febsui.toast({ content: '这是一个toast提示', icon: 'error' }); }
     function showToastWarn() { febsui.toast({ content: '这是一个toast提示', icon: 'warn' }); }
 
@@ -104,10 +105,16 @@
 
   <!-- dialog -->
   <h2>Dialog modal:</h2>
-  <button onclick="showDialogAlert()">dialog alert</button>
-  <button onclick="showDialogConfirm()">dialog confirm</button>
-  <button onclick="showDialogText()">dialog confirm text input</button>
-  <button onclick="showDialogText('<script>alert(1)</script>')">dialog confirm text input 转义</button>
+  <button onclick="showDialogAlert()">alert</button>
+  <button onclick="showDialogConfirm()">confirm</button>
+  <button onclick="showDialogText()">confirm text input</button>
+  <button onclick="showDialogText('<script>alert(1)</script>')">confirm text input 转义</button>
+  <button onclick="showDialogCustom()">custom</button>
+
+  <dialog id="dialog1" style="width:400px; height: 400px;">
+    <button onclick="showDialogAlert()">你好</button>
+    <button onclick="$('#dialog1').dialogHide()">关闭</button>
+  </dialog>
 
   <script type="text/javascript">
     // dialog.
@@ -118,7 +125,7 @@
         okText: '这是确定',
         confirm: function () {
           febsui.toast('你点击了确定按钮');
-          febsui.dialog_hide();
+          febsui.dialog_hide(this);
         }
       });
     }
@@ -151,12 +158,16 @@
         editText: str ? str : '这是输入的内容',
         confirm: function (text) {
           febsui.toast('你输入了: ' + text);
-          febsui.dialog_hide();
+          febsui.dialog_hide(this);
         },
         cancel: function () {
           febsui.toast('你点击了取消按钮');
         }
       });
+    }
+
+    function showDialogCustom() {
+      $('#dialog1').dialogShow();
     }
 
   </script>
@@ -207,7 +218,11 @@
   <!-- ActionSheet -->
   <h2>ActionSheet:<h2>
   <actionsheet>
-    
+    <div class="febsui-actionsheet-cell">menu 1</div>
+    <div class="febsui-actionsheet-cell">menu 2</div>
+    <div class="febsui-actionsheet-cell">menu 3</div>
+    <div class="febsui-actionsheet-cell" style="color:#ff0000">menu 4</div>
+    <div class="febsui-actionsheet-cancel">cancel</div>
   </actionsheet>
 
 

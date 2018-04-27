@@ -1,7 +1,7 @@
 {
   "description": "Some UI in common use",
   "dependencies": {
-    "febs-browser": "^0.7.20"
+    "febs-browser": "^0.7.21"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

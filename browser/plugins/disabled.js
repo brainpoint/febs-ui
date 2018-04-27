@@ -1,4 +1,7 @@
 
+/**
+ * 仅返回第一个元素的情况.
+ */
 $.fn.isDisabled = function() {
 
   var ee = this;

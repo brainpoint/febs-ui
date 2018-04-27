@@ -3,12 +3,10 @@
  * Author: lipengxiang
  * Desc:
  */
-var escape = require('../escape');
-
 function escape_string(str) {
   // 转义.
   if (str) {
-    str =  escape(str);
+    str =  window.febs.string.escapeHtml(str);
   }
   return str;
 }

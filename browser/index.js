@@ -33,6 +33,12 @@
 } )( typeof window !== "undefined" ? window : this, function( window, noGlobal ) {
 
 
+/**
+ * jquery plugins.
+ */
+require('./plugins/isVisibile');
+require('./plugins/hasVisibile');
+
 var febsui = require('./controls');
 window['febsui'] = febsui;
 
@@ -42,7 +48,6 @@ window['febsui'] = febsui;
  */
 require('./plugins/jquery-form/jquery.form')(window);
 require('./plugins/disabled');
-require('./plugins/isVisibile');
 
 return febsui;
 }

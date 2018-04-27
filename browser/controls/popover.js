@@ -1,7 +1,20 @@
-var escape = require('../escape');
 var uuid = require('../uuid');
 
 exports.popover_init = popover_init;
+
+
+function resizePopover() {
+  $('popover').popoverHide();
+}
+
+// 是否支持orientationchange事件
+if ('orientation' in window && 'onorientationchange' in window)
+{
+  $(window).on('orientationchange', resizePopover);
+}
+else {
+  $(window).on('resize', resizePopover);
+}
 
 
 $.fn.isPopover = function() {
@@ -31,14 +44,17 @@ $.fn.popoverShow = function(mask, attachNode) {
     }
     if (ee.hasClass('febsui-popover')) {
 
+      if (ee.isVisibile())
+        continue;
+
       ee.one('click', function(){
         $(this).popoverHide();
       });
 
       if (mask) {
-        ee.css('background-color', 'rgba(0,0,0,.2)');
+        ee.addClass('febsui-mask');
       } else {
-        ee.css('background-color', 'rgba(0,0,0,0)');
+        ee.removeClass('febsui-mask');
       }
 
       ee.removeClass('febsui-invisible').addClass('febsui-visible');
@@ -62,7 +78,7 @@ $.fn.popoverShow = function(mask, attachNode) {
           offset = window.febs.string.isEmpty(offset) ? 0 : parseInt(offset);
 
           var attrDirection = $(eee[0]).attr('data-direction');
-          attrDirection = attrDirection ? attrDirection.toLowerCase() : 'top';
+          attrDirection = attrDirection ? attrDirection.toLowerCase() : 'auto';
           var dis2 = 11;
           var dis = dis2 + 4;
           
@@ -92,16 +108,15 @@ $.fn.popoverShow = function(mask, attachNode) {
   return this;
 }
 
-$.fn.popoverIsVisibile = function() {
-  return this.hasClass("febsui-visible");
-}
-
 $.fn.popoverHide = function() {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
 
   for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
+    if (ee[0].nodeName.toLowerCase() == 'popover') {
+      ee = ee.parent();
+    }
     if (ee.hasClass('febsui-popover')) {
       ee.removeClass('febsui-visible').addClass('febsui-invisible');
     }
@@ -122,7 +137,7 @@ function popover_init() {
       
       // data-direction
       var direction = dom.attr('data-direction');
-      direction = window.febs.string.isEmpty(direction) ? 'top' : direction;
+      direction = window.febs.string.isEmpty(direction) ? 'auto' : direction;
       direction = direction.toLowerCase();
       var direction2;
       if (direction != 'top' && direction != 'left' && direction != 'right' && direction != 'bottom') {

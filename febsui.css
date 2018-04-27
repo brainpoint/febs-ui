@@ -6,7 +6,9 @@
  [class|=btn],
  button,
  switch,
- popover {
+ popover,
+ actionsheet,
+ dialog {
    font-family: -apple-system, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
@@ -335,6 +337,11 @@
  
  /* febsui-dialog */
  
+ .febsui-mask {
+  background: transparent;
+  background-color: rgba(0, 0, 0, .2);
+ }
+
  .febsui-dialog .img-replace {
    /* replace text with an image */
    display: inline-block;
@@ -355,8 +362,6 @@
    top: 0;
    height: 100%;
    width: 100%;
-   background: transparent;
-   background-color: rgba(0, 0, 0, .2);
    opacity: 0;
    visibility: hidden;
    -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
@@ -565,6 +570,13 @@
      margin: 12em auto;
    }
  }
+
+
+dialog {
+  display: block;
+  border: none;
+  max-width: inherit !important;
+}
  
  /* switch: use honeySwitch  */
  
@@ -794,8 +806,6 @@
    top: 0;
    height: 100%;
    width: 100%;
-   background: transparent;
-   background-color: rgba(0, 0, 0, .2);
    opacity: 0;
    visibility: hidden;
    -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
@@ -894,7 +904,8 @@
    border-top-width: 1px;
  }
  
- popover .febsui-popover-cell {
+ popover .febsui-popover-cell,
+ actionsheet .febsui-actionsheet-cell {
    box-sizing: border-box;
    -moz-box-sizing: border-box;
    -webkit-box-sizing: border-box;
@@ -933,7 +944,7 @@
    background-color: rgba(0, 0, 0, 0);
  }
  
- popover .febsui-popover-cell:nth-last-child(2) {
+ popover:nth-last-child(2) {
    border: none !important;
  }
  
@@ -943,6 +954,96 @@
    background-color: rgba(0, 0, 0, 0.01);
  }
  
+
+ /* actionsheet */
+ 
+ .febsui-actionsheet {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  text-align: center;
+  -webkit-transition: opacity 0.2s 0s, visibility 0s 0.2s;
+  -moz-transition: opacity 0.2s 0s, visibility 0s 0.2s;
+  transition: opacity 0.2s 0s, visibility 0s 0.2s;
+  z-index: 99999;
+}
+
+.febsui-actionsheet.febsui-visible actionsheet {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -o-transform: translateY(0);
+  transform: translateY(0);
+}
+
+actionsheet {
+  display: inline-block;
+  position: relative;
+  width: 96%;
+  max-width: 400px;
+  min-height: 44px;
+  -webkit-transform: translateY(120px);
+  -moz-transform: translateY(120px);
+  -ms-transform: translateY(120px);
+  -o-transform: translateY(120px);
+  transform: translateY(120px);
+  /* Force Hardware Acceleration in WebKit */
+  -webkit-backface-visibility: hidden;
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+
+actionsheet .febsui-actionsheet-group {
+  background-color: rgba(255, 255, 255, 0.93);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px 8px 8px 8px;
+}
+ 
+
+actionsheet .febsui-actionsheet-group:nth-last-child(1) {
+  border: none !important;
+}
+
+actionsheet .febsui-actionsheet-cell {
+  text-align: center;
+  color: #1880d2;
+  font-size: 20px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+actionsheet .febsui-actionsheet-cancel {
+  font-weight: 500;
+}
+
+/* actionsheet .febsui-actionsheet-cell-bg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  -ms-filter: blur(1px);    
+  filter: blur(1px);
+  filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=1, MakeShadow=false);
+} */
+
+actionsheet .febsui-actionsheet-cell:hover,
+actionsheet .febsui-actionsheet-cell:active {
+  color: #1880d2;
+  background-color: rgba(0, 0, 0, 0.01);
+}
+
+
  /* upload */
  
  .febsui-upload {

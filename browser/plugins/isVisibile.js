@@ -1,4 +1,8 @@
 
+
+/**
+ * 仅返回第一个元素的情况.
+ */
 $.fn.isVisibile = function() {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
