@@ -86,7 +86,7 @@ function page_init(elem, curPage, pageCount, totalCount, pageCallback) {
 
   var e = elem.children('.febsui-pagin');
   if (e && e.length > 0) {
-    e[0].remove();
+    $(e[0]).remove();
   }
 
   elem.append(('<div class="febsui-pagin">\

@@ -78,7 +78,7 @@ febsui.dialog_showToast({content:'即将开始', icon:'ok'});
 /**
  * @desc 设置为disable (对input, button等元素有效).
  */
-$('').disabled(isDisable);
+$('').setDisabled(isDisable);
 
 /**
  * @desc 返回当前控件是否为disable状态.
@@ -382,7 +382,7 @@ $('switch').switchIsOn();
 | 属性 | 说明 | 值 |
 |----|----|----|
 | data-direction | 表明popover的方向. | 允许的值为: left, right, top, bottom, auto  |
-| data-offset |  表明提示位置(三角尖)的偏移像素. | 允许的值: 只能为数值  |
+| data-offset |  表明提示位置(三角尖)的偏移像素. (auto时忽略此数值) | 允许的值: 只能为数值  |
 | data-attach |  表明显示时自动显示在此元素的指定位置.  | 例如: #btn1  |
 
 方法
@@ -425,7 +425,7 @@ $('popover').popoverHide();
 <actionsheet>
   <div class="febsui-actionsheet-cell">cell1</div>
   <div class="febsui-actionsheet-cell">cell2</div>
-  
+
   <div class="febsui-actionsheet-cancel">CANCEL</div>
 </actionsheet>
 

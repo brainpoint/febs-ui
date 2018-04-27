@@ -9,11 +9,12 @@ exports.actionsheet_init = actionsheet_init;
 function resizeActionsheet(){
   var elem = $('actionsheet');
   
+  var viewport = window.febs.dom.getViewPort();
   for (var i = 0; i < elem.length; i++) {
-    var span = (document.body.clientWidth - elem[i].clientWidth) / 2;
+    var span = (viewport.width - elem[i].clientWidth) / 2;
     span = Math.min(span, 15);
 
-    $(elem[i]).css('margin-top', parseInt((document.body.clientHeight - elem[i].clientHeight) - span) + 'px');
+    $(elem[i]).css('margin-top', parseInt((viewport.height - elem[i].clientHeight) - span) + 'px');
   }
 }
 

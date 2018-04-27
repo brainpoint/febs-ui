@@ -10,8 +10,10 @@ exports.showConfirmEdit = showConfirmEdit;
 */
 function resizeDialog(){
   var elem = $('.febsui-dialog-container');
+
+  var viewport = window.febs.dom.getViewPort();
   for (var i = 0; i < elem.length; i++) {
-    $(elem[i]).css('margin-top', parseInt((document.body.clientHeight - elem[i].clientHeight) / 2) + 'px');
+    $(elem[i]).css('margin-top', parseInt((viewport.height - elem[i].clientHeight) / 2) + 'px');
   }
 }
 
@@ -115,7 +117,7 @@ function showAlert(ctx) {
   }
 
   $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li style="width:100%"><a href="#0" class="febsui-dialog-cancel">' + ctx.okText + '</a></li></ul></div></div>'));
-	resizeDialog();
+  resizeDialog();
 
 	setTimeout(function () {
 		$('#'+uid).addClass('febsui-visible');

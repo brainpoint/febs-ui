@@ -15,7 +15,7 @@ $.fn.isDisabled = function() {
   return !!dis;
 }
 
-$.fn.disabled = function(isDisable) {
+$.fn.setDisabled = function(isDisable) {
 
   var ee = this;
 

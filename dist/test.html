@@ -1,10 +1,12 @@
+<!DOCTYPE>
 <html>
 
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <link rel="stylesheet" type="text/css" href="../dist/febsui/febsui.css" />
-  <script charset='UTF-8' type="text/javascript" src="../dist/febs/febs.min.js"></script>
+  <script charset='UTF-8' type="text/javascript" src="../dist/febs/febs.js"></script>
   <script charset='UTF-8' type="text/javascript" src="../dist/febsui/febsui.js"></script>
 </head>
 
@@ -73,7 +75,7 @@
   <script type="text/javascript">
     // toast.
     function showToast() { febsui.toast({ content: '这是一个toast提示' }); }
-    function showToastOk() { febsui.toast_hide(); }  //febsui.toast({ content: '这是一个toast提示', icon: 'ok' }); }
+    function showToastOk() { febsui.toast({ content: '这是一个toast提示', icon: 'ok' }); }
     function showToastError() { febsui.toast({ content: '这是一个toast提示', icon: 'error' }); }
     function showToastWarn() { febsui.toast({ content: '这是一个toast提示', icon: 'warn' }); }
 
@@ -200,14 +202,14 @@
     function switchDisable() {
       var switchs = $('switch');
       for (var i = 0; i < switchs.length; i++) {
-        switchs[i].disabled(!$(switchs[i]).isDisabled());
+        $(switchs[i]).setDisabled(!$(switchs[i]).isDisabled());
       }
     }
   </script>
 
   <!-- Popover -->
   <h2>Popover:</h2>
-  <popover style="top:50px; left:50px;" data-attach="#popoverAttach1" data-direction="bottom" data-offset="5">
+  <popover style="top:50px; left:50px;" data-attach="#popoverAttach1" data-offset="5">
     <div class="febsui-popover-cell">Call History</div>
     <div class="febsui-popover-cell">Scan QR</div>
     <div class="febsui-popover-cell">Pay</div>
@@ -217,6 +219,7 @@
 
   <!-- ActionSheet -->
   <h2>ActionSheet:<h2>
+  <button onclick="$('actionsheet').actionsheetShow();">show</button>
   <actionsheet>
     <div class="febsui-actionsheet-cell">menu 1</div>
     <div class="febsui-actionsheet-cell">menu 2</div>

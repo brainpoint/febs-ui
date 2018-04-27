@@ -6,7 +6,7 @@
 export class dom {
 
   /** common */
-  disabled(isDisable:boolean):dom;
+  setDisabled(isDisable:boolean):dom;
   isDisabled():boolean;
   /**
    * 判断第一个元素是否可见.

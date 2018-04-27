@@ -741,8 +741,10 @@ exports.showConfirmEdit = showConfirmEdit;
 */
 function resizeDialog() {
   var elem = $('.febsui-dialog-container');
+
+  var viewport = window.febs.dom.getViewPort();
   for (var i = 0; i < elem.length; i++) {
-    $(elem[i]).css('margin-top', parseInt((document.body.clientHeight - elem[i].clientHeight) / 2) + 'px');
+    $(elem[i]).css('margin-top', parseInt((viewport.height - elem[i].clientHeight) / 2) + 'px');
   }
 }
 
@@ -1166,7 +1168,7 @@ $.fn.isDisabled = function () {
   return !!dis;
 };
 
-$.fn.disabled = function (isDisable) {
+$.fn.setDisabled = function (isDisable) {
 
   var ee = this;
 
@@ -3530,11 +3532,12 @@ exports.actionsheet_init = actionsheet_init;
 function resizeActionsheet() {
   var elem = $('actionsheet');
 
+  var viewport = window.febs.dom.getViewPort();
   for (var i = 0; i < elem.length; i++) {
-    var span = (document.body.clientWidth - elem[i].clientWidth) / 2;
+    var span = (viewport.width - elem[i].clientWidth) / 2;
     span = Math.min(span, 15);
 
-    $(elem[i]).css('margin-top', parseInt(document.body.clientHeight - elem[i].clientHeight - span) + 'px');
+    $(elem[i]).css('margin-top', parseInt(viewport.height - elem[i].clientHeight - span) + 'px');
   }
 }
 
@@ -3925,7 +3928,7 @@ var crypt = __webpack_require__(10);
 
     var e = elem.children('.febsui-pagin');
     if (e && e.length > 0) {
-      e[0].remove();
+      $(e[0]).remove();
     }
 
     elem.append('<div class="febsui-pagin">\
@@ -3994,11 +3997,14 @@ $.fn.popoverShow = function (mask, attachNode) {
 
   var _this = typeof this.length === 'undefined' ? $(this) : this;
 
+  var viewport = window.febs.dom.getViewPort();
+
   for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
     if (ee[0].nodeName.toLowerCase() == 'popover') {
       ee = ee.parent();
     }
+
     if (ee.hasClass('febsui-popover')) {
 
       if (ee.isVisibile()) continue;
@@ -4013,49 +4019,161 @@ $.fn.popoverShow = function (mask, attachNode) {
         ee.removeClass('febsui-mask');
       }
 
-      ee.removeClass('febsui-invisible').addClass('febsui-visible');
-
       var eee = ee.children('popover');
       if (eee.length > 0) {
+        eee = $(eee[0]);
         // data-attach.
-        var attrAttach = attachNode ? attachNode : $(eee[0]).attr('data-attach');
+        var attrAttach = attachNode ? attachNode : eee.attr('data-attach');
         var attach = $(attrAttach)[0];
         if (attach) {
 
-          var top = attach.offsetTop - attach.offsetParent.scrollTop;
-          var left = attach.offsetLeft - attach.offsetParent.scrollLeft;
+          var attachOffset = window.febs.dom.getElementOffset(attach);
+
+          var top = attachOffset.top;
+          var left = attachOffset.left;
           var width = attach.offsetWidth;
           var height = attach.offsetHeight;
 
           var width2 = eee[0].offsetWidth;
           var height2 = eee[0].offsetHeight;
 
-          var offset = $(eee[0]).attr('data-offset');
+          var offset = eee.attr('data-offset');
           offset = window.febs.string.isEmpty(offset) ? 0 : parseInt(offset);
 
-          var attrDirection = $(eee[0]).attr('data-direction');
+          var attrDirection = eee.attr('data-direction');
           attrDirection = attrDirection ? attrDirection.toLowerCase() : 'auto';
+
           var dis2 = 11;
           var dis = dis2 + 4;
 
-          if (attrDirection == 'left') {
-            top = parseInt(top + height / 2 - offset - dis);
-            left = left + width + dis;
-          } else if (attrDirection == 'right') {
-            top = parseInt(top + height / 2 - offset - dis);
-            left = left - width2 - dis;
-          } else if (attrDirection == 'top') {
-            top = parseInt(top + height + dis);
-            left = parseInt(left + width / 2 - offset - dis);
-          } else if (attrDirection == 'bottom') {
-            top = parseInt(top - height2 - dis);
-            left = parseInt(left + width / 2 - offset - dis);
+          // auto.
+          // data-direction
+          if (attrDirection == 'auto') {
+            var direction2;
+
+            // if (attrDirection == 'bottom') {
+            if (!direction2) {
+              top = parseInt(attachOffset.top - height2 - dis);
+              if (top > dis2) {
+                left = parseInt(attachOffset.left + width / 2 - width2 / 2);
+                if (left > dis2 && left + width2 < viewport.width - dis2) {
+                  direction2 = 'bottom';
+                  offset = parseInt(width2 / 2 - dis2);
+                } else if (attachOffset.left > dis2 && dis2 + width2 < viewport.width) {
+                  left = dis2;
+                  if (left + width2 < attachOffset.left + width) left = attachOffset.left + width - width2;
+                  if (left + width2 < viewport.width - dis2) {
+                    direction2 = 'bottom';
+                    offset = parseInt(attachOffset.left - left + width / 2 - dis2);
+                  }
+                }
+              }
+            }
+            // }
+
+            // else if (attrDirection == 'top') {
+            if (!direction2) {
+              top = parseInt(attachOffset.top + height + dis);
+              if (top + height2 < viewport.height - dis2) {
+                left = parseInt(attachOffset.left + width / 2 - width2 / 2);
+                if (left > dis2 && left + width2 < viewport.width - dis2) {
+                  direction2 = 'top';
+                  offset = parseInt(width2 / 2 - dis2);
+                } else if (attachOffset.left > dis2 && dis2 + width2 < viewport.width) {
+                  left = dis2;
+                  if (left + width2 < attachOffset.left + width) left = attachOffset.left + width - width2;
+
+                  if (left + width2 < viewport.width - dis2) {
+                    direction2 = 'top';
+                    offset = parseInt(attachOffset.left - left + width / 2 - dis2);
+                  }
+                }
+              }
+            }
+            // }
+
+            // else if (attrDirection == 'left') {
+            if (!direction2) {
+              left = attachOffset.left + width + dis;
+              if (left + width2 < viewport.width - dis2) {
+                top = parseInt(attachOffset.top + height / 2 - height2 / 2 - dis);
+                if (top > dis2) {
+                  direction2 = 'left';
+                  offset = parseInt(height2 / 2);
+                } else if (attachOffset.top > dis2 && dis2 + height2 < viewport.height) {
+                  top = dis2;
+                  direction2 = 'left';
+                  offset = parseInt(attachOffset.top + height / 2 - top - dis);
+                }
+              }
+            }
+            // }
+
+            // else if (attrDirection == 'right') {
+            if (!direction2) {
+              left = attachOffset.left - width2 - dis;
+              if (left > dis2) {
+                top = parseInt(attachOffset.top + height / 2 - height2 / 2 - dis);
+                if (top > dis2) {
+                  direction2 = 'right';
+                  offset = parseInt(height2 / 2);
+                } else if (attachOffset.top > dis2 && dis2 + height2 < viewport.height) {
+                  top = dis2;
+                  direction2 = 'right';
+                  offset = parseInt(attachOffset.top + height / 2 - top - dis);
+                }
+              }
+            }
+            // }
+
+            // center.
+            if (!direction2) {
+              left = parseInt((viewport.width - width2) / 2);
+              top = parseInt((viewport.height - height2) / 2);
+              direction2 = 'bottom';
+              offset = parseInt(width2 / 2 - dis);
+            }
+
+            var arrow = eee.children('.febsui-popover-arrow');
+
+            arrow.removeClass('febsui-popover-arrow-left');
+            arrow.removeClass('febsui-popover-arrow-right');
+            arrow.removeClass('febsui-popover-arrow-top');
+            arrow.removeClass('febsui-popover-arrow-bottom');
+            arrow.addClass('febsui-popover-arrow-' + direction2);
+
+            if (direction2 == 'top' || direction2 == 'bottom') {
+              direction2 = 'left';
+            } else if (direction2 == 'left' || direction2 == 'right') {
+              direction2 = 'top';
+            }
+            arrow.css('top', '');
+            arrow.css('bottom', '');
+            arrow.css('left', '');
+            arrow.css('right', '');
+            arrow.css(direction2, offset + 'px');
+          } else {
+            if (attrDirection == 'left') {
+              top = parseInt(top + height / 2 - offset - dis);
+              left = left + width + dis;
+            } else if (attrDirection == 'right') {
+              top = parseInt(top + height / 2 - offset - dis);
+              left = left - width2 - dis;
+            } else if (attrDirection == 'top') {
+              top = parseInt(top + height + dis);
+              left = parseInt(left + width / 2 - offset - dis);
+            } else if (attrDirection == 'bottom') {
+              top = parseInt(top - height2 - dis);
+              left = parseInt(left + width / 2 - offset - dis);
+            }
           }
 
-          $(eee[0]).css('top', top + 'px');
-          $(eee[0]).css('left', left + 'px');
+          eee.css('top', top + 'px');
+          eee.css('left', left + 'px');
         }
       }
+
+      ee.removeClass('febsui-invisible').addClass('febsui-visible');
     }
   }
   return this;
@@ -4092,25 +4210,30 @@ function popover_init() {
       var direction = dom.attr('data-direction');
       direction = window.febs.string.isEmpty(direction) ? 'auto' : direction;
       direction = direction.toLowerCase();
-      var direction2;
-      if (direction != 'top' && direction != 'left' && direction != 'right' && direction != 'bottom') {
-        throw new Error('popover attribute data-direction only can be top/left/right/bottom');
-      }
-      if (direction == 'top' || direction == 'bottom') {
-        direction2 = 'left';
-      }
-      if (direction == 'left' || direction == 'right') {
-        direction2 = 'top';
+      if (direction != 'auto') {
+        var direction2;
+        if (direction != 'top' && direction != 'left' && direction != 'right' && direction != 'bottom') {
+          throw new Error('popover attribute data-direction only can be top/left/right/bottom');
+        }
+        if (direction == 'top' || direction == 'bottom') {
+          direction2 = 'left';
+        }
+        if (direction == 'left' || direction == 'right') {
+          direction2 = 'top';
+        }
+
+        // data-offset
+        var offset = dom.attr('data-offset');
+        offset = window.febs.string.isEmpty(offset) ? '10' : offset;
+        if (parseInt(offset) != offset) {
+          throw new Error('popover attribute data-offset only can be number');
+        }
+
+        dom.append('<div class="febsui-popover-arrow febsui-popover-arrow-' + direction + '" style="' + direction2 + ': ' + offset + 'px;"></div>');
+      } else {
+        dom.append('<div class="febsui-popover-arrow"></div>');
       }
 
-      // data-offset
-      var offset = dom.attr('data-offset');
-      offset = window.febs.string.isEmpty(offset) ? '10' : offset;
-      if (parseInt(offset) != offset) {
-        throw new Error('popover attribute data-offset only can be number');
-      }
-
-      dom.append('<div class="febsui-popover-arrow febsui-popover-arrow-' + direction + '" style="' + direction2 + ': ' + offset + ';"></div>');
       dom.addClass('febsui-popover-inited');
 
       var dd = $("<div class='febsui-popover'></div>");
