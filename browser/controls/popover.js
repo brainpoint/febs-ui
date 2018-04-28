@@ -38,6 +38,8 @@ $.fn.popoverShow = function(mask, attachNode) {
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
 
   var viewport = window.febs.dom.getViewPort();
+  var docport = window.febs.dom.getDocumentPort();
+  var docoffset = window.febs.dom.getElementOffset('html');
 
   for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
@@ -53,6 +55,9 @@ $.fn.popoverShow = function(mask, attachNode) {
       ee.one('click', function(){
         $(this).popoverHide();
       });
+
+      ee.css('height', docport.height+'px');
+      ee.css('width', docport.width+'px');
 
       if (mask) {
         ee.addClass('febsui-mask');
@@ -217,8 +222,8 @@ $.fn.popoverShow = function(mask, attachNode) {
             }
           }
 
-          eee.css('top', top+'px');
-          eee.css('left', left+'px');
+          eee.css('top', top-docoffset.top +'px');
+          eee.css('left', left-docoffset.left+'px');
         }
       }
 
