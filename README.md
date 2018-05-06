@@ -95,6 +95,53 @@ $('').hasVisibile();
 
 ```
 
+### initial ui
+
+对于非js调用创建的ui, 在编辑好html标签代码后, 需要调用相应的初始化方法进行控件初始化.
+
+页面加载完成`ready`事件触发后, 会自动调用一次初始化方法; 当如果在后续进行dom的修改添加新控件时, 需要手动调用初始化方法.
+
+初始化方法列表
+
+```js
+/**
+* @desc: 对页面上所有类型的ui控件进行初始化.
+*/
+export function ui_init();
+
+/**
+ * @desc 初始化页面上所有switch控件
+ *       默认在页面加载完成时会调用一次; 加入新的switch控件时需调用一次.
+ */
+export function ui_switch_init();
+
+/**
+* @desc: 初始化popover控件.
+*        对页面上 的所有 <popover> 元素进行初始化.
+*        在增加新的popover到页面后, 需要手动调用此方法.
+*/
+export function ui_popover_init();
+
+/**
+* @desc: 初始化actionSheet控件.
+*        对页面上 的所有 <actionsheet> 元素进行初始化.
+*        在增加新的actionsheet到页面后, 需要手动调用此方法.
+*/
+export function ui_actionSheet_init();
+/**
+* @desc: 初始化dialog控件.
+*        对页面上 的所有 <dialog> 元素进行初始化.
+*        在增加新的dialog到页面后, 需要手动调用此方法.
+*/
+export function ui_dialog_init():void;
+/**
+* @desc: 初始化uploader控件.
+*        对页面上 的所有 <uploader> 元素进行初始化.
+*        在增加新的uploader到页面后, 需要手动调用此方法.
+*/
+export function ui_uploader_init():void;
+```
+
 ### button
 
 ![](doc/ui/control-button.png)
@@ -165,6 +212,7 @@ febsui.loading_hide()
   * ctx.callback: function(){}	// 对话框消失后的回调.
   * ctx.center: 默认为false; 是否使用居中的显示方式.
   * }
+  *  or string.
   */
 febsui.toast( ctx );
 /**
@@ -198,6 +246,7 @@ febsui.dialog_hide( selector?:any );
 * ctx.confirm: function(){}	// 点击确认键的回调.
 * ctx.okText
 * }
+*  or string.
 */
 febsui.dialog_showAlert( ctx );
 
@@ -261,14 +310,6 @@ febsui.page_init(elem, curPage, pageCount, totalCount, pageCallback)
 
 ```js
 /**
-* @desc: 初始化dialog控件. (页面加载完成后会自动调用一次)
-*        对页面上 的所有 <dialog> 元素进行初始化.
-*        在增加新的dialog到页面后, 需要手动调用此方法.
-*/
-febsui.dialog_init();
-```
-```js
-/**
  * @desc 判断是否是popover
  */
 $('dialog').isDialog();
@@ -316,13 +357,6 @@ $('dialog').dialogHide();
 
 方法
 
-```js
-/**
- * @desc 初始化页面上所有switch控件 (页面加载完成后会自动调用一次)
- *       默认在页面加载完成时会调用一次; 加入新的switch控件时需调用一次.
- */
-febsui.switch_init();
-```
 ```js
 /**
  * @desc 判断是否是switch
@@ -389,14 +423,6 @@ $('switch').switchIsOn();
 
 ```js
 /**
-* @desc: 初始化popover控件. (页面加载完成后会自动调用一次)
-*        对页面上 的所有 <popover> 元素进行初始化.
-*        在增加新的popover到页面后, 需要手动调用此方法.
-*/
-febsui.popover_init();
-```
-```js
-/**
  * @desc 判断是否是popover
  */
 $('popover').isPopover();
@@ -443,14 +469,6 @@ $('popover').popoverHide();
 
 ```js
 /**
-* @desc: 初始化actionsheet控件. (页面加载完成后会自动调用一次)
-*        对页面上 的所有 <actionsheet> 元素进行初始化.
-*        在增加新的actionsheet到页面后, 需要手动调用此方法.
-*/
-febsui.actionsheet_init();
-```
-```js
-/**
  * @desc 判断是否是actionsheet
  */
 $('actionsheet').isActionsheet();
@@ -467,6 +485,54 @@ $('actionsheet').actionsheetHide();
 
 
 ### upload
+
+
+示例
+
+```html
+<html>
+  <uploader data-api="/upload" 
+         data-accept="application/zip" 
+       data-filename="true" 
+         data-finish="febsui.dialog_showAlert('upload ok')"
+         data-progress="onUploadProgress"
+         data-error="onUploadError">上传图片</uploader>
+  
+  <script>
+    function onUploadProgress(percent) {
+      console.log(percenter);
+    }
+
+    function onUploadError(err) {
+      console.log(err);  
+    }
+  </script>
+
+</html>
+```
+
+属性
+
+| 属性 | 说明 | 值 |
+|----|----|----|
+| data-api | 上传文件的api地址 |   |
+| data-accept |  接受文件的类型 | (可选) MIME_type值  |
+| data-filename |  是否显示选中的文件名  | (可选) true |
+| data-finish | 上传成功的回调  | (可选) function(serverData) {} |
+| data-progress | 上传进度的回调  | (可选) function(percent) {} |
+| data-error | 上传错误的回调  | (可选) function(err) {}; err可能的值有:  <br> febsui.uploadErr.nofile - 未选择文件<br> febsui.uploadErr.sizeExceed - 文件太大<br> febsui.uploadErr.crc32 - 计算本地文件hash值时错误<br> febsui.uploadErr.net - ajax上传时出错<br> 其他 |
+| data-maxsize | 最大的文件字节大小 | (可选) 10240 |
+
+
+方法
+
+```js
+/**
+ * @desc 重设为未开始上传的样式
+ */
+$('uploader').uploaderReset();
+```
+
 
 上传控件配合 `febs` 库使用.
 
@@ -499,11 +565,12 @@ $('actionsheet').actionsheetHide();
   *                uploadUrl:  , // 上传文件内容的url. 系统将自动使用 uploadUrl?crc32=&size=的方式来上传.
   *                maxFileSize:    , // 允许上传的最大文件.0表示无限制.默认为0
   *                fileType:     , // 允许的文件类型.  如: image/gif,image/jpeg,image/x-png
+  *                beginCB:     , // 上传开始的回调. function(uploader); 调用uploader.abort() 可以停止上传.
   *                finishCB:    , // 上传完成后的回调. function(err, fileObj, serverData)
-  *                               //                   err:  - 'no file'      未选择文件.
-  *                               //                         - 'size too big' 文件太大.
-  *                               //                         - 'check crc32 err' 计算本地文件hash值时错误.
-  *                               //                         - 'ajax err'     ajax上传时出错.
+ *                               //                   err:  - febsui.uploadErr.nofile      未选择文件.
+ *                               //                         - febsui.uploadErr.sizeExceed  文件太大.
+ *                               //                         - febsui.uploadErr.crc32       计算本地文件hash值时错误.
+ *                               //                         - febsui.uploadErr.net         ajax上传时出错.
   *                               //                   serverData: 服务器返回的数据.
   *                progressCB:  , // 上传进度的回调. function(fileObj, percent),
   *                headers: {     // 设置request headers
@@ -571,11 +638,12 @@ function upload() {
  *                headerUrl:  , // 上传开始前的header请求地址.
  *                uploadUrl:  , // 上传文件内容的url.
  *                chunkSize:  1024*20,  // 每次上传的块大小.默认20kb
+ *                beginCB:     , // 上传开始的回调. function(uploader); 调用uploader.abort() 可以停止上传.
  *                finishCB:    , // 上传完成后的回调. function(err, serverData)
- *                               //                   err:  - 'no file'      未选择文件.
- *                               //                         - 'size too big' 文件太大.
- *                               //                         - 'check crc32 err' 计算本地文件hash值时错误.
- *                               //                         - 'ajax err'     ajax上传时出错.
+ *                               //                   err:  - febsui.uploadErr.nofile      未选择文件.
+ *                               //                         - febsui.uploadErr.sizeExceed  文件太大.
+ *                               //                         - febsui.uploadErr.crc32       计算本地文件hash值时错误.
+ *                               //                         - febsui.uploadErr.net         ajax上传时出错.
  *                               //                   serverData: 服务器返回的数据. 至少包含一个filename
  *                progressCB:  , // 上传进度的回调. function(percent)
  *              }

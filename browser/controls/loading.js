@@ -11,31 +11,6 @@ function escape_string(str) {
   return str;
 }
 
-( function( global, factory ) {
-
-	"use strict";
-
-	if ( typeof module === "object" && typeof module.exports === "object" ) {
-
-		// For CommonJS and CommonJS-like environments where a proper `window`
-		// For environments that do not have a `window` with a `document`
-		// (such as Node.js), expose a factory as module.exports.
-		// This accentuates the need for the creation of a real `window`.
-		module.exports = global.document ?
-			factory( global, true ) :
-			function( w ) {
-				if ( !w.document ) {
-					throw new Error( "febs-ui requires a window with a document" );
-				}
-				return factory( w );
-			};
-	} else {
-		factory( global );
-	}
-
-// Pass this if window is not defined yet
-} )( typeof window !== "undefined" ? window : this, function( window, noGlobal ) {
-
 'use strict';
 
 const loading_tag_name = 'febsui_loading_span_s23153dd12ax1';
@@ -45,12 +20,10 @@ var control_loading_text_elemFunc;
 var control_loading_text_hideFunc;
 var control_loading_text_array;
 
-var controls = {};
-
 /**
 * @desc: 当前是否显示.
 */
-controls.loading_isVisiable = function() {
+exports.loading_isVisiable = function() {
   if (control_loading_timer)
     return true;
   
@@ -86,10 +59,10 @@ function loading_show(text, timeout) {
     }, timeout);
   }
   else {
-    $('#' + loading_tag_name).html('<div class="febsui-loading-c"><div class="febsui-loading"><div class="febsui-loading-spin"></div><p style="margin-left:auto;margin-right:auto;text-align:center;max-width:200px;">' + (text ? text : '') + '</p></div></div>');
+    $('#' + loading_tag_name).html('<div class="febsui-loading-c"><div class="febsui-loading"><div class="febsui-loading-spin"></div><p>' + (text ? text : '') + '</p></div></div>');
   }
 }
-controls.loading_show = loading_show;
+exports.loading_show = loading_show;
 
 /**
 * @desc: 通过每500ms改变文本的方式显示加载框; 例如显示 3,2,1,3,2,1循环显示.
@@ -98,7 +71,7 @@ controls.loading_show = loading_show;
 * @param hideCB:  隐藏加载框时的设置文本的函数. function().
 * @return: 
 */
-controls.loading_show_text = function(textArray, changeTextCB, hideCB) {
+exports.loading_show_text = function(textArray, changeTextCB, hideCB) {
 
   var e = $('body').children('#' + loading_tag_name);
   if (!e || e.length == 0) {
@@ -133,7 +106,7 @@ controls.loading_show_text = function(textArray, changeTextCB, hideCB) {
 * @desc: 隐藏加载对话框
 * @return: 
 */
-controls.loading_hide = function() {
+exports.loading_hide = function() {
   var e = $('body').children('#' + loading_tag_name);
   if (!e || e.length == 0) {
     $('body').prepend(('<span id="' + loading_tag_name + '"></span>'));
@@ -157,7 +130,3 @@ controls.loading_hide = function() {
 
   $('#' + loading_tag_name).html('');
 }
-
-return controls;
-}
-);

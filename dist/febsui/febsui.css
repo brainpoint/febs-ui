@@ -12,10 +12,14 @@
    font-family: -apple-system, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
-   -webkit-user-select: none;
-   -moz-user-select: none;
-   -ms-user-select: none;
-   user-select: none;
+   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -khtml-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
  }
 
  /**
@@ -76,18 +80,31 @@
    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABCCAYAAADjVADoAAACXUlEQVR4Xu3aq04DURAG4H8cEgyvgCIBCw7DA0EIslVAgDfhBRCEBE+CROJwaNyQlm2ybXbTmT0zc7bp1NRsz+Xbf85eegj5mQtQOvwLJESThIRIiOVFIRORichEdF4oszSyNLI07EqDmSfzuzGi+fcYPsy8B+AJwBURvWvHpF4jmPkawE3T0XQMGMy8C+AVwBGAHwCnRPSpwVBBMPMFgIeVDqpirCAshvYN4ISIvqQYYghm3gHwAeCgo/EJEU2lnVod15TDC4DjjjZnJXIv7UsMMWuQmfcBvPVghCajJwmLeavHooIYC4Y1wuDH8CYZz83itJo+9dmQxrc5Ee2F0axvdSIWPXuclXUgnn0OhvA8O10gngiDS6M9UO8BRoEXJSKiTCKgTRLhiRGFYAphHeFIBHMIK4xoBBeIUowaCG4QQzFqIbhCaDFqIrhDSDFqI4RACDDuAJzXeG5p3xia3FCte0YQYHQ14frwttphGIQSIxQhrDQ6nk1mL3cOe5IUjpAQrTORpdFghEGsuURux2K5BmE7Lp+SmyXJMZJLdMkxrqWhmaDm2JIJ9/3WDWLIxIb8xgrFBaJkQiW/LUExh7CYiEUbWhRTCMsJWLYlQTGD8Bi4R5uui6XnX4BRGMWJiPiHPAKjCCICYRFlb4zBEJEIERiDIGogeGOoIWoieGKoIMaA4IUhhtjAzWSXRPQouZlSv6rbsO2FZ5q9luJEtCKZG05bGLcAfsew67Y1ptgtyNKa27Tj1KWxaROUjjchol/nS89MreMyEZmI5exlIjIRmYjO9ThLI0tjORh/kgGVUghHpeMAAAAASUVORK5CYII=) 0% 0% / 100% no-repeat;
  }
  
+
+/****************************************************/
  /* control loading */
+/****************************************************/
+
+/*
+<span>
+  <div class="febsui-loading-c">
+    <div class="febsui-loading">
+      <div class="febsui-loading-spin"></div>
+      <p>1秒后关闭</p>
+    </div>
+  </div>
+</span> */
  
  .febsui-loading-c {
-   position: fixed;
-   left: 0;
-   top: 0;
-   height: 100%;
-   width: 100%;
-   background-color: rgba(255, 255, 255, 0.0001);
-   opacity: 1;
-   z-index: 999999;
-   text-align: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.0001);
+  opacity: 1;
+  z-index: 999999;
+  text-align: center;
  }
  
  .febsui-loading {
@@ -134,10 +151,33 @@
  
  .febsui-loading p {
    padding-top: 50px;
-   margin: 0px 0px 0px 0px;
+   margin-top: 0px;
+   margin-bottom: 0px;
+   margin-left: auto;
+   margin-right: auto;
+   text-align:center;
+   max-width:200px;
  }
  
+
+/****************************************************/
  /* control pager */
+/****************************************************/
+
+ /*
+ <div class="febsui-pagin">
+  <div class="message"> 共<i class="blue">25</i>条记录，当前显示第<i class="blue">12</i>页 </div>
+  <ul class="febsui-paginList">
+    <li class="febsui-paginItem"><a><span class="febsui_pagepre"></span></a></li>
+    <li class="febsui-paginItem"><a>1</a></li>
+    <li class="febsui-paginItem"><a>2</a></li>
+    <li class="febsui-paginItem"><a>3</a></li>
+    <li class="febsui-paginItem febsui-pagin-current"><a>4</a></li>
+    <li class="febsui-paginItem"><a>5</a></li>
+    <li class="febsui-paginItem"><a>...</a></li>
+    <li class="febsui-paginItem"><a><span class="febsui_pagenxt_no"></span></a></li>
+  </ul>
+</div> */
  
  .febsui-pagin {
    position: relative;
@@ -182,6 +222,7 @@
    line-height: 30px;
    border-left: none;
    color: #3399d5;
+   text-decoration: none;
  }
  
  .febsui-pagin .febsui-paginList .febsui-paginItem:first-child a {
@@ -246,8 +287,45 @@
    height: 28px;
  }
  
+
  /* febsui-toast */
  
+
+/****************************************************/
+ /* no icon */
+/****************************************************/
+/*
+<div class="febsui-toast" role="alert">
+ <div class="febsui-toast-container">
+   <div class="febsui-dialog-msg">这是一个toast提示</div>
+ </div>
+</div> */
+
+
+/****************************************************/
+ /* with icon */
+/****************************************************/
+/*
+<div class="febsui-toast" role="alert">
+ <div class="febsui-toast-container">
+   <div class="febsui-icon febsui-icon-ok"></div>
+   <div class="febsui-dialog-msg" style="padding-left:30px;">这是一个toast提示</div>
+ </div>
+</div> */
+
+
+/****************************************************/
+/* show in center */
+/****************************************************/
+/*
+<div class="febsui-toast febsui-toast-center" role="alert">
+  <div class="febsui-toast-container">
+    <div class="febsui-icon febsui-icon-ok"></div>
+    <div class="febsui-dialog-msg">完成</div>
+  </div>
+</div> */
+
+
  .febsui-toast {
    text-align: center;
    position: fixed;
@@ -336,19 +414,67 @@
  }
  
  /* febsui-dialog */
+
+/****************************************************/
+ /* alert */
+/****************************************************/
+ /*
+<div class="febsui-dialog febsui-mask" role="alert">
+  <div class="febsui-dialog-container">
+    <div class="febsui-dialog-title">title</div>
+    <div class="febsui-dialog-content">content</div>
+    <ul class="febsui-dialog-buttons">
+      <li><a class="febsui-dialog-cancel">ok</a></li>
+    </ul>
+  </div>
+</div> */
+
+/****************************************************/
+/* confirm */
+/****************************************************/
+/*
+<div class="febsui-dialog febsui-mask" role="alert">
+  <div class="febsui-dialog-container">
+    <div class="febsui-dialog-title">title</div>
+    <div class="febsui-dialog-content">content</div>
+    <ul class="febsui-dialog-buttons">
+      <li><a class="febsui-dialog-cancel">cancel</a></li>
+      <li><a class="febsui-dialog-ok">ok</a></li>
+    </ul>
+  </div>
+</div> */
  
+/****************************************************/
+/* editor */
+/****************************************************/
+/*
+<div class="febsui-dialog febsui-mask" role="alert">
+  <div class="febsui-dialog-container">
+    <div class="febsui-dialog-title">title</div>
+    <div class="febsui-dialog-content">content</div>
+    <div class="febsui-dialog-edit">
+      <input class="febsui-dialog-input-text" type="text" value="">
+    </div>
+    <ul class="febsui-dialog-buttons">
+      <li><a class="febsui-dialog-cancel">cancel</a></li>
+      <li><a class="febsui-dialog-ok">ok</a></li>
+    </ul>
+  </div>
+</div> */
+
+/****************************************************/
+/* custom */
+/****************************************************/
+/* 
+<div class="febsui-dialog febsui-mask" role="alert">
+  <dialog style="" class="febsui-dialog-container">
+    {{html}}
+  </dialog>
+</div> */
+
  .febsui-mask {
   background: transparent;
   background-color: rgba(0, 0, 0, .2);
- }
-
- .febsui-dialog .img-replace {
-   /* replace text with an image */
-   display: inline-block;
-   overflow: hidden;
-   text-indent: 100%;
-   color: transparent;
-   white-space: nowrap;
  }
  
  .febsui-dialog a {
@@ -371,12 +497,12 @@
  }
  
  .febsui-dialog a,
- dl,
- dt,
- dd,
- ol,
- ul,
- li {
+ .febsui-dialog dl,
+ .febsui-dialog dt,
+ .febsui-dialog dd,
+ .febsui-dialog ol,
+ .febsui-dialog ul,
+ .febsui-dialog li {
    margin: 0;
    padding: 0;
    border: 0;
@@ -398,7 +524,7 @@
    padding-top: 16px;
    background-color: rgba(255, 255, 255, 0.99);
    text-align: center;
-   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+   box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
    -webkit-transform: translateY(-40px);
    -moz-transform: translateY(-40px);
    -ms-transform: translateY(-40px);
@@ -499,7 +625,7 @@
    text-decoration: blink;
    display: block;
    font-size: 16px;
-   height: 44;
+   height: 44px;
    line-height: 44px;
    /* text-transform: uppercase; */
    color: #3A77EE;
@@ -520,48 +646,14 @@
    border-left-style: solid;
    border-left-width: 1px;
  }
- 
- .febsui-dialog .febsui-dialog-container .febsui-dialog-close {
-   position: absolute;
-   top: 8px;
-   right: 8px;
-   width: 30px;
-   height: 30px;
- }
- 
- .febsui-dialog .febsui-dialog-container .febsui-dialog-close::before,
- .febsui-dialog .febsui-dialog-container .febsui-dialog-close::after {
-   content: '';
-   position: absolute;
-   top: 12px;
-   width: 14px;
-   height: 3px;
-   /* background-color: #8f9cb5; */
- }
- 
- .febsui-dialog .febsui-dialog-container .febsui-dialog-close::before {
-   -webkit-transform: rotate(45deg);
-   -moz-transform: rotate(45deg);
-   -ms-transform: rotate(45deg);
-   -o-transform: rotate(45deg);
-   transform: rotate(45deg);
-   left: 8px;
- }
- 
- .febsui-dialog .febsui-dialog-container .febsui-dialog-close::after {
-   -webkit-transform: rotate(-45deg);
-   -moz-transform: rotate(-45deg);
-   -ms-transform: rotate(-45deg);
-   -o-transform: rotate(-45deg);
-   transform: rotate(-45deg);
-   right: 8px;
- }
- 
+
  .febsui-dialog .febsui-dialog-container .febsui-dialog-ok {
+   cursor: pointer;
    font-weight: 400;
  }
  
  .febsui-dialog .febsui-dialog-container .febsui-dialog-cancel {
+   cursor: pointer;
    font-weight: 600;
  }
  
@@ -578,13 +670,21 @@ dialog {
   max-width: inherit !important;
 }
  
+
+/****************************************************/
  /* switch: use honeySwitch  */
- 
+/****************************************************/
+
+/*
+<switch class="febsui-switch-on">
+  <span class="febsui-switch-slider"></span>
+</switch> */
+
  switch {
    position: relative;
    display: inline-block;
-   width: 40px !important;
-   height: 24px !important;
+   width: 50px !important;
+   height: 30px !important;
    border-radius: 16px !important;
    line-height: 32px !important;
    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
@@ -602,8 +702,8 @@ dialog {
  .febsui-switch-slider {
    position: absolute;
    display: inline-block;
-   width: 22px;
-   height: 22px;
+   width: 28px;
+   height: 28px;
    background: white;
    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
    border-radius: 50%;
@@ -621,7 +721,7 @@ dialog {
  switch .febsui-switch-slider,
  .febsui-switch-on .febsui-switch-slider {
    top: 1px;
-   left: 17px;
+   left: 21px;
    transition: background-color 0.4s, left 0.2s;
  }
  
@@ -645,7 +745,10 @@ dialog {
    cursor: auto;
  }
  
+
+/****************************************************/
  /* button */
+/****************************************************/
  
  button,
  .btn {
@@ -798,7 +901,18 @@ dialog {
   border-color: #FF0017
  }
  
+/****************************************************/
  /* popover */
+/****************************************************/
+/* 
+<div class="febsui-popover febsui-mask">
+  <popover>
+    <div class="febsui-popover-arrow"></div>
+    <div class="febsui-popover-cell">cell1</div>
+    <div class="febsui-popover-cell">cell2</div>
+    <div class="febsui-popover-cell">cell3</div>
+  </popover>
+</div> */
  
  .febsui-popover {
    /* position: fixed; */
@@ -836,10 +950,10 @@ dialog {
    position: absolute;
    width: 16px;
    height: 16px;
-   /* webkit */
-   /* background-color: transparent; */
    /* ie9 */
    background-color: #fff;
+   /* webkit */
+   background-color: transparent;
    margin: 0;
    z-index: 100000;
  }
@@ -850,11 +964,11 @@ dialog {
    -moz-transform-origin: 50% 50% 0;
    -ms-transform-origin: 50% 50% 0;
    transform-origin: 50% 50% 0;
-   -webkit-transform: translateY(-8px) translateX(8px) rotate(135deg);
-   -moz-transform: translateY(-8px) translateX(8px) rotate(135deg);
-   -ms-transform: translateY(-8px) translateX(8px) rotate(135deg);
-   transform: translateY(-8px) translateX(8px) rotate(135deg);
-   background-image: linear-gradient(45deg, #fff, #fff 50%, transparent 0);
+   -webkit-transform: translateY(-9px) translateX(9px) rotate(135deg);
+   -moz-transform: translateY(-9px) translateX(9px) rotate(135deg);
+   -ms-transform: translateY(-9px) translateX(9px) rotate(135deg);
+   transform: translateY(-9px) translateX(9px) rotate(135deg);
+   background-image: linear-gradient(45deg, #fff, #fff 51%, transparent 0);
    border-radius: 0 0 0 4px;
    border-left-color: rgba(0, 0, 0, 0.1);
    border-left-style: solid;
@@ -870,11 +984,11 @@ dialog {
    -moz-transform-origin: 50% 50% 0;
    -ms-transform-origin: 50% 50% 0;
    transform-origin: 50% 50% 0;
-   -webkit-transform: translateY(8px) translateX(8px) rotate(135deg);
-   -moz-transform: translateY(8px) translateX(8px) rotate(135deg);
-   -ms-transform: translateY(8px) translateX(8px) rotate(135deg);
-   transform: translateY(8px) translateX(8px) rotate(135deg);
-   background-image: linear-gradient(225deg, #fff, #fff 50%, transparent 0);
+   -webkit-transform: translateY(9px) translateX(9px) rotate(135deg);
+   -moz-transform: translateY(9px) translateX(9px) rotate(135deg);
+   -ms-transform: translateY(9px) translateX(9px) rotate(135deg);
+   transform: translateY(9px) translateX(9px) rotate(135deg);
+   background-image: linear-gradient(225deg, #fff, #fff 51%, transparent 0);
    border-radius: 0 4px 0 0;
    border-right-color: rgba(0, 0, 0, 0.1);
    border-right-style: solid;
@@ -890,11 +1004,11 @@ dialog {
    -moz-transform-origin: 50% 50% 0;
    -ms-transform-origin: 50% 50% 0;
    transform-origin: 50% 50% 0;
-   -webkit-transform: translateY(8px) translateX(-8px) rotate(135deg);
-   -moz-transform: translateY(8px) translateX(-8px) rotate(135deg);
-   -ms-transform: translateY(8px) translateX(-8px) rotate(135deg);
-   transform: translateY(8px) translateX(-8px) rotate(135deg);
-   background-image: linear-gradient(-45deg, #fff, #fff 50%, transparent 0);
+   -webkit-transform: translateY(9px) translateX(-9px) rotate(135deg);
+   -moz-transform: translateY(9px) translateX(-9px) rotate(135deg);
+   -ms-transform: translateY(9px) translateX(-9px) rotate(135deg);
+   transform: translateY(9px) translateX(-9px) rotate(135deg);
+   background-image: linear-gradient(-45deg, #fff, #fff 51%, transparent 0);
    border-radius: 0 0 4px 0;
    border-right-color: rgba(0, 0, 0, 0.1);
    border-right-style: solid;
@@ -910,11 +1024,11 @@ dialog {
    -moz-transform-origin: 50% 50% 0;
    -ms-transform-origin: 50% 50% 0;
    transform-origin: 50% 50% 0;
-   -webkit-transform: translateY(8px) translateX(8px) rotate(135deg);
-   -moz-transform: translateY(8px) translateX(8px) rotate(135deg);
-   -ms-transform: translateY(8px) translateX(8px) rotate(135deg);
-   transform: translateY(8px) translateX(8px) rotate(135deg);
-   background-image: linear-gradient(135deg, #fff, #fff 50%, transparent 0);
+   -webkit-transform: translateY(9px) translateX(9px) rotate(135deg);
+   -moz-transform: translateY(9px) translateX(9px) rotate(135deg);
+   -ms-transform: translateY(9px) translateX(9px) rotate(135deg);
+   transform: translateY(9px) translateX(9px) rotate(135deg);
+   background-image: linear-gradient(135deg, #fff, #fff 51%, transparent 0);
    border-radius: 0 0 4px 0;
    border-left-color: rgba(0, 0, 0, 0.1);
    border-left-style: solid;
@@ -934,12 +1048,12 @@ dialog {
    text-align: left;
    vertical-align: middle;
    user-select: none;
-   padding-top: 8px;
-   padding-bottom: 8px;
+   padding-top: 12px;
+   padding-bottom: 12px;
    padding-left: 14px;
    padding-right: 8px;
    font-size: 1rem;
-   line-height: 1.25;
+   line-height: 1.2em;
    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
    white-space: nowrap;
    word-wrap: break-word;
@@ -949,9 +1063,6 @@ dialog {
    text-overflow: ellipsis;
    overflow-x: hidden;
    overflow-y: hidden;
-   border-bottom-color: rgba(199, 199, 199, 0.77);
-   border-bottom-style: solid;
-   border-bottom-width: 1px;
    
    -webkit-box-shadow: none;
    -moz-box-shadow: none;
@@ -962,6 +1073,28 @@ dialog {
 
    color: #000;
    background-color: rgba(0, 0, 0, 0);
+
+   border-bottom: 1px solid #eee;
+   border-bottom: none;
+   background-size: 100% 1px;
+   background-repeat: no-repeat;
+   background-position: bottom;
+   background-image: linear-gradient(0deg,#eee,#eee 100%)
+ }
+
+
+ popover .febsui-popover-cell:last-of-type,
+ actionsheet .febsui-actionsheet-cell:last-of-type
+{
+  border: none;
+  background-image: none
+}
+
+ @media (-webkit-min-device-pixel-ratio: 2),(min-resolution:192dpi) {
+  popover .febsui-popover-cell,
+  actionsheet .febsui-actionsheet-cell {
+      background-image:linear-gradient(0deg,#ccc,#ccc 50%,transparent 0);
+  }
  }
 
 popover .febsui-popover-cell:hover,
@@ -974,7 +1107,23 @@ popover .febsui-popover-cell:hover,
   border: none !important;
 } 
 
+/****************************************************/
  /* actionsheet */
+/****************************************************/
+/* 
+<div class="febsui-actionsheet febsui-mask">
+  <actionsheet>
+    <div class="febsui-actionsheet-group">
+      <div class="febsui-actionsheet-cell">menu 1</div>
+      <div class="febsui-actionsheet-cell">menu 2</div>
+      <div class="febsui-actionsheet-cell">menu 3</div>
+      <div class="febsui-actionsheet-cell">menu 4</div>
+    </div>
+    <div class="febsui-actionsheet-group" style="margin-top:5px;">
+      <div class="febsui-actionsheet-cancel febsui-actionsheet-cell">cancel</div>
+    </div>
+  </actionsheet>
+</div> */
  
  .febsui-actionsheet {
   position: fixed;
@@ -1018,6 +1167,13 @@ actionsheet {
   -webkit-transition-duration: 0.3s;
   -moz-transition-duration: 0.3s;
   transition-duration: 0.3s;
+
+  bottom: 5px;
+  left: 0px;
+  right: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
 }
 
 actionsheet .febsui-actionsheet-group {
@@ -1063,90 +1219,143 @@ actionsheet .febsui-actionsheet-cell:active {
 }
 
 
- /* upload */
- 
- .febsui-upload {
+/****************************************************/
+ /* uploader */
+/****************************************************/
+/* 
+<uploader>
+  <form method="post" role="form" enctype="multipart/form-data" style="display:none">
+    <input type="file">
+  </form>
+  <label>
+    <div class="btn">上传图片</div>
+    <div class="febsui-uploader-progress">
+      <div class="febsui-uploader-progress-bg" style="width:0%;"></div>
+      <span class="febsui-uploader-filename febsui-ellipsis"></span>
+      <span class="febsui-uploader-right">0%</span>
+    </div>
+  </label>
+  <div class="febsui-uploader-progress-cancel"></div>
+</uploader> */
+
+ uploader, .febsui-uploader {
    display: inline-block;
    text-align: center;
-   min-width: 60px;
- }
- 
- .febsui-upload button {
-   margin: 0px auto;
- }
- 
- .febsui-upload .febsui-upload-progress {
-   width: 100%;
-   height: 20px;
-   border: 1px solid transparent;
-   border-radius: .25rem;
    position: relative;
+   min-width: 120px;
+   min-height: 38px;
+   line-height: 38px;
  }
  
- .febsui-upload .febsui-upload-progress-bg {
+ uploader label,
+.febsui-uploader label {
+  cursor: pointer;
+  margin: 0px auto;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+ }
+
+ uploader label .btn,
+.febsui-uploader label .btn {
+  margin: 0px auto;
+  padding: 0;
+  line-height: 38px;
+ }
+
+ uploader .febsui-uploader-progress,
+.febsui-uploader .febsui-uploader-progress {
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   text-align: center;
+   top: 0px;
+   bottom: 0px;
+   left: 0px;
+   right: 30px;
+ }
+
+ uploader .febsui-uploader-progress-bg,
+.febsui-uploader .febsui-uploader-progress-bg {
    position: absolute;
    left: 0px;
    top: 0px;
+   bottom: 0px;
    width: 10%;
-   height: 100%;
    border-radius: .25rem;
    background-color: #1991EB;
  }
  
- .febsui-upload .febsui-upload-progress span {
+ uploader .febsui-uploader-progress span,
+ .febsui-uploader .febsui-uploader-progress span {
    position: absolute;
    top: 0;
-   left: 0.5;
-   right: 0.5;
+   bottom: 0;
+   left: 0;
+   right: 0;
    color: #3c3c3c;
    font-size: 10px;
-   line-height: 2;
  }
  
- .febsui-upload .febsui-upload-progress .febsui-upload-progress-cancel {
+ uploader .febsui-uploader-progress .febsui-uploader-right,
+ .febsui-uploader .febsui-uploader-progress .febsui-uploader-right {
+   text-align: right;
+   left: auto;
+   right: 5px;
+ }
+
+ uploader .febsui-uploader-progress .febsui-uploader-filename,
+.febsui-uploader .febsui-uploader-progress .febsui-uploader-filename {
+  text-align: left;
+  left: 5px;
+  right: 35px;
+}
+
+ uploader .febsui-uploader-progress-cancel,
+ .febsui-uploader .febsui-uploader-progress-cancel {
+   display: none;
+   cursor: pointer;
+   position: absolute;
+   top: 0px;
+   bottom: 0px;
+   right: 0px;
+   width: 30px;
+   height: 16px;
+   padding: 2px;
+   border-radius: 50%;
+ }
+
+ uploader .febsui-uploader-progress-cancel::after,
+ .febsui-uploader .febsui-uploader-progress-cancel::after {
+   content: '取消';
+   font-size: 10px;
+   color: #2e86d4;
+ }
+ 
+ /* uploader .febsui-uploader-progress .febsui-uploader-progress-cancel,
+ .febsui-uploader .febsui-uploader-progress .febsui-uploader-progress-cancel {
    cursor: pointer;
    display: none;
    position: absolute;
-   top: 0;
-   right: 0;
+   top: -5px;
+   right: -5px;
    width: 16px;
    height: 16px;
    padding: 2px;
-   background-color: #ff0000;
    border-radius: 50%;
- }
- 
- .febsui-upload .febsui-upload-progress .febsui-upload-progress-cancel .febsui-icon {
+ } */
+
+ /* uploader .febsui-uploader-progress .febsui-uploader-progress-cancel .febsui-icon,
+ .febsui-uploader .febsui-uploader-progress .febsui-uploader-progress-cancel .febsui-icon {
    width: 100%;
    height: 100%;
- }
+ } */
  
- .febsui-upload:hover .febsui-upload-progress-cancel {
+ /* uploader:hover .febsui-uploader-progress-cancel,
+ .febsui-uploader:hover .febsui-uploader-progress-cancel {
    display: block;
- }
+ } */
  
- /* border */
- 
- .febsui-border-top {
-   border-top-color: rgba(215, 221, 228, 0.77);
-   border-top-style: solid;
-   border-top-width: 1px;
- }
- 
- .febsui-border-bottom {
-   border-bottom-color: rgba(215, 221, 228, 0.77);
-   border-bottom-style: solid;
-   border-bottom-width: 1px;
- }
- 
- .febsui-border-left {
-   border-left-color: rgba(215, 221, 228, 0.77);
-   border-left-style: solid;
-   border-left-width: 1px;
- }
- 
- .febsui-border-right {
-   border-right-color: rgba(215, 221, 228, 0.77);
-   border-right-style: solid;
-   border-right-width: 1px;
- }

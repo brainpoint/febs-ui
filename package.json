@@ -1,7 +1,7 @@
 {
   "description": "Some UI in common use",
   "dependencies": {
-    "febs-browser": "^0.8.5"
+    "febs-browser": "^0.8.11"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -23,11 +23,12 @@
     "es3ify-webpack-plugin": "0.0.1",
     "es5-shim": "^4.5.10",
     "es6-promise": "^4.2.4",
-    "febs": "^0.6.9",
+    "febs": "^0.8.7",
     "ora": "^2.0.0",
     "tap": "^10.1.0",
     "uglify-js": "^3.2.1",
-    "webpack": "^2.6.1"
+    "webpack": "^2.6.1",
+    "webpack-bundle-analyzer": "^2.11.1"
   },
   "keywords": [
     "jquery",

@@ -1,10 +1,8 @@
-
-// require('es5-shim');
-// require('es5-shim/es5-sham');
-// require('console-polyfill');
-// require('babel-polyfill');
-// require('../third-party/bluebird.min.js');
-// require('../third-party/bignumber.min.js');
+/**
+ * Copyright (c) 2017 Copyright brainpoint All Rights Reserved.
+ * Author: lipengxiang
+ * Desc:
+ */
 
 
 ( function( global, factory ) {
@@ -21,7 +19,7 @@
 			factory( global, true ) :
 			function( w ) {
 				if ( !w.document ) {
-					throw new Error( "febsui requires a window with a document" );
+					throw new Error( "febs-ui requires a window with a document" );
 				}
 				return factory( w );
 			};
@@ -32,28 +30,22 @@
 // Pass this if window is not defined yet
 } )( typeof window !== "undefined" ? window : this, function( window, noGlobal ) {
 
+'use strict';
 
-/**
- * jquery plugins.
- */
-require('./plugins/isVisibile');
-require('./plugins/hasVisibile');
+if ( !window.febs ) {
+  throw new Error( "febs-ui requires febs" );
+}
 
-var febsui = require('./controls');
-window['febsui'] = febsui;
+var err_nofile = 'nofile error';  // 未选择文件.
+var err_sizeExceed = 'sizeExceed error';  // 文件太大.
+var err_crc32 = 'crc32 error';    // 计算本地文件hash值时错误.
+var err_net = 'network error';    // ajax上传时出错.
 
-
-/**
- * jquery plugins.
- */
-require('./plugins/disabled');
-
-require('./plugins/actionsheet');
-require('./plugins/dialog');
-require('./plugins/popover');
-require('./plugins/switch');
-require('./plugins/uploader');
-
-return febsui;
+return {
+        nofile:err_nofile,
+        sizeExceed: err_sizeExceed,
+        crc32: err_crc32,
+        net: err_net
+       };
 }
 );

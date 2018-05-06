@@ -37,6 +37,9 @@ if ( !window.febs ) {
 }
 
 var crypt = window.febs.crypt;
+var err = require('./upload.err');
+var ajaxSubmit = require('../ajaxSubmit').ajaxSubmit;
+
 
 /**
  * post方式上传文件 
@@ -49,11 +52,12 @@ var crypt = window.febs.crypt;
  *                uploadUrl:  , // 上传文件内容的url. 系统将自动使用 uploadUrl?crc32=&size=的方式来上传.
  *                maxFileSize:    , // 允许上传的最大文件.0表示无限制.默认为0
  *                fileType:     , // 允许的文件类型.  如: image/gif,image/jpeg,image/x-png
+ *                beginCB:     , // 上传开始的回调. function(uploader); 调用uploader.abort() 可以停止上传.
  *                finishCB:    , // 上传完成后的回调. function(err, fileObj, serverData)
- *                               //                   err:  - 'no file'      未选择文件.
- *                               //                         - 'size too big' 文件太大.
- *                               //                         - 'check crc32 err' 计算本地文件hash值时错误.
- *                               //                         - 'ajax err'     ajax上传时出错.
+ *                               //                   err:  - uploadErr.nofile      未选择文件.
+ *                               //                         - uploadErr.sizeExceed  文件太大.
+ *                               //                         - uploadErr.crc32       计算本地文件hash值时错误.
+ *                               //                         - uploadErr.net         ajax上传时出错.
  *                               //                   serverData: 服务器返回的数据.
  *                progressCB:  , // 上传进度的回调. function(fileObj, percent),
  *                headers: {     // 设置request headers
@@ -67,9 +71,13 @@ var crypt = window.febs.crypt;
 function upload(cfg) {
   var control_upload_cb = cfg.finishCB;
   var control_upload_progress_cb = cfg.progressCB;
+  var control_upload_begin_cb = cfg.beginCB;
   var control_upload_url = cfg.uploadUrl;
   var control_upload_maxFileSize = (!cfg.maxFileSize) ? Infinity : cfg.maxFileSize;
 
+  cfg.fileObj = $(cfg.fileObj);
+  cfg.formObj = $(cfg.formObj);
+  
   if (cfg.fileType)
   {
     cfg.fileObj.attr("accept", cfg.fileType);
@@ -77,12 +85,12 @@ function upload(cfg) {
 
   if (!cfg.fileObj[0].files[0])
   {
-    if (control_upload_cb)  control_upload_cb('no file', cfg.fileObj, null);
+    if (control_upload_cb)  control_upload_cb(err.nofile, cfg.fileObj, null);
     return;
   }
   if (cfg.fileObj[0].files[0].size > control_upload_maxFileSize)
   {
-    if (control_upload_cb)  control_upload_cb('size too big', cfg.fileObj, null);
+    if (control_upload_cb)  control_upload_cb(err.sizeExceed, cfg.fileObj, null);
     return;
   }
 
@@ -96,37 +104,31 @@ function upload(cfg) {
   var formObj = cfg.formObj;
   var fileObj = cfg.fileObj;
 
-  if (!formObj.ajaxSubmit) {
-    throw 'febs-ui upload need jquery.form.js';
-  }
-
   crypt.crc32_file(fileObj[0].files[0], function(crc){
     if (crc) {
-      formObj.ajaxSubmit({
-        method:       'POST',
-        url:          control_upload_url + 'crc32=' + crc + '&size=' + fileObj[0].files[0].size + (cfg.data ? '&data='+cfg.data : ''),
-        dataType:     'json',
-        contentType:  "application/json; charset=utf-8",
-        uploadProgress: function(ev, pos, total, percentComplete){ if (control_upload_progress_cb) control_upload_progress_cb(fileObj, percentComplete/100.0); },
-        error:          function(){ if (control_upload_cb)  control_upload_cb('ajax err', fileObj, null); },
-        success:        function(r) {
-          if (control_upload_cb)  control_upload_cb(null, fileObj, r);
-        },
-        crossDomain:cfg.crossDomain, 
-        beforeSend: function(xhr){
-          if (cfg.headers) {
-            for (var control_uploadSeg_key in cfg.headers) {
-              if (control_uploadSeg_key != 'Content-Type')
-                xhr.setRequestHeader(control_uploadSeg_key, cfg.headers[control_uploadSeg_key]);
-            }
-          }
-        },
-        xhrFields: cfg.withCredentials ? {
-          withCredentials:true
-        } : null,
-      });
+      try {
+        var con = ajaxSubmit(formObj, fileObj, {
+          method:       'POST',
+          url:          control_upload_url + 'crc32=' + crc + '&size=' + fileObj[0].files[0].size + (cfg.data ? '&data='+cfg.data : ''),
+          progress:     function(percentComplete){ if (control_upload_progress_cb) control_upload_progress_cb(fileObj, percentComplete?percentComplete.toFixed(1):0 ); },
+          error:        function(){ if (control_upload_cb)  control_upload_cb(err.net, fileObj, null); },
+          success:      function(r) {
+            try {
+              r = JSON.parse(r);
+            } catch(e) {}
+
+            if (control_upload_cb)  control_upload_cb(null, fileObj, r);
+          },
+          crossDomain:cfg.crossDomain, 
+          headers: cfg.headers,
+          withCredentials: cfg.withCredentials
+        });
+        if (control_upload_begin_cb) control_upload_begin_cb(con);
+      } catch (e) {
+        if (control_upload_cb)  control_upload_cb(e, fileObj, null);
+      }
     } else {
-      if (control_upload_cb)  control_upload_cb('check crc32 err', fileObj, null);
+      if (control_upload_cb)  control_upload_cb(err.crc32, fileObj, null);
     }
   });
 }

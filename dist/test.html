@@ -230,21 +230,38 @@
 
 
   <h2>Upload:</h2>
-  <div class="febsui-upload">
-    <button onclick='$("#fileObj")[0].click()'>上传图片</button>
-    <form id="fileForm" method="post" role="form" enctype="multipart/form-data" style="display:none">
-      <input id="fileObj" type="file" name="file" onchange="javascript:SetupWebUploader('/api/users/upload_image', $('#fileForm'), $('#fileObj'))"
-        multiple>
-    </form>
-    <div class="febsui-upload-progress">
-      <div class="febsui-upload-progress-bg"></div>
-      <span>10%</span>
-      <div class="febsui-upload-progress-cancel">
-        <div class="febsui-icon febsui-icon-error"></div>
-      </div>
-    </div>
-  </div>
+  <uploader data-api="http://test2.citongs.com/api/upload" 
+         data-accept="application/zip" 
+       data-filename="true" 
+         data-finish="febsui.dialog_showAlert('upload ok')"
+         data-progress="onUploadProgress"
+         data-error="onUploadError"
+          >上传图片</uploader>
 
+  <uploader data-api="http://test2.citongs.com/api/upload"
+         data-accept="application/zip"
+        data-maxsize="10240">上传图片</uploader>
+
+  <script>
+    function onUploadProgress(percent) {
+      console.log(percent);
+    }
+
+    function onUploadError(err) {
+      if (febsui.uploadErr.nofile == err) {
+        err = '未选择文件';
+      } else if (febsui.uploadErr.sizeExceed == err) {
+        err = '文件超出大小';
+      } else if (febsui.uploadErr.crc32 == err) {
+        err = '文件验证出错';
+      } else if (febsui.uploadErr.net == err) {
+        err = '网络错误';
+      } else {
+        err = '上传错误';
+      }
+      febsui.dialog_showAlert(err.toString());
+    }
+  </script>
 
 </body>
 

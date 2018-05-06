@@ -40,6 +40,7 @@ if ( !window.febs ) {
 var net = window.febs.net;
 var utils = window.febs.utils;
 var crypt = window.febs.crypt;
+var err = require('./upload.err');
 
 /**
  * post方式上传文件.
@@ -52,11 +53,12 @@ var crypt = window.febs.crypt;
  *                uploadUrl:  , // 上传文件内容的url.
  *                timeout:   5000, // 网络超时.
  *                chunkSize:  1024*20,  // 每次上传的块大小.默认20kb
+ *                beginCB:     , // 上传开始的回调. function(uploader); 调用uploader.abort() 可以停止上传.
  *                finishCB:    , // 上传完成后的回调. function(err, serverData)
- *                               //                   err:  - 'no file'      未选择文件.
- *                               //                         - 'size too big' 文件太大.
- *                               //                         - 'check crc32 err' 计算本地文件hash值时错误.
- *                               //                         - 'ajax err'     ajax上传时出错.
+ *                               //                   err:  - uploadErr.nofile      未选择文件.
+ *                               //                         - uploadErr.sizeExceed  文件太大.
+ *                               //                         - uploadErr.crc32       计算本地文件hash值时错误.
+ *                               //                         - uploadErr.net         ajax上传时出错.
  *                               //                   serverData: 服务器返回的数据. 至少包含一个filename
  *                progressCB:  , // 上传进度的回调. function(percent),
  *                headers: {     // 设置request headers
@@ -70,13 +72,14 @@ function uploadBase64(cfg) {
   cfg.timeout = cfg.timeout || 5000;
   var control_uploadSeg_cb = cfg.finishCB;
   var control_uploadSeg_progress_cb = cfg.progressCB;
+  var control_uploadSeg_begin_cb = cfg.beginCB;
   var control_uploadSeg_header_url = cfg.headerUrl;
   var control_uploadSeg_url = cfg.uploadUrl;
   var control_uploadSeg_chunkSize = cfg.chunkSize || 1024*20;
 
   if (!cfg.fileBase64Str)
   {
-    if (control_uploadSeg_cb)  control_uploadSeg_cb('no file', null);
+    if (control_uploadSeg_cb)  control_uploadSeg_cb(err.nofile, null);
     return;
   }
 
@@ -88,6 +91,12 @@ function uploadBase64(cfg) {
   }
   control_uploadSeg_url += 'crc32=';
 
+  var stop = false;
+  function abort() {
+    stop = true;
+  }
+  if (control_uploadSeg_begin_cb) control_uploadSeg_begin_cb({abort:abort});
+
   if (control_uploadSeg_progress_cb)
     control_uploadSeg_progress_cb(0.0);
 
@@ -97,6 +106,7 @@ function uploadBase64(cfg) {
   var control_uploadSeg_currentChunk = 0;
 
   // console.log({filesize:control_uploadSeg_file.length, chunks:control_uploadSeg_chunks, data:cfg.data});
+
 
   // 上传文件头.
   net.fetch(control_uploadSeg_header_url, {
@@ -113,6 +123,8 @@ function uploadBase64(cfg) {
   .then(function(r){
     if (r && r.err == 0)
     {
+      if (stop) { return; }
+
         var control_uploadSeg_errorCount = 0;
 
         function control_uploadSegs_begin() {
@@ -139,6 +151,8 @@ function uploadBase64(cfg) {
           .then(function(r){
             if (r && r.err == 0)
             {
+              if (stop) { return; }
+
               if (++control_uploadSeg_currentChunk == control_uploadSeg_chunks)
               {
                 if (control_uploadSeg_cb)  control_uploadSeg_cb(null, r);
@@ -151,16 +165,17 @@ function uploadBase64(cfg) {
             }
             else
             {
-              if (control_uploadSeg_cb)  control_uploadSeg_cb('ajax err', r);
+              if (control_uploadSeg_cb)  control_uploadSeg_cb(err.net, r);
             }
           })
           .catch(function(err){
             if(err=='timeout'){
               if (control_uploadSeg_errorCount++ < 10)
               {
+                if (stop) { return; }
                 control_uploadSegs_begin();
               } else {
-                if (control_uploadSeg_cb)  control_uploadSeg_cb('ajax err', null);
+                if (control_uploadSeg_cb)  control_uploadSeg_cb(err.net, null);
               }
             }
             else if (control_uploadSeg_cb)  control_uploadSeg_cb(err, null);
@@ -170,12 +185,12 @@ function uploadBase64(cfg) {
     }
     else
     {
-      if (control_uploadSeg_cb)  control_uploadSeg_cb('ajax err', r);
+      if (control_uploadSeg_cb)  control_uploadSeg_cb(err.net, r);
     }
   })
   .catch(function(err) {
     if (err == 'timeout') {
-      if (control_uploadSeg_cb)  control_uploadSeg_cb('ajax err', null);
+      if (control_uploadSeg_cb)  control_uploadSeg_cb(err.net, null);
     } else {
       if (control_uploadSeg_cb)  control_uploadSeg_cb(err, null);
     }

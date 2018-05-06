@@ -116,7 +116,7 @@ function showAlert(ctx) {
     mask = ' febsui-mask';
   }
 
-  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li style="width:100%"><a href="#0" class="febsui-dialog-cancel">' + ctx.okText + '</a></li></ul></div></div>'));
+  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li style="width:100%"><a class="febsui-dialog-cancel">' + ctx.okText + '</a></li></ul></div></div>'));
   resizeDialog();
 
 	setTimeout(function () {
@@ -171,7 +171,7 @@ function showConfirm(ctx) {
     mask = ' febsui-mask';
   }
 
-	$("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li><a href="#0" class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li><a href="#0" class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul><a href="#0" class="febsui-dialog-close img-replace">Close</a></div></div>'));
+	$("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>'));
   resizeDialog();
 
   setTimeout(function () {
@@ -181,12 +181,7 @@ function showConfirm(ctx) {
   //close popup
   var ele = $('#'+uid);
 	ele.on('click', function (event) {
-		if ($(event.target).hasClass('febsui-dialog-close') /*|| $(event.target).hasClass('febsui-dialog')*/) {
-			event.preventDefault();
-			if (ctx.cancel) ctx.cancel.bind(ele)();
-			hide(ele);
-		}
-		else if ($(event.target).hasClass('febsui-dialog-ok')) {
+		if ($(event.target).hasClass('febsui-dialog-ok')) {
 			event.preventDefault();
 			if (ctx.confirm) ctx.confirm.bind(ele)();
 		}
@@ -245,7 +240,7 @@ function showConfirmEdit(ctx) {
   + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') 
   + '<div class="febsui-dialog-content">' + ctx.content + '</div>' 
   + '<div class="febsui-dialog-edit"><input class="febsui-dialog-input-text" type="text" value="' + (ctx.editText?ctx.editText:'') + '">' + '</div>' 
-  + '<ul class="febsui-dialog-buttons"><li><a href="#0" class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li><a href="#0" class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul><a href="#0" class="febsui-dialog-close img-replace">Close</a></div></div>';
+  + '<ul class="febsui-dialog-buttons"><li><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>';
 
   $("body").append($(elems));
   resizeDialog();
@@ -257,12 +252,7 @@ function showConfirmEdit(ctx) {
   //close popup
   var ele = $('#'+uid);
 	ele.on('click', function (event) {
-		if ($(event.target).hasClass('febsui-dialog-close') /*|| $(event.target).hasClass('febsui-dialog')*/) {
-			event.preventDefault();
-			if (ctx.cancel) ctx.cancel.bind(ele)();
-			hide(ele);
-		}
-		else if ($(event.target).hasClass('febsui-dialog-ok')) {
+		if ($(event.target).hasClass('febsui-dialog-ok')) {
 			event.preventDefault();
 			if (ctx.confirm) ctx.confirm.bind(ele)( $('#'+uid + ' .febsui-dialog-edit .febsui-dialog-input-text').val() );
 		}
@@ -294,66 +284,7 @@ function showConfirmEdit(ctx) {
  * jquery plugin.
  */
 
-
 exports.dialog_init = dialog_init;
-
-$.fn.isDialog = function() {
-
-  var _this = (typeof this.length === 'undefined') ? $(this) : this;
-
-  if (_this.length >= 1) {
-    if (_this[0].nodeName.toLowerCase() == 'dialog') {
-      return true;
-    }
-    else {
-      return $(_this[0]).hasClass('febsui-dialog');
-    }
-  }
-  
-  return false;
-}
-
-$.fn.dialogShow = function() {
-
-  var _this = (typeof this.length === 'undefined') ? $(this) : this;
-
-  for (var i = 0; i < _this.length; i++) {
-    var ee = $(_this[i]);
-    if (ee[0].nodeName.toLowerCase() == 'dialog') {
-      ee = ee.parent();
-    }
-    if (ee.hasClass('febsui-dialog')) {
-
-      if (!$('.febsui-mask').hasVisibile()) {
-        ee.addClass('febsui-mask');
-      }
-      else {
-        ee.removeClass('febsui-mask');
-      }
-
-      ee.removeClass('febsui-invisible').addClass('febsui-visible');
-    }
-  }
-
-  resizeDialog();
-  return this;
-}
-
-$.fn.dialogHide = function() {
-
-  var _this = (typeof this.length === 'undefined') ? $(this) : this;
-
-  for (var i = 0; i < _this.length; i++) {
-    var ee = $(_this[i]);
-    if (ee[0].nodeName.toLowerCase() == 'dialog') {
-      ee = ee.parent();
-    }
-    if (ee.hasClass('febsui-dialog-init')) {
-      ee.removeClass('febsui-visible').addClass('febsui-invisible');
-    }
-  }
-  return this;
-}
 
 /**
 * @desc: 初始化dialog控件.

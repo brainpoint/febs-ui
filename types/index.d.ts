@@ -126,6 +126,17 @@ export function dialog_showConfirm( ctx: { title?:string, content?:string, confi
 */
 export function dialog_showConfirmEdit( ctx: { title?:string, content?:string, editText?:string, confirm?:(text:string)=>void, cancel?:()=>void, okText?:string, cancelText?:string } ): void;
 
+export namespace uploadErr {
+  /** 未选择文件 */
+  const nofile:'nofile error';
+  /** 文件太大 */
+  const sizeExceed:'sizeExceed error';
+  /** 计算本地文件hash值时错误 */
+  const crc32:'crc32 error';
+  /** 网络出错 */
+  const net:'network error';
+}
+
 /** [客户端调用] 需要 jquery,jquery.form 库支持.
 * 并且 <input type="file" name="file"... 中, 必须存在name属性.
 * 使用post方式上传文件.
@@ -137,11 +148,12 @@ export function dialog_showConfirmEdit( ctx: { title?:string, content?:string, e
 *                uploadUrl:  , // 上传文件内容的url. 系统将自动使用 uploadUrl?crc32=&size=的方式来上传.
 *                maxFileSize:    , // 允许上传的最大文件.0表示无限制.默认为0
 *                fileType:     , // 允许的文件类型.  如: image/gif,image/jpeg,image/x-png
+*                beginCB:     , // 上传开始的回调. function(uploader); 调用uploader.abort() 可以停止上传.
 *                finishCB:    , // 上传完成后的回调. function(err, fileObj, serverData)
-*                               //                   err:  - 'no file'      未选择文件.
-*                               //                         - 'size too big' 文件太大.
-*                               //                         - 'check crc32 err' 计算本地文件hash值时错误.
-*                               //                         - 'ajax err'     ajax上传时出错.
+ *                               //                   err:  - febsui.uploadErr.nofile      未选择文件.
+ *                               //                         - febsui.uploadErr.sizeExceed  文件太大.
+ *                               //                         - febsui.uploadErr.crc32       计算本地文件hash值时错误.
+ *                               //                         - febsui.uploadErr.net         ajax上传时出错.
 *                               //                   serverData: 服务器返回的数据.
 *                progressCB:  , // 上传进度的回调. function(fileObj, percent)
 *                headers: {     // 设置request headers
@@ -152,17 +164,18 @@ export function dialog_showConfirmEdit( ctx: { title?:string, content?:string, e
 *              }
 */
 export function upload(cfg: {
-  data:       string,
+  data?:       string,
   formObj:    any,
   fileObj:    any,
   uploadUrl:  string,
-  maxFileSize:  number,
-  fileType:    string,
-  finishCB:    (err:any, fileObj:any, serverData:any)=>void,
-  progressCB:  (fileObj:any, percent:number)=>void,
-  headers:  any,
-  crossDomain: boolean,
-  withCredentials: boolean,
+  maxFileSize?:  number,
+  fileType?:    string,
+  beginCB?:     (uploader:{abort:()=>void})=>void,
+  finishCB?:    (err:any, fileObj:any, serverData:any)=>void,
+  progressCB?:  (fileObj:any, percent:number)=>void,
+  headers?:  any,
+  crossDomain?: boolean,
+  withCredentials?: boolean,
 }): void;
 
 /**
@@ -175,11 +188,12 @@ export function upload(cfg: {
  *                headerUrl:  , // 上传开始前的header请求地址.
  *                uploadUrl:  , // 上传文件内容的url.
  *                chunkSize:  1024*20,  // 每次上传的块大小.默认20kb
+ *                beginCB:     , // 上传开始的回调. function(uploader); 调用uploader.abort() 可以停止上传.
  *                finishCB:    , // 上传完成后的回调. function(err, serverData)
- *                               //                   err:  - 'no file'      未选择文件.
- *                               //                         - 'size too big' 文件太大.
- *                               //                         - 'check crc32 err' 计算本地文件hash值时错误.
- *                               //                         - 'ajax err'     ajax上传时出错.
+ *                               //                   err:  - febsui.uploadErr.nofile      未选择文件.
+ *                               //                         - febsui.uploadErr.sizeExceed  文件太大.
+ *                               //                         - febsui.uploadErr.crc32       计算本地文件hash值时错误.
+ *                               //                         - febsui.uploadErr.net         ajax上传时出错.
  *                               //                   serverData: 服务器返回的数据. 至少包含一个filename
  *                progressCB:  , // 上传进度的回调. function(percent),
  *                headers: {     // 设置request headers
@@ -190,16 +204,17 @@ export function upload(cfg: {
  *              }
  */
 export function uploadBase64(cfg: {
-  data:       string,
+  data?:       string,
   fileBase64Str:    string,
   headerUrl:        string,
   uploadUrl:        string,
-  chunkSize:        number,
-  finishCB:         (err:any, serverData:any)=>void,
-  progressCB:  (percent:number)=>void,
-  headers:  any,
-  crossDomain: boolean,
-  withCredentials: boolean,
+  chunkSize?:        number,
+  beginCB?:     (uploader:{abort:()=>void})=>void,
+  finishCB?:         (err:any, serverData:any)=>void,
+  progressCB?:  (percent:number)=>void,
+  headers?:  any,
+  crossDomain?: boolean,
+  withCredentials?: boolean,
 }): void;
 
 /**
@@ -217,18 +232,37 @@ export function page_init(elem: any, curPage: number, pageCount: number, totalCo
  * @desc 初始化页面上所有switch控件
  *       默认在页面加载完成时会调用一次; 加入新的switch控件时需调用一次.
  */
-export function switch_init():void;
+export function ui_switch_init():void;
 
 /**
 * @desc: 初始化popover控件.
 *        对页面上 的所有 <popover> 元素进行初始化.
 *        在增加新的popover到页面后, 需要手动调用此方法.
 */
-export function popover_init();
+export function ui_popover_init():void;
 
 /**
 * @desc: 初始化actionSheet控件.
 *        对页面上 的所有 <actionsheet> 元素进行初始化.
 *        在增加新的actionsheet到页面后, 需要手动调用此方法.
 */
-export function actionSheet_init();
+export function ui_actionSheet_init():void;
+
+/**
+* @desc: 初始化dialog控件.
+*        对页面上 的所有 <dialog> 元素进行初始化.
+*        在增加新的dialog到页面后, 需要手动调用此方法.
+*/
+export function ui_dialog_init():void;
+/**
+* @desc: 初始化uploader控件.
+*        对页面上 的所有 <uploader> 元素进行初始化.
+*        在增加新的uploader到页面后, 需要手动调用此方法.
+*/
+export function ui_uploader_init():void;
+
+/**
+* @desc: 对页面上所有ui控件进行初始化.
+*/
+export function ui_init():void;
+
