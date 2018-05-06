@@ -2,6 +2,8 @@
  * font.
  */
 
+ input::-webkit-input-speech-button {display: none}
+
  [class|=febsui],
  [class|=btn],
  button,
@@ -12,14 +14,23 @@
    font-family: -apple-system, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
+   -webkit-text-size-adjust: 100%;
+   -webkit-overflow-scrolling: touch;
    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+   -webkit-transform-style: preserve-3d;
+   -webkit-backface-visibility: hidden;
 
-    -webkit-touch-callout:none;
-    -webkit-user-select:none;
-    -khtml-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
+   -webkit-touch-callout: none;
+   -webkit-user-select: none;
+   -khtml-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+
+   -webkit-transform: translate3d(0, 0, 0);
+   -moz-transform: translate3d(0, 0, 0);
+   -ms-transform: translate3d(0, 0, 0);
+   transform: translate3d(0, 0, 0);
  }
 
  /**
@@ -182,7 +193,7 @@
  .febsui-pagin {
    position: relative;
    margin-top: 10px;
-   padding: 0 12px;
+   padding: 0;
  }
  
  .febsui-pagin .blue {
@@ -201,7 +212,6 @@
  @media only screen and (max-width: 500px) {
    .febsui-pagin {
      text-align: right;
-     float: right;
    }
    .febsui-pagin .febsui-paginList {
      position: relative;
@@ -612,13 +622,24 @@
  .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons li {
    float: left;
    width: 50%;
-   border-top-color: rgba(215, 221, 228, 0.77);
-   border-top-style: solid;
-   border-top-width: 1px;
+   
+   border-top: 1px solid #eee;
+   border-top: none;
+   background-color: rgba(0, 0, 0, 0);
+   background-size: 100% 1px;
+   background-repeat: no-repeat;
+   background-position: top;
+   background-image: linear-gradient(0deg,#eee,#eee 100%)
  }
  
+ @media (-webkit-min-device-pixel-ratio: 2),(min-resolution:192dpi) {
+  .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons li  {
+      background-image:linear-gradient(0deg,#ccc,#ccc 50%,transparent 0);
+  }
+ }
+
  .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons li:hover {
-   opacity: 0.9;
+  background: rgba(234, 234, 234, 0.5);
  }
  
  .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons a {
@@ -642,10 +663,9 @@
  .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons li:nth-child(2) a {
    /* background: #fc7169; */
    border-radius: 0 0 0 .25em;
-   border-left-color: rgba(215, 221, 228, 0.77);
-   border-left-style: solid;
-   border-left-width: 1px;
+   border-left: 1px solid #e5e5e5;
  }
+
 
  .febsui-dialog .febsui-dialog-container .febsui-dialog-ok {
    cursor: pointer;
@@ -778,7 +798,7 @@ dialog {
    outline-offset: 0;
    text-decoration: none;
 
-   color: #1880d2;
+   color: rgba(24, 128, 210, 1);
    background-color: rgba(0, 0, 0, 0);
    border: none;
    cursor: pointer;
@@ -789,18 +809,17 @@ dialog {
   cursor: auto;
  }
  
- button:hover,
- button:active,
- .btn:hover,
- .btn:active {
-   color: #6ca7d6;
+ button:hover, .btn:hover {
+   color: rgba(24, 128, 210, 0.7);
  }
-
+ button:active, .btn:active {
+   opacity: 0.2;
+ }
  button:disabled:hover,
  button:disabled:active,
  .btn:disabled:hover,
  .btn:disabled:active {
-  color: #1880d2;
+  color: rgba(24, 128, 210, 1);
   background-color: rgba(0, 0, 0, 0);
  }
  
@@ -810,11 +829,14 @@ dialog {
    border: none;
  }
  
- .btn-empty:hover,
- .btn-empty:active {
+ .btn-empty:hover {
    color: #000;
    background-color: rgba(0, 0, 0, 0.01);
  }
+ .btn-empty:active {
+  opacity: 0.2;
+ }
+
  .btn-empty:disabled:hover,
  .btn-empty:disabled:active {
   color: #000;
@@ -828,11 +850,13 @@ dialog {
    border-color: #1991EB;
  }
  
- .btn-primary:hover,
- .btn-primary:active {
+ .btn-primary:hover {
    color: #fff;
    background-color: #127ccc;
-   border-color: #1175c0
+   border-color: #1175c0;
+ }
+ .btn-primary:active {
+   opacity: 0.2;
  }
  .btn-primary:disabled:hover,
  .btn-primary:disabled:active {
@@ -845,14 +869,16 @@ dialog {
    border: 1px solid transparent;
    color: #111;
    background-color: #dee2e6;
-   border-color: #dee2e6
+   border-color: #dee2e6;
  }
  
- .btn-secondary:hover,
- .btn-secondary:active {
+ .btn-secondary:hover {
    color: #111;
    background-color: #c8cfd6;
-   border-color: #c1c9d0
+   border-color: #c1c9d0;
+ }
+ .btn-secondary:active {
+   opacity: 0.2;
  }
  .btn-secondary:disabled:hover,
  .btn-secondary:disabled:active {
@@ -868,11 +894,13 @@ dialog {
    border-color: #FFC105
  }
  
- .btn-warning:hover,
- .btn-warning:active {
+ .btn-warning:hover {
    color: #111;
    background-color: #dea700;
-   border-color: #d19d00
+   border-color: #d19d00;
+ }
+ .btn-warning:active {
+   opacity: 0.2;
  }
  .btn-warning:disabled:hover,
  .btn-warning:disabled:active {
@@ -888,11 +916,13 @@ dialog {
    border-color: #FF0017
  }
  
- .btn-danger:hover,
- .btn-danger:active {
+ .btn-danger:hover {
    color: #fff;
    background-color: #d90014;
-   border-color: #cc0012
+   border-color: #cc0012;
+ }
+ .btn-danger:active {
+   opacity: 0.2;
  }
  .btn-danger:disabled:hover,
  .btn-danger:disabled:active {
@@ -1072,10 +1102,10 @@ dialog {
    text-decoration: none;
 
    color: #000;
-   background-color: rgba(0, 0, 0, 0);
 
    border-bottom: 1px solid #eee;
    border-bottom: none;
+   background-color: rgba(0, 0, 0, 0);
    background-size: 100% 1px;
    background-repeat: no-repeat;
    background-position: bottom;
@@ -1100,7 +1130,7 @@ dialog {
 popover .febsui-popover-cell:hover,
  popover .febsui-popover-cell:active {
    color: #000;
-   background-color: rgba(0, 0, 0, 0.01);
+   background-color: rgba(0, 0, 0, 0.02);
  }
 
  popover .febsui-popover-cell:nth-last-child(1) {
@@ -1189,7 +1219,7 @@ actionsheet .febsui-actionsheet-group:nth-last-child(1) {
 
 actionsheet .febsui-actionsheet-cell {
   text-align: center;
-  color: #1880d2;
+  color: rgba(24, 128, 210, 1);
   font-size: 20px;
   padding-top: 12px;
   padding-bottom: 12px;
@@ -1214,8 +1244,8 @@ actionsheet .febsui-actionsheet-cancel {
 
 actionsheet .febsui-actionsheet-cell:hover,
 actionsheet .febsui-actionsheet-cell:active {
-  color: #1880d2;
-  background-color: rgba(0, 0, 0, 0.01);
+  color: rgba(24, 128, 210, 1);
+  background-color: rgba(0, 0, 0, 0.02);
 }
 
 

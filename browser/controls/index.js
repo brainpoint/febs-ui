@@ -54,6 +54,10 @@ exports.ui_init = function() {
   uploadera.uploader_init();
 }
 
+// for mobile hover.
+$(document).on('touchstart', function(){});
+
 $(document).ready(function(){
+  // init.
   exports.ui_init();
 });

@@ -60,7 +60,9 @@ $.fn.actionsheetHide = function() {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-actionsheet')) {
-      ee.removeClass('febsui-visible').addClass('febsui-invisible');
+      setTimeout(function(){
+        ee.removeClass('febsui-visible').addClass('febsui-invisible');
+      }, 100);
     }
   }
   return this;

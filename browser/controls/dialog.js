@@ -51,16 +51,18 @@ function escape_string(ctx) {
 
 function hide(selector) {
   if (selector) {
-    $(selector).removeClass('febsui-visible').addClass('febsui-invisible');
-    if ($(selector)[0]) {
+    setTimeout(function(){
+      $(selector).removeClass('febsui-visible').addClass('febsui-invisible');
+      if ($(selector)[0]) {
 
-      // 移除临时弹出的窗口.
-      if (!selector.hasClass('febsui-dialog-init')) {
-        setTimeout(function(){
-          $(selector).remove();
-        }, 300);
+        // 移除临时弹出的窗口.
+        if (!selector.hasClass('febsui-dialog-init')) {
+          setTimeout(function(){
+            $(selector).remove();
+          }, 300);
+        }
       }
-    }
+    }, 100);
   }
   else {
     var ee = $('.febsui-dialog');

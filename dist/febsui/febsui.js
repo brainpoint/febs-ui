@@ -563,16 +563,18 @@ function escape_string(ctx) {
 
 function hide(selector) {
   if (selector) {
-    $(selector).removeClass('febsui-visible').addClass('febsui-invisible');
-    if ($(selector)[0]) {
+    setTimeout(function () {
+      $(selector).removeClass('febsui-visible').addClass('febsui-invisible');
+      if ($(selector)[0]) {
 
-      // 移除临时弹出的窗口.
-      if (!selector.hasClass('febsui-dialog-init')) {
-        setTimeout(function () {
-          $(selector).remove();
-        }, 300);
+        // 移除临时弹出的窗口.
+        if (!selector.hasClass('febsui-dialog-init')) {
+          setTimeout(function () {
+            $(selector).remove();
+          }, 300);
+        }
       }
-    }
+    }, 100);
   } else {
     var ee = $('.febsui-dialog');
     ee.removeClass('febsui-visible').addClass('febsui-invisible');
@@ -1295,7 +1297,11 @@ exports.ui_init = function () {
   uploadera.uploader_init();
 };
 
+// for mobile hover.
+$(document).on('touchstart', function () {});
+
 $(document).ready(function () {
+  // init.
   exports.ui_init();
 });
 
@@ -1363,7 +1369,9 @@ $.fn.actionsheetHide = function () {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-actionsheet')) {
-      ee.removeClass('febsui-visible').addClass('febsui-invisible');
+      setTimeout(function () {
+        ee.removeClass('febsui-visible').addClass('febsui-invisible');
+      }, 100);
     }
   }
   return this;
@@ -1756,7 +1764,9 @@ $.fn.popoverHide = function () {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-popover')) {
-      ee.removeClass('febsui-visible').addClass('febsui-invisible');
+      setTimeout(function () {
+        ee.removeClass('febsui-visible').addClass('febsui-invisible');
+      }, 100);
     }
   }
   return this;
