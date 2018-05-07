@@ -243,6 +243,7 @@ febsui.dialog_hide( selector?:any );
  * @param ctx: {
 * ctx.title:    标题.
 * ctx.content:	内容文字.
+* ctx.contentHtml: html格式的内容 (与content二选一)
 * ctx.confirm: function(){}	// 点击确认键的回调.
 * ctx.okText
 * }
@@ -255,6 +256,7 @@ febsui.dialog_showAlert( ctx );
  * @param ctx: {
 * ctx.title:    标题.
 * ctx.content:	内容文字.
+* ctx.contentHtml: html格式的内容 (与content二选一)
 * ctx.confirm: function(){}	// 点击确认键的回调.
 * ctx.cancel: function(){}	// 点击取消键的回调.
 * ctx.okText 确认按钮文字
@@ -268,6 +270,7 @@ febsui.dialog_showConfirm( ctx );
    * @param ctx: {
   * ctx.title:    标题.
   * ctx.content:		 内容文字.
+  * ctx.contentHtml: html格式的内容 (与content二选一)
   * ctx.editText:		 输入框文字.
   * ctx.confirm: function(text){}	// 点击确认键的回调.
   * ctx.cancel:  function(){} // 点击取消键的回调.

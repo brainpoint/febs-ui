@@ -1,4 +1,27 @@
 
+exports.resizeDialog = resizeDialog;
+
+/**
+* @desc: 屏幕旋转事件.
+*/
+function resizeDialog(){
+  var elem = $('.febsui-dialog-container');
+
+  var viewport = window.febs.dom.getViewPort();
+  for (var i = 0; i < elem.length; i++) {
+    $(elem[i]).css('margin-top', parseInt((viewport.height - elem[i].clientHeight) / 2) + 'px');
+  }
+}
+
+// 是否支持orientationchange事件
+if ('orientation' in window && 'onorientationchange' in window)
+{
+  $(window).on('orientationchange', resizeDialog);
+}
+else {
+  $(window).on('resize', resizeDialog);
+}
+
 $.fn.isDialog = function() {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;

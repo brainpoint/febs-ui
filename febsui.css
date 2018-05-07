@@ -27,10 +27,14 @@
    -ms-user-select: none;
    user-select: none;
 
-   -webkit-transform: translate3d(0, 0, 0);
-   -moz-transform: translate3d(0, 0, 0);
-   -ms-transform: translate3d(0, 0, 0);
-   transform: translate3d(0, 0, 0);
+   touch-action: manipulation;   /* no 300ms delay */
+ }
+
+ dialog {
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+  max-height: 80%;
  }
 
  /**
@@ -114,7 +118,7 @@
   right: 0;
   background-color: rgba(255, 255, 255, 0.0001);
   opacity: 1;
-  z-index: 999999;
+  z-index: 20000;
   text-align: center;
  }
  
@@ -139,7 +143,7 @@
    -webkit-border-radius: 8px;
    border-radius: 8px;
    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=70);
-   z-index: 999999;
+   z-index: 20001;
  }
  
  @media only screen and (max-height: 420px) {
@@ -177,7 +181,7 @@
 
  /*
  <div class="febsui-pagin">
-  <div class="message"> 共<i class="blue">25</i>条记录，当前显示第<i class="blue">12</i>页 </div>
+  <div class="febsui-paginMessage"> 共<i class="blue">25</i>条记录，当前显示第<i class="blue">12</i>页 </div>
   <ul class="febsui-paginList">
     <li class="febsui-paginItem"><a><span class="febsui_pagepre"></span></a></li>
     <li class="febsui-paginItem"><a>1</a></li>
@@ -194,6 +198,7 @@
    position: relative;
    margin-top: 10px;
    padding: 0;
+   min-height: 30px;
  }
  
  .febsui-pagin .blue {
@@ -203,22 +208,28 @@
  
  @media only screen and (min-width: 500px) {
    .febsui-pagin .febsui-paginList {
-     position: absolute;
-     right: 12px;
-     top: 0;
+    float: right;
+    padding: 0;
+    margin: 0;
    }
+
+  .febsui-pagin .febsui-paginMessage {
+    float: left;
+  }
  }
  
  @media only screen and (max-width: 500px) {
    .febsui-pagin {
-     text-align: right;
+     text-align: center;
    }
    .febsui-pagin .febsui-paginList {
-     position: relative;
-     margin-top: 5px;
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+      margin-top: 5px;
    }
  }
- 
+
  .febsui-pagin .febsui-paginList .febsui-paginItem {
    float: left;
  }
@@ -342,7 +353,7 @@
    left: 0;
    top: 0;
    width: 100%;
-   z-index: 99999;
+   z-index: 20001;
  }
  
  .febsui-toast .febsui-toast-container {
@@ -379,7 +390,7 @@
    /* top: 0; */
    min-width: 100px;
    height: 100px;
-   z-index: 99999;
+   z-index: 20001;
    margin: auto;
  }
  
@@ -503,7 +514,7 @@
    -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
    -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
    transition: opacity 0.3s 0s, visibility 0s 0.3s;
-   z-index: 99999;
+   z-index: 20000;
  }
  
  .febsui-dialog a,
@@ -725,7 +736,7 @@ dialog {
    width: 28px;
    height: 28px;
    background: white;
-   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4);
    border-radius: 50%;
    left: 1px;
    top: 1px;
@@ -936,8 +947,8 @@ dialog {
 /****************************************************/
 /* 
 <div class="febsui-popover febsui-mask">
+  <div class="febsui-popover-arrow"></div>
   <popover>
-    <div class="febsui-popover-arrow"></div>
     <div class="febsui-popover-cell">cell1</div>
     <div class="febsui-popover-cell">cell2</div>
     <div class="febsui-popover-cell">cell3</div>
@@ -956,7 +967,7 @@ dialog {
    -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
    -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
    transition: opacity 0.3s 0s, visibility 0s 0.3s;
-   z-index: 99999;
+   z-index: 20000;
  }
  
  popover {
@@ -972,11 +983,13 @@ dialog {
    -moz-transition-property: -moz-transform;
    transition-property: transform;
    border-radius: 8px 8px 8px 8px;
+   
+   max-height: 370px;
+   overflow: auto;
  }
  
- popover .febsui-popover-arrow {
+ .febsui-popover .febsui-popover-arrow {
    /* box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); */
-   margin-right: -16px;
    position: absolute;
    width: 16px;
    height: 16px;
@@ -985,11 +998,11 @@ dialog {
    /* webkit */
    background-color: transparent;
    margin: 0;
-   z-index: 100000;
+   z-index: 20001;
  }
  
- popover .febsui-popover-arrow.febsui-popover-arrow-top {
-   top: 0 !important;
+ .febsui-popover .febsui-popover-arrow.febsui-popover-arrow-top {
+   /* top: 0 !important; */
    -webkit-transform-origin: 50% 50% 0;
    -moz-transform-origin: 50% 50% 0;
    -ms-transform-origin: 50% 50% 0;
@@ -1008,8 +1021,8 @@ dialog {
    border-bottom-width: 1px;
  }
  
- popover .febsui-popover-arrow.febsui-popover-arrow-bottom {
-   bottom: 0 !important;
+ .febsui-popover .febsui-popover-arrow.febsui-popover-arrow-bottom {
+   /* bottom: 0 !important; */
    -webkit-transform-origin: 50% 50% 0;
    -moz-transform-origin: 50% 50% 0;
    -ms-transform-origin: 50% 50% 0;
@@ -1028,8 +1041,8 @@ dialog {
    border-top-width: 1px;
  }
  
- popover .febsui-popover-arrow.febsui-popover-arrow-left {
-   left: 0 !important;
+ .febsui-popover .febsui-popover-arrow.febsui-popover-arrow-left {
+   /* left: 0 !important; */
    -webkit-transform-origin: 50% 50% 0;
    -moz-transform-origin: 50% 50% 0;
    -ms-transform-origin: 50% 50% 0;
@@ -1048,8 +1061,8 @@ dialog {
    border-bottom-width: 1px;
  }
  
- popover .febsui-popover-arrow.febsui-popover-arrow-right {
-   right: 0 !important;
+ .febsui-popover .febsui-popover-arrow.febsui-popover-arrow-right {
+   /* right: 0 !important; */
    -webkit-transform-origin: 50% 50% 0;
    -moz-transform-origin: 50% 50% 0;
    -ms-transform-origin: 50% 50% 0;
@@ -1167,15 +1180,7 @@ popover .febsui-popover-cell:hover,
   -webkit-transition: opacity 0.2s 0s, visibility 0s 0.2s;
   -moz-transition: opacity 0.2s 0s, visibility 0s 0.2s;
   transition: opacity 0.2s 0s, visibility 0s 0.2s;
-  z-index: 99999;
-}
-
-.febsui-actionsheet.febsui-visible actionsheet {
-  -webkit-transform: translateY(0);
-  -moz-transform: translateY(0);
-  -ms-transform: translateY(0);
-  -o-transform: translateY(0);
-  transform: translateY(0);
+  z-index: 20000;
 }
 
 actionsheet {
@@ -1204,6 +1209,14 @@ actionsheet {
   margin-left: auto;
   margin-right: auto;
   position: absolute;
+}
+
+.febsui-actionsheet.febsui-visible actionsheet {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -o-transform: translateY(0);
+  transform: translateY(0);
 }
 
 actionsheet .febsui-actionsheet-group {
@@ -1394,3 +1407,42 @@ actionsheet .febsui-actionsheet-cell:active {
    display: block;
  } */
  
+
+/****************************************************/
+ /* search */
+/****************************************************/
+
+
+/* see https://github.com/OnsenUI/OnsenUI */
+
+.febsui-search {
+  background-clip: padding-box;
+  padding: 0;
+  background: transparent;
+  border: none;
+  vertical-align: top;
+  outline: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  box-sizing: border-box;
+  height: 28px;
+  font-size: 14px;
+  background-color: rgba(3,3,3,.09);
+  box-shadow: none;
+  color: #1f1f21;
+  line-height: 1.3;
+  padding: 0 8px 0 28px;
+  margin: 0;
+  border-radius: 5.5px;
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTNweCIgaGVpZ2h0PSIxNHB4IiB2aWV3Qm94PSIwIDAgMTMgMTQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDQyICgzNjc4MSkgLSBodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2ggLS0+CiAgICA8dGl0bGU+aW9zLXNlYXJjaC1pbnB1dC1pY29uPC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGRlZnM+PC9kZWZzPgogICAgPGcgaWQ9ImNvbXBvbmVudHMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJpb3Mtc2VhcmNoLWlucHV0IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNDguMDAwMDAwLCAtNDMuMDAwMDAwKSIgZmlsbD0iIzdBNzk3QiI+CiAgICAgICAgICAgIDxnIGlkPSJHcm91cCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDAuMDAwMDAwLCAzNi4wMDAwMDApIj4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0xNi45OTcyNDgyLDE1LjUwNDE0NjYgQzE3LjA3NzM2NTcsMTUuNTQwNTkzOCAxNy4xNTIyNzMxLDE1LjU5MTYxMjkgMTcuMjE3NzUxNiwxNS42NTcwOTE0IEwyMC42NDk5OTEsMTkuMDg5MzMwOCBDMjAuOTQ0ODQ0OSwxOS4zODQxODQ3IDIwLjk0ODQ3NjQsMTkuODU4NjA2IDIwLjY1MzU0MTIsMjAuMTUzNTQxMiBDMjAuMzYwNjQ4LDIwLjQ0NjQzNDQgMTkuODgxMjcxNiwyMC40NDE5MzE3IDE5LjU4OTMzMDgsMjAuMTQ5OTkxIEwxNi4xNTcwOTE0LDE2LjcxNzc1MTYgQzE2LjA5MTM3LDE2LjY1MjAzMDEgMTYuMDQwMTE3MSwxNi41NzczODc0IDE2LjAwMzQxNDEsMTYuNDk3Nzk5NSBDMTUuMTY3MTY5NCwxNy4xMjcwNDExIDE0LjEyNzEzOTMsMTcuNSAxMywxNy41IEMxMC4yMzg1NzYzLDE3LjUgOCwxNS4yNjE0MjM3IDgsMTIuNSBDOCw5LjczODU3NjI1IDEwLjIzODU3NjMsNy41IDEzLDcuNSBDMTUuNzYxNDIzNyw3LjUgMTgsOS43Mzg1NzYyNSAxOCwxMi41IEMxOCwxMy42Mjc0Njg1IDE3LjYyNjgyMzIsMTQuNjY3Nzc2OCAxNi45OTcyNDgyLDE1LjUwNDE0NjYgWiBNMTMsMTYuNSBDMTUuMjA5MTM5LDE2LjUgMTcsMTQuNzA5MTM5IDE3LDEyLjUgQzE3LDEwLjI5MDg2MSAxNS4yMDkxMzksOC41IDEzLDguNSBDMTAuNzkwODYxLDguNSA5LDEwLjI5MDg2MSA5LDEyLjUgQzksMTQuNzA5MTM5IDEwLjc5MDg2MSwxNi41IDEzLDE2LjUgWiIgaWQ9Imlvcy1zZWFyY2gtaW5wdXQtaWNvbiI+PC9wYXRoPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4=);
+  background-position: 8px;
+  background-repeat: no-repeat;
+  background-size: 13px;
+  font-weight: 400;
+  display: inline-block;
+  text-indent: 0;
+ }

@@ -63,7 +63,7 @@ function page_init(elem, curPage, pageCount, totalCount, pageCallback) {
   }
 
   elem.append(('<div class="febsui-pagin">\
-  <div class="message">\
+  <div class="febsui-paginMessage">\
     共<i class="blue">'
       + totalCount +
     '</i>条记录，当前显示第&nbsp;<i class="blue">'+curPage+'&nbsp;</i>页\

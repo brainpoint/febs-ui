@@ -243,6 +243,7 @@ febsui.dialog_hide( selector?:any );
  * @param ctx: {
 * ctx.title:    标题.
 * ctx.content:	内容文字.
+* ctx.contentHtml: html格式的内容 (与content二选一)
 * ctx.confirm: function(){}	// 点击确认键的回调.
 * ctx.okText
 * }
@@ -255,6 +256,7 @@ febsui.dialog_showAlert( ctx );
  * @param ctx: {
 * ctx.title:    标题.
 * ctx.content:	内容文字.
+* ctx.contentHtml: html格式的内容 (与content二选一)
 * ctx.confirm: function(){}	// 点击确认键的回调.
 * ctx.cancel: function(){}	// 点击取消键的回调.
 * ctx.okText 确认按钮文字
@@ -268,6 +270,7 @@ febsui.dialog_showConfirm( ctx );
    * @param ctx: {
   * ctx.title:    标题.
   * ctx.content:		 内容文字.
+  * ctx.contentHtml: html格式的内容 (与content二选一)
   * ctx.editText:		 输入框文字.
   * ctx.confirm: function(text){}	// 点击确认键的回调.
   * ctx.cancel:  function(){} // 点击取消键的回调.
@@ -486,6 +489,7 @@ $('actionsheet').actionsheetHide();
 
 ### upload
 
+![](doc/ui/control-uploader.png)
 
 示例
 
@@ -540,7 +544,9 @@ $('uploader').uploaderReset();
 ```
 
 
-上传控件配合 `febs` 库使用.
+上传控件配合 `febs` 库使用. js的使用方式为:
+
+> 如果是ie9以下浏览器, 服务器返回的数据时, 需要把响应头的content-type的值设为`text/plain`或者`text/html`; 否则会出现提示保存文件. 
 
 #### multipart/form-data方式上传.
 
@@ -551,9 +557,10 @@ $('uploader').uploaderReset();
  *          1. uploadUrl: 上传文件.
  * Example:
  *      前台引入:
- *          1. 在需要upload的页面上引入 control_upload.hbs页面; 或者使用如下语句:
+ *          1. 在需要upload的页面上使用如下语句:
  *                <form method="post" role="form" enctype="multipart/form-data" id="fileForm">
  *                  <input type="file" class="form-control" name="file" onchange="febsui.upload(cfg)" multiple>
+ *                  <input type="submit" value="提交"> <!-- ie9以下浏览器需要提供此元素 -->
  *                </form>
  *      后台:
  *          1. 在uploadUrl中调用  await require('febs').controls.upload.accept(app, conditionCB); 当满足条件时将存储, 并返回true表示成功.

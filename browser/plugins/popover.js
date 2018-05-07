@@ -89,11 +89,13 @@ $.fn.popoverShow = function(mask, attachNode) {
           var dis2 = 11;
           var dis = dis2 + 4;
 
+
+          var direction2;
+          
           // auto.
           // data-direction
           if (attrDirection == 'auto')
           {
-            var direction2;
 
             // if (attrDirection == 'bottom') {
               if (!direction2) {
@@ -179,26 +181,6 @@ $.fn.popoverShow = function(mask, attachNode) {
               direction2 = 'bottom';
               offset = parseInt(width2/2-dis);
             }
-
-            var arrow = eee.children('.febsui-popover-arrow');
-
-            arrow.removeClass('febsui-popover-arrow-left');
-            arrow.removeClass('febsui-popover-arrow-right');
-            arrow.removeClass('febsui-popover-arrow-top');
-            arrow.removeClass('febsui-popover-arrow-bottom');
-            arrow.addClass('febsui-popover-arrow-'+direction2);
-            
-            if (direction2 == 'top' || direction2 == 'bottom') {
-              direction2 = 'left';
-            }
-            else if (direction2 == 'left' || direction2 == 'right') {
-              direction2 = 'top';
-            }
-            arrow.css('top', '');
-            arrow.css('bottom', '');
-            arrow.css('left', '');
-            arrow.css('right', '');
-            arrow.css(direction2, offset+'px');
           }
           else {
             if (attrDirection == 'left') {
@@ -220,7 +202,39 @@ $.fn.popoverShow = function(mask, attachNode) {
           }
 
           eee.css('top', top+docoffset.top +'px');
-          eee.css('left', left+docoffset.left+'px');
+          eee.css('left', left+docoffset.left +'px');
+
+
+          var arrow = ee.children('.febsui-popover-arrow');
+
+          arrow.removeClass('febsui-popover-arrow-left');
+          arrow.removeClass('febsui-popover-arrow-right');
+          arrow.removeClass('febsui-popover-arrow-top');
+          arrow.removeClass('febsui-popover-arrow-bottom');
+          arrow.addClass('febsui-popover-arrow-'+direction2);
+          
+          arrow.css('top', '');
+          arrow.css('bottom', '');
+          arrow.css('left', '');
+          arrow.css('right', '');
+          var eeeOffset = window.febs.dom.getElementOffset(eee);
+          
+          if (direction2 == 'top' || direction2 == 'bottom') {
+            if (direction2 == 'top')
+              arrow.css('top', eeeOffset.top+docoffset.top+'px');
+            else
+              arrow.css('top', eeeOffset.top+docoffset.top+eee[0].clientHeight-17+'px');
+            direction2 = 'left';
+            arrow.css(direction2, offset+eeeOffset.left+docoffset.left+'px');
+          }
+          else if (direction2 == 'left' || direction2 == 'right') {
+            if (direction2 == 'left')
+              arrow.css('left', eeeOffset.left+docoffset.left+'px');
+            else
+              arrow.css('left', eeeOffset.left+docoffset.left+eee[0].clientWidth-17+'px');
+            direction2 = 'top';
+            arrow.css(direction2, offset+eeeOffset.top+docoffset.top+'px');
+          }
         }
       }
 

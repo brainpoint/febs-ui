@@ -138,7 +138,7 @@ module.exports = __webpack_require__(3) ? function (object, key, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(11);
-var IE8_DOM_DEFINE = __webpack_require__(34);
+var IE8_DOM_DEFINE = __webpack_require__(35);
 var toPrimitive = __webpack_require__(27);
 var dP = Object.defineProperty;
 
@@ -403,7 +403,7 @@ module.exports = true;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(39);
+var $keys = __webpack_require__(40);
 var enumBugKeys = __webpack_require__(18);
 
 module.exports = Object.keys || function keys(O) {
@@ -514,6 +514,7 @@ exports.f = __webpack_require__(7);
 
 
 var uuid = __webpack_require__(2);
+var resizeDialog = __webpack_require__(31).resizeDialog;
 
 exports.hide = hide;
 exports.showAlert = showAlert;
@@ -525,25 +526,6 @@ var styleBorder = '';
 // ie9.
 if (isIE9 <= 9) {
   styleBorder = 'border-top:1px solid #eee;';
-}
-
-/**
-* @desc: 屏幕旋转事件.
-*/
-function resizeDialog() {
-  var elem = $('.febsui-dialog-container');
-
-  var viewport = window.febs.dom.getViewPort();
-  for (var i = 0; i < elem.length; i++) {
-    $(elem[i]).css('margin-top', parseInt((viewport.height - elem[i].clientHeight) / 2) + 'px');
-  }
-}
-
-// 是否支持orientationchange事件
-if ('orientation' in window && 'onorientationchange' in window) {
-  $(window).on('orientationchange', resizeDialog);
-} else {
-  $(window).on('resize', resizeDialog);
 }
 
 function escape_string(ctx) {
@@ -575,7 +557,7 @@ function hide(selector) {
       if ($(selector)[0]) {
 
         // 移除临时弹出的窗口.
-        if (!selector.hasClass('febsui-dialog-init')) {
+        if (!$(selector).hasClass('febsui-dialog-init')) {
           setTimeout(function () {
             $(selector).remove();
           }, 300);
@@ -613,6 +595,7 @@ document.addEventListener('keyup', function (event) {
 /**
 * ctx.title:    标题.
 * ctx.content:	内容文字.
+* ctx.contentHtml: 使用html方式的内容.
 * ctx.confirm: function(){}	// 点击确认键的回调.
 * ctx.okText
 */
@@ -621,6 +604,8 @@ function showAlert(ctx) {
   if (typeof ctx === 'string') {
     ctx = { content: ctx };
   }
+
+  ctx.contentHtml = ctx.contentHtml ? ctx.contentHtml : '';
 
   if (!ctx.okText) ctx.okText = "确认";
   escape_string(ctx);
@@ -636,7 +621,7 @@ function showAlert(ctx) {
     mask = ' febsui-mask';
   }
 
-  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><a class="febsui-dialog-cancel">' + ctx.okText + '</a></li></ul></div></div>'));
+  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + (ctx.content ? ctx.content : ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><a class="febsui-dialog-cancel">' + ctx.okText + '</a></li></ul></div></div>'));
   resizeDialog();
 
   setTimeout(function () {
@@ -669,6 +654,7 @@ function showAlert(ctx) {
 /**
 * ctx.title:    标题.
 * ctx.content:		 内容文字.
+* ctx.contentHtml: html方式的内容.
 * ctx.confirm: function(){}	// 点击确认键的回调.
 * ctx.cancel:  function(){} // 点击取消键的回调.
 * ctx.okText:
@@ -677,6 +663,8 @@ function showAlert(ctx) {
 function showConfirm(ctx) {
   if (!ctx.okText) ctx.okText = "确认";
   if (!ctx.cancelText) ctx.cancelText = "取消";
+
+  ctx.contentHtml = ctx.contentHtml ? ctx.contentHtml : '';
 
   escape_string(ctx);
 
@@ -691,7 +679,7 @@ function showConfirm(ctx) {
     mask = ' febsui-mask';
   }
 
-  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>'));
+  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + (ctx.content ? ctx.content : ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>'));
   resizeDialog();
 
   setTimeout(function () {
@@ -730,6 +718,7 @@ function showConfirm(ctx) {
 /**
 * ctx.title:    标题.
 * ctx.content:		 内容文字.
+* ctx.contentHtml: html方式的内容.
 * ctx.editText:		 输入框文字.
 * ctx.confirm: function(text){}	// 点击确认键的回调.
 * ctx.cancel:  function(){} // 点击取消键的回调.
@@ -739,6 +728,8 @@ function showConfirm(ctx) {
 function showConfirmEdit(ctx) {
   if (!ctx.okText) ctx.okText = "确认";
   if (!ctx.cancelText) ctx.cancelText = "取消";
+
+  ctx.contentHtml = ctx.contentHtml ? ctx.contentHtml : '';
 
   // 转义.
   escape_string(ctx);
@@ -754,7 +745,7 @@ function showConfirmEdit(ctx) {
     mask = ' febsui-mask';
   }
 
-  var elems = '<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + ctx.content + '</div>' + '<div class="febsui-dialog-edit"><input class="febsui-dialog-input-text" type="text" value="' + (ctx.editText ? ctx.editText : '') + '">' + '</div>' + '<ul class="febsui-dialog-buttons"><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>';
+  var elems = '<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + (ctx.content ? ctx.content : ctx.contentHtml) + '</div>' + '<div class="febsui-dialog-edit"><input class="febsui-dialog-input-text" type="text" value="' + (ctx.editText ? ctx.editText : '') + '">' + '</div>' + '<ul class="febsui-dialog-buttons"><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>';
 
   $("body").append($(elems));
   resizeDialog();
@@ -818,12 +809,104 @@ function dialog_init() {
         dom.removeAttr('id');
       }
       dd.append(dom);
+
+      //close popup
+      dom.on('click', function (event) {
+        if ($(event.target).hasClass('febsui-dialog-cancel')) {
+          event.preventDefault();
+          hide($(event.target).parents('.febsui-dialog'));
+        }
+      });
     }
   } // for.
 }
 
 /***/ }),
 /* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.resizeDialog = resizeDialog;
+
+/**
+* @desc: 屏幕旋转事件.
+*/
+function resizeDialog() {
+  var elem = $('.febsui-dialog-container');
+
+  var viewport = window.febs.dom.getViewPort();
+  for (var i = 0; i < elem.length; i++) {
+    $(elem[i]).css('margin-top', parseInt((viewport.height - elem[i].clientHeight) / 2) + 'px');
+  }
+}
+
+// 是否支持orientationchange事件
+if ('orientation' in window && 'onorientationchange' in window) {
+  $(window).on('orientationchange', resizeDialog);
+} else {
+  $(window).on('resize', resizeDialog);
+}
+
+$.fn.isDialog = function () {
+
+  var _this = typeof this.length === 'undefined' ? $(this) : this;
+
+  if (_this.length >= 1) {
+    if (_this[0].nodeName.toLowerCase() == 'dialog') {
+      return true;
+    } else {
+      return $(_this[0]).hasClass('febsui-dialog');
+    }
+  }
+
+  return false;
+};
+
+$.fn.dialogShow = function () {
+
+  var _this = typeof this.length === 'undefined' ? $(this) : this;
+
+  for (var i = 0; i < _this.length; i++) {
+    var ee = $(_this[i]);
+    if (ee[0].nodeName.toLowerCase() == 'dialog') {
+      ee = ee.parent();
+    }
+    if (ee.hasClass('febsui-dialog')) {
+
+      if (!$('.febsui-mask').hasVisibile()) {
+        ee.addClass('febsui-mask');
+      } else {
+        ee.removeClass('febsui-mask');
+      }
+
+      ee.removeClass('febsui-invisible').addClass('febsui-visible');
+    }
+  }
+
+  resizeDialog();
+  return this;
+};
+
+$.fn.dialogHide = function () {
+
+  var _this = typeof this.length === 'undefined' ? $(this) : this;
+
+  for (var i = 0; i < _this.length; i++) {
+    var ee = $(_this[i]);
+    if (ee[0].nodeName.toLowerCase() == 'dialog') {
+      ee = ee.parent();
+    }
+    if (ee.hasClass('febsui-dialog-init')) {
+      ee.removeClass('febsui-visible').addClass('febsui-invisible');
+    }
+  }
+  return this;
+};
+
+/***/ }),
+/* 32 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -834,7 +917,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(8);
@@ -847,7 +930,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(0);
@@ -915,23 +998,23 @@ module.exports = $export;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = !__webpack_require__(3) && !__webpack_require__(13)(function () {
-  return Object.defineProperty(__webpack_require__(32)('div'), 'a', { get: function () { return 7; } }).a != 7;
+  return Object.defineProperty(__webpack_require__(33)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var LIBRARY = __webpack_require__(20);
-var $export = __webpack_require__(33);
-var redefine = __webpack_require__(40);
+var $export = __webpack_require__(34);
+var redefine = __webpack_require__(41);
 var hide = __webpack_require__(4);
 var Iterators = __webpack_require__(19);
 var $iterCreate = __webpack_require__(65);
@@ -1000,7 +1083,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
@@ -1014,7 +1097,7 @@ var PROTOTYPE = 'prototype';
 // Create object with fake `null` prototype: use iframe Object with cleared prototype
 var createDict = function () {
   // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(32)('iframe');
+  var iframe = __webpack_require__(33)('iframe');
   var i = enumBugKeys.length;
   var lt = '<';
   var gt = '>';
@@ -1047,11 +1130,11 @@ module.exports = Object.create || function create(O, Properties) {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = __webpack_require__(39);
+var $keys = __webpack_require__(40);
 var hiddenKeys = __webpack_require__(18).concat('length', 'prototype');
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
@@ -1060,14 +1143,14 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports) {
 
 exports.f = Object.getOwnPropertySymbols;
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(1);
@@ -1090,14 +1173,14 @@ module.exports = function (object, names) {
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(4);
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1300,7 +1383,7 @@ var _typeof = __webpack_require__(9)["default"];
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)(module)))
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1322,7 +1405,7 @@ exports.loading_hide = loading.loading_hide;
 
 exports.page_init = __webpack_require__(87).page_init;
 exports.uploadBase64 = __webpack_require__(91).uploadBase64;
-exports.upload = __webpack_require__(41).upload;
+exports.upload = __webpack_require__(42).upload;
 exports.uploadErr = __webpack_require__(16);
 
 var toast = __webpack_require__(90);
@@ -1371,11 +1454,29 @@ $(document).ready(function () {
 });
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+
+// function resizeActionsheet() {
+//   var ee = $('actionsheet');
+//   for (var i = 0; i < ee.length; i++) {
+//     var e = $(ee[i]);
+
+//     e.css('margin-top', parseInt((document.body.clientHeight - e[0].clientHeight) - 5) + 'px');
+//   }
+// }
+
+// 是否支持orientationchange事件
+// if ('orientation' in window && 'onorientationchange' in window)
+// {
+//   $(window).on('orientationchange', resizeActionsheet);
+// }
+// else {
+//   $(window).on('resize', resizeActionsheet);
+// }
 
 $.fn.isActionsheet = function () {
 
@@ -1437,69 +1538,6 @@ $.fn.actionsheetHide = function () {
       setTimeout(function () {
         ee.removeClass('febsui-visible').addClass('febsui-invisible');
       }, 100);
-    }
-  }
-  return this;
-};
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-$.fn.isDialog = function () {
-
-  var _this = typeof this.length === 'undefined' ? $(this) : this;
-
-  if (_this.length >= 1) {
-    if (_this[0].nodeName.toLowerCase() == 'dialog') {
-      return true;
-    } else {
-      return $(_this[0]).hasClass('febsui-dialog');
-    }
-  }
-
-  return false;
-};
-
-$.fn.dialogShow = function () {
-
-  var _this = typeof this.length === 'undefined' ? $(this) : this;
-
-  for (var i = 0; i < _this.length; i++) {
-    var ee = $(_this[i]);
-    if (ee[0].nodeName.toLowerCase() == 'dialog') {
-      ee = ee.parent();
-    }
-    if (ee.hasClass('febsui-dialog')) {
-
-      if (!$('.febsui-mask').hasVisibile()) {
-        ee.addClass('febsui-mask');
-      } else {
-        ee.removeClass('febsui-mask');
-      }
-
-      ee.removeClass('febsui-invisible').addClass('febsui-visible');
-    }
-  }
-
-  resizeDialog();
-  return this;
-};
-
-$.fn.dialogHide = function () {
-
-  var _this = typeof this.length === 'undefined' ? $(this) : this;
-
-  for (var i = 0; i < _this.length; i++) {
-    var ee = $(_this[i]);
-    if (ee[0].nodeName.toLowerCase() == 'dialog') {
-      ee = ee.parent();
-    }
-    if (ee.hasClass('febsui-dialog-init')) {
-      ee.removeClass('febsui-visible').addClass('febsui-invisible');
     }
   }
   return this;
@@ -1686,10 +1724,11 @@ $.fn.popoverShow = function (mask, attachNode) {
           var dis2 = 11;
           var dis = dis2 + 4;
 
+          var direction2;
+
           // auto.
           // data-direction
           if (attrDirection == 'auto') {
-            var direction2;
 
             // if (attrDirection == 'bottom') {
             if (!direction2) {
@@ -1773,25 +1812,6 @@ $.fn.popoverShow = function (mask, attachNode) {
               direction2 = 'bottom';
               offset = parseInt(width2 / 2 - dis);
             }
-
-            var arrow = eee.children('.febsui-popover-arrow');
-
-            arrow.removeClass('febsui-popover-arrow-left');
-            arrow.removeClass('febsui-popover-arrow-right');
-            arrow.removeClass('febsui-popover-arrow-top');
-            arrow.removeClass('febsui-popover-arrow-bottom');
-            arrow.addClass('febsui-popover-arrow-' + direction2);
-
-            if (direction2 == 'top' || direction2 == 'bottom') {
-              direction2 = 'left';
-            } else if (direction2 == 'left' || direction2 == 'right') {
-              direction2 = 'top';
-            }
-            arrow.css('top', '');
-            arrow.css('bottom', '');
-            arrow.css('left', '');
-            arrow.css('right', '');
-            arrow.css(direction2, offset + 'px');
           } else {
             if (attrDirection == 'left') {
               top = parseInt(top + height / 2 - offset - dis);
@@ -1810,6 +1830,30 @@ $.fn.popoverShow = function (mask, attachNode) {
 
           eee.css('top', top + docoffset.top + 'px');
           eee.css('left', left + docoffset.left + 'px');
+
+          var arrow = ee.children('.febsui-popover-arrow');
+
+          arrow.removeClass('febsui-popover-arrow-left');
+          arrow.removeClass('febsui-popover-arrow-right');
+          arrow.removeClass('febsui-popover-arrow-top');
+          arrow.removeClass('febsui-popover-arrow-bottom');
+          arrow.addClass('febsui-popover-arrow-' + direction2);
+
+          arrow.css('top', '');
+          arrow.css('bottom', '');
+          arrow.css('left', '');
+          arrow.css('right', '');
+          var eeeOffset = window.febs.dom.getElementOffset(eee);
+
+          if (direction2 == 'top' || direction2 == 'bottom') {
+            if (direction2 == 'top') arrow.css('top', eeeOffset.top + docoffset.top + 'px');else arrow.css('top', eeeOffset.top + docoffset.top + eee[0].clientHeight - 17 + 'px');
+            direction2 = 'left';
+            arrow.css(direction2, offset + eeeOffset.left + docoffset.left + 'px');
+          } else if (direction2 == 'left' || direction2 == 'right') {
+            if (direction2 == 'left') arrow.css('left', eeeOffset.left + docoffset.left + 'px');else arrow.css('left', eeeOffset.left + docoffset.left + eee[0].clientWidth - 17 + 'px');
+            direction2 = 'top';
+            arrow.css(direction2, offset + eeeOffset.top + docoffset.top + 'px');
+          }
         }
       }
 
@@ -2123,7 +2167,7 @@ module.exports = function (fn, that, length) {
 
 // all enumerable object keys, includes symbols
 var getKeys = __webpack_require__(21);
-var gOPS = __webpack_require__(38);
+var gOPS = __webpack_require__(39);
 var pIE = __webpack_require__(22);
 module.exports = function (it) {
   var result = getKeys(it);
@@ -2151,7 +2195,7 @@ module.exports = document && document.documentElement;
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(31);
+var cof = __webpack_require__(32);
 // eslint-disable-next-line no-prototype-builtins
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
   return cof(it) == 'String' ? it.split('') : Object(it);
@@ -2163,7 +2207,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
-var cof = __webpack_require__(31);
+var cof = __webpack_require__(32);
 module.exports = Array.isArray || function isArray(arg) {
   return cof(arg) == 'Array';
 };
@@ -2175,7 +2219,7 @@ module.exports = Array.isArray || function isArray(arg) {
 
 "use strict";
 
-var create = __webpack_require__(36);
+var create = __webpack_require__(37);
 var descriptor = __webpack_require__(14);
 var setToStringTag = __webpack_require__(23);
 var IteratorPrototype = {};
@@ -2285,7 +2329,7 @@ var createDesc = __webpack_require__(14);
 var toIObject = __webpack_require__(6);
 var toPrimitive = __webpack_require__(27);
 var has = __webpack_require__(1);
-var IE8_DOM_DEFINE = __webpack_require__(34);
+var IE8_DOM_DEFINE = __webpack_require__(35);
 var gOPD = Object.getOwnPropertyDescriptor;
 
 exports.f = __webpack_require__(3) ? gOPD : function getOwnPropertyDescriptor(O, P) {
@@ -2304,7 +2348,7 @@ exports.f = __webpack_require__(3) ? gOPD : function getOwnPropertyDescriptor(O,
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var toIObject = __webpack_require__(6);
-var gOPN = __webpack_require__(37).f;
+var gOPN = __webpack_require__(38).f;
 var toString = {}.toString;
 
 var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -2416,7 +2460,7 @@ var toIObject = __webpack_require__(6);
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(35)(Array, 'Array', function (iterated, kind) {
+module.exports = __webpack_require__(36)(Array, 'Array', function (iterated, kind) {
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -2457,7 +2501,7 @@ addToUnscopables('entries');
 var $at = __webpack_require__(72)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(35)(String, 'String', function (iterated) {
+__webpack_require__(36)(String, 'String', function (iterated) {
   this._t = String(iterated); // target
   this._i = 0;                // next index
 // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -2482,8 +2526,8 @@ __webpack_require__(35)(String, 'String', function (iterated) {
 var global = __webpack_require__(0);
 var has = __webpack_require__(1);
 var DESCRIPTORS = __webpack_require__(3);
-var $export = __webpack_require__(33);
-var redefine = __webpack_require__(40);
+var $export = __webpack_require__(34);
+var redefine = __webpack_require__(41);
 var META = __webpack_require__(67).KEY;
 var $fails = __webpack_require__(13);
 var shared = __webpack_require__(25);
@@ -2499,7 +2543,7 @@ var isObject = __webpack_require__(8);
 var toIObject = __webpack_require__(6);
 var toPrimitive = __webpack_require__(27);
 var createDesc = __webpack_require__(14);
-var _create = __webpack_require__(36);
+var _create = __webpack_require__(37);
 var gOPNExt = __webpack_require__(70);
 var $GOPD = __webpack_require__(69);
 var $DP = __webpack_require__(5);
@@ -2626,9 +2670,9 @@ if (!USE_NATIVE) {
 
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
-  __webpack_require__(37).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(38).f = gOPNExt.f = $getOwnPropertyNames;
   __webpack_require__(22).f = $propertyIsEnumerable;
-  __webpack_require__(38).f = $getOwnPropertySymbols;
+  __webpack_require__(39).f = $getOwnPropertySymbols;
 
   if (DESCRIPTORS && !__webpack_require__(20)) {
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
@@ -2844,7 +2888,7 @@ exports.ajaxSubmit = function ajaxSubmit(formObj, fileObj, options) {
   </div> */}
 
 var uuid = __webpack_require__(2);
-var upload = __webpack_require__(41);
+var upload = __webpack_require__(42);
 var uploadErr = __webpack_require__(16);
 var dialog = __webpack_require__(30);
 
@@ -3392,7 +3436,7 @@ function page_init(elem, curPage, pageCount, totalCount, pageCallback) {
   }
 
   elem.append('<div class="febsui-pagin">\
-  <div class="message">\
+  <div class="febsui-paginMessage">\
     共<i class="blue">' + totalCount + '</i>条记录，当前显示第&nbsp;<i class="blue">' + curPage + '&nbsp;</i>页\
   </div>\
   <ul class="febsui-paginList">\
@@ -3435,6 +3479,8 @@ function popover_init() {
 
     if (!dom.hasClass('febsui-popover-inited') && !dom.children().hasClass('febsui-popover-arrow')) {
 
+      var dd = $("<div class='febsui-popover'></div>");
+
       // data-direction
       var direction = dom.attr('data-direction');
       direction = window.febs.string.isEmpty(direction) ? 'auto' : direction;
@@ -3444,12 +3490,6 @@ function popover_init() {
         if (direction != 'top' && direction != 'left' && direction != 'right' && direction != 'bottom') {
           throw new Error('popover attribute data-direction only can be top/left/right/bottom');
         }
-        if (direction == 'top' || direction == 'bottom') {
-          direction2 = 'left';
-        }
-        if (direction == 'left' || direction == 'right') {
-          direction2 = 'top';
-        }
 
         // data-offset
         var offset = dom.attr('data-offset');
@@ -3458,9 +3498,21 @@ function popover_init() {
           throw new Error('popover attribute data-offset only can be number');
         }
 
-        dom.prepend('<div class="febsui-popover-arrow febsui-popover-arrow-' + direction + '" style="' + direction2 + ': ' + offset + 'px;"></div>');
+        var offset1 = window.febs.dom.getElementOffset(dom);
+        var offset2 = window.febs.dom.getDocumentOffset();
+
+        if (direction == 'top' || direction == 'bottom') {
+          direction2 = 'left';
+          offset += offset1.left + offset2.left;
+        }
+        if (direction == 'left' || direction == 'right') {
+          direction2 = 'top';
+          offset += offset1.top + offset2.top;
+        }
+
+        dd.prepend('<div class="febsui-popover-arrow febsui-popover-arrow-' + direction + '" style="' + direction2 + ': ' + offset + 'px;"></div>');
       } else {
-        dom.prepend('<div class="febsui-popover-arrow"></div>');
+        dd.prepend('<div class="febsui-popover-arrow"></div>');
       }
 
       dom.addClass('febsui-popover-inited');
@@ -3473,7 +3525,6 @@ function popover_init() {
         }
       }
 
-      var dd = $("<div class='febsui-popover'></div>");
       $('body').append(dd);
       var did = dom.attr('id');
       if (did) {
@@ -3894,7 +3945,7 @@ var _typeof = __webpack_require__(9)["default"];
 	__webpack_require__(47);
 	__webpack_require__(46);
 
-	var febsui = __webpack_require__(42);
+	var febsui = __webpack_require__(43);
 	window['febsui'] = febsui;
 
 	/**
@@ -3902,8 +3953,8 @@ var _typeof = __webpack_require__(9)["default"];
   */
 	__webpack_require__(45);
 
-	__webpack_require__(43);
 	__webpack_require__(44);
+	__webpack_require__(31);
 	__webpack_require__(48);
 	__webpack_require__(49);
 	__webpack_require__(50);

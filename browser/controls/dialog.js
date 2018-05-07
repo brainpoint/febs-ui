@@ -1,4 +1,5 @@
 var uuid = require('../uuid');
+var resizeDialog = require('../plugins/dialog').resizeDialog;
 
 exports.hide = hide;
 exports.showAlert = showAlert;
@@ -12,26 +13,6 @@ if (isIE9 <= 9) {
   styleBorder = 'border-top:1px solid #eee;';
 }
 
-/**
-* @desc: 屏幕旋转事件.
-*/
-function resizeDialog(){
-  var elem = $('.febsui-dialog-container');
-
-  var viewport = window.febs.dom.getViewPort();
-  for (var i = 0; i < elem.length; i++) {
-    $(elem[i]).css('margin-top', parseInt((viewport.height - elem[i].clientHeight) / 2) + 'px');
-  }
-}
-
-// 是否支持orientationchange事件
-if ('orientation' in window && 'onorientationchange' in window)
-{
-  $(window).on('orientationchange', resizeDialog);
-}
-else {
-  $(window).on('resize', resizeDialog);
-}
 
 
 function escape_string(ctx) {
@@ -63,7 +44,7 @@ function hide(selector) {
       if ($(selector)[0]) {
 
         // 移除临时弹出的窗口.
-        if (!selector.hasClass('febsui-dialog-init')) {
+        if (!$(selector).hasClass('febsui-dialog-init')) {
           setTimeout(function(){
             $(selector).remove();
           }, 300);
@@ -102,6 +83,7 @@ function hide(selector) {
 /**
 * ctx.title:    标题.
 * ctx.content:	内容文字.
+* ctx.contentHtml: 使用html方式的内容.
 * ctx.confirm: function(){}	// 点击确认键的回调.
 * ctx.okText
 */
@@ -110,6 +92,8 @@ function showAlert(ctx) {
   if (typeof ctx === 'string') {
     ctx = {content:ctx};
   }
+
+  ctx.contentHtml = ctx.contentHtml? ctx.contentHtml: '';
 
 	if (!ctx.okText) ctx.okText = "确认";
   escape_string(ctx);
@@ -125,7 +109,7 @@ function showAlert(ctx) {
     mask = ' febsui-mask';
   }
 
-  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><a class="febsui-dialog-cancel">' + ctx.okText + '</a></li></ul></div></div>'));
+  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><a class="febsui-dialog-cancel">' + ctx.okText + '</a></li></ul></div></div>'));
   resizeDialog();
 
 	setTimeout(function () {
@@ -158,6 +142,7 @@ function showAlert(ctx) {
 /**
 * ctx.title:    标题.
 * ctx.content:		 内容文字.
+* ctx.contentHtml: html方式的内容.
 * ctx.confirm: function(){}	// 点击确认键的回调.
 * ctx.cancel:  function(){} // 点击取消键的回调.
 * ctx.okText:
@@ -167,6 +152,8 @@ function showConfirm(ctx) {
 	if (!ctx.okText) ctx.okText = "确认";
   if (!ctx.cancelText) ctx.cancelText = "取消";
   
+  ctx.contentHtml = ctx.contentHtml? ctx.contentHtml: '';
+
   escape_string(ctx);
 
 	// if ($('.febsui-dialog').length > 0) {
@@ -180,7 +167,7 @@ function showConfirm(ctx) {
     mask = ' febsui-mask';
   }
 
-	$("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li' + (isIE9?' style="'+styleBorder+'"':'') + '><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li'+(isIE9?' style="'+styleBorder+'"':'')+'><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>'));
+	$("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li' + (isIE9?' style="'+styleBorder+'"':'') + '><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li'+(isIE9?' style="'+styleBorder+'"':'')+'><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>'));
   resizeDialog();
 
   setTimeout(function () {
@@ -221,6 +208,7 @@ function showConfirm(ctx) {
 /**
 * ctx.title:    标题.
 * ctx.content:		 内容文字.
+* ctx.contentHtml: html方式的内容.
 * ctx.editText:		 输入框文字.
 * ctx.confirm: function(text){}	// 点击确认键的回调.
 * ctx.cancel:  function(){} // 点击取消键的回调.
@@ -231,6 +219,8 @@ function showConfirmEdit(ctx) {
 	if (!ctx.okText) ctx.okText = "确认";
   if (!ctx.cancelText) ctx.cancelText = "取消";
   
+  ctx.contentHtml = ctx.contentHtml? ctx.contentHtml: '';
+
   // 转义.
   escape_string(ctx);
 
@@ -247,7 +237,7 @@ function showConfirmEdit(ctx) {
 
   var elems = '<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' 
   + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') 
-  + '<div class="febsui-dialog-content">' + ctx.content + '</div>' 
+  + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div>' 
   + '<div class="febsui-dialog-edit"><input class="febsui-dialog-input-text" type="text" value="' + (ctx.editText?ctx.editText:'') + '">' + '</div>' 
   + '<ul class="febsui-dialog-buttons"><li'+(isIE9?' style="'+styleBorder+'"':'')+'><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li'+(isIE9?' style="'+styleBorder+'"':'')+'><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>';
 
@@ -315,6 +305,14 @@ function dialog_init() {
         dom.removeAttr('id');
       }
       dd.append(dom);
+      
+      //close popup
+      dom.on('click', function (event) {
+        if ($(event.target).hasClass('febsui-dialog-cancel')) {
+          event.preventDefault();
+          hide($(event.target).parents('.febsui-dialog'));
+        }
+      });
     }
   } // for.
 }

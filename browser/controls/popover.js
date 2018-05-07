@@ -13,6 +13,8 @@ function popover_init() {
 
     if (!dom.hasClass('febsui-popover-inited') && !dom.children().hasClass('febsui-popover-arrow')) {
       
+      var dd = $("<div class='febsui-popover'></div>");
+      
       // data-direction
       var direction = dom.attr('data-direction');
       direction = window.febs.string.isEmpty(direction) ? 'auto' : direction;
@@ -22,12 +24,6 @@ function popover_init() {
         if (direction != 'top' && direction != 'left' && direction != 'right' && direction != 'bottom') {
           throw new Error('popover attribute data-direction only can be top/left/right/bottom');
         }
-        if (direction == 'top' || direction == 'bottom') {
-          direction2 = 'left';
-        }
-        if (direction == 'left' || direction == 'right') {
-          direction2 = 'top';
-        }
 
         // data-offset
         var offset = dom.attr('data-offset');
@@ -36,10 +32,22 @@ function popover_init() {
           throw new Error('popover attribute data-offset only can be number');
         }
 
-        dom.prepend('<div class="febsui-popover-arrow febsui-popover-arrow-'+direction+'" style="'+direction2+': '+offset+'px;"></div>');
+        var offset1 = window.febs.dom.getElementOffset(dom);
+        var offset2 = window.febs.dom.getDocumentOffset();
+
+        if (direction == 'top' || direction == 'bottom') {
+          direction2 = 'left';
+          offset += offset1.left + offset2.left;
+        }
+        if (direction == 'left' || direction == 'right') {
+          direction2 = 'top';
+          offset += offset1.top + offset2.top;
+        }
+
+        dd.prepend('<div class="febsui-popover-arrow febsui-popover-arrow-'+direction+'" style="'+direction2+': '+offset+'px;"></div>');
       }
       else {
-        dom.prepend('<div class="febsui-popover-arrow"></div>');
+        dd.prepend('<div class="febsui-popover-arrow"></div>');
       }
 
       dom.addClass('febsui-popover-inited');
@@ -52,7 +60,6 @@ function popover_init() {
         }
       }
 
-      var dd = $("<div class='febsui-popover'></div>");
       $('body').append(dd);
       var did = dom.attr('id');
       if (did) {

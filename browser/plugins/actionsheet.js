@@ -1,4 +1,21 @@
 
+// function resizeActionsheet() {
+//   var ee = $('actionsheet');
+//   for (var i = 0; i < ee.length; i++) {
+//     var e = $(ee[i]);
+
+//     e.css('margin-top', parseInt((document.body.clientHeight - e[0].clientHeight) - 5) + 'px');
+//   }
+// }
+
+// 是否支持orientationchange事件
+// if ('orientation' in window && 'onorientationchange' in window)
+// {
+//   $(window).on('orientationchange', resizeActionsheet);
+// }
+// else {
+//   $(window).on('resize', resizeActionsheet);
+// }
 
 $.fn.isActionsheet = function() {
 
