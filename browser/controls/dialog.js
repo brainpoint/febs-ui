@@ -5,6 +5,13 @@ exports.showAlert = showAlert;
 exports.showConfirm = showConfirm;
 exports.showConfirmEdit = showConfirmEdit;
 
+var isIE9 = window.febs.utils.browserIEVer();
+var styleBorder = '';
+// ie9.
+if (isIE9 <= 9) {
+  styleBorder = 'border-top:1px solid #eee;';
+}
+
 /**
 * @desc: 屏幕旋转事件.
 */
@@ -118,7 +125,7 @@ function showAlert(ctx) {
     mask = ' febsui-mask';
   }
 
-  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li style="width:100%"><a class="febsui-dialog-cancel">' + ctx.okText + '</a></li></ul></div></div>'));
+  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><a class="febsui-dialog-cancel">' + ctx.okText + '</a></li></ul></div></div>'));
   resizeDialog();
 
 	setTimeout(function () {
@@ -173,7 +180,7 @@ function showConfirm(ctx) {
     mask = ' febsui-mask';
   }
 
-	$("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>'));
+	$("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li' + (isIE9?' style="'+styleBorder+'"':'') + '><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li'+(isIE9?' style="'+styleBorder+'"':'')+'><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>'));
   resizeDialog();
 
   setTimeout(function () {
@@ -242,7 +249,7 @@ function showConfirmEdit(ctx) {
   + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') 
   + '<div class="febsui-dialog-content">' + ctx.content + '</div>' 
   + '<div class="febsui-dialog-edit"><input class="febsui-dialog-input-text" type="text" value="' + (ctx.editText?ctx.editText:'') + '">' + '</div>' 
-  + '<ul class="febsui-dialog-buttons"><li><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>';
+  + '<ul class="febsui-dialog-buttons"><li'+(isIE9?' style="'+styleBorder+'"':'')+'><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li'+(isIE9?' style="'+styleBorder+'"':'')+'><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>';
 
   $("body").append($(elems));
   resizeDialog();

@@ -44,6 +44,14 @@ function popover_init() {
 
       dom.addClass('febsui-popover-inited');
 
+      // ie9.
+      if (window.febs.utils.browserIEVer() <= 9) {
+        var cells = dom.children('.febsui-popover-cell');
+        for (var jj = 0; jj < cells.length-1; jj++) {
+          $(cells[jj]).css('border-bottom','1px solid #eee');
+        }
+      }
+
       var dd = $("<div class='febsui-popover'></div>");
       $('body').append(dd);
       var did = dom.attr('id');

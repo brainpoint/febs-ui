@@ -92,81 +92,6 @@ module.exports = function (it, key) {
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(13)(function () {
-  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP = __webpack_require__(4);
-var createDesc = __webpack_require__(14);
-module.exports = __webpack_require__(2) ? function (object, key, value) {
-  return dP.f(object, key, createDesc(1, value));
-} : function (object, key, value) {
-  object[key] = value;
-  return object;
-};
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var anObject = __webpack_require__(11);
-var IE8_DOM_DEFINE = __webpack_require__(34);
-var toPrimitive = __webpack_require__(27);
-var dP = Object.defineProperty;
-
-exports.f = __webpack_require__(2) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if (IE8_DOM_DEFINE) try {
-    return dP(O, P, Attributes);
-  } catch (e) { /* empty */ }
-  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
-  if ('value' in Attributes) O[P] = Attributes.value;
-  return O;
-};
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(63);
-var defined = __webpack_require__(17);
-module.exports = function (it) {
-  return IObject(defined(it));
-};
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store = __webpack_require__(25)('wks');
-var uid = __webpack_require__(15);
-var Symbol = __webpack_require__(0).Symbol;
-var USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function (name) {
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
@@ -183,6 +108,81 @@ exports.uuid = function () {
     var uuid = s.join("");
     return uuid;
 };
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Thank's IE8 for his funny defineProperty
+module.exports = !__webpack_require__(13)(function () {
+  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
+});
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var dP = __webpack_require__(5);
+var createDesc = __webpack_require__(14);
+module.exports = __webpack_require__(3) ? function (object, key, value) {
+  return dP.f(object, key, createDesc(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var anObject = __webpack_require__(11);
+var IE8_DOM_DEFINE = __webpack_require__(34);
+var toPrimitive = __webpack_require__(27);
+var dP = Object.defineProperty;
+
+exports.f = __webpack_require__(3) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return dP(O, P, Attributes);
+  } catch (e) { /* empty */ }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// to indexed object, toObject with fallback for non-array-like ES3 strings
+var IObject = __webpack_require__(63);
+var defined = __webpack_require__(17);
+module.exports = function (it) {
+  return IObject(defined(it));
+};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var store = __webpack_require__(25)('wks');
+var uid = __webpack_require__(15);
+var Symbol = __webpack_require__(0).Symbol;
+var USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+
 
 /***/ }),
 /* 8 */
@@ -422,9 +422,9 @@ exports.f = {}.propertyIsEnumerable;
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(4).f;
+var def = __webpack_require__(5).f;
 var has = __webpack_require__(1);
-var TAG = __webpack_require__(6)('toStringTag');
+var TAG = __webpack_require__(7)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -492,7 +492,7 @@ var global = __webpack_require__(0);
 var core = __webpack_require__(12);
 var LIBRARY = __webpack_require__(20);
 var wksExt = __webpack_require__(29);
-var defineProperty = __webpack_require__(4).f;
+var defineProperty = __webpack_require__(5).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
@@ -503,7 +503,7 @@ module.exports = function (name) {
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(6);
+exports.f = __webpack_require__(7);
 
 
 /***/ }),
@@ -513,12 +513,19 @@ exports.f = __webpack_require__(6);
 "use strict";
 
 
-var uuid = __webpack_require__(7);
+var uuid = __webpack_require__(2);
 
 exports.hide = hide;
 exports.showAlert = showAlert;
 exports.showConfirm = showConfirm;
 exports.showConfirmEdit = showConfirmEdit;
+
+var isIE9 = window.febs.utils.browserIEVer();
+var styleBorder = '';
+// ie9.
+if (isIE9 <= 9) {
+  styleBorder = 'border-top:1px solid #eee;';
+}
 
 /**
 * @desc: 屏幕旋转事件.
@@ -629,7 +636,7 @@ function showAlert(ctx) {
     mask = ' febsui-mask';
   }
 
-  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li style="width:100%"><a class="febsui-dialog-cancel">' + ctx.okText + '</a></li></ul></div></div>'));
+  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><a class="febsui-dialog-cancel">' + ctx.okText + '</a></li></ul></div></div>'));
   resizeDialog();
 
   setTimeout(function () {
@@ -684,7 +691,7 @@ function showConfirm(ctx) {
     mask = ' febsui-mask';
   }
 
-  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>'));
+  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + ctx.content + '</div><ul class="febsui-dialog-buttons"><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>'));
   resizeDialog();
 
   setTimeout(function () {
@@ -747,7 +754,7 @@ function showConfirmEdit(ctx) {
     mask = ' febsui-mask';
   }
 
-  var elems = '<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + ctx.content + '</div>' + '<div class="febsui-dialog-edit"><input class="febsui-dialog-input-text" type="text" value="' + (ctx.editText ? ctx.editText : '') + '">' + '</div>' + '<ul class="febsui-dialog-buttons"><li><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>';
+  var elems = '<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + ctx.content + '</div>' + '<div class="febsui-dialog-edit"><input class="febsui-dialog-input-text" type="text" value="' + (ctx.editText ? ctx.editText : '') + '">' + '</div>' + '<ul class="febsui-dialog-buttons"><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>';
 
   $("body").append($(elems));
   resizeDialog();
@@ -846,7 +853,7 @@ module.exports = function (it) {
 var global = __webpack_require__(0);
 var core = __webpack_require__(12);
 var ctx = __webpack_require__(60);
-var hide = __webpack_require__(3);
+var hide = __webpack_require__(4);
 var has = __webpack_require__(1);
 var PROTOTYPE = 'prototype';
 
@@ -911,7 +918,7 @@ module.exports = $export;
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(2) && !__webpack_require__(13)(function () {
+module.exports = !__webpack_require__(3) && !__webpack_require__(13)(function () {
   return Object.defineProperty(__webpack_require__(32)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -925,12 +932,12 @@ module.exports = !__webpack_require__(2) && !__webpack_require__(13)(function ()
 var LIBRARY = __webpack_require__(20);
 var $export = __webpack_require__(33);
 var redefine = __webpack_require__(40);
-var hide = __webpack_require__(3);
+var hide = __webpack_require__(4);
 var Iterators = __webpack_require__(19);
 var $iterCreate = __webpack_require__(65);
 var setToStringTag = __webpack_require__(23);
 var getPrototypeOf = __webpack_require__(71);
-var ITERATOR = __webpack_require__(6)('iterator');
+var ITERATOR = __webpack_require__(7)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
 var KEYS = 'keys';
@@ -1064,7 +1071,7 @@ exports.f = Object.getOwnPropertySymbols;
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(1);
-var toIObject = __webpack_require__(5);
+var toIObject = __webpack_require__(6);
 var arrayIndexOf = __webpack_require__(59)(false);
 var IE_PROTO = __webpack_require__(24)('IE_PROTO');
 
@@ -1086,7 +1093,7 @@ module.exports = function (object, names) {
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(3);
+module.exports = __webpack_require__(4);
 
 
 /***/ }),
@@ -1136,6 +1143,16 @@ var _typeof = __webpack_require__(9)["default"];
   var crypt = window.febs.crypt;
   var err = __webpack_require__(16);
   var ajaxSubmit = __webpack_require__(83).ajaxSubmit;
+  var uuid = __webpack_require__(2);
+
+  // var responseText = $('iframe')[0].contentDocument.body.textContent;
+  //     var responseData = JSON.parse(responseText) || {};
+  //     if (responseData.isSuccess == true || responseData.code == 200) {
+  //         //success
+  //     } else {
+  //         //error   
+  //     }
+
 
   /**
    * post方式上传文件 
@@ -1178,56 +1195,104 @@ var _typeof = __webpack_require__(9)["default"];
       cfg.fileObj.attr("accept", cfg.fileType);
     }
 
-    if (!cfg.fileObj[0].files[0]) {
-      if (control_upload_cb) control_upload_cb(err.nofile, cfg.fileObj, null);
-      return;
-    }
-    if (cfg.fileObj[0].files[0].size > control_upload_maxFileSize) {
-      if (control_upload_cb) control_upload_cb(err.sizeExceed, cfg.fileObj, null);
-      return;
-    }
+    // ie9.
+    var uid = 'febsuifile' + uuid.uuid();
+    uid = window.febs.string.replace(uid, '-', '');
+    var ie99 = window.febs.utils.browserIEVer() <= 9;
+    if (ie99) {
+      cfg.formObj.attr('target', uid);
+      cfg.formObj.attr('action', control_upload_url);
+      cfg.formObj.attr('method', 'post');
 
-    var urlQueryIndex = control_upload_url.indexOf('?');
-    if (urlQueryIndex < 0) {
-      control_upload_url += '?';
-    } else if (urlQueryIndex < control_upload_url.length - 1) {
-      control_upload_url += '&';
-    }
+      var iframeDom = "<iframe id=\"" + uid + "\" name=\"" + uid + "\" style=\"display:none;\"></iframe>";
+      $('body').prepend(iframeDom);
 
-    var formObj = cfg.formObj;
-    var fileObj = cfg.fileObj;
-
-    crypt.crc32_file(fileObj[0].files[0], function (crc) {
-      if (crc) {
+      $('#' + uid).on('load', function () {
+        var responseText = $('#' + uid)[0].contentDocument.body.textContent;
+        var r;
         try {
-          var con = ajaxSubmit(formObj, fileObj, {
-            method: 'POST',
-            url: control_upload_url + 'crc32=' + crc + '&size=' + fileObj[0].files[0].size + (cfg.data ? '&data=' + cfg.data : ''),
-            progress: function progress(percentComplete) {
-              if (control_upload_progress_cb) control_upload_progress_cb(fileObj, percentComplete ? percentComplete.toFixed(1) : 0);
-            },
-            error: function error() {
-              if (control_upload_cb) control_upload_cb(err.net, fileObj, null);
-            },
-            success: function success(r) {
-              try {
-                r = JSON.parse(r);
-              } catch (e) {}
-
-              if (control_upload_cb) control_upload_cb(null, fileObj, r);
-            },
-            crossDomain: cfg.crossDomain,
-            headers: cfg.headers,
-            withCredentials: cfg.withCredentials
-          });
-          if (control_upload_begin_cb) control_upload_begin_cb(con);
+          r = JSON.parse(responseText);
         } catch (e) {
-          if (control_upload_cb) control_upload_cb(e, fileObj, null);
+          r = {};
         }
-      } else {
-        if (control_upload_cb) control_upload_cb(err.crc32, fileObj, null);
+
+        if (r.isSuccess == true || r.code == 200) {
+          //success
+          if (control_upload_cb) control_upload_cb(null, cfg.fileObj, r);
+        } else {
+          //error   
+          if (control_upload_cb) control_upload_cb(err.net, cfg.fileObj, null);
+        }
+
+        cfg.formObj.removeAttr('target');
+        cfg.fileObj[0].value = "";
+        $('#' + uid).remove();
+      });
+
+      if (control_upload_begin_cb) control_upload_begin_cb({ abort: function abort() {
+          $('#' + uid).remove();cfg.fileObj[0].value = "";
+        } });
+
+      var inputs = cfg.formObj.children('input');
+      $(inputs[inputs.length - 1]).click();
+    } else {
+
+      if (!cfg.fileObj[0].files[0]) {
+        if (control_upload_cb) control_upload_cb(err.nofile, cfg.fileObj, null);
+        return;
       }
-    });
+      if (cfg.fileObj[0].files[0].size > control_upload_maxFileSize) {
+        if (control_upload_cb) control_upload_cb(err.sizeExceed, cfg.fileObj, null);
+        return;
+      }
+
+      var urlQueryIndex = control_upload_url.indexOf('?');
+      if (urlQueryIndex < 0) {
+        control_upload_url += '?';
+      } else if (urlQueryIndex < control_upload_url.length - 1) {
+        control_upload_url += '&';
+      }
+
+      var formObj = cfg.formObj;
+      var fileObj = cfg.fileObj;
+
+      crypt.crc32_file(fileObj[0].files[0], function (crc) {
+        if (crc) {
+          try {
+            var con = ajaxSubmit(formObj, fileObj, {
+              method: 'POST',
+              url: control_upload_url + 'crc32=' + crc + '&size=' + fileObj[0].files[0].size + (cfg.data ? '&data=' + cfg.data : ''),
+              progress: function progress(percentComplete) {
+                if (control_upload_progress_cb) control_upload_progress_cb(fileObj, percentComplete ? percentComplete.toFixed(1) : 0);
+              },
+              error: function error() {
+                if (control_upload_cb) control_upload_cb(err.net, fileObj, null);fileObj[0].value = "";
+              },
+              success: function success(r) {
+                try {
+                  r = JSON.parse(r);
+                } catch (e) {
+                  r = {};
+                }
+
+                if (control_upload_cb) control_upload_cb(null, fileObj, r);
+                fileObj[0].value = "";
+              },
+              crossDomain: cfg.crossDomain,
+              headers: cfg.headers,
+              withCredentials: cfg.withCredentials
+            });
+            if (control_upload_begin_cb) control_upload_begin_cb(con);
+          } catch (e) {
+            if (control_upload_cb) control_upload_cb(e, fileObj, null);
+            fileObj[0].value = "";
+          }
+        } else {
+          if (control_upload_cb) control_upload_cb(err.crc32, fileObj, null);
+          fileObj[0].value = "";
+        }
+      });
+    } // if..else.
   }
 
   return { upload: upload };
@@ -2003,7 +2068,7 @@ module.exports = function () { /* empty */ };
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(5);
+var toIObject = __webpack_require__(6);
 var toLength = __webpack_require__(74);
 var toAbsoluteIndex = __webpack_require__(73);
 module.exports = function (IS_INCLUDES) {
@@ -2116,7 +2181,7 @@ var setToStringTag = __webpack_require__(23);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(3)(IteratorPrototype, __webpack_require__(6)('iterator'), function () { return this; });
+__webpack_require__(4)(IteratorPrototype, __webpack_require__(7)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -2140,7 +2205,7 @@ module.exports = function (done, value) {
 var META = __webpack_require__(15)('meta');
 var isObject = __webpack_require__(8);
 var has = __webpack_require__(1);
-var setDesc = __webpack_require__(4).f;
+var setDesc = __webpack_require__(5).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
@@ -2196,11 +2261,11 @@ var meta = module.exports = {
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(4);
+var dP = __webpack_require__(5);
 var anObject = __webpack_require__(11);
 var getKeys = __webpack_require__(21);
 
-module.exports = __webpack_require__(2) ? Object.defineProperties : function defineProperties(O, Properties) {
+module.exports = __webpack_require__(3) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
   var keys = getKeys(Properties);
   var length = keys.length;
@@ -2217,13 +2282,13 @@ module.exports = __webpack_require__(2) ? Object.defineProperties : function def
 
 var pIE = __webpack_require__(22);
 var createDesc = __webpack_require__(14);
-var toIObject = __webpack_require__(5);
+var toIObject = __webpack_require__(6);
 var toPrimitive = __webpack_require__(27);
 var has = __webpack_require__(1);
 var IE8_DOM_DEFINE = __webpack_require__(34);
 var gOPD = Object.getOwnPropertyDescriptor;
 
-exports.f = __webpack_require__(2) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+exports.f = __webpack_require__(3) ? gOPD : function getOwnPropertyDescriptor(O, P) {
   O = toIObject(O);
   P = toPrimitive(P, true);
   if (IE8_DOM_DEFINE) try {
@@ -2238,7 +2303,7 @@ exports.f = __webpack_require__(2) ? gOPD : function getOwnPropertyDescriptor(O,
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(5);
+var toIObject = __webpack_require__(6);
 var gOPN = __webpack_require__(37).f;
 var toString = {}.toString;
 
@@ -2345,7 +2410,7 @@ module.exports = function (it) {
 var addToUnscopables = __webpack_require__(58);
 var step = __webpack_require__(66);
 var Iterators = __webpack_require__(19);
-var toIObject = __webpack_require__(5);
+var toIObject = __webpack_require__(6);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
@@ -2416,7 +2481,7 @@ __webpack_require__(35)(String, 'String', function (iterated) {
 // ECMAScript 6 symbols shim
 var global = __webpack_require__(0);
 var has = __webpack_require__(1);
-var DESCRIPTORS = __webpack_require__(2);
+var DESCRIPTORS = __webpack_require__(3);
 var $export = __webpack_require__(33);
 var redefine = __webpack_require__(40);
 var META = __webpack_require__(67).KEY;
@@ -2424,20 +2489,20 @@ var $fails = __webpack_require__(13);
 var shared = __webpack_require__(25);
 var setToStringTag = __webpack_require__(23);
 var uid = __webpack_require__(15);
-var wks = __webpack_require__(6);
+var wks = __webpack_require__(7);
 var wksExt = __webpack_require__(29);
 var wksDefine = __webpack_require__(28);
 var enumKeys = __webpack_require__(61);
 var isArray = __webpack_require__(64);
 var anObject = __webpack_require__(11);
 var isObject = __webpack_require__(8);
-var toIObject = __webpack_require__(5);
+var toIObject = __webpack_require__(6);
 var toPrimitive = __webpack_require__(27);
 var createDesc = __webpack_require__(14);
 var _create = __webpack_require__(36);
 var gOPNExt = __webpack_require__(70);
 var $GOPD = __webpack_require__(69);
-var $DP = __webpack_require__(4);
+var $DP = __webpack_require__(5);
 var $keys = __webpack_require__(21);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
@@ -2639,7 +2704,7 @@ $JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
 });
 
 // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(3)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(4)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 // 19.4.3.5 Symbol.prototype[@@toStringTag]
 setToStringTag($Symbol, 'Symbol');
 // 20.2.1.9 Math[@@toStringTag]
@@ -2668,9 +2733,9 @@ __webpack_require__(28)('observable');
 
 __webpack_require__(76);
 var global = __webpack_require__(0);
-var hide = __webpack_require__(3);
+var hide = __webpack_require__(4);
 var Iterators = __webpack_require__(19);
-var TO_STRING_TAG = __webpack_require__(6)('toStringTag');
+var TO_STRING_TAG = __webpack_require__(7)('toStringTag');
 
 var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
   'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
@@ -2778,10 +2843,13 @@ exports.ajaxSubmit = function ajaxSubmit(formObj, fileObj, options) {
    </div>
   </div> */}
 
-var uuid = __webpack_require__(7);
+var uuid = __webpack_require__(2);
 var upload = __webpack_require__(41);
 var uploadErr = __webpack_require__(16);
 var dialog = __webpack_require__(30);
+
+// ie9.
+var ie99 = window.febs.utils.browserIEVer() <= 9;
 
 exports.uploader_init = uploader_init;
 
@@ -2799,8 +2867,6 @@ window['_Feb_fegegRRdefaultUploaderError'] = function (err) {
   }
   dialog.showAlert(err.toString());
 };
-
-window['_Feb_fegegRRdefaultUploaderFinishParam'] = null;
 
 /**
 * @desc: 初始化page控件.
@@ -2831,14 +2897,19 @@ function uploader_init() {
       var html = dom.html();
       dom.html('');
 
-      var htmlForm = '<form id="' + uid + '-form" method="post" role="form" enctype="multipart/form-data" style="display:none">\n  <input id="' + uid + '" type="file" name="file" multiple' + (dataAccept ? ' accept="' + dataAccept + '"' : '') + '>\n</form>';
+      var submitHtml = '';
+      if (ie99) {
+        submitHtml = '<input type="submit" value="submit">';
+      }
+
+      var htmlForm = '<form id="' + uid + '-form" method="post" role="form" enctype="multipart/form-data" style="display:none">\n  <input id="' + uid + '" type="file" name="file" multiple' + (dataAccept ? ' accept="' + dataAccept + '"' : '') + '>\n  ' + submitHtml + '\n</form>';
       dom.append($(htmlForm));
 
       var html = '<label id="' + uid + '-label" for="' + uid + '" data-for="' + uid + '"><div class="btn">' + html + '</div>';
 
       var htmlFilename = dataFilename === 'true' ? '<span id="' + uid + '-filename" class="febsui-uploader-filename febsui-ellipsis"></span>' : '';
 
-      var htmlPro = '<div id="' + uid + '-progress" class="febsui-uploader-progress" style="display:none;">\n  <div class="febsui-uploader-progress-bg" style="width:0%;"></div>\n  ' + htmlFilename + '<span' + (dataFilename === 'true' ? ' class="febsui-uploader-right"' : '') + '>10%</span>\n</div>\n</label>\n<div class="febsui-uploader-progress-cancel"></div>\n';
+      var htmlPro = '<div id="' + uid + '-progress" class="febsui-uploader-progress" style="display:none;">\n  ' + htmlFilename + '<div class="febsui-uploader-progress-bg" style="width:0%;"></div>\n  <span' + (dataFilename === 'true' ? ' class="febsui-uploader-right"' : '') + '>10%</span>\n</div>\n</label>\n<div class="febsui-uploader-progress-cancel"></div>\n';
       html += htmlPro;
 
       //       var htmlPro = 
@@ -2859,7 +2930,7 @@ function uploader_init() {
 
         var _uid = $(this).attr('id');
 
-        if ($('#' + _uid)[0].files.length <= 0) {
+        if (window.febs.string.isEmpty(this.value) || $('#' + _uid)[0].files && $('#' + _uid)[0].files.length <= 0) {
           return;
         }
 
@@ -2881,117 +2952,156 @@ function uploader_init() {
         progressBg.css('width', '0%');
         progressSpan.html('0%');
 
-        if ($('#' + _uid)[0].files) {
+        var uploader = $(this).parent().parent('uploader');
 
-          var cancelControl;
+        var _dataApi = uploader.attr('data-api');
+        var _dataMaxSize = uploader.attr('data-maxsize');
+        var _dataBegin = uploader.attr('data-begin');
+        var _dataFinish = uploader.attr('data-finish');
+        var _dataError = uploader.attr('data-error');
 
-          var uploader = $(this).parent().parent('uploader');
+        // if ($('#'+_uid)[0].files) {
 
-          var _dataApi = uploader.attr('data-api');
-          var _dataMaxSize = uploader.attr('data-maxsize');
-          var _dataFinish = uploader.attr('data-finish');
-          var _dataError = uploader.attr('data-error');
+        var cancelControl;
+        var filename = '';
 
-          $('#' + _uid + '-filename').html($('#' + _uid)[0].files[0].name);
-
-          // trim.
-          if (_dataFinish) {
-            _dataFinish = _dataFinish.replace(/(^\s*)|(\s*$)/g, "");
-          }
-          if (_dataError) {
-            _dataError = _dataError.replace(/(^\s*)|(\s*$)/g, "");
+        if (ie99) {
+          var indexsp = this.value.lastIndexOf('\\');
+          if (indexsp > 0) {
+            indexsp = this.value.substr(indexsp + 1);
           } else {
-            _dataError = '_Feb_fegegRRdefaultUploaderError';
+            indexsp = this.value.lastIndexOf('/');
+            if (indexsp < 0) {
+              console.log('can\'t find filename');indexsp = '';
+            } else indexsp = this.value.substr(indexsp + 1);
           }
 
-          _dataMaxSize = _dataMaxSize ? parseInt(_dataMaxSize) : 0;
+          filename = indexsp;
+          $('#' + _uid + '-filename').html(filename);
+        } else {
+          filename = $('#' + _uid)[0].files[0].name;
+          $('#' + _uid + '-filename').html(filename);
+        }
 
-          // 取消.
-          cancel.attr('style', 'display:inline !important;');
-          cancel.one('click', function () {
-            uploader.uploaderReset();
-            _dataError = null;
-            if (cancelControl) cancelControl.abort();
-            cancelControl = null;
-          });
+        // trim.
+        if (_dataFinish) {
+          _dataFinish = _dataFinish.replace(/(^\s*)|(\s*$)/g, "");
+        }
+        if (_dataError) {
+          _dataError = _dataError.replace(/(^\s*)|(\s*$)/g, "");
+        } else {
+          _dataError = '_Feb_fegegRRdefaultUploaderError';
+        }
 
-          // 上传.
-          upload.upload({
-            formObj: $('#' + _uid + '-form'),
-            fileObj: $('#' + _uid),
-            uploadUrl: _dataApi,
-            maxFileSize: _dataMaxSize,
-            beginCB: function beginCB(uploader) {
-              cancelControl = uploader;
-            },
-            finishCB: function finishCB(err, fileObj, serverData) {
-              if (err) {
+        _dataMaxSize = _dataMaxSize ? parseInt(_dataMaxSize) : 0;
+
+        // 取消.
+        cancel.attr('style', 'display:inline !important;');
+        cancel.one('click', function () {
+          uploader.uploaderReset();
+          _dataError = null;
+          if (cancelControl) cancelControl.abort();
+          cancelControl = null;
+        });
+
+        // 上传.
+        upload.upload({
+          formObj: $('#' + _uid + '-form'),
+          fileObj: $('#' + _uid),
+          uploadUrl: _dataApi,
+          maxFileSize: _dataMaxSize,
+          beginCB: function beginCB(uploader) {
+            cancelControl = uploader;
+
+            if (_dataBegin) {
+              var i = 0;
+              for (; i < _dataBegin.length; i++) {
+                if (!(_dataBegin[i] >= 'a' && _dataBegin[i] <= 'z' || _dataBegin[i] >= 'A' && _dataBegin[i] <= 'Z' || _dataBegin[i] == '_')) {
+                  break;
+                }
+              }
+              if (i >= _dataBegin.length) {
+                var controlId = 'febsui-cancel-' + uuid.uuid();
+                window[controlId] = uploader;
+
+                filename = window.febs.string.replace(filename, '"', '\"');
+                eval(_dataBegin + ('(window["' + controlId + '"], "' + filename + '")'));
+                delete window[controlId];
+              } else {
+                eval(_dataBegin);
+              }
+            }
+          },
+          finishCB: function finishCB(err, fileObj, serverData) {
+            if (err) {
+
+              cancel.removeAttr('style');
+              label.removeAttr('style');
+              label.attr('for', label.attr('data-for'));
+              uploadHtml.css('display', 'inline-block');
+              progress.css('display', 'none');
+
+              if (err != uploadErr.nofile && err != uploadErr.sizeExceed && err != uploadErr.crc32 && err != uploadErr.net) {
+                console.log(err);
+              }
+
+              if (_dataError) {
+                var i = 0;
+                for (; i < _dataError.length; i++) {
+                  if (!(_dataError[i] >= 'a' && _dataError[i] <= 'z' || _dataError[i] >= 'A' && _dataError[i] <= 'Z' || _dataError[i] == '_')) {
+                    break;
+                  }
+                }
+                if (i >= _dataError.length) {
+                  err = err.toString();
+                  err = window.febs.string.replace(err, '"', '\"');
+                  eval(_dataError + '("' + err + '")');
+                } else {
+                  eval(_dataError);
+                }
+              }
+
+              // reset.
+              cancel.trigger('click');
+              cancel.off('click');
+            }
+            // 上传成功.
+            else {
+                cancelControl = null;
+                var percent = "100%";
+                progressBg.css('width', percent);
+                progressSpan.html(percent);
 
                 cancel.removeAttr('style');
                 label.removeAttr('style');
                 label.attr('for', label.attr('data-for'));
-                uploadHtml.css('display', 'inline-block');
-                progress.css('display', 'none');
 
-                if (err != uploadErr.nofile && err != uploadErr.sizeExceed && err != uploadErr.crc32 && err != uploadErr.net) {
-                  console.log(err);
-                }
-
-                if (_dataError) {
+                if (_dataFinish) {
                   var i = 0;
-                  for (; i < _dataError.length; i++) {
-                    if (!(_dataError[i] >= 'a' && _dataError[i] <= 'z' || _dataError[i] >= 'A' && _dataError[i] <= 'Z' || _dataError[i] == '_')) {
+                  for (; i < _dataFinish.length; i++) {
+                    if (!(_dataFinish[i] >= 'a' && _dataFinish[i] <= 'z' || _dataFinish[i] >= 'A' && _dataFinish[i] <= 'Z' || _dataFinish[i] == '_')) {
                       break;
                     }
                   }
-                  if (i >= _dataError.length) {
-                    err = err.toString();
-                    err = window.febs.string.replace(err, '"', '\"');
-                    eval(_dataError + '("' + err + '")');
+                  if (i >= _dataFinish.length) {
+
+                    var finishData = 'febsui-finish-' + uuid.uuid();
+                    window[finishData] = serverData;
+                    eval(_dataFinish + ('(window["' + finishData + '"])'));
+                    delete window[finishData];
                   } else {
-                    eval(_dataError);
+                    eval(_dataFinish);
                   }
                 }
-
-                // reset.
-                cancel.trigger('click');
-                cancel.off('click');
               }
-              // 上传成功.
-              else {
-                  cancelControl = null;
-                  var percent = "100%";
-                  progressBg.css('width', percent);
-                  progressSpan.html(percent);
-
-                  cancel.removeAttr('style');
-                  label.removeAttr('style');
-                  label.attr('for', label.attr('data-for'));
-
-                  window['_Feb_fegegRRdefaultUploaderFinishParam'] = serverData;
-
-                  if (_dataFinish) {
-                    var i = 0;
-                    for (; i < _dataFinish.length; i++) {
-                      if (!(_dataFinish[i] >= 'a' && _dataFinish[i] <= 'z' || _dataFinish[i] >= 'A' && _dataFinish[i] <= 'Z' || _dataFinish[i] == '_')) {
-                        break;
-                      }
-                    }
-                    if (i >= _dataFinish.length) {
-                      eval(_dataFinish + '(window["_Feb_fegegRRdefaultUploaderFinishParam"])');
-                    } else {
-                      eval(_dataFinish);
-                    }
-                  }
-                }
-            },
-            progressCB: function progressCB(fileObj, percent) {
-              percent = percent * 100 + "%";
-              progressBg.css('width', percent);
-              progressSpan.html(percent);
-            }
-          });
-        } // if.
+          },
+          progressCB: function progressCB(fileObj, percent) {
+            percent = percent * 100 + "%";
+            progressBg.css('width', percent);
+            progressSpan.html(percent);
+          }
+        });
+        // } // if.
       });
     }
   } // for.
@@ -3004,7 +3114,7 @@ function uploader_init() {
 "use strict";
 
 
-var uuid = __webpack_require__(7);
+var uuid = __webpack_require__(2);
 
 exports.actionsheet_init = actionsheet_init;
 
@@ -3036,6 +3146,17 @@ function actionsheet_init() {
           var ddCancel = $("<div class='febsui-actionsheet-group' style='margin-top:5px;'></div>");
           ddCancel.append(domCancel);
           dom.append(ddCancel);
+        }
+      }
+
+      // ie9.
+      if (window.febs.utils.browserIEVer() <= 9) {
+        var groups = dom.children('.febsui-actionsheet-group');
+        for (var jj = 0; jj < groups.length; jj++) {
+          var cells = $(groups[jj]).children('.febsui-actionsheet-cell');
+          for (var jjj = 0; jjj < cells.length - 1; jjj++) {
+            $(cells[jjj]).css('border-bottom', '1px solid #eee');
+          }
         }
       }
 
@@ -3217,7 +3338,7 @@ exports.loading_hide = function () {
  * Desc:
  */
 
-var crypt = __webpack_require__(7);
+var crypt = __webpack_require__(2);
 
 'use strict';
 
@@ -3299,7 +3420,7 @@ exports.page_init = page_init;
 "use strict";
 
 
-var uuid = __webpack_require__(7);
+var uuid = __webpack_require__(2);
 
 exports.popover_init = popover_init;
 
@@ -3343,6 +3464,14 @@ function popover_init() {
       }
 
       dom.addClass('febsui-popover-inited');
+
+      // ie9.
+      if (window.febs.utils.browserIEVer() <= 9) {
+        var cells = dom.children('.febsui-popover-cell');
+        for (var jj = 0; jj < cells.length - 1; jj++) {
+          $(cells[jj]).css('border-bottom', '1px solid #eee');
+        }
+      }
 
       var dd = $("<div class='febsui-popover'></div>");
       $('body').append(dd);
@@ -3411,7 +3540,7 @@ function switch_init() {
 "use strict";
 
 
-var uuid = __webpack_require__(7);
+var uuid = __webpack_require__(2);
 
 var toastHideTimer;
 

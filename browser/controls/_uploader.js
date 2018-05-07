@@ -15,6 +15,9 @@ var upload = require('./upload');
 var uploadErr = require('./upload.err');
 var dialog = require('./dialog');
 
+// ie9.
+var ie99 = window.febs.utils.browserIEVer() <= 9;
+
 exports.uploader_init = uploader_init;
 
 window['_Feb_fegegRRdefaultUploaderError'] = function(err) {
@@ -31,8 +34,6 @@ window['_Feb_fegegRRdefaultUploaderError'] = function(err) {
   }
   dialog.showAlert(err.toString());
 };
-
-window['_Feb_fegegRRdefaultUploaderFinishParam'] = null;
 
 
 /**
@@ -65,9 +66,15 @@ function uploader_init() {
       var html = dom.html();
       dom.html('');
 
+      var submitHtml = '';
+      if (ie99) {
+        submitHtml = `<input type="submit" value="submit">`;
+      }
+
       var htmlForm = 
 `<form id="${uid}-form" method="post" role="form" enctype="multipart/form-data" style="display:none">
   <input id="${uid}" type="file" name="file" multiple${dataAccept?' accept="'+dataAccept+'"': ''}>
+  ${submitHtml}
 </form>`;
       dom.append($(htmlForm));
 
@@ -77,8 +84,8 @@ function uploader_init() {
 
       var htmlPro = 
 `<div id="${uid}-progress" class="febsui-uploader-progress" style="display:none;">
-  <div class="febsui-uploader-progress-bg" style="width:0%;"></div>
-  ${htmlFilename}<span${dataFilename==='true'?' class="febsui-uploader-right"':''}>10%</span>
+  ${htmlFilename}<div class="febsui-uploader-progress-bg" style="width:0%;"></div>
+  <span${dataFilename==='true'?' class="febsui-uploader-right"':''}>10%</span>
 </div>
 </label>
 <div class="febsui-uploader-progress-cancel"></div>
@@ -104,7 +111,7 @@ function uploader_init() {
 
         var _uid = $(this).attr('id');
 
-        if ($('#'+_uid)[0].files.length <= 0) {
+        if (window.febs.string.isEmpty(this.value) || ($('#'+_uid)[0].files && $('#'+_uid)[0].files.length <= 0)) {
           return;
         }
 
@@ -126,19 +133,37 @@ function uploader_init() {
         progressBg.css('width', '0%');
         progressSpan.html('0%');
 
-        if ($('#'+_uid)[0].files) {
+        var uploader = $(this).parent().parent('uploader');
+
+        var _dataApi = uploader.attr('data-api');
+        var _dataMaxSize = uploader.attr('data-maxsize');
+        var _dataBegin = uploader.attr('data-begin');
+        var _dataFinish = uploader.attr('data-finish');
+        var _dataError = uploader.attr('data-error');
+
+        // if ($('#'+_uid)[0].files) {
 
           var cancelControl;
+          var filename = '';
 
+          if (ie99) {
+            var indexsp = this.value.lastIndexOf('\\');
+            if (indexsp > 0) {
+              indexsp = this.value.substr(indexsp+1);
+            } else {
+              indexsp = this.value.lastIndexOf('/');
+              if (indexsp < 0) { console.log('can\'t find filename'); indexsp = ''; }
+              else 
+                indexsp = this.value.substr(indexsp+1);
+            }
 
-          var uploader = $(this).parent().parent('uploader');
-
-          var _dataApi = uploader.attr('data-api');
-          var _dataMaxSize = uploader.attr('data-maxsize');
-          var _dataFinish = uploader.attr('data-finish');
-          var _dataError = uploader.attr('data-error');
-
-          $(`#${_uid}-filename`).html($('#'+_uid)[0].files[0].name);
+            filename = indexsp;
+            $(`#${_uid}-filename`).html(filename);
+          }
+          else {
+            filename = $('#'+_uid)[0].files[0].name;
+            $(`#${_uid}-filename`).html(filename);
+          }
 
           // trim.
           if (_dataFinish) {
@@ -167,7 +192,31 @@ function uploader_init() {
             fileObj: $('#'+_uid),
             uploadUrl: _dataApi,
             maxFileSize: _dataMaxSize,
-            beginCB: function(uploader) { cancelControl = uploader; },
+            beginCB: function(uploader) { 
+              cancelControl = uploader;
+
+              if (_dataBegin) {
+                var i = 0;
+                for (; i < _dataBegin.length; i++) {
+                  if (!((_dataBegin[i] >= 'a' && _dataBegin[i] <= 'z')
+                  || (_dataBegin[i] >= 'A' && _dataBegin[i] <= 'Z')
+                  || _dataBegin[i] == '_')) {
+                    break;
+                  }
+                }
+                if (i >= _dataBegin.length) {
+                  var controlId = 'febsui-cancel-'+uuid.uuid();
+                  window[controlId] = uploader;
+
+                  filename = window.febs.string.replace(filename, '"', '\"');
+                  eval(_dataBegin+`(window["${controlId}"], "${filename}")`);
+                  delete window[controlId];
+                }
+                else {
+                  eval(_dataBegin);
+                }
+              }
+            },
             finishCB: function(err, fileObj, serverData) {
               if (err) {
 
@@ -220,8 +269,6 @@ function uploader_init() {
                 label.removeAttr('style');
                 label.attr('for', label.attr('data-for'));
 
-                window['_Feb_fegegRRdefaultUploaderFinishParam'] = serverData;
-
                 if (_dataFinish) {
                   var i = 0;
                   for (; i < _dataFinish.length; i++) {
@@ -232,7 +279,11 @@ function uploader_init() {
                     }
                   }
                   if (i >= _dataFinish.length) {
-                    eval(_dataFinish+'(window["_Feb_fegegRRdefaultUploaderFinishParam"])');
+
+                    var finishData = 'febsui-finish-'+uuid.uuid();
+                    window[finishData] = serverData;
+                    eval(_dataFinish+`(window["${finishData}"])`);
+                    delete window[finishData];
                   }
                   else {
                     eval(_dataFinish);
@@ -246,7 +297,7 @@ function uploader_init() {
               progressSpan.html(percent);
             }
           });
-        } // if.
+        // } // if.
       });
 
     }

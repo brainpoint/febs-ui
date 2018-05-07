@@ -39,6 +39,15 @@ if ( !window.febs ) {
 var crypt = window.febs.crypt;
 var err = require('./upload.err');
 var ajaxSubmit = require('../ajaxSubmit').ajaxSubmit;
+var uuid = require('../uuid');
+
+// var responseText = $('iframe')[0].contentDocument.body.textContent;
+//     var responseData = JSON.parse(responseText) || {};
+//     if (responseData.isSuccess == true || responseData.code == 200) {
+//         //success
+//     } else {
+//         //error   
+//     }
 
 
 /**
@@ -82,55 +91,98 @@ function upload(cfg) {
   {
     cfg.fileObj.attr("accept", cfg.fileType);
   }
+  
+  // ie9.
+  var uid = 'febsuifile' + uuid.uuid();
+  uid = window.febs.string.replace(uid, '-', '');
+  var ie99 = window.febs.utils.browserIEVer() <= 9;
+  if (ie99) {
+    cfg.formObj.attr('target', uid);
+    cfg.formObj.attr('action', control_upload_url);
+    cfg.formObj.attr('method', 'post');
 
-  if (!cfg.fileObj[0].files[0])
-  {
-    if (control_upload_cb)  control_upload_cb(err.nofile, cfg.fileObj, null);
-    return;
-  }
-  if (cfg.fileObj[0].files[0].size > control_upload_maxFileSize)
-  {
-    if (control_upload_cb)  control_upload_cb(err.sizeExceed, cfg.fileObj, null);
-    return;
-  }
+    var iframeDom = `<iframe id="${uid}" name="${uid}" style="display:none;"></iframe>`;
+    $('body').prepend(iframeDom);
 
-  var urlQueryIndex = control_upload_url.indexOf('?');
-  if (urlQueryIndex < 0) {
-    control_upload_url += '?';
-  } else if (urlQueryIndex < control_upload_url.length-1) {
-    control_upload_url += '&';
-  }
-
-  var formObj = cfg.formObj;
-  var fileObj = cfg.fileObj;
-
-  crypt.crc32_file(fileObj[0].files[0], function(crc){
-    if (crc) {
+    $('#'+uid).on('load', function() {
+      var responseText = $('#'+uid)[0].contentDocument.body.textContent;
+      var r;
       try {
-        var con = ajaxSubmit(formObj, fileObj, {
-          method:       'POST',
-          url:          control_upload_url + 'crc32=' + crc + '&size=' + fileObj[0].files[0].size + (cfg.data ? '&data='+cfg.data : ''),
-          progress:     function(percentComplete){ if (control_upload_progress_cb) control_upload_progress_cb(fileObj, percentComplete?percentComplete.toFixed(1):0 ); },
-          error:        function(){ if (control_upload_cb)  control_upload_cb(err.net, fileObj, null); },
-          success:      function(r) {
-            try {
-              r = JSON.parse(r);
-            } catch(e) {}
+        r = JSON.parse(responseText);
+      } catch(e) { r = {}; }
 
-            if (control_upload_cb)  control_upload_cb(null, fileObj, r);
-          },
-          crossDomain:cfg.crossDomain, 
-          headers: cfg.headers,
-          withCredentials: cfg.withCredentials
-        });
-        if (control_upload_begin_cb) control_upload_begin_cb(con);
-      } catch (e) {
-        if (control_upload_cb)  control_upload_cb(e, fileObj, null);
+      if (r.isSuccess == true || r.code == 200) {
+          //success
+          if (control_upload_cb)  control_upload_cb(null, cfg.fileObj, r);
+      } else {
+          //error   
+          if (control_upload_cb)  control_upload_cb(err.net, cfg.fileObj, null);
       }
-    } else {
-      if (control_upload_cb)  control_upload_cb(err.crc32, fileObj, null);
+
+      cfg.formObj.removeAttr('target');
+      cfg.fileObj[0].value="";
+      $('#'+uid).remove();
+    });
+
+    if (control_upload_begin_cb) control_upload_begin_cb({abort:function(){ $('#'+uid).remove(); cfg.fileObj[0].value=""; }});
+
+    var inputs = cfg.formObj.children('input');
+    $(inputs[inputs.length-1]).click();
+  }
+  else {
+
+    if (!cfg.fileObj[0].files[0])
+    {
+      if (control_upload_cb)  control_upload_cb(err.nofile, cfg.fileObj, null);
+      return;
     }
-  });
+    if (cfg.fileObj[0].files[0].size > control_upload_maxFileSize)
+    {
+      if (control_upload_cb)  control_upload_cb(err.sizeExceed, cfg.fileObj, null);
+      return;
+    }
+
+    var urlQueryIndex = control_upload_url.indexOf('?');
+    if (urlQueryIndex < 0) {
+      control_upload_url += '?';
+    } else if (urlQueryIndex < control_upload_url.length-1) {
+      control_upload_url += '&';
+    }
+
+    var formObj = cfg.formObj;
+    var fileObj = cfg.fileObj;
+  
+    crypt.crc32_file(fileObj[0].files[0], function(crc){
+      if (crc) {
+        try {
+          var con = ajaxSubmit(formObj, fileObj, {
+            method:       'POST',
+            url:          control_upload_url + 'crc32=' + crc + '&size=' + fileObj[0].files[0].size + (cfg.data ? '&data='+cfg.data : ''),
+            progress:     function(percentComplete){ if (control_upload_progress_cb) control_upload_progress_cb(fileObj, percentComplete?percentComplete.toFixed(1):0 ); },
+            error:        function(){ if (control_upload_cb)  control_upload_cb(err.net, fileObj, null); fileObj[0].value=""; },
+            success:      function(r) {
+              try {
+                r = JSON.parse(r);
+              } catch(e) { r = {}; }
+
+              if (control_upload_cb)  control_upload_cb(null, fileObj, r);
+              fileObj[0].value="";
+            },
+            crossDomain:cfg.crossDomain, 
+            headers: cfg.headers,
+            withCredentials: cfg.withCredentials
+          });
+          if (control_upload_begin_cb) control_upload_begin_cb(con);
+        } catch (e) {
+          if (control_upload_cb)  control_upload_cb(e, fileObj, null);
+          fileObj[0].value="";
+        }
+      } else {
+        if (control_upload_cb)  control_upload_cb(err.crc32, fileObj, null);
+        fileObj[0].value="";
+      }
+    });
+  } // if..else.
 }
 
 

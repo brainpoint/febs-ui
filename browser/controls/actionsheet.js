@@ -33,6 +33,17 @@ function actionsheet_init() {
         }
       }
 
+      // ie9.
+      if (window.febs.utils.browserIEVer() <= 9) {
+        var groups = dom.children('.febsui-actionsheet-group');
+        for (var jj = 0; jj < groups.length; jj++) {
+          var cells = $(groups[jj]).children('.febsui-actionsheet-cell');
+          for (var jjj = 0; jjj < cells.length-1; jjj++) {
+            $(cells[jjj]).css('border-bottom','1px solid #eee');
+          }
+        }
+      }
+
       var dd = $("<div class='febsui-actionsheet'></div>");
       $('body').append(dd);
       var did = dom.attr('id');

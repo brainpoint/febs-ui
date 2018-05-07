@@ -494,11 +494,16 @@ $('actionsheet').actionsheetHide();
   <uploader data-api="/upload" 
          data-accept="application/zip" 
        data-filename="true" 
+          data-begin="onUploadBegin"
          data-finish="febsui.dialog_showAlert('upload ok')"
          data-progress="onUploadProgress"
          data-error="onUploadError">上传图片</uploader>
   
   <script>
+    function onUploadBegin(uploaderController, filename) {
+      uploaderController.abort(); // abort uploader.
+    }
+
     function onUploadProgress(percent) {
       console.log(percenter);
     }
@@ -518,6 +523,7 @@ $('actionsheet').actionsheetHide();
 | data-api | 上传文件的api地址 |   |
 | data-accept |  接受文件的类型 | (可选) MIME_type值  |
 | data-filename |  是否显示选中的文件名  | (可选) true |
+| data-begin | 上传开始的回调  | (可选) function(uploaderController, filename) {} |
 | data-finish | 上传成功的回调  | (可选) function(serverData) {} |
 | data-progress | 上传进度的回调  | (可选) function(percent) {} |
 | data-error | 上传错误的回调  | (可选) function(err) {}; err可能的值有:  <br> febsui.uploadErr.nofile - 未选择文件<br> febsui.uploadErr.sizeExceed - 文件太大<br> febsui.uploadErr.crc32 - 计算本地文件hash值时错误<br> febsui.uploadErr.net - ajax上传时出错<br> 其他 |

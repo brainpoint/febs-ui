@@ -1260,8 +1260,8 @@ actionsheet .febsui-actionsheet-cell:active {
   <label>
     <div class="btn">上传图片</div>
     <div class="febsui-uploader-progress">
-      <div class="febsui-uploader-progress-bg" style="width:0%;"></div>
       <span class="febsui-uploader-filename febsui-ellipsis"></span>
+      <div class="febsui-uploader-progress-bg" style="width:0%;"></div>
       <span class="febsui-uploader-right">0%</span>
     </div>
   </label>
@@ -1312,7 +1312,7 @@ actionsheet .febsui-actionsheet-cell:active {
 .febsui-uploader .febsui-uploader-progress-bg {
    position: absolute;
    left: 0px;
-   top: 0px;
+   top: 50%;
    bottom: 0px;
    width: 10%;
    border-radius: .25rem;
@@ -1335,13 +1335,17 @@ actionsheet .febsui-actionsheet-cell:active {
    text-align: right;
    left: auto;
    right: 5px;
+   top:50%;
+   line-height: 19px;
  }
 
  uploader .febsui-uploader-progress .febsui-uploader-filename,
 .febsui-uploader .febsui-uploader-progress .febsui-uploader-filename {
   text-align: left;
   left: 5px;
-  right: 35px;
+  right: 5px;
+  line-height: 19px;
+  bottom: 50%;
 }
 
  uploader .febsui-uploader-progress-cancel,
@@ -1349,13 +1353,14 @@ actionsheet .febsui-actionsheet-cell:active {
    display: none;
    cursor: pointer;
    position: absolute;
-   top: 0px;
+   top: 50%;
    bottom: 0px;
    right: 0px;
    width: 30px;
    height: 16px;
    padding: 2px;
    border-radius: 50%;
+   line-height: 19px;
  }
 
  uploader .febsui-uploader-progress-cancel::after,
