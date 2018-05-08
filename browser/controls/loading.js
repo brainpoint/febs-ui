@@ -130,3 +130,53 @@ exports.loading_hide = function() {
 
   $('#' + loading_tag_name).html('');
 }
+
+
+// ie9.
+var ie9Spins = [];
+if (window.febs.utils.browserIEVer() <= 9) {
+  var total = 0;
+  var timer;
+  var now = Date.now();
+  var timeSpan = 3000;
+  
+  function foo(tm) {
+    if (ie9Spins.length > 0) {
+      var now2 = Date.now();
+      total += now2-now;
+      now = now2;
+
+      total = total%timeSpan;
+
+      var deg = 360*(total/timeSpan);
+      deg = 'rotate('+deg+'deg)';
+
+      for (var i = 0; i < ie9Spins.length; i++) {
+        ie9Spins[i].css('-ms-transform', deg);
+      }
+    }
+    timer = requestAnimationFrame(foo);
+  }
+   
+  timer = requestAnimationFrame(foo);
+} // ie9.
+
+/**
+* @desc: for spin.
+* @return: 
+*/
+exports.spin_init = function() {
+  // ie9.
+  if (window.febs.utils.browserIEVer() <= 9) {
+    ie9Spins = [];
+    var spins = $('.febsui-icon-spin');
+    for (var i = 0; i < spins.length; i++) {
+      ie9Spins.push(spins[i]);
+    }
+
+    spins = $('.febsui-icon-spin-white');
+    for (var i = 0; i < spins.length; i++) {
+      ie9Spins.push(spins[i]);
+    }
+  }
+}

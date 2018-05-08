@@ -272,6 +272,10 @@ export function ui_dialog_init():void;
 *        在增加新的uploader到页面后, 需要手动调用此方法.
 */
 export function ui_uploader_init():void;
+/**
+* @desc: 用于解决ie9下不支持css:animation; 初始化<div class="febsui-icon-spin/febsui-icon-spin-white">控件.
+*/
+export function ui_spin_init():void;
 
 /**
 * @desc: 对页面上所有ui控件进行初始化.

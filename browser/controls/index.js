@@ -45,6 +45,11 @@ exports.ui_uploader_init = uploadera.uploader_init;
 var checkboxa = require('./checkbox');
 exports.ui_checkbox_init = checkboxa.checkbox_init;
 
+var loadinga = require('./loading');
+exports.ui_spin_init = loadinga.spin_init;
+
+
+
 /**
 * @desc: 初始化所有ui
 * @return: 
@@ -56,6 +61,7 @@ exports.ui_init = function() {
   actionsheeta.actionsheet_init();
   uploadera.uploader_init();
   checkboxa.checkbox_init();
+  loadinga.spin_init();
 }
 
 // for mobile active.

@@ -160,7 +160,7 @@ exports.f = __webpack_require__(3) ? Object.defineProperty : function defineProp
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(66);
+var IObject = __webpack_require__(67);
 var defined = __webpack_require__(17);
 module.exports = function (it) {
   return IObject(defined(it));
@@ -202,11 +202,11 @@ module.exports = function (it) {
 
 exports.__esModule = true;
 
-var _iterator = __webpack_require__(55);
+var _iterator = __webpack_require__(56);
 
 var _iterator2 = _interopRequireDefault(_iterator);
 
-var _symbol = __webpack_require__(54);
+var _symbol = __webpack_require__(55);
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
@@ -985,7 +985,7 @@ module.exports = function (it) {
 
 var global = __webpack_require__(0);
 var core = __webpack_require__(12);
-var ctx = __webpack_require__(63);
+var ctx = __webpack_require__(64);
 var hide = __webpack_require__(4);
 var has = __webpack_require__(1);
 var PROTOTYPE = 'prototype';
@@ -1067,9 +1067,9 @@ var $export = __webpack_require__(35);
 var redefine = __webpack_require__(42);
 var hide = __webpack_require__(4);
 var Iterators = __webpack_require__(19);
-var $iterCreate = __webpack_require__(68);
+var $iterCreate = __webpack_require__(69);
 var setToStringTag = __webpack_require__(23);
-var getPrototypeOf = __webpack_require__(74);
+var getPrototypeOf = __webpack_require__(75);
 var ITERATOR = __webpack_require__(7)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
@@ -1138,7 +1138,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject = __webpack_require__(11);
-var dPs = __webpack_require__(71);
+var dPs = __webpack_require__(72);
 var enumBugKeys = __webpack_require__(18);
 var IE_PROTO = __webpack_require__(24)('IE_PROTO');
 var Empty = function () { /* empty */ };
@@ -1153,7 +1153,7 @@ var createDict = function () {
   var gt = '>';
   var iframeDocument;
   iframe.style.display = 'none';
-  __webpack_require__(65).appendChild(iframe);
+  __webpack_require__(66).appendChild(iframe);
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
@@ -1205,7 +1205,7 @@ exports.f = Object.getOwnPropertySymbols;
 
 var has = __webpack_require__(1);
 var toIObject = __webpack_require__(6);
-var arrayIndexOf = __webpack_require__(62)(false);
+var arrayIndexOf = __webpack_require__(63)(false);
 var IE_PROTO = __webpack_require__(24)('IE_PROTO');
 
 module.exports = function (object, names) {
@@ -1231,6 +1231,191 @@ module.exports = __webpack_require__(4);
 
 /***/ }),
 /* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright (c) 2017 Copyright brainpoint All Rights Reserved.
+ * Author: lipengxiang
+ * Desc:
+ */
+function escape_string(str) {
+  // 转义.
+  if (str) {
+    str = window.febs.string.escapeHtml(str);
+  }
+  return str;
+}
+
+'use strict';
+
+var loading_tag_name = 'febsui_loading_span_s23153dd12ax1';
+var control_loading_index = 0;
+var control_loading_timer;
+var control_loading_text_elemFunc;
+var control_loading_text_hideFunc;
+var control_loading_text_array;
+
+/**
+* @desc: 当前是否显示.
+*/
+exports.loading_isVisiable = function () {
+  if (control_loading_timer) return true;
+
+  var ee = $('#' + loading_tag_name).html();
+  return ee && ee.length > 0;
+
+  // var e1 = dom.getElementById(loading_tag_name);
+  // var ee = e1 ? e1.innerHTML : null;
+  // return ee && ee.length>0;
+};
+
+/**
+* @desc: 使用延时显示加载框.
+* @param text: 提示文本.
+* @param timeout: 延时显示, 默认为0.
+* @return: 
+*/
+function loading_show(text, timeout) {
+
+  text = escape_string(text);
+
+  var e = $('body').children('#' + loading_tag_name);
+  if (!e || e.length == 0) {
+    $('body').prepend('<span id="' + loading_tag_name + '"></span>');
+  }
+
+  if (control_loading_timer) window.clearInterval(control_loading_timer);
+  if (timeout) {
+    control_loading_timer = window.setInterval(function () {
+      loading_show(text);
+    }, timeout);
+  } else {
+    $('#' + loading_tag_name).html('<div class="febsui-loading-c"><div class="febsui-loading"><div class="febsui-loading-spin"></div><p>' + (text ? text : '') + '</p></div></div>');
+  }
+}
+exports.loading_show = loading_show;
+
+/**
+* @desc: 通过每500ms改变文本的方式显示加载框; 例如显示 3,2,1,3,2,1循环显示.
+* @param textArray: 变化的文本数组.
+* @param changeTextCB: 当前显示文本的回调. function(text).
+* @param hideCB:  隐藏加载框时的设置文本的函数. function().
+* @return: 
+*/
+exports.loading_show_text = function (textArray, changeTextCB, hideCB) {
+
+  var e = $('body').children('#' + loading_tag_name);
+  if (!e || e.length == 0) {
+    $('body').prepend('<span id="' + loading_tag_name + '"></span>');
+  }
+
+  if (control_loading_text_elemFunc) {
+    if (control_loading_text_hideFunc) control_loading_text_hideFunc();
+    control_loading_text_hideFunc = null;
+    control_loading_text_elemFunc = null;
+    control_loading_text_array = null;
+    if (control_loading_timer) {
+      window.clearInterval(control_loading_timer);
+      control_loading_timer = null;
+    }
+  }
+
+  for (var i = 0; i < textArray.length; i++) {
+    textArray[i] = escape_string(textArray[i]);
+  }
+
+  control_loading_text_array = textArray;
+  control_loading_text_hideFunc = hideCB;
+  control_loading_text_elemFunc = changeTextCB;
+  control_loading_index = 0;
+  control_loading_timer = window.setInterval(function () {
+    control_loading_text_elemFunc(control_loading_text_array[control_loading_index++ % control_loading_text_array.length]);
+  }, 500);
+};
+
+/**
+* @desc: 隐藏加载对话框
+* @return: 
+*/
+exports.loading_hide = function () {
+  var e = $('body').children('#' + loading_tag_name);
+  if (!e || e.length == 0) {
+    $('body').prepend('<span id="' + loading_tag_name + '"></span>');
+  }
+
+  if (control_loading_timer) {
+    window.clearInterval(control_loading_timer);
+    control_loading_timer = null;
+  }
+
+  if (control_loading_text_elemFunc) {
+    if (control_loading_text_hideFunc) control_loading_text_hideFunc();
+    control_loading_text_hideFunc = null;
+    control_loading_text_elemFunc = null;
+    control_loading_text_array = null;
+    if (control_loading_timer) {
+      window.clearInterval(control_loading_timer);
+      control_loading_timer = null;
+    }
+  }
+
+  $('#' + loading_tag_name).html('');
+};
+
+// ie9.
+var ie9Spins = [];
+if (window.febs.utils.browserIEVer() <= 9) {
+  var foo = function foo(tm) {
+    if (ie9Spins.length > 0) {
+      var now2 = Date.now();
+      total += now2 - now;
+      now = now2;
+
+      total = total % timeSpan;
+
+      var deg = 360 * (total / timeSpan);
+      deg = 'rotate(' + deg + 'deg)';
+
+      for (var i = 0; i < ie9Spins.length; i++) {
+        ie9Spins[i].css('-ms-transform', deg);
+      }
+    }
+    timer = requestAnimationFrame(foo);
+  };
+
+  var total = 0;
+  var timer;
+  var now = Date.now();
+  var timeSpan = 3000;
+
+  timer = requestAnimationFrame(foo);
+} // ie9.
+
+/**
+* @desc: for spin.
+* @return: 
+*/
+exports.spin_init = function () {
+  // ie9.
+  if (window.febs.utils.browserIEVer() <= 9) {
+    ie9Spins = [];
+    var spins = $('.febsui-icon-spin');
+    for (var i = 0; i < spins.length; i++) {
+      ie9Spins.push(spins[i]);
+    }
+
+    spins = $('.febsui-icon-spin-white');
+    for (var i = 0; i < spins.length; i++) {
+      ie9Spins.push(spins[i]);
+    }
+  }
+};
+
+/***/ }),
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1275,7 +1460,7 @@ var _typeof = __webpack_require__(9)["default"];
 
   var crypt = window.febs.crypt;
   var err = __webpack_require__(16);
-  var ajaxSubmit = __webpack_require__(86).ajaxSubmit;
+  var ajaxSubmit = __webpack_require__(87).ajaxSubmit;
   var uuid = __webpack_require__(2);
 
   // var responseText = $('iframe')[0].contentDocument.body.textContent;
@@ -1433,7 +1618,7 @@ var _typeof = __webpack_require__(9)["default"];
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)(module)))
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1447,7 +1632,7 @@ if (!$) {
   throw new Error('must import febs first');
 }
 
-var loading = __webpack_require__(90);
+var loading = __webpack_require__(43);
 exports.loading_isVisiable = loading.loading_isVisiable;
 exports.loading_show = loading.loading_show;
 exports.loading_show_text = loading.loading_show_text;
@@ -1455,7 +1640,7 @@ exports.loading_hide = loading.loading_hide;
 
 exports.page_init = __webpack_require__(91).page_init;
 exports.uploadBase64 = __webpack_require__(95).uploadBase64;
-exports.upload = __webpack_require__(43).upload;
+exports.upload = __webpack_require__(44).upload;
 exports.uploadErr = __webpack_require__(16);
 
 var toast = __webpack_require__(94);
@@ -1477,14 +1662,17 @@ exports.ui_popover_init = popovera.popover_init;
 var dialoga = __webpack_require__(30);
 exports.ui_dialog_init = dialoga.dialog_init;
 
-var actionsheeta = __webpack_require__(88);
+var actionsheeta = __webpack_require__(89);
 exports.ui_actionsheet_init = actionsheeta.actionsheet_init;
 
-var uploadera = __webpack_require__(87);
+var uploadera = __webpack_require__(88);
 exports.ui_uploader_init = uploadera.uploader_init;
 
-var checkboxa = __webpack_require__(89);
+var checkboxa = __webpack_require__(90);
 exports.ui_checkbox_init = checkboxa.checkbox_init;
+
+var loadinga = __webpack_require__(43);
+exports.ui_spin_init = loadinga.spin_init;
 
 /**
 * @desc: 初始化所有ui
@@ -1497,6 +1685,7 @@ exports.ui_init = function () {
   actionsheeta.actionsheet_init();
   uploadera.uploader_init();
   checkboxa.checkbox_init();
+  loadinga.spin_init();
 };
 
 // for mobile active.
@@ -1508,7 +1697,7 @@ $(document).ready(function () {
 });
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1598,7 +1787,7 @@ $.fn.actionsheetHide = function () {
 };
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1733,7 +1922,7 @@ $.fn.checkboxDisabled = function (isDisable) {
 };
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1777,7 +1966,7 @@ $.fn.setDisabled = function (isDisable) {
 };
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1805,7 +1994,7 @@ $.fn.hasVisibile = function () {
 };
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1831,7 +2020,7 @@ $.fn.isVisibile = function () {
 };
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2079,7 +2268,7 @@ $.fn.popoverHide = function () {
 };
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2114,8 +2303,8 @@ $.fn['switch'] = function (cb) {
     for (var i = 0; i < _this.length; i++) {
       var elem = $(_this[i]);
 
-      if (elem._swtichEvents) {
-        elem._swtichEvents.push(cb);
+      if (elem[0]._swtichEvents) {
+        elem[0]._swtichEvents.push(cb);
       } // if.
     } // for.
   }
@@ -2123,7 +2312,7 @@ $.fn['switch'] = function (cb) {
   else {
       for (var i = 0; i < _this.length; i++) {
         var elem = $(_this[i]);
-        var ee = elem._swtichEvents;
+        var ee = elem[0]._swtichEvents;
         if (ee) {
           for (var i = 0; i < ee.length; i++) {
             ee[i].bind(elem)();
@@ -2141,7 +2330,7 @@ $.fn.switchOn = function (isOn, trigger) {
   for (var i = 0; i < _this.length; i++) {
     var elem = $(_this[i]);
 
-    if (elem._swtichEvents) {
+    if (elem[0]._swtichEvents) {
       if (isOn) {
         if (elem.hasClass("febsui-switch-off")) {
           elem.removeClass("febsui-switch-off").addClass("febsui-switch-on");
@@ -2173,7 +2362,7 @@ $.fn.switchDisabled = function (isDisable) {
   for (var i = 0; i < _this.length; i++) {
     var elem = $(_this[i]);
 
-    if (elem._swtichEvents) {
+    if (elem[0]._swtichEvents) {
       if (isDisable) elem.addClass("febsui-switch-disabled");else elem.removeClass("febsui-switch-disabled");
     } // if.
   } // for.
@@ -2181,7 +2370,7 @@ $.fn.switchDisabled = function (isDisable) {
 };
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2238,12 +2427,6 @@ $.fn.uploaderReset = function () {
 };
 
 /***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(57), __esModule: true };
-
-/***/ }),
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2257,12 +2440,18 @@ module.exports = { "default": __webpack_require__(59), __esModule: true };
 
 /***/ }),
 /* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(60), __esModule: true };
+
+/***/ }),
+/* 57 */
 /***/ (function(module, exports) {
 
 module.exports = {"O_RDONLY":0,"O_WRONLY":1,"O_RDWR":2,"S_IFMT":61440,"S_IFREG":32768,"S_IFDIR":16384,"S_IFCHR":8192,"S_IFBLK":24576,"S_IFIFO":4096,"S_IFLNK":40960,"S_IFSOCK":49152,"O_CREAT":512,"O_EXCL":2048,"O_NOCTTY":131072,"O_TRUNC":1024,"O_APPEND":8,"O_DIRECTORY":1048576,"O_NOFOLLOW":256,"O_SYNC":128,"O_SYMLINK":2097152,"O_NONBLOCK":4,"S_IRWXU":448,"S_IRUSR":256,"S_IWUSR":128,"S_IXUSR":64,"S_IRWXG":56,"S_IRGRP":32,"S_IWGRP":16,"S_IXGRP":8,"S_IRWXO":7,"S_IROTH":4,"S_IWOTH":2,"S_IXOTH":1,"E2BIG":7,"EACCES":13,"EADDRINUSE":48,"EADDRNOTAVAIL":49,"EAFNOSUPPORT":47,"EAGAIN":35,"EALREADY":37,"EBADF":9,"EBADMSG":94,"EBUSY":16,"ECANCELED":89,"ECHILD":10,"ECONNABORTED":53,"ECONNREFUSED":61,"ECONNRESET":54,"EDEADLK":11,"EDESTADDRREQ":39,"EDOM":33,"EDQUOT":69,"EEXIST":17,"EFAULT":14,"EFBIG":27,"EHOSTUNREACH":65,"EIDRM":90,"EILSEQ":92,"EINPROGRESS":36,"EINTR":4,"EINVAL":22,"EIO":5,"EISCONN":56,"EISDIR":21,"ELOOP":62,"EMFILE":24,"EMLINK":31,"EMSGSIZE":40,"EMULTIHOP":95,"ENAMETOOLONG":63,"ENETDOWN":50,"ENETRESET":52,"ENETUNREACH":51,"ENFILE":23,"ENOBUFS":55,"ENODATA":96,"ENODEV":19,"ENOENT":2,"ENOEXEC":8,"ENOLCK":77,"ENOLINK":97,"ENOMEM":12,"ENOMSG":91,"ENOPROTOOPT":42,"ENOSPC":28,"ENOSR":98,"ENOSTR":99,"ENOSYS":78,"ENOTCONN":57,"ENOTDIR":20,"ENOTEMPTY":66,"ENOTSOCK":38,"ENOTSUP":45,"ENOTTY":25,"ENXIO":6,"EOPNOTSUPP":102,"EOVERFLOW":84,"EPERM":1,"EPIPE":32,"EPROTO":100,"EPROTONOSUPPORT":43,"EPROTOTYPE":41,"ERANGE":34,"EROFS":30,"ESPIPE":29,"ESRCH":3,"ESTALE":70,"ETIME":101,"ETIMEDOUT":60,"ETXTBSY":26,"EWOULDBLOCK":35,"EXDEV":18,"SIGHUP":1,"SIGINT":2,"SIGQUIT":3,"SIGILL":4,"SIGTRAP":5,"SIGABRT":6,"SIGIOT":6,"SIGBUS":10,"SIGFPE":8,"SIGKILL":9,"SIGUSR1":30,"SIGSEGV":11,"SIGUSR2":31,"SIGPIPE":13,"SIGALRM":14,"SIGTERM":15,"SIGCHLD":20,"SIGCONT":19,"SIGSTOP":17,"SIGTSTP":18,"SIGTTIN":21,"SIGTTOU":22,"SIGURG":16,"SIGXCPU":24,"SIGXFSZ":25,"SIGVTALRM":26,"SIGPROF":27,"SIGWINCH":28,"SIGIO":23,"SIGSYS":12,"SSL_OP_ALL":2147486719,"SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION":262144,"SSL_OP_CIPHER_SERVER_PREFERENCE":4194304,"SSL_OP_CISCO_ANYCONNECT":32768,"SSL_OP_COOKIE_EXCHANGE":8192,"SSL_OP_CRYPTOPRO_TLSEXT_BUG":2147483648,"SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS":2048,"SSL_OP_EPHEMERAL_RSA":0,"SSL_OP_LEGACY_SERVER_CONNECT":4,"SSL_OP_MICROSOFT_BIG_SSLV3_BUFFER":32,"SSL_OP_MICROSOFT_SESS_ID_BUG":1,"SSL_OP_MSIE_SSLV2_RSA_PADDING":0,"SSL_OP_NETSCAPE_CA_DN_BUG":536870912,"SSL_OP_NETSCAPE_CHALLENGE_BUG":2,"SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG":1073741824,"SSL_OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG":8,"SSL_OP_NO_COMPRESSION":131072,"SSL_OP_NO_QUERY_MTU":4096,"SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION":65536,"SSL_OP_NO_SSLv2":16777216,"SSL_OP_NO_SSLv3":33554432,"SSL_OP_NO_TICKET":16384,"SSL_OP_NO_TLSv1":67108864,"SSL_OP_NO_TLSv1_1":268435456,"SSL_OP_NO_TLSv1_2":134217728,"SSL_OP_PKCS1_CHECK_1":0,"SSL_OP_PKCS1_CHECK_2":0,"SSL_OP_SINGLE_DH_USE":1048576,"SSL_OP_SINGLE_ECDH_USE":524288,"SSL_OP_SSLEAY_080_CLIENT_DH_BUG":128,"SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG":0,"SSL_OP_TLS_BLOCK_PADDING_BUG":512,"SSL_OP_TLS_D5_BUG":256,"SSL_OP_TLS_ROLLBACK_BUG":8388608,"ENGINE_METHOD_DSA":2,"ENGINE_METHOD_DH":4,"ENGINE_METHOD_RAND":8,"ENGINE_METHOD_ECDH":16,"ENGINE_METHOD_ECDSA":32,"ENGINE_METHOD_CIPHERS":64,"ENGINE_METHOD_DIGESTS":128,"ENGINE_METHOD_STORE":256,"ENGINE_METHOD_PKEY_METHS":512,"ENGINE_METHOD_PKEY_ASN1_METHS":1024,"ENGINE_METHOD_ALL":65535,"ENGINE_METHOD_NONE":0,"DH_CHECK_P_NOT_SAFE_PRIME":2,"DH_CHECK_P_NOT_PRIME":1,"DH_UNABLE_TO_CHECK_GENERATOR":4,"DH_NOT_SUITABLE_GENERATOR":8,"NPN_ENABLED":1,"RSA_PKCS1_PADDING":1,"RSA_SSLV23_PADDING":2,"RSA_NO_PADDING":3,"RSA_PKCS1_OAEP_PADDING":4,"RSA_X931_PADDING":5,"RSA_PKCS1_PSS_PADDING":6,"POINT_CONVERSION_COMPRESSED":2,"POINT_CONVERSION_UNCOMPRESSED":4,"POINT_CONVERSION_HYBRID":6,"F_OK":0,"R_OK":4,"W_OK":2,"X_OK":1,"UV_UDP_REUSEADDR":4}
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var core = __webpack_require__(12);
@@ -2273,27 +2462,27 @@ module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(82);
-__webpack_require__(80);
 __webpack_require__(83);
+__webpack_require__(81);
 __webpack_require__(84);
+__webpack_require__(85);
 module.exports = __webpack_require__(12).Symbol;
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(81);
-__webpack_require__(85);
+__webpack_require__(82);
+__webpack_require__(86);
 module.exports = __webpack_require__(29).f('iterator');
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -2303,21 +2492,21 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports) {
 
 module.exports = function () { /* empty */ };
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = __webpack_require__(6);
-var toLength = __webpack_require__(77);
-var toAbsoluteIndex = __webpack_require__(76);
+var toLength = __webpack_require__(78);
+var toAbsoluteIndex = __webpack_require__(77);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIObject($this);
@@ -2339,11 +2528,11 @@ module.exports = function (IS_INCLUDES) {
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(60);
+var aFunction = __webpack_require__(61);
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -2365,7 +2554,7 @@ module.exports = function (fn, that, length) {
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
@@ -2386,7 +2575,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var document = __webpack_require__(0).document;
@@ -2394,7 +2583,7 @@ module.exports = document && document.documentElement;
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
@@ -2406,7 +2595,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
@@ -2417,7 +2606,7 @@ module.exports = Array.isArray || function isArray(arg) {
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2437,7 +2626,7 @@ module.exports = function (Constructor, NAME, next) {
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports) {
 
 module.exports = function (done, value) {
@@ -2446,7 +2635,7 @@ module.exports = function (done, value) {
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var META = __webpack_require__(15)('meta');
@@ -2505,7 +2694,7 @@ var meta = module.exports = {
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(5);
@@ -2524,7 +2713,7 @@ module.exports = __webpack_require__(3) ? Object.defineProperties : function def
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var pIE = __webpack_require__(22);
@@ -2546,7 +2735,7 @@ exports.f = __webpack_require__(3) ? gOPD : function getOwnPropertyDescriptor(O,
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
@@ -2571,12 +2760,12 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(1);
-var toObject = __webpack_require__(78);
+var toObject = __webpack_require__(79);
 var IE_PROTO = __webpack_require__(24)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
@@ -2590,7 +2779,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(26);
@@ -2613,7 +2802,7 @@ module.exports = function (TO_STRING) {
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(26);
@@ -2626,7 +2815,7 @@ module.exports = function (index, length) {
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
@@ -2638,7 +2827,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
@@ -2649,13 +2838,13 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(61);
-var step = __webpack_require__(69);
+var addToUnscopables = __webpack_require__(62);
+var step = __webpack_require__(70);
 var Iterators = __webpack_require__(19);
 var toIObject = __webpack_require__(6);
 
@@ -2690,18 +2879,18 @@ addToUnscopables('entries');
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports) {
 
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var $at = __webpack_require__(75)(true);
+var $at = __webpack_require__(76)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
 __webpack_require__(37)(String, 'String', function (iterated) {
@@ -2720,7 +2909,7 @@ __webpack_require__(37)(String, 'String', function (iterated) {
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2731,7 +2920,7 @@ var has = __webpack_require__(1);
 var DESCRIPTORS = __webpack_require__(3);
 var $export = __webpack_require__(35);
 var redefine = __webpack_require__(42);
-var META = __webpack_require__(70).KEY;
+var META = __webpack_require__(71).KEY;
 var $fails = __webpack_require__(13);
 var shared = __webpack_require__(25);
 var setToStringTag = __webpack_require__(23);
@@ -2739,16 +2928,16 @@ var uid = __webpack_require__(15);
 var wks = __webpack_require__(7);
 var wksExt = __webpack_require__(29);
 var wksDefine = __webpack_require__(28);
-var enumKeys = __webpack_require__(64);
-var isArray = __webpack_require__(67);
+var enumKeys = __webpack_require__(65);
+var isArray = __webpack_require__(68);
 var anObject = __webpack_require__(11);
 var isObject = __webpack_require__(8);
 var toIObject = __webpack_require__(6);
 var toPrimitive = __webpack_require__(27);
 var createDesc = __webpack_require__(14);
 var _create = __webpack_require__(38);
-var gOPNExt = __webpack_require__(73);
-var $GOPD = __webpack_require__(72);
+var gOPNExt = __webpack_require__(74);
+var $GOPD = __webpack_require__(73);
 var $DP = __webpack_require__(5);
 var $keys = __webpack_require__(21);
 var gOPD = $GOPD.f;
@@ -2961,24 +3150,24 @@ setToStringTag(global.JSON, 'JSON', true);
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(28)('asyncIterator');
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(28)('observable');
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(79);
+__webpack_require__(80);
 var global = __webpack_require__(0);
 var hide = __webpack_require__(4);
 var Iterators = __webpack_require__(19);
@@ -3000,7 +3189,7 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3072,7 +3261,7 @@ exports.ajaxSubmit = function ajaxSubmit(formObj, fileObj, options) {
 };
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3091,7 +3280,7 @@ exports.ajaxSubmit = function ajaxSubmit(formObj, fileObj, options) {
   </div> */}
 
 var uuid = __webpack_require__(2);
-var upload = __webpack_require__(43);
+var upload = __webpack_require__(44);
 var uploadErr = __webpack_require__(16);
 var dialog = __webpack_require__(30);
 
@@ -3355,7 +3544,7 @@ function uploader_init() {
 }
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3430,7 +3619,7 @@ function actionsheet_init() {
 }
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3484,142 +3673,6 @@ function checkbox_init() {
     }
   } // for.
 }
-
-/***/ }),
-/* 90 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Copyright (c) 2017 Copyright brainpoint All Rights Reserved.
- * Author: lipengxiang
- * Desc:
- */
-function escape_string(str) {
-  // 转义.
-  if (str) {
-    str = window.febs.string.escapeHtml(str);
-  }
-  return str;
-}
-
-'use strict';
-
-var loading_tag_name = 'febsui_loading_span_s23153dd12ax1';
-var control_loading_index = 0;
-var control_loading_timer;
-var control_loading_text_elemFunc;
-var control_loading_text_hideFunc;
-var control_loading_text_array;
-
-/**
-* @desc: 当前是否显示.
-*/
-exports.loading_isVisiable = function () {
-  if (control_loading_timer) return true;
-
-  var ee = $('#' + loading_tag_name).html();
-  return ee && ee.length > 0;
-
-  // var e1 = dom.getElementById(loading_tag_name);
-  // var ee = e1 ? e1.innerHTML : null;
-  // return ee && ee.length>0;
-};
-
-/**
-* @desc: 使用延时显示加载框.
-* @param text: 提示文本.
-* @param timeout: 延时显示, 默认为0.
-* @return: 
-*/
-function loading_show(text, timeout) {
-
-  text = escape_string(text);
-
-  var e = $('body').children('#' + loading_tag_name);
-  if (!e || e.length == 0) {
-    $('body').prepend('<span id="' + loading_tag_name + '"></span>');
-  }
-
-  if (control_loading_timer) window.clearInterval(control_loading_timer);
-  if (timeout) {
-    control_loading_timer = window.setInterval(function () {
-      loading_show(text);
-    }, timeout);
-  } else {
-    $('#' + loading_tag_name).html('<div class="febsui-loading-c"><div class="febsui-loading"><div class="febsui-loading-spin"></div><p>' + (text ? text : '') + '</p></div></div>');
-  }
-}
-exports.loading_show = loading_show;
-
-/**
-* @desc: 通过每500ms改变文本的方式显示加载框; 例如显示 3,2,1,3,2,1循环显示.
-* @param textArray: 变化的文本数组.
-* @param changeTextCB: 当前显示文本的回调. function(text).
-* @param hideCB:  隐藏加载框时的设置文本的函数. function().
-* @return: 
-*/
-exports.loading_show_text = function (textArray, changeTextCB, hideCB) {
-
-  var e = $('body').children('#' + loading_tag_name);
-  if (!e || e.length == 0) {
-    $('body').prepend('<span id="' + loading_tag_name + '"></span>');
-  }
-
-  if (control_loading_text_elemFunc) {
-    if (control_loading_text_hideFunc) control_loading_text_hideFunc();
-    control_loading_text_hideFunc = null;
-    control_loading_text_elemFunc = null;
-    control_loading_text_array = null;
-    if (control_loading_timer) {
-      window.clearInterval(control_loading_timer);
-      control_loading_timer = null;
-    }
-  }
-
-  for (var i = 0; i < textArray.length; i++) {
-    textArray[i] = escape_string(textArray[i]);
-  }
-
-  control_loading_text_array = textArray;
-  control_loading_text_hideFunc = hideCB;
-  control_loading_text_elemFunc = changeTextCB;
-  control_loading_index = 0;
-  control_loading_timer = window.setInterval(function () {
-    control_loading_text_elemFunc(control_loading_text_array[control_loading_index++ % control_loading_text_array.length]);
-  }, 500);
-};
-
-/**
-* @desc: 隐藏加载对话框
-* @return: 
-*/
-exports.loading_hide = function () {
-  var e = $('body').children('#' + loading_tag_name);
-  if (!e || e.length == 0) {
-    $('body').prepend('<span id="' + loading_tag_name + '"></span>');
-  }
-
-  if (control_loading_timer) {
-    window.clearInterval(control_loading_timer);
-    control_loading_timer = null;
-  }
-
-  if (control_loading_text_elemFunc) {
-    if (control_loading_text_hideFunc) control_loading_text_hideFunc();
-    control_loading_text_hideFunc = null;
-    control_loading_text_elemFunc = null;
-    control_loading_text_array = null;
-    if (control_loading_timer) {
-      window.clearInterval(control_loading_timer);
-      control_loading_timer = null;
-    }
-  }
-
-  $('#' + loading_tag_name).html('');
-};
 
 /***/ }),
 /* 91 */
@@ -3716,7 +3769,7 @@ exports.page_init = page_init;
 "use strict";
 
 
-var _constants = __webpack_require__(56);
+var _constants = __webpack_require__(57);
 
 var EADDRNOTAVAIL = _constants.EADDRNOTAVAIL;
 
@@ -3957,7 +4010,7 @@ function hideToast(cb) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {
 
-var _JSON$stringify = __webpack_require__(53)["default"];
+var _JSON$stringify = __webpack_require__(54)["default"];
 
 var _typeof = __webpack_require__(9)["default"];
 
@@ -4193,23 +4246,23 @@ var _typeof = __webpack_require__(9)["default"];
 	/**
   * jquery plugins.
   */
+	__webpack_require__(50);
 	__webpack_require__(49);
-	__webpack_require__(48);
 
-	var febsui = __webpack_require__(44);
+	var febsui = __webpack_require__(45);
 	window['febsui'] = febsui;
 
 	/**
   * jquery plugins.
   */
-	__webpack_require__(47);
+	__webpack_require__(48);
 
-	__webpack_require__(45);
-	__webpack_require__(32);
-	__webpack_require__(50);
-	__webpack_require__(51);
 	__webpack_require__(46);
+	__webpack_require__(32);
+	__webpack_require__(51);
 	__webpack_require__(52);
+	__webpack_require__(47);
+	__webpack_require__(53);
 
 	return febsui;
 });

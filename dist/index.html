@@ -70,6 +70,7 @@
     <div class="febsui-popover-cell" onclick="window.location.href='#anchor_popover'">popover</div>
     <div class="febsui-popover-cell" onclick="window.location.href='#anchor_uploader'">uploader</div>
     <div class="febsui-popover-cell" onclick="window.location.href='#anchor_search'">search</div>
+    <div class="febsui-popover-cell" onclick="window.location.href='#anchor_checkbox'">checkbox</div>
   </popover>
   <button id="popoverAttachAll" onclick="$('#allControl').popoverShow(true)">See All Controls</button>
   
@@ -129,9 +130,15 @@
   <!-- loading -->
   <a class="title" id="anchor_loading" href="#anchor_loading">Loading:</a>
   <dialog id="h2loading">
+    loading api:
     <script type="syntaxhighlighter" class="brush: js"><![CDATA[
       febsui.loading_show('3秒后关闭');
       febsui.loading_hide();
+    ]]></script>
+    spin html
+    <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
+      <div class="febsui-icon febsui-icon-spin"></div>
+      <div class="febsui-icon febsui-icon-spin-white"></div>
     ]]></script>
 
     <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
@@ -139,6 +146,8 @@
   <button style="font-size:10px;" onclick="$('#h2loading').dialogShow()">[Code]</button><br>
 
   <button onclick="showLoading()">loading</button>
+  <button><div class="febsui-icon febsui-icon-spin"></div></button>
+  <button class="btn-primary"><div class="febsui-icon febsui-icon-spin-white"></div></button>
   <br>
 
   <script type="text/javascript">

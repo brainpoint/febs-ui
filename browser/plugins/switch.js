@@ -30,8 +30,8 @@ $.fn.switch = function(cb) {
     for (var i = 0; i < _this.length; i++) {
       var elem = $(_this[i]);
   
-      if (elem._swtichEvents) {
-        elem._swtichEvents.push(cb);
+      if (elem[0]._swtichEvents) {
+        elem[0]._swtichEvents.push(cb);
       } // if.
     } // for.
   }
@@ -39,7 +39,7 @@ $.fn.switch = function(cb) {
   else {
     for (var i = 0; i < _this.length; i++) {
       var elem = $(_this[i]);
-      var ee = elem._swtichEvents;
+      var ee = elem[0]._swtichEvents;
       if (ee) {
         for (var i = 0; i < ee.length; i++) {
           ee[i].bind(elem)();
@@ -57,7 +57,7 @@ $.fn.switchOn = function(isOn, trigger) {
   for (var i = 0; i < _this.length; i++) {
     var elem = $(_this[i]);
 
-    if (elem._swtichEvents) {
+    if (elem[0]._swtichEvents) {
       if (isOn) {
         if (elem.hasClass("febsui-switch-off")) {
           elem.removeClass("febsui-switch-off").addClass("febsui-switch-on");
@@ -89,7 +89,7 @@ $.fn.switchDisabled = function(isDisable) {
   for (var i = 0; i < _this.length; i++) {
     var elem = $(_this[i]);
 
-    if (elem._swtichEvents) {
+    if (elem[0]._swtichEvents) {
       if (isDisable)
         elem.addClass("febsui-switch-disabled");
       else
