@@ -19,9 +19,7 @@ febs.file.dirRemoveRecursive(path.join(root, 'dist/febsui'));
 febs.file.fileCopy(path.join(root, 'febsui.css'),         path.join(root, 'dist/febsui/febsui.css'));
 
 febs.file.fileRemove(path.join(root, 'dist/febsui/README.md'));
-febs.file.fileRemove(path.join(root, 'dist/test.html'));
 febs.file.fileCopy(path.join(root, 'README.md'),          path.join(root, 'dist/febsui/README.md'));
-febs.file.fileCopy(path.join(root, 'test/test.html'),     path.join(root, 'dist/test.html'));
 
 function buildSrc(cbStop, cbSuccess) {
   webpack(webpackConfig, function (err, stats) {

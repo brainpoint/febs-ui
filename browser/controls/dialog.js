@@ -305,7 +305,7 @@ function dialog_init() {
         dom.removeAttr('id');
       }
       dd.append(dom);
-      
+
       //close popup
       dom.on('click', function (event) {
         if ($(event.target).hasClass('febsui-dialog-cancel')) {

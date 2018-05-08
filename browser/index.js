@@ -52,6 +52,7 @@ require('./plugins/actionsheet');
 require('./plugins/dialog');
 require('./plugins/popover');
 require('./plugins/switch');
+require('./plugins/checkbox');
 require('./plugins/uploader');
 
 return febsui;

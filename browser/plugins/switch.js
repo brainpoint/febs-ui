@@ -28,7 +28,7 @@ $.fn.switch = function(cb) {
 
   if (cb) {
     for (var i = 0; i < _this.length; i++) {
-      var elem = _this[i];
+      var elem = $(_this[i]);
   
       if (elem._swtichEvents) {
         elem._swtichEvents.push(cb);
@@ -38,7 +38,7 @@ $.fn.switch = function(cb) {
   // trigger.
   else {
     for (var i = 0; i < _this.length; i++) {
-      var elem = _this[i];
+      var elem = $(_this[i]);
       var ee = elem._swtichEvents;
       if (ee) {
         for (var i = 0; i < ee.length; i++) {
@@ -55,7 +55,7 @@ $.fn.switchOn = function(isOn, trigger) {
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
 
   for (var i = 0; i < _this.length; i++) {
-    var elem = _this[i];
+    var elem = $(_this[i]);
 
     if (elem._swtichEvents) {
       if (isOn) {
@@ -87,7 +87,7 @@ $.fn.switchDisabled = function(isDisable) {
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
 
   for (var i = 0; i < _this.length; i++) {
-    var elem = _this[i];
+    var elem = $(_this[i]);
 
     if (elem._swtichEvents) {
       if (isDisable)

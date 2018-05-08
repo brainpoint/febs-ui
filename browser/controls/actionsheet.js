@@ -1,9 +1,10 @@
 var uuid = require('../uuid');
+var domHelper = require('../domHelper');
 
 exports.actionsheet_init = actionsheet_init;
 
 /**
-* @desc: 初始化popover控件.
+* @desc: 初始化actionsheet控件.
 *        对页面上 的所有 <actionsheet> 元素进行初始化.
 */
 function actionsheet_init() {
@@ -46,20 +47,12 @@ function actionsheet_init() {
 
       var dd = $("<div class='febsui-actionsheet'></div>");
       $('body').append(dd);
-      var did = dom.attr('id');
-      if (did) {
-        dd.attr('id', did);
-        dom.removeAttr('id');
-        // copy attri.
-        var attris = dom[0].attributes;
-        if (attris) {
-          for (var j = 0; j < attris.length; j++) {
-            if (attris[j].nodeName.indexOf('data-') == 0) {
-              dd.attr(attris[j].nodeName, dom.attr(attris[j].nodeName));
-            }
-          }
-        }
-      }
+      
+      // copy attri.
+      domHelper.copyAttrs(dom,dd, function(name){
+        if ('id' == name) return true;
+        return name.indexOf('data-') == 0;
+      });
 
       dd.append(dom);
 

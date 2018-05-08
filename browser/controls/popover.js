@@ -1,4 +1,7 @@
+import { EADDRNOTAVAIL } from 'constants';
+
 var uuid = require('../uuid');
+var domHelper = require('../domHelper');
 
 exports.popover_init = popover_init;
 
@@ -61,20 +64,13 @@ function popover_init() {
       }
 
       $('body').append(dd);
-      var did = dom.attr('id');
-      if (did) {
-        dd.attr('id', did);
-        dom.removeAttr('id');
-        // copy attri.
-        var attris = dom[0].attributes;
-        if (attris) {
-          for (var j = 0; j < attris.length; j++) {
-            if (attris[j].nodeName.indexOf('data-') == 0) {
-              dd.attr(attris[j].nodeName, dom.attr(attris[j].nodeName));
-            }
-          }
-        }
-      }
+            
+      // copy attri.
+      domHelper.copyAttrs(dom, dd, function(name){
+        if ('id' == name) return true;
+        return name.indexOf('data-') == 0;
+      });
+
       dd.append(dom);
     }
   } // for.

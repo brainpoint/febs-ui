@@ -34,11 +34,12 @@
     "jquery",
     "zepto",
     "switch",
+    "checkbox",
     "dialog",
     "toast",
     "alert",
     "loading",
-    "upload",
+    "uploader",
     "page",
     "ui"
   ],
@@ -55,7 +56,6 @@
     "doc",
     "dist",
     "browser",
-    "test",
     "types",
     "febsui.css"
   ],
@@ -74,5 +74,5 @@
     "prepare": "node scripts/webpack.build.js"
   },
   "name": "febs-ui",
-  "version": "0.7.1"
+  "version": "0.7.2"
 }

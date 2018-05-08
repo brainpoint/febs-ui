@@ -7,11 +7,11 @@ febs-ui 库依赖 febs-browser 库
 - 尽量使用js方法的方式来构建ui.
 - 默认样式为iOS样式
 
-febs-ui 引入了febs-browser(实现了jquery的部分接口), 估无需额外引入jquery;
+febs-ui 引入了febs-browser(实现了jquery的部分接口), 无需额外引入jquery;
 
 如果需要jquery, 请在febs-ui,febs之前引用
 
-可以查看 [demo](./dist/test.html)
+可以查看 [demo](http://demo.citongs.com/febsui)
 
 # Install
 
@@ -65,6 +65,7 @@ febsui.dialog_showToast({content:'即将开始', icon:'ok'});
   - [custom dialog](#custom-dialog)
   - [paging](#page)
   - [switch](#switch)
+  - [checkbox](#checkbox)
   - [popover](#popover)
   - [actionSheet](#actionsheet)
   - [upload](#upload)
@@ -115,6 +116,11 @@ export function ui_init();
  */
 export function ui_switch_init();
 
+/**
+ * @desc 初始化页面上所有checkbox控件 (带 febsui-checkbox 类的控件)
+ *       默认在页面加载完成时会调用一次; 加入新的checkbox控件时需调用一次.
+ */
+export function ui_checkbox_init();
 /**
 * @desc: 初始化popover控件.
 *        对页面上 的所有 <popover> 元素进行初始化.
@@ -380,7 +386,7 @@ $('switch').switch();
 /**
  * @desc 改变状态
  * @param isOn: 设置控件的状态.
- * @param trigger: 可选, 是否触发事件监听.
+ * @param trigger: 可选, 是否触发事件监听 (状态未改变不触发).
  */
 $('switch').switchOn(isOn, trigger);
 
@@ -388,6 +394,54 @@ $('switch').switchOn(isOn, trigger);
  * @desc 返回当前控件的状态.
  */
 $('switch').switchIsOn();
+```
+
+
+### checkbox
+![](doc/ui/control-checkbox.png)
+
+示例
+
+```html
+<html>
+
+<input id="checkbox1" type="checkbox" class="febsui-checkbox">
+<label for="checkbox1">checkbox</label>
+
+</html>
+```
+
+
+方法
+
+```js
+/**
+ * @desc 判断是否是checkbox
+ */
+$('.febsui-checkbox').isCheckbox();
+/**
+ * @desc 监听变化事件
+ */
+$('.febsui-checkbox').checkboxChange(function(){
+  // 
+});
+
+/**
+ * @desc 手动触发事件
+ */
+$('.febsui-checkbox').checkboxChange();
+
+/**
+ * @desc 改变状态
+ * @param checked: 设置控件的状态.
+ * @param trigger: 可选, 是否触发事件监听 (状态未改变不触发).
+ */
+$('.febsui-checkbox').checkboxChecked(checked, trigger);
+
+/**
+ * @desc 返回当前控件的状态.
+ */
+$('.febsui-checkbox').checkboxIsChecked();
 ```
 
 ### popover

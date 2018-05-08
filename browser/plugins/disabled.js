@@ -9,6 +9,11 @@ $.fn.isDisabled = function() {
   // switch.
   if (ee.isSwitch())
     return ee.switchIsDisabled();
+  
+  // checkbox.
+  if (ee.isCheckbox()) {
+    return ee.checkboxIsDisabled();
+  }
 
 
   var dis = ee.attr('disabled');
@@ -23,6 +28,9 @@ $.fn.setDisabled = function(isDisable) {
   if (ee.isSwitch())
     return ee.switchDisabled(isDisable);
 
+  // checkbox.
+  if (ee.isCheckbox())
+    return ee.checkboxDisabled(isDisable);
 
   if (isDisable) {
     ee.attr('disabled', 'disabled');

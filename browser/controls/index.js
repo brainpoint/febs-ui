@@ -42,6 +42,9 @@ exports.ui_actionsheet_init = actionsheeta.actionsheet_init;
 var uploadera = require('./_uploader');
 exports.ui_uploader_init = uploadera.uploader_init;
 
+var checkboxa = require('./checkbox');
+exports.ui_checkbox_init = checkboxa.checkbox_init;
+
 /**
 * @desc: 初始化所有ui
 * @return: 
@@ -52,9 +55,10 @@ exports.ui_init = function() {
   dialoga.dialog_init();
   actionsheeta.actionsheet_init();
   uploadera.uploader_init();
+  checkboxa.checkbox_init();
 }
 
-// for mobile hover.
+// for mobile active.
 $(document).on('touchstart', function(){});
 
 $(document).ready(function(){
