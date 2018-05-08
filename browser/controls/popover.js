@@ -34,9 +34,11 @@ function popover_init() {
         if (parseInt(offset) != offset) {
           throw new Error('popover attribute data-offset only can be number');
         }
+        offset = parseInt(offset);
 
         var offset1 = window.febs.dom.getElementOffset(dom);
         var offset2 = window.febs.dom.getDocumentOffset();
+        offset1 = offset1 || {left:0, top:0};
 
         if (direction == 'top' || direction == 'bottom') {
           direction2 = 'left';
