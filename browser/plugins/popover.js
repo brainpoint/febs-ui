@@ -91,6 +91,17 @@ $.fn.popoverShow = function(mask, attachNode) {
 
 
           var direction2;
+
+          var arrow = ee.children('.febsui-popover-arrow');
+
+          arrow.removeClass('febsui-popover-arrow-left');
+          arrow.removeClass('febsui-popover-arrow-right');
+          arrow.removeClass('febsui-popover-arrow-top');
+          arrow.removeClass('febsui-popover-arrow-bottom');
+          arrow.css('top', '');
+          arrow.css('bottom', '');
+          arrow.css('left', '');
+          arrow.css('right', '');
           
           // auto.
           // data-direction
@@ -180,61 +191,114 @@ $.fn.popoverShow = function(mask, attachNode) {
               top = parseInt((viewport.height-height2)/2);
               direction2 = 'bottom';
               offset = parseInt(width2/2-dis);
+
+              arrow.css('display', 'none');
             }
+            else {
+              arrow.css('display', 'block');
+            }
+
+            eee.css('top', top+docoffset.top +'px');
+            eee.css('left', left+docoffset.left +'px');
+
+            arrow.addClass('febsui-popover-arrow-'+direction2);
+            var eeeOffset = window.febs.dom.getElementOffset(eee);
+            
+            if (direction2 == 'top' || direction2 == 'bottom') {
+              if (direction2 == 'top')
+                arrow.css('top', eeeOffset.top+docoffset.top+'px');
+              else
+                arrow.css('top', eeeOffset.top+docoffset.top+eee[0].clientHeight-17+'px');
+              direction2 = 'left';
+              arrow.css(direction2, offset+eeeOffset.left+docoffset.left+'px');
+            }
+            else if (direction2 == 'left' || direction2 == 'right') {
+              if (direction2 == 'left')
+                arrow.css('left', eeeOffset.left+docoffset.left+'px');
+              else
+                arrow.css('left', eeeOffset.left+docoffset.left+eee[0].clientWidth-17+'px');
+              direction2 = 'top';
+              arrow.css(direction2, offset+eeeOffset.top+docoffset.top+'px');
+            }
+
           }
           else {
+            direction2 = attrDirection;
+
             if (attrDirection == 'left') {
-              top = parseInt(top + height/2 - offset - dis);
+              top = parseInt(top + height/2 - dis) || 0;
               left = left + width + dis;
             }
             else if (attrDirection == 'right') {
-              top = parseInt(top + height/2 - offset - dis);
-              left = left - width2 - dis;
+              top = parseInt(top + height/2 - dis) || 0;
+              left = left - dis - 24;
             }
             else if (attrDirection == 'top') {
-              top = parseInt(top + height + dis);
-              left = parseInt(left + width/2 - offset - dis);
+              top = parseInt(top + height + dis) || 0;
+              left = parseInt(left + width/2 - dis) || 0;
             }
             else if (attrDirection == 'bottom') {
-              top = parseInt(top - height2 - dis);
-              left = parseInt(left + width/2 - offset - dis);
+              top = parseInt(top - dis - 24) || 0;
+              left = parseInt(left + width/2 - dis) || 0;
             }
-          }
 
-          eee.css('top', top+docoffset.top +'px');
-          eee.css('left', left+docoffset.left +'px');
+            arrow.addClass('febsui-popover-arrow-'+direction2);
+            
+            top += docoffset.top;
+            left += docoffset.left;
+            arrow.css('top', parseInt(top)+'px');
+            arrow.css('left', parseInt(left)+'px');
 
 
-          var arrow = ee.children('.febsui-popover-arrow');
+            var top22 = top;
+            var left22 = left;
 
-          arrow.removeClass('febsui-popover-arrow-left');
-          arrow.removeClass('febsui-popover-arrow-right');
-          arrow.removeClass('febsui-popover-arrow-top');
-          arrow.removeClass('febsui-popover-arrow-bottom');
-          arrow.addClass('febsui-popover-arrow-'+direction2);
-          
-          arrow.css('top', '');
-          arrow.css('bottom', '');
-          arrow.css('left', '');
-          arrow.css('right', '');
-          var eeeOffset = window.febs.dom.getElementOffset(eee);
-          
-          if (direction2 == 'top' || direction2 == 'bottom') {
-            if (direction2 == 'top')
-              arrow.css('top', eeeOffset.top+docoffset.top+'px');
-            else
-              arrow.css('top', eeeOffset.top+docoffset.top+eee[0].clientHeight-17+'px');
-            direction2 = 'left';
-            arrow.css(direction2, offset+eeeOffset.left+docoffset.left+'px');
-          }
-          else if (direction2 == 'left' || direction2 == 'right') {
-            if (direction2 == 'left')
-              arrow.css('left', eeeOffset.left+docoffset.left+'px');
-            else
-              arrow.css('left', eeeOffset.left+docoffset.left+eee[0].clientWidth-17+'px');
-            direction2 = 'top';
-            arrow.css(direction2, offset+eeeOffset.top+docoffset.top+'px');
-          }
+
+            if (direction2 == 'top' || direction2 == 'bottom') {
+              left22 -= width2/2-17;
+              if (direction2 == 'top') {
+                // top22 += 16;
+              }
+              else {
+                top22 -= height2-18;
+              }
+
+              if (offset < -(width2/2-17)) offset = -(width2/2-17);
+              else if (offset > width2/2-17) offset = width2/2-17;
+              left22 -= offset;
+            }
+            else if (direction2 == 'left' || direction2 == 'right') {
+              top22 -= height2/2-17;
+              if (direction2 == 'left') {
+                // left22 += 16;
+              }
+              else {
+                left22 -= width2-18;
+              }
+
+              if (offset < -(height2/2-17)) offset = -(height2/2-17);
+              else if (offset > height2/2-17) offset = height2/2-17;
+              top22 -= offset;
+            }
+
+            var hideArrow = false;
+            if (top22+height2/2 > docport.height - 17) { hideArrow = true; top22 = docport.height - 17 - height2/2; }
+            else if (top22 < 17) { hideArrow = true;top22 = 17; }
+
+            if (left22+width2/2 > docport.width - 17) { hideArrow = true;left22 = docport.width - 17 - width2/2; }
+            else if (left22 < 17) { hideArrow = true; left22 = 17; }
+            
+            eee.css('top', parseInt(top22) +'px');
+            eee.css('left', parseInt(left22) +'px');
+
+            if (hideArrow) {
+              arrow.css('display', 'none');
+            } else {
+              arrow.css('display', 'block');
+            }
+
+          } // if..else.
+
         }
       }
 

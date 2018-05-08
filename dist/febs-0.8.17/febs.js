@@ -2076,7 +2076,11 @@ var _typeof = __webpack_require__(4)["default"];
         this._elem = name._elem;
         this._isArr = name._isArr;
       } else {
-        this._elem = _getElement(name);
+        if (name && name.length == 1) {
+          this._elem = _getElement(name[0]);
+        } else {
+          this._elem = _getElement(name);
+        }
         this._isArr = this._elem._isarr;
         this._elem = this._elem._elem;
       }
