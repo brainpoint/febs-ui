@@ -827,7 +827,7 @@ dialog {
    user-select: none;
    padding: .38rem .68rem;
    font-size: 1rem;
-   line-height: 1.25;
+   line-height: 1.25em;
    border-radius: .25rem;
    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
    white-space: nowrap;
@@ -1130,7 +1130,7 @@ dialog {
    padding-bottom: 12px;
    padding-left: 14px;
    padding-right: 8px;
-   font-size: 1rem;
+   font-size: 16px; /* 1rem */
    line-height: 1.2em;
    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
    white-space: nowrap;

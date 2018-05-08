@@ -2960,7 +2960,7 @@ var _typeof = __webpack_require__(5)["default"];
         var actualTop = ee.offsetTop;
         var current = ee.offsetParent;
 
-        while (current !== null) {
+        while (current) {
           actualLeft += current.offsetLeft;
           actualTop += current.offsetTop;
           current = current.offsetParent;
