@@ -9,36 +9,23 @@ var webpack = require('webpack')
 var webpackConfig = require('./webpack.config.js')
 var webpackConfigMin = require('./webpack.config.min.js')
 
+var packageJson = require('../package.json');
+var dir = 'febsui-'+packageJson.version;
 
 var spinner = ora('building for production...')
 spinner.start()
 
 var root = path.resolve(__dirname, '../');
 var febs = require('febs');
-febs.file.dirRemoveRecursive(path.join(root, 'dist/febsui'));
-febs.file.fileCopy(path.join(root, 'febsui.css'),         path.join(root, 'dist/febsui/febsui.css'));
+febs.file.fileCopy(path.join(root, 'febsui.css'),         path.join(root, `dist/${dir}/febsui.css`));
+febs.file.fileCopy(path.join(root, 'README.md'),          path.join(root, `dist/${dir}/README.md`));
 
-febs.file.fileRemove(path.join(root, 'dist/febsui/README.md'));
-febs.file.fileCopy(path.join(root, 'README.md'),          path.join(root, 'dist/febsui/README.md'));
-
-function buildSrc(cbStop, cbSuccess) {
-  webpack(webpackConfig, function (err, stats) {
-    if (err) {
-      cbStop();
-      throw err
-    }
-    process.stdout.write(stats.toString({
-      colors: true,
-      modules: false,
-      children: false,
-      chunks: false,
-      chunkModules: false
-    }) + '\n\n')
-
-    webpack(webpackConfigMin, function (err, stats) {
+function buildSrc(config) {
+  return new Promise((resolve,reject)=>{
+    webpack(config, function (err, stats) {
       if (err) {
-        cbStop();
-        throw err
+        reject(err);
+        return;
       }
       process.stdout.write(stats.toString({
         colors: true,
@@ -47,17 +34,15 @@ function buildSrc(cbStop, cbSuccess) {
         chunks: false,
         chunkModules: false
       }) + '\n\n')
-      cbSuccess();
+      resolve();
     });
   });
-
-  
 }
 
 // start.
-buildSrc(function() {
-  spinner.stop();
-}, function(){
+buildSrc(webpackConfig('browser/index.js', 'febsui.js', 'dist/'+dir))
+.then(()=>buildSrc(webpackConfigMin('browser/index.js', 'febsui.min.js', 'dist/'+dir)))
+.then(()=>{
   spinner.stop()
 
   // 等待文件flush到磁盘.
@@ -71,8 +56,10 @@ buildSrc(function() {
       '  Opening index.html over file:// won\'t work.\n'
     ))
   }, 1000);
+})
+.catch(err=>{
+  spinner.stop();
 });
-
 
 /**
 * @desc: 修改js中的.default 兼容ie.
@@ -80,7 +67,7 @@ buildSrc(function() {
 */
 function formatDotDefault() {
 
-  let assetsRoot = path.join(root, 'dist/febsui');
+  let assetsRoot = path.join(root, `dist/${dir}`);
 
   // 查找所有css.
   let alljs = febs.file.dirExplorerFilesRecursive(assetsRoot);
