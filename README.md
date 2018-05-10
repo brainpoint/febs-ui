@@ -3,7 +3,7 @@ febs-ui 库依赖 febs-browser 库
 
 设计上
 
-- 可以通过修改 `febsui.css` 来个性化ui样式.
+- 可以通过修改 `febsui-icon.css`, `febsui.css` 来个性化ui样式.
 - 尽量使用js方法的方式来构建ui.
 - 默认样式为iOS样式
 
@@ -30,7 +30,7 @@ npm install febs-ui --save
 > copy directory `node_modules/febs-ui/dist/febsui` to client
 
 ```html
-<link rel="stylesheet" type="text/css" href="path/febsui/febsui.css" />
+<link rel="stylesheet" type="text/css" href="path/febsui/febsui.css" /> <!-- 会自动关联 febsui-icon.css -->
 <script charset='UTF-8' type="text/javascript" src="path/febs/febs.min.js"></script>
 <script charset='UTF-8' type="text/javascript" src="path/febsui/febsui.min.js"></script>
 
@@ -147,7 +147,7 @@ febsui.ui_dialog_init():void;
 */
 febsui.ui_uploader_init():void;
 /**
-* @desc: 用于解决ie9下不支持css:animation; 初始化<div class="febsui-icon-spin/febsui-icon-spin-white">控件.
+* @desc: 用于解决ie9下不支持css:animation; 初始化<div class="febsui-icon-spin1/febsui-icon-spin1-white">控件.
 */
 febsui.ui_spin_init():void;
 ```
@@ -185,9 +185,10 @@ febsui.loading_isVisiable()
 * @desc: 使用延时显示加载框.
 * @param text: 提示文本.
 * @param timeout: 延时显示, 默认为0.
+* @param spinClass: 默认为 febsui-icon-spin1-white ; ie9以下浏览器使用 febsui-icon-spin3-white
 * @return: 
 */
-febsui.loading_show(text, timeout)
+febsui.loading_show(text, timeout, spinClass)
 
 /**
 * @desc: 通过每500ms改变文本的方式显示加载框; 例如显示 3,2,1,3,2,1循环显示.
@@ -210,8 +211,8 @@ febsui.loading_hide()
 ```html
 <html>
 
-<div class="febsui-icon febsui-icon-spin"></div>
-<div class="febsui-icon febsui-icon-spin-white"></div>
+<div class="febsui-icon febsui-icon-spin1"></div>
+<div class="febsui-icon febsui-icon-spin1-white"></div>
 
 </html>
 ```

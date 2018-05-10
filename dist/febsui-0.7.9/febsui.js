@@ -745,7 +745,7 @@ function showConfirmEdit(ctx) {
     mask = ' febsui-mask';
   }
 
-  var elems = '<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + (ctx.content ? ctx.content : ctx.contentHtml) + '</div>' + '<div class="febsui-dialog-edit"><input class="febsui-dialog-input-text" type="text" value="' + (ctx.editText ? ctx.editText : '') + '">' + '</div>' + '<ul class="febsui-dialog-buttons"><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>';
+  var elems = '<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + (ctx.content ? ctx.content : ctx.contentHtml) + '</div>' + '<div class="febsui-dialog-edit"><input class="febsui-input-text-noborder" type="text" value="' + (ctx.editText ? ctx.editText : '') + '">' + '</div>' + '<ul class="febsui-dialog-buttons"><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>';
 
   $("body").append($(elems));
   resizeDialog();
@@ -759,7 +759,7 @@ function showConfirmEdit(ctx) {
   ele.on('click', function (event) {
     if ($(event.target).hasClass('febsui-dialog-ok')) {
       event.preventDefault();
-      if (ctx.confirm) ctx.confirm.bind(ele)($('#' + uid + ' .febsui-dialog-edit .febsui-dialog-input-text').val());
+      if (ctx.confirm) ctx.confirm.bind(ele)($('#' + uid + ' .febsui-dialog-edit .febsui-input-text-noborder').val());
     } else if ($(event.target).hasClass('febsui-dialog-cancel')) {
       event.preventDefault();
       if (ctx.cancel) ctx.cancel.bind(ele)();
@@ -893,11 +893,13 @@ function resizeDialog() {
 }
 
 // 是否支持orientationchange事件
-if ('orientation' in window && 'onorientationchange' in window) {
-  $(window).on('orientationchange', resizeDialog);
-} else {
-  $(window).on('resize', resizeDialog);
-}
+// if ('orientation' in window && 'onorientationchange' in window)
+// {
+//   $(window).on('orientationchange', resizeDialog);
+// }
+// else {
+$(window).on('resize', resizeDialog);
+// }
 
 $.fn.isDialog = function () {
 
@@ -1249,6 +1251,8 @@ function escape_string(str) {
   return str;
 }
 
+var ie9 = window.febs.utils.browserIEVer() <= 9;
+
 'use strict';
 
 var loading_tag_name = 'febsui_loading_span_s23153dd12ax1';
@@ -1276,9 +1280,12 @@ exports.loading_isVisiable = function () {
 * @desc: 使用延时显示加载框.
 * @param text: 提示文本.
 * @param timeout: 延时显示, 默认为0.
+* @param spinClass: 默认为 febsui-icon-spin1-white
 * @return: 
 */
-function loading_show(text, timeout) {
+function loading_show(text, timeout, spinClass) {
+
+  if (ie9) spinClass = spinClass || 'febsui-icon-spin3-white';else spinClass = spinClass || 'febsui-icon-spin1-white';
 
   text = escape_string(text);
 
@@ -1293,7 +1300,18 @@ function loading_show(text, timeout) {
       loading_show(text);
     }, timeout);
   } else {
-    $('#' + loading_tag_name).html('<div class="febsui-loading-c"><div class="febsui-loading"><div class="febsui-loading-spin"></div><p>' + (text ? text : '') + '</p></div></div>');
+    var ee = $('#' + loading_tag_name);
+    if (window.febs.string.isEmpty(ee.html())) {
+      ee.html('<div class="febsui-loading-c"><div class="febsui-loading"><div class="' + spinClass + ' febsui-animation-spin febsui-loading-spin"></div><p>' + (text ? text : '') + '</p></div></div>');
+    } else {
+      ee = $(ee.children('.febsui-loading-c')[0]);
+      ee = $(ee.children('.febsui-loading')[0]);
+      ee = $(ee.children('p')[0]);
+      ee.html(text ? text : '');
+    }
+
+    // for ie9.
+    exports.spin_init();
   }
 }
 exports.loading_show = loading_show;
@@ -1363,35 +1381,35 @@ exports.loading_hide = function () {
   }
 
   $('#' + loading_tag_name).html('');
+
+  // for ie9.
+  exports.spin_init();
 };
 
 // ie9.
-var ie9Spins = [];
-if (window.febs.utils.browserIEVer() <= 9) {
-  var foo = function foo(tm) {
-    if (ie9Spins.length > 0) {
+var ie9Spins;
+var spinTotal = 0;
+var spinTimer;
+var _spinFoo;
+if (ie9) {
+  var now = Date.now();
+  var timeSpan = 2000;
+
+  _spinFoo = function spinFoo(tm) {
+    if (ie9Spins) {
       var now2 = Date.now();
-      total += now2 - now;
+      spinTotal += now2 - now;
       now = now2;
 
-      total = total % timeSpan;
+      spinTotal = spinTotal % timeSpan;
 
-      var deg = 360 * (total / timeSpan);
+      var deg = 360 * (spinTotal / timeSpan);
       deg = 'rotate(' + deg + 'deg)';
 
-      for (var i = 0; i < ie9Spins.length; i++) {
-        ie9Spins[i].css('-ms-transform', deg);
-      }
+      ie9Spins.css('-ms-transform', deg);
     }
-    timer = requestAnimationFrame(foo);
+    spinTimer = requestAnimationFrame(_spinFoo);
   };
-
-  var total = 0;
-  var timer;
-  var now = Date.now();
-  var timeSpan = 3000;
-
-  timer = requestAnimationFrame(foo);
 } // ie9.
 
 /**
@@ -1400,16 +1418,15 @@ if (window.febs.utils.browserIEVer() <= 9) {
 */
 exports.spin_init = function () {
   // ie9.
-  if (window.febs.utils.browserIEVer() <= 9) {
-    ie9Spins = [];
-    var spins = $('.febsui-icon-spin');
-    for (var i = 0; i < spins.length; i++) {
-      ie9Spins.push(spins[i]);
-    }
-
-    spins = $('.febsui-icon-spin-white');
-    for (var i = 0; i < spins.length; i++) {
-      ie9Spins.push(spins[i]);
+  if (ie9) {
+    ie9Spins = $('.febsui-animation-spin');
+    if (ie9Spins.length > 0) {
+      spinTimer = requestAnimationFrame(_spinFoo);
+    } else {
+      if (spinTimer) {
+        cancelAnimationFrame(spinTimer);
+        spinTimer = null;
+      }
     }
   }
 };
@@ -3791,9 +3808,9 @@ function page_init(elem, curPage, pageCount, totalCount, pageCallback) {
   }
 
   var urlPrePage = curPage > 1 ? foo + '(' + (curPage - 1) + ')' : 'javascript:;';
-  var urlPrePageClass = curPage > 1 ? 'febsui_pagepre' : 'febsui_pagepre_no';
+  var urlPrePageClass = curPage > 1 ? 'febsui-pagepre febsui-icon-arrow-left' : 'febsui-pagepre febsui-icon-arrow-left-gray';
   var urlNextPage = curPage < pageCount ? foo + '(' + (curPage + 1) + ')' : 'javascript:;';
-  var urlNextPageClass = curPage < pageCount ? 'febsui_pagenxt' : 'febsui_pagenxt_no';
+  var urlNextPageClass = curPage < pageCount ? 'febsui-pagenxt febsui-icon-arrow-right' : 'febsui-pagenxt febsui-icon-arrow-right-gray';
 
   var e = elem.children('.febsui-pagin');
   if (e && e.length > 0) {
@@ -3807,13 +3824,13 @@ function page_init(elem, curPage, pageCount, totalCount, pageCallback) {
   <ul class="febsui-paginList">\
     <li class="febsui-paginItem">\
       <a href="' + urlPrePage + '">\
-        <span style="display: block" class=' + urlPrePageClass + '></span>\
+        <span style="display: block" class="' + urlPrePageClass + '"></span>\
       </a>\
     </li>' + pagePre + '<li class="febsui-paginItem febsui-pagin-current">\
       <a href="javascript:;">' + curPage + '</a>\
     </li>' + pageNext + '<li class="febsui-paginItem">\
       <a href="' + urlNextPage + '">\
-        <span style="display: block" class=' + urlNextPageClass + '></span>\
+        <span style="display: block" class="' + urlNextPageClass + '"></span>\
       </a>\
     </li>\
   </ul>\

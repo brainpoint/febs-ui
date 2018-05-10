@@ -238,7 +238,7 @@ function showConfirmEdit(ctx) {
   var elems = '<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' 
   + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') 
   + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div>' 
-  + '<div class="febsui-dialog-edit"><input class="febsui-dialog-input-text" type="text" value="' + (ctx.editText?ctx.editText:'') + '">' + '</div>' 
+  + '<div class="febsui-dialog-edit"><input class="febsui-input-text-noborder" type="text" value="' + (ctx.editText?ctx.editText:'') + '">' + '</div>' 
   + '<ul class="febsui-dialog-buttons"><li'+(isIE9?' style="'+styleBorder+'"':'')+'><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li'+(isIE9?' style="'+styleBorder+'"':'')+'><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>';
 
   $("body").append($(elems));
@@ -253,7 +253,7 @@ function showConfirmEdit(ctx) {
 	ele.on('click', function (event) {
 		if ($(event.target).hasClass('febsui-dialog-ok')) {
 			event.preventDefault();
-			if (ctx.confirm) ctx.confirm.bind(ele)( $('#'+uid + ' .febsui-dialog-edit .febsui-dialog-input-text').val() );
+			if (ctx.confirm) ctx.confirm.bind(ele)( $('#'+uid + ' .febsui-dialog-edit .febsui-input-text-noborder').val() );
 		}
 		else if ($(event.target).hasClass('febsui-dialog-cancel')) {
 			event.preventDefault();

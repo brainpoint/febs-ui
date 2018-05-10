@@ -53,9 +53,9 @@ function page_init(elem, curPage, pageCount, totalCount, pageCallback) {
   }
 
   var urlPrePage = curPage > 1 ? foo+'(' + (curPage-1) + ')' : 'javascript:;';
-  var urlPrePageClass = curPage > 1 ? 'febsui_pagepre' : 'febsui_pagepre_no';
+  var urlPrePageClass = curPage > 1 ? 'febsui-pagepre febsui-icon-arrow-left' : 'febsui-pagepre febsui-icon-arrow-left-gray';
   var urlNextPage = curPage < pageCount ? foo+'(' + (curPage+1) + ')' : 'javascript:;';
-  var urlNextPageClass = curPage < pageCount ? 'febsui_pagenxt' : 'febsui_pagenxt_no';
+  var urlNextPageClass = curPage < pageCount ? 'febsui-pagenxt febsui-icon-arrow-right' : 'febsui-pagenxt febsui-icon-arrow-right-gray';
 
   var e = elem.children('.febsui-pagin');
   if (e && e.length > 0) {
@@ -71,7 +71,7 @@ function page_init(elem, curPage, pageCount, totalCount, pageCallback) {
   <ul class="febsui-paginList">\
     <li class="febsui-paginItem">\
       <a href="'+urlPrePage+'">\
-        <span style="display: block" class='+urlPrePageClass+'></span>\
+        <span style="display: block" class="'+urlPrePageClass+'"></span>\
       </a>\
     </li>'
     + pagePre +
@@ -81,7 +81,7 @@ function page_init(elem, curPage, pageCount, totalCount, pageCallback) {
     + pageNext +
     '<li class="febsui-paginItem">\
       <a href="'+urlNextPage+'">\
-        <span style="display: block" class='+urlNextPageClass+'></span>\
+        <span style="display: block" class="'+urlNextPageClass+'"></span>\
       </a>\
     </li>\
   </ul>\

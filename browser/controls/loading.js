@@ -11,6 +11,8 @@ function escape_string(str) {
   return str;
 }
 
+var ie9 = window.febs.utils.browserIEVer() <= 9;
+
 'use strict';
 
 const loading_tag_name = 'febsui_loading_span_s23153dd12ax1';
@@ -40,9 +42,15 @@ exports.loading_isVisiable = function() {
 * @desc: 使用延时显示加载框.
 * @param text: 提示文本.
 * @param timeout: 延时显示, 默认为0.
+* @param spinClass: 默认为 febsui-icon-spin1-white
 * @return: 
 */
-function loading_show(text, timeout) {
+function loading_show(text, timeout, spinClass) {
+
+  if (ie9)
+    spinClass = spinClass||'febsui-icon-spin3-white';
+  else
+    spinClass = spinClass||'febsui-icon-spin1-white';
 
   text = escape_string(text);
 
@@ -59,7 +67,18 @@ function loading_show(text, timeout) {
     }, timeout);
   }
   else {
-    $('#' + loading_tag_name).html('<div class="febsui-loading-c"><div class="febsui-loading"><div class="febsui-loading-spin"></div><p>' + (text ? text : '') + '</p></div></div>');
+    var ee = $('#' + loading_tag_name);
+    if (window.febs.string.isEmpty(ee.html())) {
+      ee.html('<div class="febsui-loading-c"><div class="febsui-loading"><div class="' + spinClass + ' febsui-animation-spin febsui-loading-spin"></div><p>' + (text ? text : '') + '</p></div></div>');
+    } else {
+      ee = $(ee.children('.febsui-loading-c')[0]);
+      ee = $(ee.children('.febsui-loading')[0]);
+      ee = $(ee.children('p')[0]);
+      ee.html((text ? text : ''));
+    }
+
+    // for ie9.
+    exports.spin_init();
   }
 }
 exports.loading_show = loading_show;
@@ -129,36 +148,36 @@ exports.loading_hide = function() {
   }
 
   $('#' + loading_tag_name).html('');
+
+  // for ie9.
+  exports.spin_init();
 }
 
 
 // ie9.
-var ie9Spins = [];
-if (window.febs.utils.browserIEVer() <= 9) {
-  var total = 0;
-  var timer;
+var ie9Spins;
+var spinTotal = 0;
+var spinTimer;
+var spinFoo;
+if (ie9) {
   var now = Date.now();
-  var timeSpan = 3000;
+  var timeSpan = 2000;
   
-  function foo(tm) {
-    if (ie9Spins.length > 0) {
+  spinFoo = function(tm) {
+    if (ie9Spins) {
       var now2 = Date.now();
-      total += now2-now;
+      spinTotal += now2-now;
       now = now2;
 
-      total = total%timeSpan;
+      spinTotal = spinTotal%timeSpan;
 
-      var deg = 360*(total/timeSpan);
+      var deg = 360*(spinTotal/timeSpan);
       deg = 'rotate('+deg+'deg)';
 
-      for (var i = 0; i < ie9Spins.length; i++) {
-        ie9Spins[i].css('-ms-transform', deg);
-      }
+      ie9Spins.css('-ms-transform', deg);
     }
-    timer = requestAnimationFrame(foo);
+    spinTimer = requestAnimationFrame(spinFoo);
   }
-   
-  timer = requestAnimationFrame(foo);
 } // ie9.
 
 /**
@@ -167,16 +186,15 @@ if (window.febs.utils.browserIEVer() <= 9) {
 */
 exports.spin_init = function() {
   // ie9.
-  if (window.febs.utils.browserIEVer() <= 9) {
-    ie9Spins = [];
-    var spins = $('.febsui-icon-spin');
-    for (var i = 0; i < spins.length; i++) {
-      ie9Spins.push(spins[i]);
-    }
-
-    spins = $('.febsui-icon-spin-white');
-    for (var i = 0; i < spins.length; i++) {
-      ie9Spins.push(spins[i]);
+  if (ie9) {
+    ie9Spins = $('.febsui-animation-spin');
+    if (ie9Spins.length > 0) {
+      spinTimer = requestAnimationFrame(spinFoo);
+    } else {
+      if (spinTimer) {
+        cancelAnimationFrame(spinTimer);
+        spinTimer = null;
+      }
     }
   }
 }

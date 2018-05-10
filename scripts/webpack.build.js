@@ -17,7 +17,11 @@ spinner.start()
 
 var root = path.resolve(__dirname, '../');
 var febs = require('febs');
+febs.file.fileRemove(path.join(root, `dist/${dir}/febsui.css`));
+febs.file.fileRemove(path.join(root, `dist/${dir}/febsui-icon.css`));
+febs.file.fileRemove(path.join(root, `dist/${dir}/README.md`));
 febs.file.fileCopy(path.join(root, 'febsui.css'),         path.join(root, `dist/${dir}/febsui.css`));
+febs.file.fileCopy(path.join(root, 'febsui-icon.css'),    path.join(root, `dist/${dir}/febsui-icon.css`));
 febs.file.fileCopy(path.join(root, 'README.md'),          path.join(root, `dist/${dir}/README.md`));
 
 function buildSrc(config) {

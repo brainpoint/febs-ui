@@ -14,13 +14,13 @@ function resizeDialog(){
 }
 
 // 是否支持orientationchange事件
-if ('orientation' in window && 'onorientationchange' in window)
-{
-  $(window).on('orientationchange', resizeDialog);
-}
-else {
+// if ('orientation' in window && 'onorientationchange' in window)
+// {
+//   $(window).on('orientationchange', resizeDialog);
+// }
+// else {
   $(window).on('resize', resizeDialog);
-}
+// }
 
 $.fn.isDialog = function() {
 
