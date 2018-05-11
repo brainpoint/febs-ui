@@ -318,9 +318,9 @@ $.fn.popoverHide = function() {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-popover')) {
-      setTimeout(function(){
+      // setTimeout(function(){
         ee.removeClass('febsui-visible').addClass('febsui-invisible');
-      }, 100);
+      // }, 100);
     }
   }
   return this;

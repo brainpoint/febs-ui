@@ -1,5 +1,6 @@
 var uuid = require('../uuid');
 var resizeDialog = require('../plugins/dialog').resizeDialog;
+var maskPrevent = require('../domHelper').maskPreventEvent;
 
 exports.hide = hide;
 exports.showAlert = showAlert;
@@ -12,7 +13,6 @@ var styleBorder = '';
 if (isIE9 <= 9) {
   styleBorder = 'border-top:1px solid #eee;';
 }
-
 
 
 function escape_string(ctx) {
@@ -74,11 +74,11 @@ function hide(selector) {
 }
 
 // add keyup.
-(document).addEventListener('keyup', function (event) {
-  if (event.which == '27') {
-    hide();
-  }
-});
+// (document).addEventListener('keyup', function (event) {
+//   if (event.which == '27') {
+//     hide();
+//   }
+// });
 
 /**
 * ctx.title:    标题.
@@ -111,6 +111,8 @@ function showAlert(ctx) {
 
   $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><a class="febsui-dialog-cancel">' + ctx.okText + '</a></li></ul></div></div>'));
   resizeDialog();
+
+  maskPrevent($('#'+uid));
 
 	setTimeout(function () {
 		$('#'+uid).addClass('febsui-visible');
@@ -170,6 +172,8 @@ function showConfirm(ctx) {
 	$("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li' + (isIE9?' style="'+styleBorder+'"':'') + '><a class="febsui-dialog-cancel">' + ctx.cancelText + '</a></li><li'+(isIE9?' style="'+styleBorder+'"':'')+'><a class="febsui-dialog-ok">' + ctx.okText + '</a></li></ul></div></div>'));
   resizeDialog();
 
+  maskPrevent($('#'+uid));
+
   setTimeout(function () {
 		$('#'+uid).addClass('febsui-visible');
 	}, 10);
@@ -196,12 +200,12 @@ function showConfirm(ctx) {
   //     (document).removeEventListener('keyup', this);
 	// 	}
 	// });
-	$(document).one('keyup', function (event) {
-		if (event.which == '27') {
-			if (ctx.cancel) ctx.cancel.bind(ele)();
-			hide(ele);
-		}
-	});
+	// $(document).one('keyup', function (event) {
+	// 	if (event.which == '27') {
+	// 		if (ctx.cancel) ctx.cancel.bind(ele)();
+	// 		hide(ele);
+	// 	}
+	// });
 }
 
 
@@ -244,6 +248,8 @@ function showConfirmEdit(ctx) {
   $("body").append($(elems));
   resizeDialog();
 
+  maskPrevent($('#'+uid));
+
 	setTimeout(function () {
 		$('#'+uid).addClass('febsui-visible');
 	}, 10);
@@ -270,12 +276,12 @@ function showConfirmEdit(ctx) {
   //     (document).removeEventListener('keyup', this);
 	// 	}
 	// });
-	$(document).one('keyup', function (event) {
-		if (event.which == '27') {
-			if (ctx.cancel) ctx.cancel.bind(ele)();
-			hide(ele);
-		}
-	});
+	// $(document).one('keyup', function (event) {
+	// 	if (event.which == '27') {
+	// 		if (ctx.cancel) ctx.cancel.bind(ele)();
+	// 		hide(ele);
+	// 	}
+	// });
 }
 
 

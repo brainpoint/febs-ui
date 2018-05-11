@@ -1,6 +1,9 @@
 
 exports.resizeDialog = resizeDialog;
 
+var maskPrevent = require('../domHelper').maskPreventEvent;
+
+
 /**
 * @desc: 屏幕旋转事件.
 */
@@ -55,6 +58,8 @@ $.fn.dialogShow = function() {
       else {
         ee.removeClass('febsui-mask');
       }
+
+      maskPrevent(ee);
 
       ee.removeClass('febsui-invisible').addClass('febsui-visible');
     }

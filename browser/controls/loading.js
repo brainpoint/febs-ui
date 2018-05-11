@@ -1,3 +1,6 @@
+
+var maskPrevent = require('../domHelper').maskPreventEvent;
+
 /**
  * Copyright (c) 2017 Copyright brainpoint All Rights Reserved.
  * Author: lipengxiang
@@ -76,6 +79,8 @@ function loading_show(text, timeout, spinClass) {
       ee = $(ee.children('p')[0]);
       ee.html((text ? text : ''));
     }
+
+    maskPrevent(ee);
 
     // for ie9.
     exports.spin_init();

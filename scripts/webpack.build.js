@@ -23,6 +23,8 @@ febs.file.fileRemove(path.join(root, `dist/${dir}/README.md`));
 febs.file.fileCopy(path.join(root, 'febsui.css'),         path.join(root, `dist/${dir}/febsui.css`));
 febs.file.fileCopy(path.join(root, 'febsui-icon.css'),    path.join(root, `dist/${dir}/febsui-icon.css`));
 febs.file.fileCopy(path.join(root, 'README.md'),          path.join(root, `dist/${dir}/README.md`));
+febs.file.fileCopy(path.join(root, 'dist/index.html'),    path.join(root, `dist/${dir}/demo.html`));
+febs.file.dirCopy(path.join(root, 'resource/icons'),    path.join(root, `dist/${dir}/icons`));
 
 function buildSrc(config) {
   return new Promise((resolve,reject)=>{

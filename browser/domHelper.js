@@ -39,3 +39,20 @@ exports.copyClass = function(from, to) {
     }
   }
 }
+
+
+function maskPreventHandler(event){
+  event.preventDefault();
+}
+
+// event.
+exports.maskPreventEvent = function(ee) {
+  if (window.febs.utils.browserIsMobile()) {
+    ee.off('touchmove', maskPreventHandler);
+    ee.on('touchmove', maskPreventHandler);
+  }
+  else {
+    ee.off('mousewheel', maskPreventHandler);
+    ee.on('mousewheel', maskPreventHandler);
+  }
+}

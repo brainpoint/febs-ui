@@ -1,4 +1,6 @@
 
+var maskPrevent = require('../domHelper').maskPreventEvent;
+
 // function resizeActionsheet() {
 //   var ee = $('actionsheet');
 //   for (var i = 0; i < ee.length; i++) {
@@ -55,6 +57,8 @@ $.fn.actionsheetShow = function() {
         ee.removeClass('febsui-mask');
       }
 
+      maskPrevent(ee);
+
       ee.one('click', function(){
         $(this).actionsheetHide();
       });
@@ -77,9 +81,9 @@ $.fn.actionsheetHide = function() {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-actionsheet')) {
-      setTimeout(function(){
+      // setTimeout(function(){
         ee.removeClass('febsui-visible').addClass('febsui-invisible');
-      }, 100);
+      // }, 100);
     }
   }
   return this;
