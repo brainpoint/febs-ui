@@ -42,7 +42,8 @@
   max-height: 80%;
  }
 
- input {
+ [class|=febsui-input],
+ input, .febsui-dialog, .febsui-mask, .febsui-visible, dialog, .febsui-dialog-container, .febsui-dialog-edit {
   -webkit-user-select: auto;
   -khtml-user-select: auto;
   -moz-user-select: auto;
@@ -680,7 +681,7 @@
  
  .febsui-dialog .febsui-dialog-container .febsui-dialog-edit {
    width: 100%;
-   height: 30px;
+   height: 38px;
    padding-bottom: 8px;
  }
  
