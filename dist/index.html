@@ -11,9 +11,9 @@
   <meta name="apple-touch-fullscreen" content="yes" /> 
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link rel="stylesheet" type="text/css" href="./febsui-0.7.13/febsui.css" />
-  <script charset='UTF-8' type="text/javascript" src="./febs-0.8.17/febs.js"></script>
-  <script charset='UTF-8' type="text/javascript" src="./febsui-0.7.13/febsui.js"></script>
+  <link rel="stylesheet" type="text/css" href="./febsui-0.7.14/febsui.css" />
+  <script charset='UTF-8' type="text/javascript" src="./febs-0.8.18/febs.js"></script>
+  <script charset='UTF-8' type="text/javascript" src="./febsui-0.7.14/febsui.js"></script>
 
   <script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
 	<script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/shCore.js"></script>
@@ -559,7 +559,8 @@
   <uploader data-api="http://test2.citongs.com/api/upload" 
          data-accept="application/zip" 
        data-filename="true" 
-         data-finish="febsui.dialog_showAlert('upload ok')"
+          data-begin="onUploadBegin"
+          data-finish="onUploadFinish"
          data-progress="onUploadProgress"
          data-error="onUploadError"
           >上传图片</uploader>
@@ -569,11 +570,18 @@
         data-maxsize="10240">上传图片</uploader>
 
   <script>
-    function onUploadProgress(percent) {
+    function onUploadBegin(uploader, filename) {
+      console.log(filename);
+    }
+    function onUploadFinish(uploader, data) {
+      febsui.dialog_showAlert(JSON.stringify(data));
+      uploader.uploaderReset();
+    }
+    function onUploadProgress(uploader, percent) {
       console.log(percent);
     }
 
-    function onUploadError(err) {
+    function onUploadError(uploader, err) {
       if (febsui.uploadErr.nofile == err) {
         err = '未选择文件';
       } else if (febsui.uploadErr.sizeExceed == err) {

@@ -5,6 +5,7 @@
  */
 
 var crypt = require('../uuid');
+var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
 
 'use strict';
 
@@ -86,6 +87,8 @@ function page_init(elem, curPage, pageCount, totalCount, pageCallback) {
     </li>\
   </ul>\
 </div>'));
+
+  touchEventPrevent(elem[0]);
 }
 
 exports.page_init  = page_init;

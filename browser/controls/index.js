@@ -48,6 +48,9 @@ exports.ui_checkbox_init = checkboxa.checkbox_init;
 var loadinga = require('./loading');
 exports.ui_spin_init = loadinga.spin_init;
 
+var buttona = require('./button');
+exports.ui_button_init = buttona.button_init;
+
 
 
 /**
@@ -62,6 +65,7 @@ exports.ui_init = function() {
   uploadera.uploader_init();
   checkboxa.checkbox_init();
   loadinga.spin_init();
+  buttona.button_init();
 }
 
 // for mobile active.

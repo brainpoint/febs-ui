@@ -1,4 +1,5 @@
 
+var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
 
 exports.switch_init = switch_init;
 
@@ -28,6 +29,8 @@ function switch_init() {
       });
 
       elems[i]._swtichEvents = elems[i]._swtichEvents||[];
+
+      touchEventPrevent(dom[0]);
     }
   } // for.
 }

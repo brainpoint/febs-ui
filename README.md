@@ -150,6 +150,10 @@ febsui.ui_uploader_init():void;
 * @desc: 用于解决ie9下不支持css:animation; 初始化<div class="febsui-icon-spin1/febsui-icon-spin1-white">控件.
 */
 febsui.ui_spin_init():void;
+/**
+* @desc: 对所有的button控件进行初始化, 保证移动端touch穿透体验.
+*/
+febsui.ui_button_init():void;
 ```
 
 ### button
@@ -597,10 +601,10 @@ $('actionsheet').actionsheetHide();
 | data-api | 上传文件的api地址 |   |
 | data-accept |  接受文件的类型 | (可选) MIME_type值  |
 | data-filename |  是否显示选中的文件名  | (可选) true |
-| data-begin | 上传开始的回调  | (可选) function(uploaderController, filename) {} |
-| data-finish | 上传成功的回调  | (可选) function(serverData) {} |
-| data-progress | 上传进度的回调  | (可选) function(percent) {} |
-| data-error | 上传错误的回调  | (可选) function(err) {}; err可能的值有:  <br> febsui.uploadErr.nofile - 未选择文件<br> febsui.uploadErr.sizeExceed - 文件太大<br> febsui.uploadErr.crc32 - 计算本地文件hash值时错误<br> febsui.uploadErr.net - ajax上传时出错<br> 其他 |
+| data-begin | 上传开始的回调  | (可选) function(uploader, filename) {} |
+| data-finish | 上传成功的回调  | (可选) function(uploader, serverData) {} |
+| data-progress | 上传进度的回调  | (可选) function(uploader, percent) {} |
+| data-error | 上传错误的回调  | (可选) function(uploader, err) {}; err可能的值有:  <br> febsui.uploadErr.nofile - 未选择文件<br> febsui.uploadErr.sizeExceed - 文件太大<br> febsui.uploadErr.crc32 - 计算本地文件hash值时错误<br> febsui.uploadErr.net - ajax上传时出错<br> 其他 |
 | data-maxsize | 最大的文件字节大小 | (可选) 10240 |
 
 

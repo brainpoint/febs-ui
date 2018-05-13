@@ -1,5 +1,6 @@
 
 var domHelper = require('../domHelper');
+var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
 
 exports.checkbox_init = checkbox_init;
 
@@ -30,6 +31,8 @@ function checkbox_init() {
       dd.insertBefore(dom);
       dd.append(dom);
       dd.append('<div class="febsui-checkbox-mark"></div>');
+      
+      touchEventPrevent(dd[0]);
 
       // ie. for checked.
       if (window.febs.utils.browserIsIE()) {

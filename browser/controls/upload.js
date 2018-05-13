@@ -61,7 +61,7 @@ var uuid = require('../uuid');
  *                uploadUrl:  , // 上传文件内容的url. 系统将自动使用 uploadUrl?crc32=&size=的方式来上传.
  *                maxFileSize:    , // 允许上传的最大文件.0表示无限制.默认为0
  *                fileType:     , // 允许的文件类型.  如: image/gif,image/jpeg,image/x-png
- *                beginCB:     , // 上传开始的回调. function(uploader); 调用uploader.abort() 可以停止上传.
+ *                beginCB:     , // 上传开始的回调. function(fieObj, uploader); 调用uploader.abort() 可以停止上传.
  *                finishCB:    , // 上传完成后的回调. function(err, fileObj, serverData)
  *                               //                   err:  - uploadErr.nofile      未选择文件.
  *                               //                         - uploadErr.sizeExceed  文件太大.
@@ -124,7 +124,7 @@ function upload(cfg) {
       $('#'+uid).remove();
     });
 
-    if (control_upload_begin_cb) control_upload_begin_cb({abort:function(){ $('#'+uid).remove(); cfg.fileObj[0].value=""; }});
+    if (control_upload_begin_cb) control_upload_begin_cb(cfg.fileObj, {abort:function(){ $('#'+uid).remove(); cfg.fileObj[0].value=""; }});
 
     var inputs = cfg.formObj.children('input');
     $(inputs[inputs.length-1]).click();
@@ -172,7 +172,7 @@ function upload(cfg) {
             headers: cfg.headers,
             withCredentials: cfg.withCredentials
           });
-          if (control_upload_begin_cb) control_upload_begin_cb(con);
+          if (control_upload_begin_cb) control_upload_begin_cb(cfg.fileObj, con);
         } catch (e) {
           if (control_upload_cb)  control_upload_cb(e, fileObj, null);
           fileObj[0].value="";

@@ -277,7 +277,10 @@ export function ui_uploader_init():void;
 * @desc: 用于解决ie9下不支持css:animation; 初始化<div class="febsui-icon-spin1/febsui-icon-spin1-white">控件.
 */
 export function ui_spin_init():void;
-
+/**
+* @desc: 对所有的button控件进行初始化, 保证移动端touch穿透体验.
+*/
+export function ui_button_init():void;
 /**
 * @desc: 对页面上所有ui控件进行初始化.
 */

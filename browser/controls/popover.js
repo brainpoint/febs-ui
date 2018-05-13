@@ -1,4 +1,4 @@
-import { EADDRNOTAVAIL } from 'constants';
+var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
 
 var uuid = require('../uuid');
 var domHelper = require('../domHelper');
@@ -72,6 +72,8 @@ function popover_init() {
         if ('id' == name) return true;
         return name.indexOf('data-') == 0;
       });
+
+      touchEventPrevent(dom[0]);
 
       dd.append(dom);
     }
