@@ -65,7 +65,7 @@ function mobile_onTouchstart(event) {
 }
 function mobile_onTouchmove(event) {
   event = event || window.event;
-  if (event.target.__touchstart_at && Date.now()-event.target.__touchstart_at > 200) {
+  if (event.target.__touchstart_at && Date.now()-event.target.__touchstart_at > 500) {
     event.preventDefault();
   } else {
     delete event.target.__touchstart_at;
