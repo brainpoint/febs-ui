@@ -16,13 +16,23 @@
 		// For CommonJS and CommonJS-like environments where a proper `window`
 		// For environments that do not have a `window` with a `document`
 		// (such as Node.js), expose a factory as module.exports.
-		// This accentuates the need for the creation of a real `window`.
-		module.exports = global.document ?
+    // This accentuates the need for the creation of a real `window`.
+    
+    if (global.document) {
+      if (!global['febs']) {
+        throw new Error('febsui requires `febs` or `febs-browser` library; Please require `febs`/`febs-browser` before febsui');
+      }
+    }
+    
+    module.exports = global.document ?
 			factory( global, true ) :
 			function( w ) {
 				if ( !w.document ) {
 					throw new Error( "febsui requires a window with a document" );
-				}
+        }
+        if (!w['febs']) {
+          throw new Error('febsui requires `febs` or `febs-browser` library; Please require `febs`/`febs-browser` before febsui');
+        }
 				return factory( w );
 			};
 	} else {

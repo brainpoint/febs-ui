@@ -36,7 +36,8 @@
    touch-action: manipulation;   /* no 300ms delay */
  }
 
- dialog {
+ dialog,
+ .febsui-dialog {
   padding: 0;
   margin: 0;
   overflow: auto;
@@ -528,9 +529,11 @@
   <div class="febsui-dialog-container">
     <div class="febsui-dialog-title">title</div>
     <div class="febsui-dialog-content">content</div>
-    <ul class="febsui-dialog-buttons">
-      <li><a class="febsui-dialog-cancel">ok</a></li>
-    </ul>
+    <div class="febsui-dialog-buttons">
+      <ul>
+        <li><a class="febsui-dialog-cancel">ok</a></li>
+      </ul>
+    </div>
   </div>
 </div> */
 
@@ -542,10 +545,12 @@
   <div class="febsui-dialog-container">
     <div class="febsui-dialog-title">title</div>
     <div class="febsui-dialog-content">content</div>
-    <ul class="febsui-dialog-buttons">
-      <li><a class="febsui-dialog-cancel">cancel</a></li>
-      <li><a class="febsui-dialog-ok">ok</a></li>
-    </ul>
+    <div class="febsui-dialog-buttons">
+      <ul>
+        <li><a class="febsui-dialog-cancel">cancel</a></li>
+        <li><a class="febsui-dialog-ok">ok</a></li>
+      </ul>
+    </div>
   </div>
 </div> */
  
@@ -560,10 +565,12 @@
     <div class="febsui-dialog-edit">
       <input class="febsui-input-text-noborder" type="text" value="">
     </div>
-    <ul class="febsui-dialog-buttons">
-      <li><a class="febsui-dialog-cancel">cancel</a></li>
-      <li><a class="febsui-dialog-ok">ok</a></li>
-    </ul>
+    <div class="febsui-dialog-buttons">
+      <ul>
+        <li><a class="febsui-dialog-cancel">cancel</a></li>
+        <li><a class="febsui-dialog-ok">ok</a></li>
+      </ul>
+    </div>
   </div>
 </div> */
 
@@ -691,7 +698,16 @@
   width: 90%;
  }
 
+
  dialog .febsui-dialog-buttons {
+  bottom: 0;
+  top: 0;
+  position: fixed;
+  left: 0;
+  right: 0;
+ }
+
+ dialog .febsui-dialog-buttons ul {
   bottom: 0;
   position: absolute;
   left: 0;
@@ -702,7 +718,7 @@
    padding-bottom: 44px;
  }
 
- .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons:after {
+ .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons ul:after {
    content: "";
    display: table;
    clear: both;

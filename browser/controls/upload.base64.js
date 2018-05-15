@@ -4,38 +4,7 @@
  * Desc:
  */
 
-
-( function( global, factory ) {
-
-	"use strict";
-
-	if ( typeof module === "object" && typeof module.exports === "object" ) {
-
-		// For CommonJS and CommonJS-like environments where a proper `window`
-		// For environments that do not have a `window` with a `document`
-		// (such as Node.js), expose a factory as module.exports.
-		// This accentuates the need for the creation of a real `window`.
-		module.exports = global.document ?
-			factory( global, true ) :
-			function( w ) {
-				if ( !w.document ) {
-					throw new Error( "febs-ui requires a window with a document" );
-				}
-				return factory( w );
-			};
-	} else {
-		factory( global );
-	}
-
-// Pass this if window is not defined yet
-} )( typeof window !== "undefined" ? window : this, function( window, noGlobal ) {
-
 'use strict';
-
-if ( !window.febs ) {
-  throw new Error( "febs-ui requires febs" );
-}
-
 
 var net = window.febs.net;
 var utils = window.febs.utils;
@@ -68,7 +37,7 @@ var err = require('./upload.err');
  *                withCredentials: true, // 是否附带cookie, 默认为true
  *              }
  */
-function uploadBase64(cfg) {
+exports.uploadBase64 = function uploadBase64(cfg) {
   cfg.timeout = cfg.timeout || 5000;
   var control_uploadSeg_cb = cfg.finishCB;
   var control_uploadSeg_progress_cb = cfg.progressCB;
@@ -196,7 +165,3 @@ function uploadBase64(cfg) {
     }
   });
 }
-
-return {uploadBase64:uploadBase64};
-
-});

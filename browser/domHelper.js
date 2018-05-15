@@ -45,13 +45,28 @@ function maskPreventHandler(event){
   event.preventDefault();
 }
 
+
+function maskPreventHandler2(event){
+  event.stopPropagation();
+  // event.preventDefault();
+}
+
 // event.
 exports.maskPreventEvent = function(ee) {
+
+  var children = ee.children();
+  
   if (window.febs.utils.browserIsMobile()) {
+    children.off('touchmove', maskPreventHandler2);
+    children.on('touchmove', maskPreventHandler2);
+
     ee.off('touchmove', maskPreventHandler);
     ee.on('touchmove', maskPreventHandler);
   }
   else {
+    children.off('mousewheel', maskPreventHandler2);
+    children.on('mousewheel', maskPreventHandler2);
+
     ee.off('mousewheel', maskPreventHandler);
     ee.on('mousewheel', maskPreventHandler);
   }
@@ -65,7 +80,7 @@ function mobile_onTouchstart(event) {
 }
 function mobile_onTouchmove(event) {
   event = event || window.event;
-  if (event.target.__touchstart_at && Date.now()-event.target.__touchstart_at > 500) {
+  if (event.target.__touchstart_at && Date.now()-event.target.__touchstart_at > 450) {
     event.preventDefault();
   } else {
     delete event.target.__touchstart_at;

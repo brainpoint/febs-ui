@@ -74,13 +74,13 @@ function loading_show(text, timeout, spinClass) {
     if (window.febs.string.isEmpty(ee.html())) {
       ee.html('<div class="febsui-loading-c"><div class="febsui-loading"><div class="' + spinClass + ' febsui-animation-spin febsui-loading-spin"></div><p>' + (text ? text : '') + '</p></div></div>');
     } else {
-      ee = $(ee.children('.febsui-loading-c')[0]);
-      ee = $(ee.children('.febsui-loading')[0]);
-      ee = $(ee.children('p')[0]);
-      ee.html((text ? text : ''));
+      var eee = $(ee.children('.febsui-loading-c')[0]);
+      eee = $(eee.children('.febsui-loading')[0]);
+      eee = $(eee.children('p')[0]);
+      eee.html((text ? text : ''));
     }
 
-    maskPrevent(ee);
+    maskPrevent($(ee.children('.febsui-loading-c')[0]));
 
     // for ie9.
     exports.spin_init();

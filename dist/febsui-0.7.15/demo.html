@@ -11,9 +11,9 @@
   <meta name="apple-touch-fullscreen" content="yes" /> 
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link rel="stylesheet" type="text/css" href="./febsui-0.7.15/febsui.css" />
-  <script charset='UTF-8' type="text/javascript" src="./febs-0.8.19/febs.js"></script>
-  <script charset='UTF-8' type="text/javascript" src="./febsui-0.7.15/febsui.js"></script>
+  <link rel="stylesheet" type="text/css" href="./febsui-0.7.14/febsui.css" />
+  <script charset='UTF-8' type="text/javascript" src="./febs-0.8.18/febs.js"></script>
+  <script charset='UTF-8' type="text/javascript" src="./febsui-0.7.14/febsui.js"></script>
 
   <script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
 	<script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/shCore.js"></script>
@@ -106,7 +106,7 @@
       <div class="febsui-icon febsui-icon-arrow-left"></div>
       <div class="febsui-icon febsui-icon-arrow-right"></div>
     ]]></script>
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
   </dialog>
   <button style="font-size:10px;" onclick="$('#h2icon').dialogShow()">[Code]</button> <br>
   
@@ -135,7 +135,7 @@
       febsui.page_init($("#page"), 12, 20, 25, onPage);
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
   </dialog>
   <button style="font-size:10px;" onclick="$('#h2page').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#page')">[Readme]</button><br>
@@ -162,7 +162,7 @@
       <button class="btn-danger">danger</button>
       <button disabled="disabled" class="btn-primary" onclick="console.log(23123);">disabled</button>
     ]]></script>
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
   </dialog>
   <button style="font-size:10px;" onclick="$('#h2button').dialogShow()">[Code]</button> <br>
 
@@ -189,7 +189,7 @@
       <div class="febsui-icon febsui-icon-spin1-white febsui-animation-spin"></div>
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
   </dialog>
   <button style="font-size:10px;" onclick="$('#h2loading').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#loading')">[Readme]</button><br>
@@ -235,7 +235,7 @@
       febsui.toast({ content: '这个toast消失后有一个回调', callback: function() {} });
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
   </dialog>
   <button style="font-size:10px;" onclick="$('#h2toast').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#toast')">[Readme]</button><br>
@@ -323,7 +323,7 @@
       $('#dialog1').dialogHide();
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
   </dialog>
   <button style="font-size:10px;" onclick="$('#h2dialog').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#dialog')">[Readme]</button><br>
@@ -334,11 +334,10 @@
   <button onclick="showDialogText('<script>alert(1)</script>')">confirm text input 转义</button>
   <button onclick="showDialogCustom()">custom</button>
 
-  <dialog id="dialog1" data-mask-close="true" style="width:400px; height: 400px;">
+  <dialog id="dialog1" style="width:400px; height: 400px;">
     <button onclick="showDialogAlert()">你好</button>
     <button onclick="$('#dialog1').dialogHide()">关闭</button>
-
-    <ul style="position: fixed; bottom:0;left:0;right:0;" class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
   </dialog>
 
   <script type="text/javascript">
@@ -417,7 +416,7 @@
       $('switch').setDisabled(true);
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
   </dialog>
   <button style="font-size:10px;" onclick="$('#h2switch').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#switch')">[Readme]</button><br>
@@ -468,7 +467,7 @@
       $('popover').popoverShow()
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
   </dialog>
   <button style="font-size:10px;" onclick="$('#h2popover').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#popover')">[Readme]</button><br>
@@ -504,7 +503,7 @@
       $('actionsheet').actionsheetShow()
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
   </dialog>
   <button style="font-size:10px;" onclick="$('#h2actionsheet').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#actionsheet')">[Readme]</button><br>
@@ -552,7 +551,7 @@
       }
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
   </dialog>
   <button style="font-size:10px;" onclick="$('#h2uploader').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#upload')">[Readme]</button><br>
@@ -607,7 +606,7 @@
       <input type="text" class="febsui-input-text febsui-icon-lock" maxlength="20" placeholder="Text...">
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
   </dialog>
 
   <button style="font-size:10px;" onclick="$('#h2search').dialogShow()">[Code]</button> <br>
@@ -627,7 +626,7 @@
       <label for="checkbox1">checkbox</label>
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
   </dialog>
   <button style="font-size:10px;" onclick="$('#h2Checkbox').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#checkbox')">[Readme]</button><br>
