@@ -8,7 +8,7 @@ exports.switch_init = switch_init;
 *        对页面上 class 为 febsui-switch-on 以及 febsui-switch-off 的所有元素初始化为switch控件.
 */
 function switch_init() {
-  var elems = $('switch');
+  var elems = $('.febsui-switch');
   // elems.append("<span class='febsui-switch-slider'></span>");
   for (var i = 0; i < elems.length; i++) {
     var dom = $(elems[i]);
@@ -27,8 +27,6 @@ function switch_init() {
 
         ee.switch();
       });
-
-      elems[i]._swtichEvents = elems[i]._swtichEvents||[];
 
       touchEventPrevent(dom[0]);
     }

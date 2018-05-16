@@ -30,12 +30,13 @@ $.fn.isDialog = function() {
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
 
   if (_this.length >= 1) {
-    if (_this[0].nodeName.toLowerCase() == 'dialog') {
-      return true;
+    _this = $(_this[0]);
+
+    if (_this.hasClass('febsui-dialog-container')) {
+      _this = _this.parent();
     }
-    else {
-      return $(_this[0]).hasClass('febsui-dialog');
-    }
+
+    return _this.hasClass('febsui-dialog');
   }
   
   return false;
@@ -47,7 +48,7 @@ $.fn.dialogShow = function() {
 
   for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
-    if (ee[0].nodeName.toLowerCase() == 'dialog') {
+    if (ee.hasClass('febsui-dialog-container')) {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-dialog')) {
@@ -75,7 +76,7 @@ $.fn.dialogHide = function() {
 
   for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
-    if (ee[0].nodeName.toLowerCase() == 'dialog') {
+    if (ee.hasClass('febsui-dialog-container')) {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-dialog-init')) {

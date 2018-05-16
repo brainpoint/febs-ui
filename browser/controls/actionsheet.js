@@ -5,16 +5,14 @@ exports.actionsheet_init = actionsheet_init;
 
 /**
 * @desc: 初始化actionsheet控件.
-*        对页面上 的所有 <actionsheet> 元素进行初始化.
+*        对页面上 的所有 <.febsui-actionsheet> 元素进行初始化.
 */
 function actionsheet_init() {
-  var elems = $('actionsheet');
+  var elems = $('.febsui-actionsheet');
   for (var i = 0; i < elems.length; i++) {
     var dom = $(elems[i]);
 
     if (!dom.hasClass('febsui-actionsheet-inited')) {
-
-      dom.addClass('febsui-actionsheet-inited');
 
       var domChildren = dom.children();
       var ddChildren;
@@ -45,7 +43,7 @@ function actionsheet_init() {
         }
       }
 
-      var dd = $("<div class='febsui-actionsheet'></div>");
+      var dd = $("<div class='febsui-actionsheet febsui-actionsheet-inited'></div>");
       $('body').append(dd);
       
       // copy attri.
@@ -54,6 +52,7 @@ function actionsheet_init() {
         return name.indexOf('data-') == 0;
       });
 
+      dom.removeClass('febsui-actionsheet').addClass('febsui-actionsheet-container');
       dd.append(dom);
 
       // // 动画设置.

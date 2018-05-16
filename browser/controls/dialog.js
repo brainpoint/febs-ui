@@ -109,7 +109,7 @@ function showAlert(ctx) {
     mask = ' febsui-mask';
   }
 
-  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><button class="febsui-dialog-cancel">' + ctx.okText + '</button></li></ul></div></div>'));
+  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><button class="febsui-dialog-cancel">' + ctx.okText + '</button></li></ul></div></div>'));
   resizeDialog();
 
   maskPrevent($('#'+uid));
@@ -169,7 +169,7 @@ function showConfirm(ctx) {
     mask = ' febsui-mask';
   }
 
-	$("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li' + (isIE9?' style="'+styleBorder+'"':'') + '><button class="febsui-dialog-cancel">' + ctx.cancelText + '</button></li><li'+(isIE9?' style="'+styleBorder+'"':'')+'><button class="febsui-dialog-ok">' + ctx.okText + '</button></li></ul></div></div>'));
+	$("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li' + (isIE9?' style="'+styleBorder+'"':'') + '><button class="febsui-dialog-cancel">' + ctx.cancelText + '</button></li><li'+(isIE9?' style="'+styleBorder+'"':'')+'><button class="febsui-dialog-ok">' + ctx.okText + '</button></li></ul></div></div>'));
   resizeDialog();
 
   maskPrevent($('#'+uid));
@@ -239,7 +239,7 @@ function showConfirmEdit(ctx) {
     mask = ' febsui-mask';
   }
 
-  var elems = '<div' + ' id="' + uid + '" class="febsui-dialog'+mask+'" role="alert"><div class="febsui-dialog-container">' 
+  var elems = '<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init'+mask+'" role="alert"><div class="febsui-dialog-container">' 
   + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') 
   + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div>' 
   + '<div class="febsui-dialog-edit"><input class="febsui-input-text-noborder" type="text" value="' + (ctx.editText?ctx.editText:'') + '">' + '</div>' 
@@ -296,14 +296,14 @@ exports.dialog_init = dialog_init;
 *        对页面上 的所有 <dialog> 元素进行初始化.
 */
 function dialog_init() {
-  var elems = $('dialog');
+  var elems = $('.febsui-dialog');
   for (var i = 0; i < elems.length; i++) {
     var dom = $(elems[i]);
 
-    if (!dom.hasClass('febsui-dialog-container')) {
-      dom.addClass('febsui-dialog-container');
+    if (!dom.hasClass('febsui-dialog-init')) {
+      dom.addClass('febsui-dialog-container').removeClass('febsui-dialog');
 
-      var dd = $("<div class='febsui-dialog febsui-dialog-init' role='alert'></div>");
+      var dd = $("<div class='febsui-dialog febsui-dialog-init febsui-dialog-custom' role='alert'></div>");
       $('body').append(dd);
       var did = dom.attr('id');
       if (did) {

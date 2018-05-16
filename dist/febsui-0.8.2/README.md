@@ -84,7 +84,7 @@ $('').setDisabled(isDisable);
 /**
  * @desc 返回当前控件是否为disable状态.
  */
-$('').isDisable();
+$('').isDisabled();
 /**
  * @desc 判断第一个元素是否可见.
  */
@@ -329,9 +329,9 @@ febsui.page_init(elem, curPage, pageCount, totalCount, pageCallback)
 
 ```html
 
-<dialog data-mask-close="true" style="width: 100px; height:400px;">
+<div class="febsui-dialog" data-mask-close="true" style="width: 100px; height:400px;">
   ...
-</dialog>
+</div>
 
 ```
 
@@ -348,16 +348,16 @@ febsui.page_init(elem, curPage, pageCount, totalCount, pageCallback)
 /**
  * @desc 判断是否是popover
  */
-$('dialog').isDialog();
+$('.febsui-dialog').isDialog();
 /**
  * @desc 显示dialog
  */
-$('dialog').dialogShow();
+$('.febsui-dialog').dialogShow();
 
 /**
  * @desc 隐藏dialog;
  */
-$('dialog').dialogHide();
+$('.febsui-dialog').dialogHide();
 ```
 
 
@@ -371,14 +371,14 @@ $('dialog').dialogHide();
 <html>
 
 <!-- 默认是on状态. -->
-<switch></switch> 
-<switch class="febsui-switch-on"></switch> 
+<div class="febsui-switch"></div> 
+<div class="febsui-switch febsui-switch-on"></div> 
 
 <!-- off状态. -->
-<switch class="febsui-switch-off"></switch> 
+<div class="febsui-switch febsui-switch-off"></div> 
 
 <!-- disabled状态. -->
-<switch disabled="disabled"></switch> 
+<div class="febsui-switch febsui-switch-disabled"></div> 
 
 </html>
 ```
@@ -397,30 +397,39 @@ $('dialog').dialogHide();
 /**
  * @desc 判断是否是switch
  */
-$('switch').isSwitch();
+$('.febsui-switch').isSwitch();
 /**
  * @desc 监听变化事件
  */
-$('switch').switch(function(){
+$('.febsui-switch').switch(function(){
   // 
 });
+
+or
+
+$('.febsui-switch').on('switch', function(){});
+
 
 /**
  * @desc 手动触发事件
  */
-$('switch').switch();
+$('.febsui-switch').switch();
+
+or
+
+$('.febsui-switch').on('switch');
 
 /**
  * @desc 改变状态
  * @param isOn: 设置控件的状态.
  * @param trigger: 可选, 是否触发事件监听 (状态未改变不触发).
  */
-$('switch').switchOn(isOn, trigger);
+$('.febsui-switch').switchOn(isOn, trigger);
 
 /**
  * @desc 返回当前控件的状态.
  */
-$('switch').switchIsOn();
+$('.febsui-switch').switchIsOn();
 ```
 
 
@@ -480,16 +489,16 @@ $('.febsui-checkbox').checkboxIsChecked();
 <html>
 
 <!-- 使用 top, left 样式来指定位置 -->
-<popover style="top:50px; left:50px;">
+<div class="febsui-popover" style="top:50px; left:50px;">
   <div class="febsui-popover-cell">cell1</div>
   <div class="febsui-popover-cell">cell2</div>
   <div class="febsui-popover-cell">cell3</div>
-</popover>
+</div>
 
 <!-- 使用 data-attach 来固定位置到指定元素 -->
-<popover id="popover" data-attach="#popoverAttach" data-direction="bottom" data-offset="5">
+<div class="febsui-popover" id="popover" data-attach="#popoverAttach" data-direction="bottom" data-offset="5">
   <!-- {{ children nodes }} -->
-</popover>
+</div>
 <button id="popoverAttach" onclick="$('#popover').popoverShow();">show</button>
 
 </html>
@@ -499,7 +508,7 @@ $('.febsui-checkbox').checkboxIsChecked();
 
 | 属性 | 说明 | 值 |
 |----|----|----|
-| data-direction | 表明popover的方向. | 允许的值为: left, right, top, bottom, auto  |
+| data-direction | 表明popover的方向. (默认为auto) | 允许的值为: left, right, top, bottom, center, auto  |
 | data-offset |  表明提示位置(三角尖)的偏移像素. (auto时忽略此数值) | 允许的值: 只能为数值  |
 | data-attach |  表明显示时自动显示在此元素的指定位置.  | 例如: #btn1  |
 
@@ -509,18 +518,18 @@ $('.febsui-checkbox').checkboxIsChecked();
 /**
  * @desc 判断是否是popover
  */
-$('popover').isPopover();
+$('.febsui-popover').isPopover();
 /**
  * @desc 显示popover
  * @param mask 是否显示掩码背景.
  * @param attachNode 附加到此节点上显示. 如果不存在, 则查询 data-attach 属性.
  */
-$('popover').popoverShow(mask?:boolean, attachNode?:selector);
+$('.febsui-popover').popoverShow(mask?:boolean, attachNode?:selector);
 
 /**
  * @desc 隐藏popover; 显示后点击也会隐藏.
  */
-$('popover').popoverHide();
+$('.febsui-popover').popoverHide();
 ```
 
 ### actionsheet
@@ -532,12 +541,12 @@ $('popover').popoverHide();
 ```html
 <html>
 
-<actionsheet>
+<div class="febsui-actionsheet">
   <div class="febsui-actionsheet-cell">cell1</div>
   <div class="febsui-actionsheet-cell">cell2</div>
 
   <div class="febsui-actionsheet-cancel">CANCEL</div>
-</actionsheet>
+</div>
 
 </html>
 ```
@@ -555,16 +564,16 @@ $('popover').popoverHide();
 /**
  * @desc 判断是否是actionsheet
  */
-$('actionsheet').isActionsheet();
+$('.febsui-actionsheet').isActionsheet();
 /**
  * @desc 显示actionsheet
  */
-$('actionsheet').actionsheetShow();
+$('.febsui-actionsheet').actionsheetShow();
 
 /**
  * @desc 隐藏actionsheet; 显示后点击也会隐藏.
  */
-$('actionsheet').actionsheetHide();
+$('.febsui-actionsheet').actionsheetHide();
 ```
 
 
@@ -576,13 +585,13 @@ $('actionsheet').actionsheetHide();
 
 ```html
 <html>
-  <uploader data-api="/upload" 
+  <div class="febsui-uploader" data-api="/upload" 
          data-accept="application/zip" 
        data-filename="true" 
           data-begin="onUploadBegin"
          data-finish="febsui.dialog_showAlert('upload ok')"
          data-progress="onUploadProgress"
-         data-error="onUploadError">上传图片</uploader>
+         data-error="onUploadError">上传图片</div>
   
   <script>
     function onUploadBegin(uploaderController, filename) {
@@ -601,6 +610,25 @@ $('actionsheet').actionsheetHide();
 </html>
 ```
 
+或使用 `on` 方式绑定事件.
+
+```js
+
+$('.febsui-uploader').on('uploadBegin', function(event, data) {
+  console.log(data.filename); // 文件名.
+});
+$('.febsui-uploader').on('uploadProgress', function(event, data) {
+  console.log(data.progress); // 进度.
+});
+$('.febsui-uploader').on('uploadError', function(event, data) {
+  console.log(data.err); // 错误信息.
+});
+$('.febsui-uploader').on('uploadFinish', function(event, data) {
+  console.log(data.responseData); // 服务器返回的数据.
+});
+
+```
+
 属性
 
 | 属性 | 说明 | 值 |
@@ -614,6 +642,17 @@ $('actionsheet').actionsheetHide();
 | data-error | 上传错误的回调  | (可选) function(uploader, err) {}; err可能的值有:  <br> febsui.uploadErr.nofile - 未选择文件<br> febsui.uploadErr.sizeExceed - 文件太大<br> febsui.uploadErr.crc32 - 计算本地文件hash值时错误<br> febsui.uploadErr.net - ajax上传时出错<br> 其他 |
 | data-maxsize | 最大的文件字节大小 | (可选) 10240 |
 
+事件.
+
+| 事件名 | 说明 | 参数 |
+|----|----|----|
+| uploadBegin | 上传开始的回调 |  event, {filename:string}  |
+| uploadProgress |  上传进程的回调 |  event, {progress:number}  |
+| uploadError |  上传错误的回调 |  event, {err:any}  |
+| uploadFinish |  上传完成的回调 |  event, {responseData:any}  |
+
+
+
 
 方法
 
@@ -621,7 +660,7 @@ $('actionsheet').actionsheetHide();
 /**
  * @desc 重设为未开始上传的样式
  */
-$('uploader').uploaderReset();
+$('.febsui-uploader').uploaderReset();
 ```
 
 

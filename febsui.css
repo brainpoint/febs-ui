@@ -8,10 +8,6 @@
  [class|=febsui],
  [class|=btn],
  button,
- switch,
- popover,
- actionsheet,
- dialog,
  label {
    font-family: -apple-system, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
    -webkit-font-smoothing: antialiased;
@@ -36,15 +32,8 @@
    touch-action: manipulation;   /* no 300ms delay */
  }
 
- dialog {
-  padding: 0;
-  margin: 0;
-  overflow: auto;
-  max-height: 80%;
- }
-
  [class|=febsui-input],
- input, .febsui-dialog, .febsui-mask, .febsui-visible, dialog, .febsui-dialog-container, .febsui-dialog-edit {
+ input, .febsui-dialog, .febsui-mask, .febsui-visible, .febsui-dialog-container, .febsui-dialog-edit {
   -webkit-user-select: auto;
   -khtml-user-select: auto;
   -moz-user-select: auto;
@@ -620,7 +609,7 @@
  ul {
    list-style: none;
  }
- 
+
  .febsui-dialog .febsui-dialog-container {
    position: relative;
    width: 76%;
@@ -689,12 +678,6 @@
  
  .febsui-dialog .febsui-dialog-container .febsui-dialog-edit .febsui-input-text-noborder {
   width: 90%;
- }
-
-
- dialog .febsui-dialog-buttons {
-   margin-left: auto;
-   margin-right: auto;
  }
 
  .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons:after {
@@ -771,24 +754,33 @@
    }
  }
 
-
-dialog {
+.febsui-dialog.febsui-dialog-custom .febsui-dialog-container {
+  padding: 0;
+  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: auto;
+  max-height: 80%;
   display: block;
   border: none;
   max-width: inherit !important;
+ }
+
+.febsui-dialog.febsui-dialog-custom .febsui-dialog-buttons {
+  margin-left: auto;
+  margin-right: auto;
 }
- 
 
 /****************************************************/
- /* switch: use honeySwitch  */
+ /* switch
 /****************************************************/
 
 /*
-<switch class="febsui-switch-on">
+<div class="febsui-switch febsui-switch-on">
   <span class="febsui-switch-slider"></span>
-</switch> */
+</div> */
 
- switch {
+ switch, .febsui-switch {
    position: relative;
    display: inline-block;
    width: 50px !important;
@@ -799,7 +791,7 @@ dialog {
    line-height: 32px !important;
  }
  
- switch,
+ switch, .febsui-switch,
  .febsui-switch-on {
    box-shadow: #4AD562 0px 0px 0px 16px inset;
    transition: border 0.4s, box-shadow 0.2s, background-color 1.2s;
@@ -817,21 +809,21 @@ dialog {
    border-radius: 50%;
    left: 1px;
    top: 1px;
- }
- 
+ } 
+
  switch .febsui-switch-slider,
- .febsui-switch-off .febsui-switch-slider {
-   top: 2px;
-   left: 1px;
-   transition: background-color 0.4s, left 0.2s;
- }
- 
- switch .febsui-switch-slider,
+ .febsui-switch .febsui-switch-slider,
  .febsui-switch-on .febsui-switch-slider {
    top: 2px;
    left: 20px;
    transition: background-color 0.4s, left 0.2s;
  }
+
+ .febsui-switch-off .febsui-switch-slider {
+  top: 2px;
+  left: 1px;
+  transition: background-color 0.4s, left 0.2s;
+}
  
  .febsui-switch-off {
   box-shadow: inset 0 0 0 1.5px #e6e6e6;
@@ -841,6 +833,7 @@ dialog {
  }
  
  switch.febsui-switch-disabled,
+ .febsui-switch.febsui-switch-disabled,
  .febsui-switch-on.febsui-switch-disabled {
    opacity: .5;
    cursor: auto;
@@ -1023,11 +1016,11 @@ dialog {
 /* 
 <div class="febsui-popover febsui-mask">
   <div class="febsui-popover-arrow"></div>
-  <popover>
+  <div class="febsui-popover-container">
     <div class="febsui-popover-cell">cell1</div>
     <div class="febsui-popover-cell">cell2</div>
     <div class="febsui-popover-cell">cell3</div>
-  </popover>
+  </div>
 </div> */
  
  .febsui-popover {
@@ -1045,7 +1038,7 @@ dialog {
    z-index: 20000;
  }
  
- popover {
+ .febsui-popover .febsui-popover-container {
    display: inline-block;
    position: relative;
    min-width: 200px;
@@ -1157,8 +1150,8 @@ dialog {
    border-top-width: 1px;
  }
  
- popover .febsui-popover-cell,
- actionsheet .febsui-actionsheet-cell {
+ .febsui-popover .febsui-popover-cell,
+ .febsui-actionsheet .febsui-actionsheet-cell {
    box-sizing: border-box;
    -moz-box-sizing: border-box;
    -webkit-box-sizing: border-box;
@@ -1203,27 +1196,27 @@ dialog {
    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.07);
  }
 
- popover .febsui-popover-cell:last-of-type,
- actionsheet .febsui-actionsheet-cell:last-of-type
+ .febsui-popover .febsui-popover-cell:last-of-type,
+ .febsui-actionsheet .febsui-actionsheet-cell:last-of-type
 {
   border: none;
   background-image: none
 }
 
  @media (-webkit-min-device-pixel-ratio: 2),(min-resolution:192dpi) {
-  popover .febsui-popover-cell,
-  actionsheet .febsui-actionsheet-cell {
+  .febsui-popover .febsui-popover-cell,
+  .febsui-actionsheet .febsui-actionsheet-cell {
       background-image:linear-gradient(0deg,#ccc,#ccc 50%,transparent 0);
   }
  }
 
-popover .febsui-popover-cell:hover,
- popover .febsui-popover-cell:active {
+ .febsui-popover .febsui-popover-cell:hover,
+ .febsui-popover .febsui-popover-cell:active {
    color: #000;
    background-color: rgba(0, 0, 0, 0.02);
  }
 
- popover .febsui-popover-cell:nth-last-child(1) {
+ .febsui-popover .febsui-popover-cell:nth-last-child(1) {
   border: none !important;
 } 
 
@@ -1232,7 +1225,7 @@ popover .febsui-popover-cell:hover,
 /****************************************************/
 /* 
 <div class="febsui-actionsheet febsui-mask">
-  <actionsheet>
+  <div class="febsui-actionsheet-container">
     <div class="febsui-actionsheet-group">
       <div class="febsui-actionsheet-cell">menu 1</div>
       <div class="febsui-actionsheet-cell">menu 2</div>
@@ -1242,7 +1235,7 @@ popover .febsui-popover-cell:hover,
     <div class="febsui-actionsheet-group" style="margin-top:5px;">
       <div class="febsui-actionsheet-cancel febsui-actionsheet-cell">cancel</div>
     </div>
-  </actionsheet>
+  </div>
 </div> */
  
  .febsui-actionsheet {
@@ -1260,7 +1253,7 @@ popover .febsui-popover-cell:hover,
   z-index: 20000;
 }
 
-actionsheet {
+.febsui-actionsheet .febsui-actionsheet-container {
   display: inline-block;
   position: relative;
   width: 96%;
@@ -1289,7 +1282,7 @@ actionsheet {
   position: absolute;
 }
 
-.febsui-actionsheet.febsui-visible actionsheet {
+.febsui-actionsheet.febsui-visible .febsui-actionsheet-container {
   -webkit-transform: translateY(0);
   -moz-transform: translateY(0);
   -ms-transform: translateY(0);
@@ -1297,18 +1290,18 @@ actionsheet {
   transform: translateY(0);
 }
 
-actionsheet .febsui-actionsheet-group {
+.febsui-actionsheet .febsui-actionsheet-container .febsui-actionsheet-group {
   background-color: rgba(255, 255, 255, 0.93);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px 8px 8px 8px;
 }
  
 
-actionsheet .febsui-actionsheet-group:nth-last-child(1) {
+.febsui-actionsheet .febsui-actionsheet-container .febsui-actionsheet-group:nth-last-child(1) {
   border: none !important;
 }
 
-actionsheet .febsui-actionsheet-cell {
+.febsui-actionsheet .febsui-actionsheet-container .febsui-actionsheet-cell {
   text-align: center;
   color: rgba(24, 128, 210, 1);
   font-size: 20px;
@@ -1316,7 +1309,7 @@ actionsheet .febsui-actionsheet-cell {
   padding-bottom: 12px;
 }
 
-actionsheet .febsui-actionsheet-cancel {
+.febsui-actionsheet .febsui-actionsheet-container .febsui-actionsheet-cancel {
   font-weight: 500;
 }
 
@@ -1333,8 +1326,8 @@ actionsheet .febsui-actionsheet-cancel {
   filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=1, MakeShadow=false);
 } */
 
-actionsheet .febsui-actionsheet-cell:hover,
-actionsheet .febsui-actionsheet-cell:active {
+.febsui-actionsheet .febsui-actionsheet-container .febsui-actionsheet-cell:hover,
+.febsui-actionsheet .febsui-actionsheet-container .febsui-actionsheet-cell:active {
   color: rgba(24, 128, 210, 1);
   background-color: rgba(0, 0, 0, 0.02);
 }
@@ -1344,7 +1337,7 @@ actionsheet .febsui-actionsheet-cell:active {
  /* uploader */
 /****************************************************/
 /* 
-<uploader>
+<febsui-uploader>
   <form method="post" role="form" enctype="multipart/form-data" style="display:none">
     <input type="file">
   </form>
@@ -1357,9 +1350,9 @@ actionsheet .febsui-actionsheet-cell:active {
     </div>
   </label>
   <div class="febsui-uploader-progress-cancel"></div>
-</uploader> */
+</febsui-uploader> */
 
- uploader, .febsui-uploader {
+ .febsui-uploader {
    display: inline-block;
    text-align: center;
    position: relative;
@@ -1368,7 +1361,6 @@ actionsheet .febsui-actionsheet-cell:active {
    line-height: 38px;
  }
  
- uploader label,
 .febsui-uploader label {
   cursor: pointer;
   margin: 0px auto;
@@ -1380,14 +1372,12 @@ actionsheet .febsui-actionsheet-cell:active {
   right: 0;
  }
 
- uploader label .btn,
 .febsui-uploader label .btn {
   margin: 0px auto;
   padding: 0;
   line-height: 38px;
  }
 
- uploader .febsui-uploader-progress,
 .febsui-uploader .febsui-uploader-progress {
    width: 100%;
    height: 100%;
@@ -1399,7 +1389,6 @@ actionsheet .febsui-actionsheet-cell:active {
    right: 30px;
  }
 
- uploader .febsui-uploader-progress-bg,
 .febsui-uploader .febsui-uploader-progress-bg {
    position: absolute;
    left: 0px;
@@ -1410,7 +1399,6 @@ actionsheet .febsui-actionsheet-cell:active {
    background-color: #1991EB;
  }
  
- uploader .febsui-uploader-progress span,
  .febsui-uploader .febsui-uploader-progress span {
    position: absolute;
    top: 0;
@@ -1421,7 +1409,6 @@ actionsheet .febsui-actionsheet-cell:active {
    font-size: 10px;
  }
  
- uploader .febsui-uploader-progress .febsui-uploader-right,
  .febsui-uploader .febsui-uploader-progress .febsui-uploader-right {
    text-align: right;
    left: auto;
@@ -1430,7 +1417,6 @@ actionsheet .febsui-actionsheet-cell:active {
    line-height: 19px;
  }
 
- uploader .febsui-uploader-progress .febsui-uploader-filename,
 .febsui-uploader .febsui-uploader-progress .febsui-uploader-filename {
   text-align: left;
   left: 5px;
@@ -1439,7 +1425,6 @@ actionsheet .febsui-actionsheet-cell:active {
   bottom: 50%;
 }
 
- uploader .febsui-uploader-progress-cancel,
  .febsui-uploader .febsui-uploader-progress-cancel {
    display: none;
    cursor: pointer;
@@ -1454,7 +1439,6 @@ actionsheet .febsui-actionsheet-cell:active {
    line-height: 19px;
  }
 
- uploader .febsui-uploader-progress-cancel::after,
  .febsui-uploader .febsui-uploader-progress-cancel::after {
    content: '取消';
    font-size: 10px;

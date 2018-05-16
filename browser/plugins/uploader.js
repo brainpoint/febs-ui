@@ -1,14 +1,12 @@
-
-
 /**
  * jquery plugin.
  */
 
-$.fn.uploaderReset = function() {
+$.fn.uploaderReset = function () {
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
-  if (_this[0] && _this[0].nodeName.toLowerCase() == 'uploader') {
-    for (var i = 0; i < _this.length; i++) {
-      var ee = $(_this[i]);
+  for (var i = 0; i < _this.length; i++) {
+    var ee = $(_this[i]);
+    if (ee.hasClass('febsui-uploader')) {
       var form = ee.children('form')[0];
       if (form) {
         var input = $(form).children('input')[0];
@@ -44,9 +42,8 @@ $.fn.uploaderReset = function() {
         cancel = $(cancel)
         cancel.removeAttr('style');
       }
-    }
-  } // if.
+    } // if.
+  } // for.
 
   return this;
 }
-

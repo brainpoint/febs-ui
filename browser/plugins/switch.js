@@ -5,12 +5,8 @@ $.fn.isSwitch = function() {
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
 
   if (_this.length >= 1) {
-    var elem = _this[0]._swtichEvents;
-    if (!!elem) {
-      return true;
-    }
-
-    if (_this[0].nodeName.toLowerCase() == 'switch') {
+    if (_this.hasClass('febsui-switch')) {
+    // [0].nodeName.toLowerCase() == 'switch') {
       return true;
     }
   }
@@ -30,22 +26,12 @@ $.fn.switch = function(cb) {
     for (var i = 0; i < _this.length; i++) {
       var elem = $(_this[i]);
   
-      if (elem[0]._swtichEvents) {
-        elem[0]._swtichEvents.push(cb);
-      } // if.
+      elem.on('switch', cb);
     } // for.
   }
   // trigger.
   else {
-    for (var i = 0; i < _this.length; i++) {
-      var elem = $(_this[i]);
-      var ee = elem[0]._swtichEvents;
-      if (ee) {
-        for (var i = 0; i < ee.length; i++) {
-          ee[i].bind(elem)();
-        }
-      }
-    } // for.
+    _this.trigger('switch');
   } // if..else.
   return this;
 }
@@ -57,19 +43,20 @@ $.fn.switchOn = function(isOn, trigger) {
   for (var i = 0; i < _this.length; i++) {
     var elem = $(_this[i]);
 
-    if (elem[0]._swtichEvents) {
+    if (elem.hasClass('febsui-switch')) {
+    // if (_this[0].nodeName.toLowerCase() == 'switch') {
       if (isOn) {
         if (elem.hasClass("febsui-switch-off")) {
           elem.removeClass("febsui-switch-off").addClass("febsui-switch-on");
           if (trigger) {
-            elem.switch();
+            elem.trigger('switch');
           }
         }
       } else {
         if (!elem.hasClass("febsui-switch-off")) {
           elem.removeClass("febsui-switch-on").addClass("febsui-switch-off");
           if (trigger) {
-            elem.switch();
+            elem.trigger('switch');
           }
         }
       }
@@ -89,7 +76,8 @@ $.fn.switchDisabled = function(isDisable) {
   for (var i = 0; i < _this.length; i++) {
     var elem = $(_this[i]);
 
-    if (elem[0]._swtichEvents) {
+    if (elem.hasClass('febsui-switch')) {
+    // if (_this[0].nodeName.toLowerCase() == 'switch') {
       if (isDisable)
         elem.addClass("febsui-switch-disabled");
       else

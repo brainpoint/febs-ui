@@ -10,6 +10,7 @@
   </div>
 </div> */}
 var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
+var escape_string = require('../escape').escape_string;
 
 var uuid = require('../uuid');
 var upload = require('./upload');
@@ -47,7 +48,7 @@ window['_Feb_fegegRRdefaultUploaderError'] = function(err) {
 * @return: 
 */
 function uploader_init() {
-  var elems = $('uploader');
+  var elems = $('.febsui-uploader');
   for (var i = 0; i < elems.length; i++) {
     var dom = $(elems[i]);
 
@@ -109,7 +110,7 @@ function uploader_init() {
       //
       $('#'+uid).change(function(env){
 
-        var uploader = $(this).parent().parent('uploader');
+        var uploader = $(this).parent().parent('.febsui-uploader');
         
         var _uid = $(this).attr('id');
 
@@ -137,7 +138,7 @@ function uploader_init() {
         progressBg.css('width', '0%');
         progressSpan.html('0%');
 
-        var uploader = $(this).parent().parent('uploader');
+        var uploader = $(this).parent().parent('.febsui-uploader');
 
         var _dataApi = uploader.attr('data-api');
         var _dataMaxSize = uploader.attr('data-maxsize');
@@ -149,26 +150,6 @@ function uploader_init() {
         // if ($('#'+_uid)[0].files) {
 
           var cancelControl;
-          var filename = '';
-
-          if (ie99) {
-            var indexsp = this.value.lastIndexOf('\\');
-            if (indexsp > 0) {
-              indexsp = this.value.substr(indexsp+1);
-            } else {
-              indexsp = this.value.lastIndexOf('/');
-              if (indexsp < 0) { console.log('can\'t find filename'); indexsp = ''; }
-              else 
-                indexsp = this.value.substr(indexsp+1);
-            }
-
-            filename = indexsp;
-            $(`#${_uid}-filename`).html(filename);
-          }
-          else {
-            filename = $('#'+_uid)[0].files[0].name;
-            $(`#${_uid}-filename`).html(filename);
-          }
 
           // trim.
           if (_dataFinish) {
@@ -191,7 +172,7 @@ function uploader_init() {
           // 取消.
           cancel.attr('style', 'display:inline !important;');
           cancel.one('click', function(){
-            var __uploader = $(this).parent('uploader');
+            var __uploader = $(this).parent('.febsui-uploader');
             __uploader.uploaderReset();
             _dataError = null;
             if (cancelControl) cancelControl.abort();
@@ -207,6 +188,32 @@ function uploader_init() {
             beginCB: function(fileObj, uploader) { 
               cancelControl = uploader;
 
+              var uid = fileObj.attr('id');
+
+              var filename = '';
+
+              if (ie99) {
+                var indexsp = fileObj[0].value.lastIndexOf('\\');
+                if (indexsp > 0) {
+                  indexsp = fileObj[0].value.substr(indexsp+1);
+                } else {
+                  indexsp = fileObj[0].value.lastIndexOf('/');
+                  if (indexsp < 0) { console.log('can\'t find filename'); indexsp = ''; }
+                  else 
+                    indexsp = fileObj[0].value.substr(indexsp+1);
+                }
+    
+                filename = indexsp;
+                filename = escape_string(filename);
+                $(`#${_uid}-filename`).html(filename);
+              }
+              else {
+                filename = $('#'+_uid)[0].files[0].name;
+                filename = escape_string(filename);
+                $(`#${_uid}-filename`).html(filename);
+              }
+              filename = window.febs.string.replace(filename, '"', '\"');
+
               if (_dataBegin) {
                 var i = 0;
                 for (; i < _dataBegin.length; i++) {
@@ -219,14 +226,14 @@ function uploader_init() {
                 if (i >= _dataBegin.length) {
                   var controlId = 'febsui-cancel-'+uuid.uuid();
 
-                  var uid = fileObj.attr('id');
-                  filename = window.febs.string.replace(filename, '"', '\"');
                   eval(_dataBegin+`(window["febsui-uploader-controller-${uid}"], "${filename}")`);
                 }
                 else {
                   eval(_dataBegin);
                 }
               }
+
+              window["febsui-uploader-controller-"+uid].trigger('uploadBegin', {filename:filename});
             },
             finishCB: function(err, fileObj, serverData) {
               if (err) {
@@ -245,6 +252,8 @@ function uploader_init() {
                   console.log(err);
                 }
 
+                var uid = fileObj.attr('id');
+
                 if (_dataError) {
                   var i = 0;
                   for (; i < _dataError.length; i++) {
@@ -254,20 +263,19 @@ function uploader_init() {
                       break;
                     }
                   }
-
-                  var uid = fileObj.attr('id');
                     
                   if (i >= _dataError.length) {
                     err = err.toString();
                     err = window.febs.string.replace(err, '"', '\"');
                     eval(_dataError+`(window["febsui-uploader-controller-${uid}"], "'+err+'")`);
-                    delete window["febsui-uploader-controller-"+uid];
                   }
                   else {
                     eval(_dataError);
-                    delete window["febsui-uploader-controller-"+uid];
                   }
                 }
+
+                window["febsui-uploader-controller-"+uid].trigger('uploadError', {err:err});
+                delete window["febsui-uploader-controller-"+uid];
 
                 // reset.
                 cancel.trigger('click');
@@ -285,6 +293,8 @@ function uploader_init() {
                 label.removeAttr('style');
                 label.attr('for', label.attr('data-for'));
 
+                var uid = fileObj.attr('id');
+
                 if (_dataFinish) {
                   var i = 0;
                   for (; i < _dataFinish.length; i++) {
@@ -294,8 +304,6 @@ function uploader_init() {
                       break;
                     }
                   }
-
-                  var uid = fileObj.attr('id');
                     
                   if (i >= _dataFinish.length) {
 
@@ -304,13 +312,14 @@ function uploader_init() {
 
                     eval(_dataFinish+`(window["febsui-uploader-controller-${uid}"], window["${finishData}"])`);
                     delete window[finishData];
-                    delete window["febsui-uploader-controller-"+uid];
                   }
                   else {
                     eval(_dataFinish);
-                    delete window["febsui-uploader-controller-"+uid];
                   }
                 }
+
+                window["febsui-uploader-controller-"+uid].trigger('uploadFinish', {responseData:serverData});
+                delete window["febsui-uploader-controller-"+uid];
               }
 
               fileObj[0].value = "";
@@ -321,6 +330,7 @@ function uploader_init() {
               progressBg.css('width', percent);
               progressSpan.html(percent);
 
+              var uid = fileObj.attr('id');
 
               if (_dataProgress) {
                 var i = 0;
@@ -332,8 +342,6 @@ function uploader_init() {
                   }
                 }
 
-                var uid = fileObj.attr('id');
-                  
                 if (i >= _dataProgress.length) {
                   eval(_dataProgress+`(window["febsui-uploader-controller-${uid}"], parseFloat(${pp}))`);
                 }
@@ -341,6 +349,8 @@ function uploader_init() {
                   eval(_dataProgress);
                 }
               }
+
+              window["febsui-uploader-controller-"+uid].trigger('uploadProgress', {progress:parseFloat(pp)});
             }
           });
         // } // if.

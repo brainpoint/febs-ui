@@ -11,9 +11,9 @@
   <meta name="apple-touch-fullscreen" content="yes" /> 
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link rel="stylesheet" type="text/css" href="./febsui-0.7.14/febsui.css" />
-  <script charset='UTF-8' type="text/javascript" src="./febs-0.8.18/febs.js"></script>
-  <script charset='UTF-8' type="text/javascript" src="./febsui-0.7.14/febsui.js"></script>
+  <link rel="stylesheet" type="text/css" href="./febsui-0.8.1/febsui.css" />
+  <script charset='UTF-8' type="text/javascript" src="./febs-0.8.19/febs.js"></script>
+  <script charset='UTF-8' type="text/javascript" src="./febsui-0.8.1/febsui.js"></script>
 
   <script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
 	<script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/shCore.js"></script>
@@ -77,7 +77,7 @@
   <br>
 
   <!-- all -->
-  <popover id="allControl" style="top:50px; left:50px;" data-attach="#popoverAttachAll" data-offset="5">
+  <div class="febsui-popover" id="allControl" style="top:50px; left:50px;" data-attach="#popoverAttachAll" data-offset="5">
     <div class="febsui-popover-cell" onclick="window.location.href='#anchor_page'">page</div>
     <div class="febsui-popover-cell" onclick="window.location.href='#anchor_button'">button</div>
     <div class="febsui-popover-cell" onclick="window.location.href='#anchor_loading'">loading</div>
@@ -88,13 +88,13 @@
     <div class="febsui-popover-cell" onclick="window.location.href='#anchor_uploader'">uploader</div>
     <div class="febsui-popover-cell" onclick="window.location.href='#anchor_search'">input</div>
     <div class="febsui-popover-cell" onclick="window.location.href='#anchor_checkbox'">checkbox</div>
-  </popover>
+  </div>
   <button id="popoverAttachAll" onclick="$('#allControl').popoverShow(true)">See All Controls</button>
   
 
   <!-- icon -->
   <a class="title" id="anchor_icon" href="#anchor_icon">icon:</a>
-  <dialog id="h2icon">
+  <div class="febsui-dialog" id="h2icon">
     <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
       <div class="febsui-icon febsui-icon-search"></div>
       <div class="febsui-icon febsui-icon-user"></div>
@@ -106,8 +106,8 @@
       <div class="febsui-icon febsui-icon-arrow-left"></div>
       <div class="febsui-icon febsui-icon-arrow-right"></div>
     ]]></script>
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
-  </dialog>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+  </div>
   <button style="font-size:10px;" onclick="$('#h2icon').dialogShow()">[Code]</button> <br>
   
   <div class="febsui-icon febsui-icon-search"></div>
@@ -124,7 +124,7 @@
 
   <!-- page -->
   <a class="title" id="anchor_page" href="#anchor_page">page:</a>
-  <dialog id="h2page">
+  <div class="febsui-dialog" id="h2page">
     <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
       <div id="page"></div>
     ]]></script>
@@ -135,8 +135,8 @@
       febsui.page_init($("#page"), 12, 20, 25, onPage);
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
-  </dialog>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+  </div>
   <button style="font-size:10px;" onclick="$('#h2page').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#page')">[Readme]</button><br>
 
@@ -153,7 +153,7 @@
 
   <!-- button -->
   <a class="title" id="anchor_button" href="#anchor_button">button:</a>
-  <dialog id="h2button">
+  <div class="febsui-dialog" id="h2button">
     <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
       <button >default</button>
       <button class="btn-primary">primary</button>
@@ -162,8 +162,8 @@
       <button class="btn-danger">danger</button>
       <button disabled="disabled" class="btn-primary" onclick="console.log(23123);">disabled</button>
     ]]></script>
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
-  </dialog>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+  </div>
   <button style="font-size:10px;" onclick="$('#h2button').dialogShow()">[Code]</button> <br>
 
   <div>
@@ -177,7 +177,7 @@
 
   <!-- loading -->
   <a class="title" id="anchor_loading" href="#anchor_loading">Loading:</a>
-  <dialog id="h2loading">
+  <div class="febsui-dialog" id="h2loading">
     loading api:
     <script type="syntaxhighlighter" class="brush: js"><![CDATA[
       febsui.loading_show('3秒后关闭');
@@ -189,8 +189,8 @@
       <div class="febsui-icon febsui-icon-spin1-white febsui-animation-spin"></div>
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
-  </dialog>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+  </div>
   <button style="font-size:10px;" onclick="$('#h2loading').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#loading')">[Readme]</button><br>
 
@@ -224,7 +224,7 @@
 
   <!-- toast -->
   <a class="title" id="anchor_toast" href="#anchor_toast">Toast:</a>
-  <dialog id="h2toast">
+  <div class="febsui-dialog" id="h2toast">
     <script type="syntaxhighlighter" class="brush: js"><![CDATA[
       febsui.toast({ content: '这是一个toast提示' });
       febsui.toast({ content: '这是一个带ok图标的toast提示', icon: 'ok' });
@@ -235,8 +235,8 @@
       febsui.toast({ content: '这个toast消失后有一个回调', callback: function() {} });
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
-  </dialog>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+  </div>
   <button style="font-size:10px;" onclick="$('#h2toast').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#toast')">[Readme]</button><br>
 
@@ -283,7 +283,7 @@
 
   <!-- dialog -->
   <a class="title" id="anchor_dialog" href="#anchor_dialog">Dialog modal:</a>
-  <dialog id="h2dialog">
+  <div class="febsui-dialog" id="h2dialog">
     警告框
     <script type="syntaxhighlighter" class="brush: js"><![CDATA[
       febsui.dialog_showAlert('这是一个警告框');
@@ -316,15 +316,15 @@
     ]]></script>
     自定义对话框
     <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
-      <Dialog id="dialog1">
+      <div class="febsui-dialog" id="dialog1">
         ...
-      </Dialog>
+      </div>
       $('#dialog1').dialogShow();
       $('#dialog1').dialogHide();
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
-  </dialog>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+  </div>
   <button style="font-size:10px;" onclick="$('#h2dialog').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#dialog')">[Readme]</button><br>
 
@@ -334,11 +334,12 @@
   <button onclick="showDialogText('<script>alert(1)</script>')">confirm text input 转义</button>
   <button onclick="showDialogCustom()">custom</button>
 
-  <dialog id="dialog1" style="width:400px; height: 400px;">
+  <div class="febsui-dialog" id="dialog1" data-mask-close="true" style="width:400px; height: 400px;">
     <button onclick="showDialogAlert()">你好</button>
     <button onclick="$('#dialog1').dialogHide()">关闭</button>
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
-  </dialog>
+
+    <ul style="position: fixed; bottom:0;left:0;right:0;" class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+  </div>
 
   <script type="text/javascript">
     // dialog.
@@ -400,51 +401,51 @@
   <!-- switch -->
   <a class="title" id="anchor_switch" href="#anchor_switch">Switch:</a>
 
-  <dialog id="h2switch">
+  <div class="febsui-dialog" id="h2switch">
     <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
-      <switch></switch>
-      <switch class="febsui-switch-off"></switch>
-      <switch class="febsui-switch-on"></switch>
+      <div class="febsui-switch"></div>
+      <div class="febsui-switch febsui-switch-off"></div>
+      <div class="febsui-switch febsui-switch-on"></div>
     ]]></script>
 
     <script type="syntaxhighlighter" class="brush: js"><![CDATA[
-      $('switch').switch(function () {
+      $('.febsui-switch').switch(function () {
         var isSwitch = $(this).switchIsOn();
       });
 
-      $('switch').switchOn(true);
-      $('switch').setDisabled(true);
+      $('.febsui-switch').switchOn(true);
+      $('.febsui-switch').setDisabled(true);
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
-  </dialog>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+  </div>
   <button style="font-size:10px;" onclick="$('#h2switch').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#switch')">[Readme]</button><br>
 
-  <switch></switch>
-  <switch class="febsui-switch-off"></switch>
-  <switch class="febsui-switch-on"></switch>
+  <div class="febsui-switch"></div>
+  <div class="febsui-switch febsui-switch-off"></div>
+  <div class="febsui-switch febsui-switch-on"></div>
   <br>
   <button onclick="switchAll()">switch all</button>
   <button onclick="switchDisable()">switch disable</button>
 
   <script type="text/javascript">
     $(function () {
-      $('switch').switch(function () {
-        var isSwitch = $(this).switchIsOn();
+      $('.febsui-switch').switch(function (env) {
+        var isSwitch = $(env.target).switchIsOn();
         febsui.toast('switch is: ' + (isSwitch ? 'on' : 'off'));
       });
     });
 
     function switchAll() {
-      var switchs = $('switch');
+      var switchs = $('.febsui-switch');
       for (var i = 0; i < switchs.length; i++) {
         switchs[i].switchOn(!$(switchs[i]).switchIsOn());
       }
     }
 
     function switchDisable() {
-      var switchs = $('switch');
+      var switchs = $('.febsui-switch');
       for (var i = 0; i < switchs.length; i++) {
         $(switchs[i]).setDisabled(!$(switchs[i]).isDisabled());
       }
@@ -454,80 +455,80 @@
   <!-- Popover -->
   <a class="title" id="anchor_popover" href="#anchor_popover">Popover:</a>
 
-  <dialog id="h2popover">
+  <div class="febsui-dialog" id="h2popover">
     <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
-      <popover style="top:50px; left:50px;" data-attach="#popoverAttach1" data-offset="5">
+      <div class="febsui-popover" style="top:50px; left:50px;" data-attach="#popoverAttach1" data-offset="5">
         <div class="febsui-popover-cell">Call History</div>
         <div class="febsui-popover-cell">Scan QR</div>
         <div class="febsui-popover-cell">Pay</div>
-      </popover>
+      </div>
     ]]></script>
 
     <script type="syntaxhighlighter" class="brush: js"><![CDATA[
-      $('popover').popoverShow()
+      $('.febsui-popover').popoverShow()
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
-  </dialog>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+  </div>
   <button style="font-size:10px;" onclick="$('#h2popover').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#popover')">[Readme]</button><br>
 
-  <popover id="popover1" style="top:50px; left:50px;" data-attach="#popoverAttach1" data-offset="5">
+  <div class="febsui-popover" id="popover1" style="top:50px; left:50px;" data-attach="#popoverAttach1" data-offset="5">
     <div class="febsui-popover-cell">Call History</div>
     <div class="febsui-popover-cell">Scan QR</div>
     <div class="febsui-popover-cell">Pay</div>
-  </popover>
+  </div>
   <button id="popoverAttach1" onclick="$('#popover1').popoverShow(true)">show</button>
   <button id="popoverAttach2" onclick="$('#popover1').popoverShow(false, '#popoverAttach2')">show without mask</button>
 
-  <popover id="popover2" data-attach="#popoverAttach3" data-offset="-20" data-direction="right">
+  <div class="febsui-popover" id="popover2" data-attach="#popoverAttach3" data-offset="-20" data-direction="center">
     <div class="febsui-popover-cell">Call History</div>
     <div class="febsui-popover-cell">Scan QR</div>
-  </popover>
+  </div>
   <button class="btn-primary" id="popoverAttach3" onclick="$('#popover2').popoverShow(true)">show direction</button>
 
   <!-- ActionSheet -->
   <a class="title" id="anchor_actionsheet" href="#anchor_actionsheet">ActionSheet:</a>
-  <dialog id="h2actionsheet">
+  <div class="febsui-dialog" id="h2actionsheet">
     <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
-      <actionsheet>
+      <div class="febsui-actionsheet">
         <div class="febsui-actionsheet-cell">menu 1</div>
         <div class="febsui-actionsheet-cell">menu 2</div>
         <div class="febsui-actionsheet-cell">menu 3</div>
         <div class="febsui-actionsheet-cell" style="color:#ff0000">menu 4</div>
         <div class="febsui-actionsheet-cancel">cancel</div>
-      </actionsheet>
+      </div>
     ]]></script>
 
     <script type="syntaxhighlighter" class="brush: js"><![CDATA[
-      $('actionsheet').actionsheetShow()
+      $('.febsui-actionsheet').actionsheetShow()
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
-  </dialog>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+  </div>
   <button style="font-size:10px;" onclick="$('#h2actionsheet').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#actionsheet')">[Readme]</button><br>
 
-  <button onclick="$('actionsheet').actionsheetShow();">show</button>
-  <actionsheet>
+  <button onclick="$('.febsui-actionsheet').actionsheetShow();">show</button>
+  <div class="febsui-actionsheet">
     <div class="febsui-actionsheet-cell">menu 1</div>
     <div class="febsui-actionsheet-cell">menu 2</div>
     <div class="febsui-actionsheet-cell">menu 3</div>
     <div class="febsui-actionsheet-cell" style="color:#ff0000">menu 4</div>
     <div class="febsui-actionsheet-cancel">cancel</div>
-  </actionsheet>
+  </div>
 
   <!-- Uploader -->
   <a class="title" id="anchor_uploader" href="#anchor_uploader">Uploader:</a>
-  <dialog id="h2uploader">
+  <div class="febsui-dialog" id="h2uploader">
     <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
-      <uploader data-api="http://test2.citongs.com/api/upload" 
+      <div class="febsui-uploader" data-api="http://test2.citongs.com/api/upload" 
             data-accept="application/zip" 
           data-filename="true" 
             data-finish="febsui.dialog_showAlert('upload ok')"
             data-progress="onUploadProgress"
             data-error="onUploadError"
-              >上传图片</uploader>
+              >上传图片</div>
     ]]></script>
 
     <script type="syntaxhighlighter" class="brush: js"><![CDATA[
@@ -551,27 +552,27 @@
       }
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
-  </dialog>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+  </div>
   <button style="font-size:10px;" onclick="$('#h2uploader').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#upload')">[Readme]</button><br>
 
-  <uploader data-api="http://test2.citongs.com/api/upload" 
+  <div class="febsui-uploader" data-api="http://test2.citongs.com/api/upload" 
          data-accept="application/zip" 
        data-filename="true" 
           data-begin="onUploadBegin"
           data-finish="onUploadFinish"
          data-progress="onUploadProgress"
          data-error="onUploadError"
-          >上传图片</uploader>
+          >上传图片</div>
 
-  <uploader data-api="http://test2.citongs.com/api/upload"
+  <div class="febsui-uploader" data-api="http://test2.citongs.com/api/upload"
          data-accept="application/zip"
-        data-maxsize="10240">上传图片</uploader>
+        data-maxsize="10240">上传图片</div>
 
   <script>
     function onUploadBegin(uploader, filename) {
-      console.log(filename);
+      // console.log(filename);
     }
     function onUploadFinish(uploader, data) {
       febsui.dialog_showAlert(JSON.stringify(data));
@@ -599,15 +600,15 @@
 
   <!-- input -->
   <a class="title" id="anchor_search" href="#anchor_search">input</a>
-  <dialog id="h2search">
+  <div class="febsui-dialog" id="h2search">
     <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
       <input type="search" class="febsui-input-text febsui-icon-search" maxlength="20" placeholder="Search">
       <input type="text" class="febsui-input-text febsui-icon-user" maxlength="20" placeholder="Text...">
       <input type="text" class="febsui-input-text febsui-icon-lock" maxlength="20" placeholder="Text...">
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
-  </dialog>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+  </div>
 
   <button style="font-size:10px;" onclick="$('#h2search').dialogShow()">[Code]</button> <br>
     <input type="search" class="febsui-input-text febsui-icon-search" maxlength="20" placeholder="Search" style="width:200px;">
@@ -620,14 +621,14 @@
 
   <!-- checkbox -->
   <a class="title" id="anchor_checkbox" href="#anchor_checkbox">checkbox</a>
-  <dialog id="h2Checkbox">
+  <div class="febsui-dialog" id="h2Checkbox">
     <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
       <input id="checkbox1" type="checkbox" class="febsui-checkbox">
       <label for="checkbox1">checkbox</label>
     ]]></script>
 
-    <ul class="febsui-dialog-buttons"><li style="width:100%;"><a class="febsui-dialog-cancel">确定</a></li></ul>
-  </dialog>
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+  </div>
   <button style="font-size:10px;" onclick="$('#h2Checkbox').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#checkbox')">[Readme]</button><br>
   

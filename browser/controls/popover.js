@@ -7,16 +7,16 @@ exports.popover_init = popover_init;
 
 /**
 * @desc: 初始化popover控件.
-*        对页面上 的所有 <popover> 元素进行初始化.
+*        对页面上 的所有 <.febsui-popover> 元素进行初始化.
 */
 function popover_init() {
-  var elems = $('popover');
+  var elems = $('.febsui-popover');
   for (var i = 0; i < elems.length; i++) {
     var dom = $(elems[i]);
 
     if (!dom.hasClass('febsui-popover-inited') && !dom.children().hasClass('febsui-popover-arrow')) {
       
-      var dd = $("<div class='febsui-popover'></div>");
+      var dd = $("<div class='febsui-popover febsui-popover-inited'></div>");
       
       // data-direction
       var direction = dom.attr('data-direction');
@@ -24,8 +24,8 @@ function popover_init() {
       direction = direction.toLowerCase();
       if (direction != 'auto') {
         var direction2;
-        if (direction != 'top' && direction != 'left' && direction != 'right' && direction != 'bottom') {
-          throw new Error('popover attribute data-direction only can be top/left/right/bottom');
+        if (direction != 'top' && direction != 'left' && direction != 'right' && direction != 'bottom' && direction != 'center' && direction != 'auto') {
+          throw new Error('popover attribute data-direction only can be top/left/right/bottom/center/auto');
         }
 
         // data-offset
@@ -55,7 +55,7 @@ function popover_init() {
         dd.prepend('<div class="febsui-popover-arrow"></div>');
       }
 
-      dom.addClass('febsui-popover-inited');
+      dom.removeClass('febsui-popover').addClass('febsui-popover-container');
 
       // ie9.
       if (window.febs.utils.browserIEVer() <= 9) {

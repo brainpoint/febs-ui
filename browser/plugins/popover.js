@@ -1,7 +1,7 @@
 
 
 function resizePopover() {
-  $('popover').popoverHide();
+  $('.febsui-popover').popoverHide();
 }
 
 // 是否支持orientationchange事件
@@ -19,12 +19,14 @@ $.fn.isPopover = function() {
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
 
   if (_this.length >= 1) {
-    if (_this[0].nodeName.toLowerCase() == 'popover') {
-      return true;
+    _this = $(_this[0]);
+
+    if (_this.hasClass('febsui-popover-container')) {
+    // if (ee[0].nodeName.toLowerCase() == 'popover') {
+      _this = _this.parent();
     }
-    else {
-      return $(_this[0]).hasClass('febsui-popover');
-    }
+
+    return _this.hasClass('febsui-popover');
   }
   
   return false;
@@ -40,7 +42,9 @@ $.fn.popoverShow = function(mask, attachNode) {
 
   for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
-    if (ee[0].nodeName.toLowerCase() == 'popover') {
+
+    if (ee.hasClass('febsui-popover-container')) {
+    // if (ee[0].nodeName.toLowerCase() == 'popover') {
       ee = ee.parent();
     }
     
@@ -62,7 +66,7 @@ $.fn.popoverShow = function(mask, attachNode) {
         ee.removeClass('febsui-mask');
       }
 
-      var eee = ee.children('popover');
+      var eee = ee.children('.febsui-popover-container');
       if (eee.length > 0) {
         eee = $(eee[0]);
         // data-attach.
@@ -223,8 +227,6 @@ $.fn.popoverShow = function(mask, attachNode) {
 
           }
           else {
-            direction2 = attrDirection;
-
             if (attrDirection == 'left') {
               top = parseInt(top + height/2 - dis) || 0;
               left = left + width + dis;
@@ -241,8 +243,13 @@ $.fn.popoverShow = function(mask, attachNode) {
               top = parseInt(top - dis - 24) || 0;
               left = parseInt(left + width/2 - dis) || 0;
             }
+            // center.
+            else {
+              left = parseInt((viewport.width-width2)/2);
+              top = parseInt((viewport.height-height2)/2);
+            }
 
-            arrow.addClass('febsui-popover-arrow-'+direction2);
+            arrow.addClass('febsui-popover-arrow-'+attrDirection);
             
             top += docoffset.top;
             left += docoffset.left;
@@ -254,9 +261,9 @@ $.fn.popoverShow = function(mask, attachNode) {
             var left22 = left;
 
 
-            if (direction2 == 'top' || direction2 == 'bottom') {
+            if (attrDirection == 'top' || attrDirection == 'bottom') {
               left22 -= width2/2-17;
-              if (direction2 == 'top') {
+              if (attrDirection == 'top') {
                 // top22 += 16;
               }
               else {
@@ -267,9 +274,9 @@ $.fn.popoverShow = function(mask, attachNode) {
               else if (offset > width2/2-17) offset = width2/2-17;
               left22 -= offset;
             }
-            else if (direction2 == 'left' || direction2 == 'right') {
+            else if (attrDirection == 'left' || attrDirection == 'right') {
               top22 -= height2/2-17;
-              if (direction2 == 'left') {
+              if (attrDirection == 'left') {
                 // left22 += 16;
               }
               else {
@@ -281,21 +288,28 @@ $.fn.popoverShow = function(mask, attachNode) {
               top22 -= offset;
             }
 
-            var hideArrow = false;
-            if (top22+height2/2 > docport.height - 17) { hideArrow = true; top22 = docport.height - 17 - height2/2; }
-            else if (top22 < 17) { hideArrow = true;top22 = 17; }
-
-            if (left22+width2/2 > docport.width - 17) { hideArrow = true;left22 = docport.width - 17 - width2/2; }
-            else if (left22 < 17) { hideArrow = true; left22 = 17; }
-            
-            eee.css('top', parseInt(top22) +'px');
-            eee.css('left', parseInt(left22) +'px');
-
-            if (hideArrow) {
+            if (attrDirection == 'center') {
+              eee.css('top', top +'px');
+              eee.css('left', left +'px');
               arrow.css('display', 'none');
-            } else {
-              arrow.css('display', 'block');
             }
+            else {
+              var hideArrow = false;
+              if (top22+height2/2 > docport.height - 17) { hideArrow = true; top22 = docport.height - 17 - height2/2; }
+              else if (top22 < 17) { hideArrow = true;top22 = 17; }
+
+              if (left22+width2/2 > docport.width - 17) { hideArrow = true;left22 = docport.width - 17 - width2/2; }
+              else if (left22 < 17) { hideArrow = true; left22 = 17; }
+              
+              eee.css('top', parseInt(top22) +'px');
+              eee.css('left', parseInt(left22) +'px');
+
+              if (hideArrow) {
+                arrow.css('display', 'none');
+              } else {
+                arrow.css('display', 'block');
+              }
+            } // if..else.
 
           } // if..else.
 
@@ -314,7 +328,9 @@ $.fn.popoverHide = function() {
 
   for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
-    if (ee[0].nodeName.toLowerCase() == 'popover') {
+
+    if (ee.hasClass('febsui-popover-container')) {
+    // if (ee[0].nodeName.toLowerCase() == 'popover') {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-popover')) {

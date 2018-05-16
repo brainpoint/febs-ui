@@ -39,7 +39,7 @@ exports.ui_dialog_init = dialoga.dialog_init;
 var actionsheeta = require('./actionsheet');
 exports.ui_actionsheet_init = actionsheeta.actionsheet_init;
 
-var uploadera = require('./_uploader');
+var uploadera = require('./uploader');
 exports.ui_uploader_init = uploadera.uploader_init;
 
 var checkboxa = require('./checkbox');

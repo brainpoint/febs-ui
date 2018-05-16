@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 96);
+/******/ 	return __webpack_require__(__webpack_require__.s = 97);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -656,7 +656,7 @@ function showAlert(ctx) {
     mask = ' febsui-mask';
   }
 
-  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + (ctx.content ? ctx.content : ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><button class="febsui-dialog-cancel">' + ctx.okText + '</button></li></ul></div></div>'));
+  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + (ctx.content ? ctx.content : ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><button class="febsui-dialog-cancel">' + ctx.okText + '</button></li></ul></div></div>'));
   resizeDialog();
 
   maskPrevent($('#' + uid));
@@ -716,7 +716,7 @@ function showConfirm(ctx) {
     mask = ' febsui-mask';
   }
 
-  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + (ctx.content ? ctx.content : ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><button class="febsui-dialog-cancel">' + ctx.cancelText + '</button></li><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><button class="febsui-dialog-ok">' + ctx.okText + '</button></li></ul></div></div>'));
+  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + (ctx.content ? ctx.content : ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><button class="febsui-dialog-cancel">' + ctx.cancelText + '</button></li><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><button class="febsui-dialog-ok">' + ctx.okText + '</button></li></ul></div></div>'));
   resizeDialog();
 
   maskPrevent($('#' + uid));
@@ -784,7 +784,7 @@ function showConfirmEdit(ctx) {
     mask = ' febsui-mask';
   }
 
-  var elems = '<div' + ' id="' + uid + '" class="febsui-dialog' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + (ctx.content ? ctx.content : ctx.contentHtml) + '</div>' + '<div class="febsui-dialog-edit"><input class="febsui-input-text-noborder" type="text" value="' + (ctx.editText ? ctx.editText : '') + '">' + '</div>' + '<ul class="febsui-dialog-buttons"><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><button class="febsui-dialog-cancel">' + ctx.cancelText + '</button></li><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><button class="febsui-dialog-ok">' + ctx.okText + '</button></li></ul></div></div>';
+  var elems = '<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + (ctx.content ? ctx.content : ctx.contentHtml) + '</div>' + '<div class="febsui-dialog-edit"><input class="febsui-input-text-noborder" type="text" value="' + (ctx.editText ? ctx.editText : '') + '">' + '</div>' + '<ul class="febsui-dialog-buttons"><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><button class="febsui-dialog-cancel">' + ctx.cancelText + '</button></li><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><button class="febsui-dialog-ok">' + ctx.okText + '</button></li></ul></div></div>';
 
   $("body").append($(elems));
   resizeDialog();
@@ -835,14 +835,14 @@ exports.dialog_init = dialog_init;
 *        对页面上 的所有 <dialog> 元素进行初始化.
 */
 function dialog_init() {
-  var elems = $('dialog');
+  var elems = $('.febsui-dialog');
   for (var i = 0; i < elems.length; i++) {
     var dom = $(elems[i]);
 
-    if (!dom.hasClass('febsui-dialog-container')) {
-      dom.addClass('febsui-dialog-container');
+    if (!dom.hasClass('febsui-dialog-init')) {
+      dom.addClass('febsui-dialog-container').removeClass('febsui-dialog');
 
-      var dd = $("<div class='febsui-dialog febsui-dialog-init' role='alert'></div>");
+      var dd = $("<div class='febsui-dialog febsui-dialog-init febsui-dialog-custom' role='alert'></div>");
       $('body').append(dd);
       var did = dom.attr('id');
       if (did) {
@@ -908,11 +908,13 @@ $.fn.isDialog = function () {
   var _this = typeof this.length === 'undefined' ? $(this) : this;
 
   if (_this.length >= 1) {
-    if (_this[0].nodeName.toLowerCase() == 'dialog') {
-      return true;
-    } else {
-      return $(_this[0]).hasClass('febsui-dialog');
+    _this = $(_this[0]);
+
+    if (_this.hasClass('febsui-dialog-container')) {
+      _this = _this.parent();
     }
+
+    return _this.hasClass('febsui-dialog');
   }
 
   return false;
@@ -924,7 +926,7 @@ $.fn.dialogShow = function () {
 
   for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
-    if (ee[0].nodeName.toLowerCase() == 'dialog') {
+    if (ee.hasClass('febsui-dialog-container')) {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-dialog')) {
@@ -951,7 +953,7 @@ $.fn.dialogHide = function () {
 
   for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
-    if (ee[0].nodeName.toLowerCase() == 'dialog') {
+    if (ee.hasClass('febsui-dialog-container')) {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-dialog-init')) {
@@ -1657,12 +1659,12 @@ exports.loading_show = loading.loading_show;
 exports.loading_show_text = loading.loading_show_text;
 exports.loading_hide = loading.loading_hide;
 
-exports.page_init = __webpack_require__(91).page_init;
-exports.uploadBase64 = __webpack_require__(95).uploadBase64;
+exports.page_init = __webpack_require__(90).page_init;
+exports.uploadBase64 = __webpack_require__(94).uploadBase64;
 exports.upload = __webpack_require__(42).upload;
 exports.uploadErr = __webpack_require__(15);
 
-var toast = __webpack_require__(94);
+var toast = __webpack_require__(93);
 exports.toast = toast.showToast;
 exports.toast_hide = toast.hideToast;
 
@@ -1672,28 +1674,28 @@ exports.dialog_showAlert = dialog.showAlert;
 exports.dialog_showConfirm = dialog.showConfirm;
 exports.dialog_showConfirmEdit = dialog.showConfirmEdit;
 
-var switcha = __webpack_require__(93);
+var switcha = __webpack_require__(92);
 exports.ui_switch_init = switcha.switch_init;
 
-var popovera = __webpack_require__(92);
+var popovera = __webpack_require__(91);
 exports.ui_popover_init = popovera.popover_init;
 
 var dialoga = __webpack_require__(29);
 exports.ui_dialog_init = dialoga.dialog_init;
 
-var actionsheeta = __webpack_require__(88);
+var actionsheeta = __webpack_require__(87);
 exports.ui_actionsheet_init = actionsheeta.actionsheet_init;
 
-var uploadera = __webpack_require__(87);
+var uploadera = __webpack_require__(95);
 exports.ui_uploader_init = uploadera.uploader_init;
 
-var checkboxa = __webpack_require__(90);
+var checkboxa = __webpack_require__(89);
 exports.ui_checkbox_init = checkboxa.checkbox_init;
 
 var loadinga = __webpack_require__(41);
 exports.ui_spin_init = loadinga.spin_init;
 
-var buttona = __webpack_require__(89);
+var buttona = __webpack_require__(88);
 exports.ui_button_init = buttona.button_init;
 
 /**
@@ -1751,11 +1753,14 @@ $.fn.isActionsheet = function () {
   var _this = typeof this.length === 'undefined' ? $(this) : this;
 
   if (_this.length >= 1) {
-    if (_this[0].nodeName.toLowerCase() == 'actionsheet') {
-      return true;
-    } else {
-      return $(_this[0]).hasClass('febsui-actionsheet');
+    _this = $(_this[0]);
+
+    if (_this.hasClass('febsui-actionsheet-container')) {
+      // if (ee[0].nodeName.toLowerCase() == 'actionsheet') {
+      _this = _this.parent();
     }
+
+    return _this.hasClass('febsui-actionsheet');
   }
 
   return false;
@@ -1767,9 +1772,12 @@ $.fn.actionsheetShow = function () {
 
   for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
-    if (ee[0].nodeName.toLowerCase() == 'actionsheet') {
+
+    if (ee.hasClass('febsui-actionsheet-container')) {
+      // if (ee[0].nodeName.toLowerCase() == 'actionsheet') {
       ee = ee.parent();
     }
+
     if (ee.hasClass('febsui-actionsheet')) {
 
       if (ee.isVisibile()) continue;
@@ -1801,7 +1809,9 @@ $.fn.actionsheetHide = function () {
 
   for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
-    if (ee[0].nodeName.toLowerCase() == 'actionsheet') {
+
+    if (ee.hasClass('febsui-actionsheet-container')) {
+      // if (ee[0].nodeName.toLowerCase() == 'actionsheet') {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-actionsheet')) {
@@ -2054,7 +2064,7 @@ $.fn.isVisibile = function () {
 
 
 function resizePopover() {
-  $('popover').popoverHide();
+  $('.febsui-popover').popoverHide();
 }
 
 // 是否支持orientationchange事件
@@ -2069,11 +2079,14 @@ $.fn.isPopover = function () {
   var _this = typeof this.length === 'undefined' ? $(this) : this;
 
   if (_this.length >= 1) {
-    if (_this[0].nodeName.toLowerCase() == 'popover') {
-      return true;
-    } else {
-      return $(_this[0]).hasClass('febsui-popover');
+    _this = $(_this[0]);
+
+    if (_this.hasClass('febsui-popover-container')) {
+      // if (ee[0].nodeName.toLowerCase() == 'popover') {
+      _this = _this.parent();
     }
+
+    return _this.hasClass('febsui-popover');
   }
 
   return false;
@@ -2089,7 +2102,9 @@ $.fn.popoverShow = function (mask, attachNode) {
 
   for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
-    if (ee[0].nodeName.toLowerCase() == 'popover') {
+
+    if (ee.hasClass('febsui-popover-container')) {
+      // if (ee[0].nodeName.toLowerCase() == 'popover') {
       ee = ee.parent();
     }
 
@@ -2110,7 +2125,7 @@ $.fn.popoverShow = function (mask, attachNode) {
         ee.removeClass('febsui-mask');
       }
 
-      var eee = ee.children('popover');
+      var eee = ee.children('.febsui-popover-container');
       if (eee.length > 0) {
         eee = $(eee[0]);
         // data-attach.
@@ -2257,8 +2272,6 @@ $.fn.popoverShow = function (mask, attachNode) {
               arrow.css(direction2, offset + eeeOffset.top + docoffset.top + 'px');
             }
           } else {
-            direction2 = attrDirection;
-
             if (attrDirection == 'left') {
               top = parseInt(top + height / 2 - dis) || 0;
               left = left + width + dis;
@@ -2272,8 +2285,13 @@ $.fn.popoverShow = function (mask, attachNode) {
               top = parseInt(top - dis - 24) || 0;
               left = parseInt(left + width / 2 - dis) || 0;
             }
+            // center.
+            else {
+                left = parseInt((viewport.width - width2) / 2);
+                top = parseInt((viewport.height - height2) / 2);
+              }
 
-            arrow.addClass('febsui-popover-arrow-' + direction2);
+            arrow.addClass('febsui-popover-arrow-' + attrDirection);
 
             top += docoffset.top;
             left += docoffset.left;
@@ -2283,9 +2301,9 @@ $.fn.popoverShow = function (mask, attachNode) {
             var top22 = top;
             var left22 = left;
 
-            if (direction2 == 'top' || direction2 == 'bottom') {
+            if (attrDirection == 'top' || attrDirection == 'bottom') {
               left22 -= width2 / 2 - 17;
-              if (direction2 == 'top') {
+              if (attrDirection == 'top') {
                 // top22 += 16;
               } else {
                 top22 -= height2 - 18;
@@ -2293,9 +2311,9 @@ $.fn.popoverShow = function (mask, attachNode) {
 
               if (offset < -(width2 / 2 - 17)) offset = -(width2 / 2 - 17);else if (offset > width2 / 2 - 17) offset = width2 / 2 - 17;
               left22 -= offset;
-            } else if (direction2 == 'left' || direction2 == 'right') {
+            } else if (attrDirection == 'left' || attrDirection == 'right') {
               top22 -= height2 / 2 - 17;
-              if (direction2 == 'left') {
+              if (attrDirection == 'left') {
                 // left22 += 16;
               } else {
                 left22 -= width2 - 18;
@@ -2305,27 +2323,33 @@ $.fn.popoverShow = function (mask, attachNode) {
               top22 -= offset;
             }
 
-            var hideArrow = false;
-            if (top22 + height2 / 2 > docport.height - 17) {
-              hideArrow = true;top22 = docport.height - 17 - height2 / 2;
-            } else if (top22 < 17) {
-              hideArrow = true;top22 = 17;
-            }
-
-            if (left22 + width2 / 2 > docport.width - 17) {
-              hideArrow = true;left22 = docport.width - 17 - width2 / 2;
-            } else if (left22 < 17) {
-              hideArrow = true;left22 = 17;
-            }
-
-            eee.css('top', parseInt(top22) + 'px');
-            eee.css('left', parseInt(left22) + 'px');
-
-            if (hideArrow) {
+            if (attrDirection == 'center') {
+              eee.css('top', top + 'px');
+              eee.css('left', left + 'px');
               arrow.css('display', 'none');
             } else {
-              arrow.css('display', 'block');
-            }
+              var hideArrow = false;
+              if (top22 + height2 / 2 > docport.height - 17) {
+                hideArrow = true;top22 = docport.height - 17 - height2 / 2;
+              } else if (top22 < 17) {
+                hideArrow = true;top22 = 17;
+              }
+
+              if (left22 + width2 / 2 > docport.width - 17) {
+                hideArrow = true;left22 = docport.width - 17 - width2 / 2;
+              } else if (left22 < 17) {
+                hideArrow = true;left22 = 17;
+              }
+
+              eee.css('top', parseInt(top22) + 'px');
+              eee.css('left', parseInt(left22) + 'px');
+
+              if (hideArrow) {
+                arrow.css('display', 'none');
+              } else {
+                arrow.css('display', 'block');
+              }
+            } // if..else.
           } // if..else.
         }
       }
@@ -2342,7 +2366,9 @@ $.fn.popoverHide = function () {
 
   for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
-    if (ee[0].nodeName.toLowerCase() == 'popover') {
+
+    if (ee.hasClass('febsui-popover-container')) {
+      // if (ee[0].nodeName.toLowerCase() == 'popover') {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-popover')) {
@@ -2365,12 +2391,8 @@ $.fn.isSwitch = function () {
   var _this = typeof this.length === 'undefined' ? $(this) : this;
 
   if (_this.length >= 1) {
-    var elem = _this[0]._swtichEvents;
-    if (!!elem) {
-      return true;
-    }
-
-    if (_this[0].nodeName.toLowerCase() == 'switch') {
+    if (_this.hasClass('febsui-switch')) {
+      // [0].nodeName.toLowerCase() == 'switch') {
       return true;
     }
   }
@@ -2390,22 +2412,12 @@ $.fn['switch'] = function (cb) {
     for (var i = 0; i < _this.length; i++) {
       var elem = $(_this[i]);
 
-      if (elem[0]._swtichEvents) {
-        elem[0]._swtichEvents.push(cb);
-      } // if.
+      elem.on('switch', cb);
     } // for.
   }
   // trigger.
   else {
-      for (var i = 0; i < _this.length; i++) {
-        var elem = $(_this[i]);
-        var ee = elem[0]._swtichEvents;
-        if (ee) {
-          for (var i = 0; i < ee.length; i++) {
-            ee[i].bind(elem)();
-          }
-        }
-      } // for.
+      _this.trigger('switch');
     } // if..else.
   return this;
 };
@@ -2417,19 +2429,20 @@ $.fn.switchOn = function (isOn, trigger) {
   for (var i = 0; i < _this.length; i++) {
     var elem = $(_this[i]);
 
-    if (elem[0]._swtichEvents) {
+    if (elem.hasClass('febsui-switch')) {
+      // if (_this[0].nodeName.toLowerCase() == 'switch') {
       if (isOn) {
         if (elem.hasClass("febsui-switch-off")) {
           elem.removeClass("febsui-switch-off").addClass("febsui-switch-on");
           if (trigger) {
-            elem['switch']();
+            elem.trigger('switch');
           }
         }
       } else {
         if (!elem.hasClass("febsui-switch-off")) {
           elem.removeClass("febsui-switch-on").addClass("febsui-switch-off");
           if (trigger) {
-            elem['switch']();
+            elem.trigger('switch');
           }
         }
       }
@@ -2449,7 +2462,8 @@ $.fn.switchDisabled = function (isDisable) {
   for (var i = 0; i < _this.length; i++) {
     var elem = $(_this[i]);
 
-    if (elem[0]._swtichEvents) {
+    if (elem.hasClass('febsui-switch')) {
+      // if (_this[0].nodeName.toLowerCase() == 'switch') {
       if (isDisable) elem.addClass("febsui-switch-disabled");else elem.removeClass("febsui-switch-disabled");
     } // if.
   } // for.
@@ -2469,9 +2483,9 @@ $.fn.switchDisabled = function (isDisable) {
 
 $.fn.uploaderReset = function () {
   var _this = typeof this.length === 'undefined' ? $(this) : this;
-  if (_this[0] && _this[0].nodeName.toLowerCase() == 'uploader') {
-    for (var i = 0; i < _this.length; i++) {
-      var ee = $(_this[i]);
+  for (var i = 0; i < _this.length; i++) {
+    var ee = $(_this[i]);
+    if (ee.hasClass('febsui-uploader')) {
       var form = ee.children('form')[0];
       if (form) {
         var input = $(form).children('input')[0];
@@ -2507,8 +2521,8 @@ $.fn.uploaderReset = function () {
         cancel = $(cancel);
         cancel.removeAttr('style');
       }
-    }
-  } // if.
+    } // if.
+  } // for.
 
   return this;
 };
@@ -3376,331 +3390,6 @@ exports.ajaxSubmit = function ajaxSubmit(formObj, fileObj, options) {
 "use strict";
 
 
-{/* <div class="febsui-uploader">
-   <button onclick='$("#fileObj")[0].click()'>上传图片</button>
-   <form id="fileForm" method="post" role="form" enctype="multipart/form-data" style="display:none">
-     <input id="fileObj" type="file" name="file" onchange="javascript:SetupWebUploader('/api/users/upload_image', $('#fileForm'), $('#fileObj'))" multiple>
-   </form>
-   <div class="febsui-uploader-progress">
-     <div class="febsui-uploader-progress-bg"></div>
-     <span>10%</span>
-     <div class="febsui-uploader-progress-cancel"><div class="febsui-icon febsui-icon-error"></div></div>
-   </div>
-  </div> */}
-var touchEventPrevent = __webpack_require__(0).mobile_preventTouchEvent;
-
-var uuid = __webpack_require__(3);
-var upload = __webpack_require__(42);
-var uploadErr = __webpack_require__(15);
-var dialog = __webpack_require__(29);
-
-// ie9.
-var ie99 = window.febs.utils.browserIEVer() <= 9;
-
-exports.uploader_init = uploader_init;
-
-window['_Feb_fegegRRdefaultUploaderError'] = function (err) {
-  if (febsui.uploadErr.nofile == err) {
-    err = '未选择文件';
-  } else if (febsui.uploadErr.sizeExceed == err) {
-    err = '文件超出大小';
-  } else if (febsui.uploadErr.crc32 == err) {
-    err = '文件验证出错';
-  } else if (febsui.uploadErr.net == err) {
-    err = '网络错误';
-  } else {
-    err = '上传错误';
-  }
-  dialog.showAlert(err.toString());
-};
-
-/**
-* @desc: 初始化page控件.
-* @param elem: 将控件插入到elem中, elem是一个jquery的对象.
-* @param curPage: 当前页
-* @param pageCount: 总页数
-* @param totalCount: 总条数
-* @param pageCallback: 页面跳转函数, function(page) {}
-* @return: 
-*/
-function uploader_init() {
-  var elems = $('uploader');
-  for (var i = 0; i < elems.length; i++) {
-    var dom = $(elems[i]);
-
-    if (!dom.hasClass('febsui-uploader-init')) {
-      dom.addClass('febsui-uploader-init');
-
-      var dataAccept = dom.attr('data-accept');
-      var dataFilename = dom.attr('data-filename');
-      var dataApi = dom.attr('data-api');
-      if (window.febs.string.isEmpty(dataApi)) {
-        throw new Error("uploader need attribute: data-api");
-      }
-
-      var uid = 'febsui-uploader-' + uuid.uuid();
-
-      var html = dom.html();
-      dom.html('');
-
-      var submitHtml = '';
-      if (ie99) {
-        submitHtml = '<input type="submit" value="submit">';
-      }
-
-      var htmlForm = '<form id="' + uid + '-form" method="post" role="form" enctype="multipart/form-data" style="display:none">\n  <input id="' + uid + '" type="file" name="file" multiple' + (dataAccept ? ' accept="' + dataAccept + '"' : '') + '>\n  ' + submitHtml + '\n</form>';
-      dom.append($(htmlForm));
-
-      var html = '<label id="' + uid + '-label" for="' + uid + '" data-for="' + uid + '"><div class="btn">' + html + '</div>';
-
-      var htmlFilename = dataFilename === 'true' ? '<span id="' + uid + '-filename" class="febsui-uploader-filename febsui-ellipsis"></span>' : '';
-
-      var htmlPro = '<div id="' + uid + '-progress" class="febsui-uploader-progress" style="display:none;">\n  ' + htmlFilename + '<div class="febsui-uploader-progress-bg" style="width:0%;"></div>\n  <span' + (dataFilename === 'true' ? ' class="febsui-uploader-right"' : '') + '>10%</span>\n</div>\n</label>\n<div class="febsui-uploader-progress-cancel"></div>\n';
-      html += htmlPro;
-
-      //       var htmlPro = 
-      // `<div id="${uid}-progress" class="febsui-uploader-progress" style="display:none;">
-      //   <div class="febsui-uploader-progress-bg" style="width:0%;"></div>
-      //   ${htmlFilename}<span${dataFilename==='true'?' class="febsui-uploader-right"':''}>10%</span>
-      //   <div class="febsui-uploader-progress-cancel"><div class="febsui-icon febsui-icon-error"></div></div>
-      // </div>
-      // `;
-      dom.append(html);
-      touchEventPrevent(dom[0]);
-
-      //
-      // event.
-      //
-      $('#' + uid).change(function (env) {
-
-        var uploader = $(this).parent().parent('uploader');
-
-        var _uid = $(this).attr('id');
-
-        if (window.febs.string.isEmpty(this.value) || $('#' + _uid)[0].files && $('#' + _uid)[0].files.length <= 0) {
-          return;
-        }
-
-        window['febsui-uploader-controller-' + _uid] = uploader;
-
-        var label = $('#' + _uid + '-label');
-        var cancel = $(uploader.children('.febsui-uploader-progress-cancel')[0]);
-
-        var progress = $('#' + _uid + '-progress');
-        var progressBg = $(progress.children('.febsui-uploader-progress-bg')[0]);
-        var progressSpan = progress.children('span');
-        progressSpan = $(progressSpan[progressSpan.length - 1]);
-
-        label.attr('style', 'right:35px !important;');
-        var labelFor = label.attr('for');
-        label.removeAttr('for');
-
-        var uploadHtml = $(label.children('div')[0]);
-        uploadHtml.css('display', 'none');
-        progress.css('display', 'inline-block');
-        progressBg.css('width', '0%');
-        progressSpan.html('0%');
-
-        var uploader = $(this).parent().parent('uploader');
-
-        var _dataApi = uploader.attr('data-api');
-        var _dataMaxSize = uploader.attr('data-maxsize');
-        var _dataBegin = uploader.attr('data-begin');
-        var _dataFinish = uploader.attr('data-finish');
-        var _dataError = uploader.attr('data-error');
-        var _dataProgress = uploader.attr('data-progress');
-
-        // if ($('#'+_uid)[0].files) {
-
-        var cancelControl;
-        var filename = '';
-
-        if (ie99) {
-          var indexsp = this.value.lastIndexOf('\\');
-          if (indexsp > 0) {
-            indexsp = this.value.substr(indexsp + 1);
-          } else {
-            indexsp = this.value.lastIndexOf('/');
-            if (indexsp < 0) {
-              console.log('can\'t find filename');indexsp = '';
-            } else indexsp = this.value.substr(indexsp + 1);
-          }
-
-          filename = indexsp;
-          $('#' + _uid + '-filename').html(filename);
-        } else {
-          filename = $('#' + _uid)[0].files[0].name;
-          $('#' + _uid + '-filename').html(filename);
-        }
-
-        // trim.
-        if (_dataFinish) {
-          _dataFinish = _dataFinish.replace(/(^\s*)|(\s*$)/g, "");
-        }
-        if (_dataError) {
-          _dataError = _dataError.replace(/(^\s*)|(\s*$)/g, "");
-        } else {
-          _dataError = '_Feb_fegegRRdefaultUploaderError';
-        }
-        if (_dataProgress) {
-          _dataProgress = _dataProgress.replace(/(^\s*)|(\s*$)/g, "");
-        }
-        if (_dataBegin) {
-          _dataBegin = _dataBegin.replace(/(^\s*)|(\s*$)/g, "");
-        }
-
-        _dataMaxSize = _dataMaxSize ? parseInt(_dataMaxSize) : 0;
-
-        // 取消.
-        cancel.attr('style', 'display:inline !important;');
-        cancel.one('click', function () {
-          var __uploader = $(this).parent('uploader');
-          __uploader.uploaderReset();
-          _dataError = null;
-          if (cancelControl) cancelControl.abort();
-          cancelControl = null;
-        });
-
-        // 上传.
-        upload.upload({
-          formObj: $('#' + _uid + '-form'),
-          fileObj: $('#' + _uid),
-          uploadUrl: _dataApi,
-          maxFileSize: _dataMaxSize,
-          beginCB: function beginCB(fileObj, uploader) {
-            cancelControl = uploader;
-
-            if (_dataBegin) {
-              var i = 0;
-              for (; i < _dataBegin.length; i++) {
-                if (!(_dataBegin[i] >= 'a' && _dataBegin[i] <= 'z' || _dataBegin[i] >= 'A' && _dataBegin[i] <= 'Z' || _dataBegin[i] == '_')) {
-                  break;
-                }
-              }
-              if (i >= _dataBegin.length) {
-                var controlId = 'febsui-cancel-' + uuid.uuid();
-
-                var uid = fileObj.attr('id');
-                filename = window.febs.string.replace(filename, '"', '\"');
-                eval(_dataBegin + ('(window["febsui-uploader-controller-' + uid + '"], "' + filename + '")'));
-              } else {
-                eval(_dataBegin);
-              }
-            }
-          },
-          finishCB: function finishCB(err, fileObj, serverData) {
-            if (err) {
-
-              cancel.removeAttr('style');
-              label.removeAttr('style');
-              label.attr('for', label.attr('data-for'));
-              uploadHtml.css('display', 'inline-block');
-              progress.css('display', 'none');
-
-              if (err != uploadErr.nofile && err != uploadErr.sizeExceed && err != uploadErr.crc32 && err != uploadErr.net) {
-                console.log(err);
-              }
-
-              if (_dataError) {
-                var i = 0;
-                for (; i < _dataError.length; i++) {
-                  if (!(_dataError[i] >= 'a' && _dataError[i] <= 'z' || _dataError[i] >= 'A' && _dataError[i] <= 'Z' || _dataError[i] == '_')) {
-                    break;
-                  }
-                }
-
-                var uid = fileObj.attr('id');
-
-                if (i >= _dataError.length) {
-                  err = err.toString();
-                  err = window.febs.string.replace(err, '"', '\"');
-                  eval(_dataError + ('(window["febsui-uploader-controller-' + uid + '"], "\'+err+\'")'));
-                  delete window["febsui-uploader-controller-" + uid];
-                } else {
-                  eval(_dataError);
-                  delete window["febsui-uploader-controller-" + uid];
-                }
-              }
-
-              // reset.
-              cancel.trigger('click');
-              cancel.off('click');
-            }
-            // 上传成功.
-            else {
-                cancelControl = null;
-                var percent = "100%";
-                progressBg.css('width', percent);
-                progressSpan.html(percent);
-
-                cancel.removeAttr('style');
-                label.removeAttr('style');
-                label.attr('for', label.attr('data-for'));
-
-                if (_dataFinish) {
-                  var i = 0;
-                  for (; i < _dataFinish.length; i++) {
-                    if (!(_dataFinish[i] >= 'a' && _dataFinish[i] <= 'z' || _dataFinish[i] >= 'A' && _dataFinish[i] <= 'Z' || _dataFinish[i] == '_')) {
-                      break;
-                    }
-                  }
-
-                  var uid = fileObj.attr('id');
-
-                  if (i >= _dataFinish.length) {
-
-                    var finishData = 'febsui-finish-' + uuid.uuid();
-                    window[finishData] = serverData;
-
-                    eval(_dataFinish + ('(window["febsui-uploader-controller-' + uid + '"], window["' + finishData + '"])'));
-                    delete window[finishData];
-                    delete window["febsui-uploader-controller-" + uid];
-                  } else {
-                    eval(_dataFinish);
-                    delete window["febsui-uploader-controller-" + uid];
-                  }
-                }
-              }
-
-            fileObj[0].value = "";
-          },
-          progressCB: function progressCB(fileObj, percent) {
-            var pp = percent;
-            percent = percent * 100 + "%";
-            progressBg.css('width', percent);
-            progressSpan.html(percent);
-
-            if (_dataProgress) {
-              var i = 0;
-              for (; i < _dataProgress.length; i++) {
-                if (!(_dataProgress[i] >= 'a' && _dataProgress[i] <= 'z' || _dataProgress[i] >= 'A' && _dataProgress[i] <= 'Z' || _dataProgress[i] == '_')) {
-                  break;
-                }
-              }
-
-              var uid = fileObj.attr('id');
-
-              if (i >= _dataProgress.length) {
-                eval(_dataProgress + ('(window["febsui-uploader-controller-' + uid + '"], parseFloat(' + pp + '))'));
-              } else {
-                eval(_dataProgress);
-              }
-            }
-          }
-        });
-        // } // if.
-      });
-    }
-  } // for.
-}
-
-/***/ }),
-/* 88 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var uuid = __webpack_require__(3);
 var domHelper = __webpack_require__(0);
 
@@ -3708,16 +3397,14 @@ exports.actionsheet_init = actionsheet_init;
 
 /**
 * @desc: 初始化actionsheet控件.
-*        对页面上 的所有 <actionsheet> 元素进行初始化.
+*        对页面上 的所有 <.febsui-actionsheet> 元素进行初始化.
 */
 function actionsheet_init() {
-  var elems = $('actionsheet');
+  var elems = $('.febsui-actionsheet');
   for (var i = 0; i < elems.length; i++) {
     var dom = $(elems[i]);
 
     if (!dom.hasClass('febsui-actionsheet-inited')) {
-
-      dom.addClass('febsui-actionsheet-inited');
 
       var domChildren = dom.children();
       var ddChildren;
@@ -3748,7 +3435,7 @@ function actionsheet_init() {
         }
       }
 
-      var dd = $("<div class='febsui-actionsheet'></div>");
+      var dd = $("<div class='febsui-actionsheet febsui-actionsheet-inited'></div>");
       $('body').append(dd);
 
       // copy attri.
@@ -3757,6 +3444,7 @@ function actionsheet_init() {
         return name.indexOf('data-') == 0;
       });
 
+      dom.removeClass('febsui-actionsheet').addClass('febsui-actionsheet-container');
       dd.append(dom);
 
       // // 动画设置.
@@ -3770,7 +3458,7 @@ function actionsheet_init() {
 }
 
 /***/ }),
-/* 89 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3797,7 +3485,7 @@ function button_init() {
 }
 
 /***/ }),
-/* 90 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3856,7 +3544,7 @@ function checkbox_init() {
 }
 
 /***/ }),
-/* 91 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3947,7 +3635,7 @@ function page_init(elem, curPage, pageCount, totalCount, pageCallback) {
 exports.page_init = page_init;
 
 /***/ }),
-/* 92 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3962,16 +3650,16 @@ exports.popover_init = popover_init;
 
 /**
 * @desc: 初始化popover控件.
-*        对页面上 的所有 <popover> 元素进行初始化.
+*        对页面上 的所有 <.febsui-popover> 元素进行初始化.
 */
 function popover_init() {
-  var elems = $('popover');
+  var elems = $('.febsui-popover');
   for (var i = 0; i < elems.length; i++) {
     var dom = $(elems[i]);
 
     if (!dom.hasClass('febsui-popover-inited') && !dom.children().hasClass('febsui-popover-arrow')) {
 
-      var dd = $("<div class='febsui-popover'></div>");
+      var dd = $("<div class='febsui-popover febsui-popover-inited'></div>");
 
       // data-direction
       var direction = dom.attr('data-direction');
@@ -3979,8 +3667,8 @@ function popover_init() {
       direction = direction.toLowerCase();
       if (direction != 'auto') {
         var direction2;
-        if (direction != 'top' && direction != 'left' && direction != 'right' && direction != 'bottom') {
-          throw new Error('popover attribute data-direction only can be top/left/right/bottom');
+        if (direction != 'top' && direction != 'left' && direction != 'right' && direction != 'bottom' && direction != 'center' && direction != 'auto') {
+          throw new Error('popover attribute data-direction only can be top/left/right/bottom/center/auto');
         }
 
         // data-offset
@@ -4009,7 +3697,7 @@ function popover_init() {
         dd.prepend('<div class="febsui-popover-arrow"></div>');
       }
 
-      dom.addClass('febsui-popover-inited');
+      dom.removeClass('febsui-popover').addClass('febsui-popover-container');
 
       // ie9.
       if (window.febs.utils.browserIEVer() <= 9) {
@@ -4035,7 +3723,7 @@ function popover_init() {
 }
 
 /***/ }),
-/* 93 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4050,7 +3738,7 @@ exports.switch_init = switch_init;
 *        对页面上 class 为 febsui-switch-on 以及 febsui-switch-off 的所有元素初始化为switch控件.
 */
 function switch_init() {
-  var elems = $('switch');
+  var elems = $('.febsui-switch');
   // elems.append("<span class='febsui-switch-slider'></span>");
   for (var i = 0; i < elems.length; i++) {
     var dom = $(elems[i]);
@@ -4070,15 +3758,13 @@ function switch_init() {
         ee['switch']();
       });
 
-      elems[i]._swtichEvents = elems[i]._swtichEvents || [];
-
       touchEventPrevent(dom[0]);
     }
   } // for.
 }
 
 /***/ }),
-/* 94 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4193,7 +3879,7 @@ function hideToast(cb) {
 }
 
 /***/ }),
-/* 95 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4358,7 +4044,362 @@ exports.uploadBase64 = function uploadBase64(cfg) {
 };
 
 /***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+{/* <div class="febsui-uploader">
+   <button onclick='$("#fileObj")[0].click()'>上传图片</button>
+   <form id="fileForm" method="post" role="form" enctype="multipart/form-data" style="display:none">
+     <input id="fileObj" type="file" name="file" onchange="javascript:SetupWebUploader('/api/users/upload_image', $('#fileForm'), $('#fileObj'))" multiple>
+   </form>
+   <div class="febsui-uploader-progress">
+     <div class="febsui-uploader-progress-bg"></div>
+     <span>10%</span>
+     <div class="febsui-uploader-progress-cancel"><div class="febsui-icon febsui-icon-error"></div></div>
+   </div>
+  </div> */}
+var touchEventPrevent = __webpack_require__(0).mobile_preventTouchEvent;
+var escape_string = __webpack_require__(96).escape_string;
+
+var uuid = __webpack_require__(3);
+var upload = __webpack_require__(42);
+var uploadErr = __webpack_require__(15);
+var dialog = __webpack_require__(29);
+
+// ie9.
+var ie99 = window.febs.utils.browserIEVer() <= 9;
+
+exports.uploader_init = uploader_init;
+
+window['_Feb_fegegRRdefaultUploaderError'] = function (err) {
+  if (febsui.uploadErr.nofile == err) {
+    err = '未选择文件';
+  } else if (febsui.uploadErr.sizeExceed == err) {
+    err = '文件超出大小';
+  } else if (febsui.uploadErr.crc32 == err) {
+    err = '文件验证出错';
+  } else if (febsui.uploadErr.net == err) {
+    err = '网络错误';
+  } else {
+    err = '上传错误';
+  }
+  dialog.showAlert(err.toString());
+};
+
+/**
+* @desc: 初始化page控件.
+* @param elem: 将控件插入到elem中, elem是一个jquery的对象.
+* @param curPage: 当前页
+* @param pageCount: 总页数
+* @param totalCount: 总条数
+* @param pageCallback: 页面跳转函数, function(page) {}
+* @return: 
+*/
+function uploader_init() {
+  var elems = $('.febsui-uploader');
+  for (var i = 0; i < elems.length; i++) {
+    var dom = $(elems[i]);
+
+    if (!dom.hasClass('febsui-uploader-init')) {
+      dom.addClass('febsui-uploader-init');
+
+      var dataAccept = dom.attr('data-accept');
+      var dataFilename = dom.attr('data-filename');
+      var dataApi = dom.attr('data-api');
+      if (window.febs.string.isEmpty(dataApi)) {
+        throw new Error("uploader need attribute: data-api");
+      }
+
+      var uid = 'febsui-uploader-' + uuid.uuid();
+
+      var html = dom.html();
+      dom.html('');
+
+      var submitHtml = '';
+      if (ie99) {
+        submitHtml = '<input type="submit" value="submit">';
+      }
+
+      var htmlForm = '<form id="' + uid + '-form" method="post" role="form" enctype="multipart/form-data" style="display:none">\n  <input id="' + uid + '" type="file" name="file" multiple' + (dataAccept ? ' accept="' + dataAccept + '"' : '') + '>\n  ' + submitHtml + '\n</form>';
+      dom.append($(htmlForm));
+
+      var html = '<label id="' + uid + '-label" for="' + uid + '" data-for="' + uid + '"><div class="btn">' + html + '</div>';
+
+      var htmlFilename = dataFilename === 'true' ? '<span id="' + uid + '-filename" class="febsui-uploader-filename febsui-ellipsis"></span>' : '';
+
+      var htmlPro = '<div id="' + uid + '-progress" class="febsui-uploader-progress" style="display:none;">\n  ' + htmlFilename + '<div class="febsui-uploader-progress-bg" style="width:0%;"></div>\n  <span' + (dataFilename === 'true' ? ' class="febsui-uploader-right"' : '') + '>10%</span>\n</div>\n</label>\n<div class="febsui-uploader-progress-cancel"></div>\n';
+      html += htmlPro;
+
+      //       var htmlPro = 
+      // `<div id="${uid}-progress" class="febsui-uploader-progress" style="display:none;">
+      //   <div class="febsui-uploader-progress-bg" style="width:0%;"></div>
+      //   ${htmlFilename}<span${dataFilename==='true'?' class="febsui-uploader-right"':''}>10%</span>
+      //   <div class="febsui-uploader-progress-cancel"><div class="febsui-icon febsui-icon-error"></div></div>
+      // </div>
+      // `;
+      dom.append(html);
+      touchEventPrevent(dom[0]);
+
+      //
+      // event.
+      //
+      $('#' + uid).change(function (env) {
+
+        var uploader = $(this).parent().parent('.febsui-uploader');
+
+        var _uid = $(this).attr('id');
+
+        if (window.febs.string.isEmpty(this.value) || $('#' + _uid)[0].files && $('#' + _uid)[0].files.length <= 0) {
+          return;
+        }
+
+        window['febsui-uploader-controller-' + _uid] = uploader;
+
+        var label = $('#' + _uid + '-label');
+        var cancel = $(uploader.children('.febsui-uploader-progress-cancel')[0]);
+
+        var progress = $('#' + _uid + '-progress');
+        var progressBg = $(progress.children('.febsui-uploader-progress-bg')[0]);
+        var progressSpan = progress.children('span');
+        progressSpan = $(progressSpan[progressSpan.length - 1]);
+
+        label.attr('style', 'right:35px !important;');
+        var labelFor = label.attr('for');
+        label.removeAttr('for');
+
+        var uploadHtml = $(label.children('div')[0]);
+        uploadHtml.css('display', 'none');
+        progress.css('display', 'inline-block');
+        progressBg.css('width', '0%');
+        progressSpan.html('0%');
+
+        var uploader = $(this).parent().parent('.febsui-uploader');
+
+        var _dataApi = uploader.attr('data-api');
+        var _dataMaxSize = uploader.attr('data-maxsize');
+        var _dataBegin = uploader.attr('data-begin');
+        var _dataFinish = uploader.attr('data-finish');
+        var _dataError = uploader.attr('data-error');
+        var _dataProgress = uploader.attr('data-progress');
+
+        // if ($('#'+_uid)[0].files) {
+
+        var cancelControl;
+
+        // trim.
+        if (_dataFinish) {
+          _dataFinish = _dataFinish.replace(/(^\s*)|(\s*$)/g, "");
+        }
+        if (_dataError) {
+          _dataError = _dataError.replace(/(^\s*)|(\s*$)/g, "");
+        } else {
+          _dataError = '_Feb_fegegRRdefaultUploaderError';
+        }
+        if (_dataProgress) {
+          _dataProgress = _dataProgress.replace(/(^\s*)|(\s*$)/g, "");
+        }
+        if (_dataBegin) {
+          _dataBegin = _dataBegin.replace(/(^\s*)|(\s*$)/g, "");
+        }
+
+        _dataMaxSize = _dataMaxSize ? parseInt(_dataMaxSize) : 0;
+
+        // 取消.
+        cancel.attr('style', 'display:inline !important;');
+        cancel.one('click', function () {
+          var __uploader = $(this).parent('.febsui-uploader');
+          __uploader.uploaderReset();
+          _dataError = null;
+          if (cancelControl) cancelControl.abort();
+          cancelControl = null;
+        });
+
+        // 上传.
+        upload.upload({
+          formObj: $('#' + _uid + '-form'),
+          fileObj: $('#' + _uid),
+          uploadUrl: _dataApi,
+          maxFileSize: _dataMaxSize,
+          beginCB: function beginCB(fileObj, uploader) {
+            cancelControl = uploader;
+
+            var uid = fileObj.attr('id');
+
+            var filename = '';
+
+            if (ie99) {
+              var indexsp = fileObj[0].value.lastIndexOf('\\');
+              if (indexsp > 0) {
+                indexsp = fileObj[0].value.substr(indexsp + 1);
+              } else {
+                indexsp = fileObj[0].value.lastIndexOf('/');
+                if (indexsp < 0) {
+                  console.log('can\'t find filename');indexsp = '';
+                } else indexsp = fileObj[0].value.substr(indexsp + 1);
+              }
+
+              filename = indexsp;
+              filename = escape_string(filename);
+              $('#' + _uid + '-filename').html(filename);
+            } else {
+              filename = $('#' + _uid)[0].files[0].name;
+              filename = escape_string(filename);
+              $('#' + _uid + '-filename').html(filename);
+            }
+            filename = window.febs.string.replace(filename, '"', '\"');
+
+            if (_dataBegin) {
+              var i = 0;
+              for (; i < _dataBegin.length; i++) {
+                if (!(_dataBegin[i] >= 'a' && _dataBegin[i] <= 'z' || _dataBegin[i] >= 'A' && _dataBegin[i] <= 'Z' || _dataBegin[i] == '_')) {
+                  break;
+                }
+              }
+              if (i >= _dataBegin.length) {
+                var controlId = 'febsui-cancel-' + uuid.uuid();
+
+                eval(_dataBegin + ('(window["febsui-uploader-controller-' + uid + '"], "' + filename + '")'));
+              } else {
+                eval(_dataBegin);
+              }
+            }
+
+            window["febsui-uploader-controller-" + uid].trigger('uploadBegin', { filename: filename });
+          },
+          finishCB: function finishCB(err, fileObj, serverData) {
+            if (err) {
+
+              cancel.removeAttr('style');
+              label.removeAttr('style');
+              label.attr('for', label.attr('data-for'));
+              uploadHtml.css('display', 'inline-block');
+              progress.css('display', 'none');
+
+              if (err != uploadErr.nofile && err != uploadErr.sizeExceed && err != uploadErr.crc32 && err != uploadErr.net) {
+                console.log(err);
+              }
+
+              var uid = fileObj.attr('id');
+
+              if (_dataError) {
+                var i = 0;
+                for (; i < _dataError.length; i++) {
+                  if (!(_dataError[i] >= 'a' && _dataError[i] <= 'z' || _dataError[i] >= 'A' && _dataError[i] <= 'Z' || _dataError[i] == '_')) {
+                    break;
+                  }
+                }
+
+                if (i >= _dataError.length) {
+                  err = err.toString();
+                  err = window.febs.string.replace(err, '"', '\"');
+                  eval(_dataError + ('(window["febsui-uploader-controller-' + uid + '"], "\'+err+\'")'));
+                } else {
+                  eval(_dataError);
+                }
+              }
+
+              window["febsui-uploader-controller-" + uid].trigger('uploadError', { err: err });
+              delete window["febsui-uploader-controller-" + uid];
+
+              // reset.
+              cancel.trigger('click');
+              cancel.off('click');
+            }
+            // 上传成功.
+            else {
+                cancelControl = null;
+                var percent = "100%";
+                progressBg.css('width', percent);
+                progressSpan.html(percent);
+
+                cancel.removeAttr('style');
+                label.removeAttr('style');
+                label.attr('for', label.attr('data-for'));
+
+                var uid = fileObj.attr('id');
+
+                if (_dataFinish) {
+                  var i = 0;
+                  for (; i < _dataFinish.length; i++) {
+                    if (!(_dataFinish[i] >= 'a' && _dataFinish[i] <= 'z' || _dataFinish[i] >= 'A' && _dataFinish[i] <= 'Z' || _dataFinish[i] == '_')) {
+                      break;
+                    }
+                  }
+
+                  if (i >= _dataFinish.length) {
+
+                    var finishData = 'febsui-finish-' + uuid.uuid();
+                    window[finishData] = serverData;
+
+                    eval(_dataFinish + ('(window["febsui-uploader-controller-' + uid + '"], window["' + finishData + '"])'));
+                    delete window[finishData];
+                  } else {
+                    eval(_dataFinish);
+                  }
+                }
+
+                window["febsui-uploader-controller-" + uid].trigger('uploadFinish', { responseData: serverData });
+                delete window["febsui-uploader-controller-" + uid];
+              }
+
+            fileObj[0].value = "";
+          },
+          progressCB: function progressCB(fileObj, percent) {
+            var pp = percent;
+            percent = percent * 100 + "%";
+            progressBg.css('width', percent);
+            progressSpan.html(percent);
+
+            var uid = fileObj.attr('id');
+
+            if (_dataProgress) {
+              var i = 0;
+              for (; i < _dataProgress.length; i++) {
+                if (!(_dataProgress[i] >= 'a' && _dataProgress[i] <= 'z' || _dataProgress[i] >= 'A' && _dataProgress[i] <= 'Z' || _dataProgress[i] == '_')) {
+                  break;
+                }
+              }
+
+              if (i >= _dataProgress.length) {
+                eval(_dataProgress + ('(window["febsui-uploader-controller-' + uid + '"], parseFloat(' + pp + '))'));
+              } else {
+                eval(_dataProgress);
+              }
+            }
+
+            window["febsui-uploader-controller-" + uid].trigger('uploadProgress', { progress: parseFloat(pp) });
+          }
+        });
+        // } // if.
+      });
+    }
+  } // for.
+}
+
+/***/ }),
 /* 96 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+var stringUtils = window.febs.string;
+
+function escape_string(str) {
+  // 转义.
+  str = stringUtils.replace(str, '<', '&lt;');
+  str = stringUtils.replace(str, '>', '&gt;');
+  return str;
+}
+
+exports.escape_string = escape_string;
+
+/***/ }),
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
