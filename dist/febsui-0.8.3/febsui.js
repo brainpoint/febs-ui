@@ -929,7 +929,7 @@ $.fn.dialogShow = function () {
     if (ee.hasClass('febsui-dialog-container')) {
       ee = ee.parent();
     }
-    if (ee.hasClass('febsui-dialog')) {
+    if (ee.hasClass('febsui-dialog-init')) {
 
       if (!$('.febsui-mask').hasVisibile()) {
         ee.addClass('febsui-mask');
@@ -1778,7 +1778,7 @@ $.fn.actionsheetShow = function () {
       ee = ee.parent();
     }
 
-    if (ee.hasClass('febsui-actionsheet')) {
+    if (ee.hasClass('febsui-actionsheet-inited')) {
 
       if (ee.isVisibile()) continue;
 
@@ -1814,7 +1814,7 @@ $.fn.actionsheetHide = function () {
       // if (ee[0].nodeName.toLowerCase() == 'actionsheet') {
       ee = ee.parent();
     }
-    if (ee.hasClass('febsui-actionsheet')) {
+    if (ee.hasClass('febsui-actionsheet-inited')) {
       // setTimeout(function(){
       ee.removeClass('febsui-visible').addClass('febsui-invisible');
       // }, 100);
@@ -2108,7 +2108,7 @@ $.fn.popoverShow = function (mask, attachNode) {
       ee = ee.parent();
     }
 
-    if (ee.hasClass('febsui-popover')) {
+    if (ee.hasClass('febsui-popover-inited')) {
 
       if (ee.isVisibile()) continue;
 
@@ -2371,7 +2371,7 @@ $.fn.popoverHide = function () {
       // if (ee[0].nodeName.toLowerCase() == 'popover') {
       ee = ee.parent();
     }
-    if (ee.hasClass('febsui-popover')) {
+    if (ee.hasClass('febsui-popover-inited')) {
       // setTimeout(function(){
       ee.removeClass('febsui-visible').addClass('febsui-invisible');
       // }, 100);

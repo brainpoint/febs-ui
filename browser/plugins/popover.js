@@ -48,7 +48,7 @@ $.fn.popoverShow = function(mask, attachNode) {
       ee = ee.parent();
     }
     
-    if (ee.hasClass('febsui-popover')) {
+    if (ee.hasClass('febsui-popover-inited')) {
 
       if (ee.isVisibile())
         continue;
@@ -333,7 +333,7 @@ $.fn.popoverHide = function() {
     // if (ee[0].nodeName.toLowerCase() == 'popover') {
       ee = ee.parent();
     }
-    if (ee.hasClass('febsui-popover')) {
+    if (ee.hasClass('febsui-popover-inited')) {
       // setTimeout(function(){
         ee.removeClass('febsui-visible').addClass('febsui-invisible');
       // }, 100);

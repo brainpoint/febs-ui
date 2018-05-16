@@ -51,7 +51,7 @@ $.fn.dialogShow = function() {
     if (ee.hasClass('febsui-dialog-container')) {
       ee = ee.parent();
     }
-    if (ee.hasClass('febsui-dialog')) {
+    if (ee.hasClass('febsui-dialog-init')) {
 
       if (!$('.febsui-mask').hasVisibile()) {
         ee.addClass('febsui-mask');

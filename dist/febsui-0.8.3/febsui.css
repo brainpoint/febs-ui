@@ -1196,9 +1196,18 @@
    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.07);
  }
 
+ .febsui-popover .febsui-popover-cell:first-of-type,
+ .febsui-actionsheet .febsui-actionsheet-cell:first-of-type
+{
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
  .febsui-popover .febsui-popover-cell:last-of-type,
  .febsui-actionsheet .febsui-actionsheet-cell:last-of-type
 {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   border: none;
   background-image: none
 }
