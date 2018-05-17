@@ -8,10 +8,14 @@ exports.checkbox_init = checkbox_init;
 * @desc: 初始化checkbox控件.
 *        对页面上 的所有 <input type="checkbox" class="febsui-checkbox"> 元素进行初始化.
 */
-function checkbox_init() {
-  var elems = $('.febsui-checkbox');
+function checkbox_init(elem) {
+  var elems = elem ? elem : $('.febsui-checkbox');
   for (var i = 0; i < elems.length; i++) {
     var dom = $(elems[i]);
+
+    if (!dom.hasClass('febsui-checkbox')) {
+      continue;
+    }
 
     if (!dom.hasClass('febsui-checkbox-inited')) {
 

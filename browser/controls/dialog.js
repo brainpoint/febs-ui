@@ -295,10 +295,14 @@ exports.dialog_init = dialog_init;
 * @desc: 初始化dialog控件.
 *        对页面上 的所有 <dialog> 元素进行初始化.
 */
-function dialog_init() {
-  var elems = $('.febsui-dialog');
+function dialog_init(elem) {
+  var elems = elem ? elem : $('.febsui-dialog');
   for (var i = 0; i < elems.length; i++) {
     var dom = $(elems[i]);
+    
+    if (!dom.hasClass('febsui-dialog')) {
+      continue;
+    }
 
     if (!dom.hasClass('febsui-dialog-init')) {
       dom.addClass('febsui-dialog-container').removeClass('febsui-dialog');

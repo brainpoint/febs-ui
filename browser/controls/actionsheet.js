@@ -7,10 +7,14 @@ exports.actionsheet_init = actionsheet_init;
 * @desc: 初始化actionsheet控件.
 *        对页面上 的所有 <.febsui-actionsheet> 元素进行初始化.
 */
-function actionsheet_init() {
-  var elems = $('.febsui-actionsheet');
+function actionsheet_init(elem) {
+  var elems = elem ? elem : $('.febsui-actionsheet');
   for (var i = 0; i < elems.length; i++) {
     var dom = $(elems[i]);
+
+    if (!dom.hasClass('febsui-actionsheet')) {
+      continue;
+    }
 
     if (!dom.hasClass('febsui-actionsheet-inited')) {
 

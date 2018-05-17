@@ -9,10 +9,14 @@ exports.popover_init = popover_init;
 * @desc: 初始化popover控件.
 *        对页面上 的所有 <.febsui-popover> 元素进行初始化.
 */
-function popover_init() {
-  var elems = $('.febsui-popover');
+function popover_init(elem) {
+  var elems = elem ? elem : $('.febsui-popover');
   for (var i = 0; i < elems.length; i++) {
     var dom = $(elems[i]);
+    
+    if (!dom.hasClass('febsui-popover')) {
+      continue;
+    }
 
     if (!dom.hasClass('febsui-popover-inited') && !dom.children().hasClass('febsui-popover-arrow')) {
       

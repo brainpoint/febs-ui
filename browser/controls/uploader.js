@@ -39,18 +39,17 @@ window['_Feb_fegegRRdefaultUploaderError'] = function(err) {
 
 
 /**
-* @desc: 初始化page控件.
-* @param elem: 将控件插入到elem中, elem是一个jquery的对象.
-* @param curPage: 当前页
-* @param pageCount: 总页数
-* @param totalCount: 总条数
-* @param pageCallback: 页面跳转函数, function(page) {}
+* @desc: 初始化uploader控件.
 * @return: 
 */
-function uploader_init() {
-  var elems = $('.febsui-uploader');
+function uploader_init(elem) {
+  var elems = elem ? elem : $('.febsui-uploader');
   for (var i = 0; i < elems.length; i++) {
     var dom = $(elems[i]);
+    
+    if (!dom.hasClass('febsui-uploader')) {
+      continue;
+    }
 
     if (!dom.hasClass('febsui-uploader-init')) {
       dom.addClass('febsui-uploader-init');

@@ -239,48 +239,48 @@ export function page_init(elem: any, curPage: number, pageCount: number, totalCo
  * @desc 初始化页面上所有switch控件
  *       默认在页面加载完成时会调用一次; 加入新的switch控件时需调用一次.
  */
-export function ui_switch_init():void;
+export function ui_switch_init(elem?:any):void;
 
 /**
  * @desc 初始化页面上所有checkbox控件 (带febsui-checkbox类的控件)
  *       默认在页面加载完成时会调用一次; 加入新的checkbox控件时需调用一次.
  */
-export function ui_checkbox_init():void;
+export function ui_checkbox_init(elem?:any):void;
 
 /**
 * @desc: 初始化popover控件.
 *        对页面上 的所有 <popover> 元素进行初始化.
 *        在增加新的popover到页面后, 需要手动调用此方法.
 */
-export function ui_popover_init():void;
+export function ui_popover_init(elem?:any):void;
 
 /**
 * @desc: 初始化actionSheet控件.
 *        对页面上 的所有 <actionsheet> 元素进行初始化.
 *        在增加新的actionsheet到页面后, 需要手动调用此方法.
 */
-export function ui_actionSheet_init():void;
+export function ui_actionSheet_init(elem?:any):void;
 
 /**
 * @desc: 初始化dialog控件.
 *        对页面上 的所有 <dialog> 元素进行初始化.
 *        在增加新的dialog到页面后, 需要手动调用此方法.
 */
-export function ui_dialog_init():void;
+export function ui_dialog_init(elem?:any):void;
 /**
 * @desc: 初始化uploader控件.
 *        对页面上 的所有 <uploader> 元素进行初始化.
 *        在增加新的uploader到页面后, 需要手动调用此方法.
 */
-export function ui_uploader_init():void;
+export function ui_uploader_init(elem?:any):void;
 /**
 * @desc: 用于解决ie9下不支持css:animation; 初始化<div class="febsui-icon-spin1/febsui-icon-spin1-white">控件.
 */
-export function ui_spin_init():void;
+export function ui_spin_init(elem?:any):void;
 /**
 * @desc: 对所有的button控件进行初始化, 保证移动端touch穿透体验.
 */
-export function ui_button_init():void;
+export function ui_button_init(elem?:any):void;
 /**
 * @desc: 对页面上所有ui控件进行初始化.
 */
