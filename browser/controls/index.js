@@ -51,6 +51,9 @@ exports.ui_spin_init = loadinga.spin_init;
 var buttona = require('./button');
 exports.ui_button_init = buttona.button_init;
 
+var swipera = require('./swiper');
+exports.ui_swiper_init = swipera.swiper_init;
+
 
 
 /**
@@ -58,6 +61,7 @@ exports.ui_button_init = buttona.button_init;
 * @return: 
 */
 exports.ui_init = function() {
+  swipera.swiper_init();
   switcha.switch_init();
   popovera.popover_init();
   dialoga.dialog_init();

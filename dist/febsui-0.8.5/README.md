@@ -66,6 +66,7 @@ febsui.dialog_showToast({content:'即将开始', icon:'ok'});
   - [paging](#page)
   - [switch](#switch)
   - [checkbox](#checkbox)
+  - [swiper](#swiper)
   - [popover](#popover)
   - [actionSheet](#actionsheet)
   - [upload](#upload)
@@ -114,46 +115,46 @@ febsui.ui_init();
  * @desc 初始化页面上所有switch控件
  *       默认在页面加载完成时会调用一次; 加入新的switch控件时需调用一次.
  */
-febsui.ui_switch_init();
+febsui.ui_switch_init(elem?:any);
 
 /**
  * @desc 初始化页面上所有checkbox控件 (带 febsui-checkbox 类的控件)
  *       默认在页面加载完成时会调用一次; 加入新的checkbox控件时需调用一次.
  */
-febsui.ui_checkbox_init();
+febsui.ui_checkbox_init(elem?:any);
 /**
 * @desc: 初始化popover控件.
 *        对页面上 的所有 <popover> 元素进行初始化.
 *        在增加新的popover到页面后, 需要手动调用此方法.
 */
-febsui.ui_popover_init();
+febsui.ui_popover_init(elem?:any);
 
 /**
 * @desc: 初始化actionSheet控件.
 *        对页面上 的所有 <actionsheet> 元素进行初始化.
 *        在增加新的actionsheet到页面后, 需要手动调用此方法.
 */
-febsui.ui_actionSheet_init();
+febsui.ui_actionSheet_init(elem?:any);
 /**
 * @desc: 初始化dialog控件.
 *        对页面上 的所有 <dialog> 元素进行初始化.
 *        在增加新的dialog到页面后, 需要手动调用此方法.
 */
-febsui.ui_dialog_init():void;
+febsui.ui_dialog_init(elem?:any):void;
 /**
 * @desc: 初始化uploader控件.
 *        对页面上 的所有 <uploader> 元素进行初始化.
 *        在增加新的uploader到页面后, 需要手动调用此方法.
 */
-febsui.ui_uploader_init():void;
+febsui.ui_uploader_init(elem?:any):void;
 /**
 * @desc: 用于解决ie9下不支持css:animation; 初始化<div class="febsui-icon-spin1/febsui-icon-spin1-white">控件.
 */
-febsui.ui_spin_init():void;
+febsui.ui_spin_init(elem?:any):void;
 /**
 * @desc: 对所有的button控件进行初始化, 保证移动端touch穿透体验.
 */
-febsui.ui_button_init():void;
+febsui.ui_button_init(elem?:any):void;
 ```
 
 ### button
@@ -478,6 +479,93 @@ $('.febsui-checkbox').checkboxChecked(checked, trigger);
  * @desc 返回当前控件的状态.
  */
 $('.febsui-checkbox').checkboxIsChecked();
+```
+
+
+### swiper
+
+跑马灯效果
+
+示例
+
+```html
+<html>
+
+<div class="febsui-swiper" style="height: 80px;" data-loop="true" data-activeindex="2" data-dot-color="#000000">
+  <div class="febsui-swiper-page" style="background-color: #ff0000;">1</div>
+  <div class="febsui-swiper-page" style="background-color: #00ff00;">2</div>
+  <div class="febsui-swiper-page" style="background-color: #ff00ff;">3</div>
+  <div class="febsui-swiper-page" style="background-color: #0000ff;">4</div>
+</div>
+
+</html>
+```
+
+属性
+
+| 属性 | 说明 | 值 |
+|----|----|----|
+| data-current | 表明当前显示的页面 | 允许的值为: 整数索引位置  |
+| data-dots |  表明是否显示当前页指示器; (默认 true) | 允许的值: true, false  |
+| data-loop |  表明是否允许循环显示. (默认 true)  | 允许的值: true, false  |
+| data-dot-color |  指示器颜色  | 例如: #ffffff  |
+| data-auto |  自动切换动画; 如果存在则会在指定时间内自动切换动画. 其他非数值值将默认为 7000  | 例如: 3000  |
+
+
+方法
+
+```js
+/**
+ * @desc 判断是否是swiper
+ */
+$('.febsui-swiper').isSwiper();
+/**
+ * @desc 监听变化事件
+ */
+$('.febsui-swiper').swiper(function(){});
+
+or
+
+$('.febsui-swiper').on('swiper', function(){});
+
+/**
+ * @desc 手动触发事件
+ */
+$('.febsui-swiper').swiper();
+
+or
+
+$('.febsui-swiper').trigger('swiper');
+
+/**
+ * @desc 设置指示器颜色.
+ */
+$('.febsui-swiper').swiperDotColor(color);
+
+/**
+ * @desc 移动到前一页.
+ * @param trigger: 是否触发事件 (默认false).
+ */
+$('.febsui-swiper').swiperPre(trigger?:boolean);
+
+/**
+ * @desc 移动到后一页.
+ * @param trigger: 是否触发事件 (默认false).
+ */
+$('.febsui-swiper').swiperNext(trigger?:boolean);
+
+/**
+ * @desc 移动到指定页.
+ * @param index: 页索引.
+ * @param animation: 是否存在动画 (默认true).
+ * @param trigger: 是否触发事件 (默认false).
+ */
+$('.febsui-swiper').swiperTo(index:number, animation?:boolean, trigger?:boolean);
+
+/**
+ * @desc 返回总共多少页.
+ */
+$('.febsui-swiper').swiperTotal();
 ```
 
 ### popover

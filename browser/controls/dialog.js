@@ -89,8 +89,8 @@ function hide(selector) {
 */
 function showAlert(ctx) {
 
-  if (typeof ctx === 'string') {
-    ctx = {content:ctx};
+  if (typeof ctx !== 'object') {
+    ctx = {content:ctx&&ctx.toString()};
   }
 
   ctx.contentHtml = ctx.contentHtml? ctx.contentHtml: '';

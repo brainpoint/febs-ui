@@ -36,8 +36,9 @@ function escape_string(ctx) {
  * ctx.center: 默认为false; 是否使用居中的显示方式.
  */
 function showToast(ctx) {
-  if (typeof ctx === 'string') {
-    ctx = {content:ctx};
+
+  if (typeof ctx !== 'object') {
+    ctx = {content:ctx&&ctx.toString()};
   }
 
   escape_string(ctx);
