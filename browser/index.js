@@ -62,6 +62,7 @@ require('./plugins/actionsheet');
 require('./plugins/dialog');
 require('./plugins/popover');
 require('./plugins/switch');
+require('./plugins/swiper');
 require('./plugins/checkbox');
 require('./plugins/uploader');
 

@@ -19,8 +19,8 @@ export class dom {
 
   /** dialog */
   isDialog():boolean;
-  dialogShow():void;
-  dialogHide():void;
+  dialogShow():dom;
+  dialogHide():dom;
 
   /** switch */
   isSwitch():boolean;
@@ -41,8 +41,18 @@ export class dom {
 
   /** actionsheet */
   isActionsheet():boolean;
-  actionsheetShow():void;
-  actionsheetHide():void;
+  actionsheetShow():dom;
+  actionsheetHide():dom;
+
+  /** swiper */
+  isSwiper():boolean;
+  swiperDotColor(color?:string):dom;
+  swiperPre(trigger?:boolean):dom;
+  swiperNext(trigger?:boolean):dom;
+  swiperCurrent():number;
+  swiperTotal():number;
+  swiperTo(index:number, animation?:boolean, trigger?:boolean):dom;
+  swiper(cb?:(e:any)=>void):dom;
 };
 
 
@@ -281,6 +291,10 @@ export function ui_spin_init(elem?:any):void;
 * @desc: 对所有的button控件进行初始化, 保证移动端touch穿透体验.
 */
 export function ui_button_init(elem?:any):void;
+/**
+* @desc: 对所有的swiper控件进行初始化.
+*/
+export function ui_swiper_init(elem?:any):void;
 /**
 * @desc: 对页面上所有ui控件进行初始化.
 */

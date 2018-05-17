@@ -33,7 +33,7 @@
  }
 
  [class|=febsui-input],
- input, .febsui-dialog, .febsui-mask, .febsui-visible, .febsui-dialog-container, .febsui-dialog-edit {
+ input, .febsui-dialog, .febsui-mask, .febsui-visible, .febsui-dialog-container, .febsui-dialog-content, .febsui-dialog-edit {
   -webkit-user-select: auto;
   -khtml-user-select: auto;
   -moz-user-select: auto;
@@ -513,7 +513,7 @@
  /* alert */
 /****************************************************/
  /*
-<div class="febsui-dialog febsui-mask" role="alert">
+<div class="febsui-dialog" role="alert">
   <div class="febsui-dialog-container">
     <div class="febsui-dialog-title">title</div>
     <div class="febsui-dialog-content">content</div>
@@ -527,7 +527,7 @@
 /* confirm */
 /****************************************************/
 /*
-<div class="febsui-dialog febsui-mask" role="alert">
+<div class="febsui-dialog" role="alert">
   <div class="febsui-dialog-container">
     <div class="febsui-dialog-title">title</div>
     <div class="febsui-dialog-content">content</div>
@@ -542,7 +542,7 @@
 /* editor */
 /****************************************************/
 /*
-<div class="febsui-dialog febsui-mask" role="alert">
+<div class="febsui-dialog" role="alert">
   <div class="febsui-dialog-container">
     <div class="febsui-dialog-title">title</div>
     <div class="febsui-dialog-content">content</div>
@@ -560,10 +560,16 @@
 /* custom */
 /****************************************************/
 /* 
-<div class="febsui-dialog febsui-mask" role="alert">
-  <dialog style="" class="febsui-dialog-container">
-    {{html}}
-  </dialog>
+<div class="febsui-dialog febsui-dialog-custom" role="alert">
+  <div style="" class="febsui-dialog-container">
+    <div class="febsui-dialog-content">
+      {{html}}
+    </div>
+    <ul class="febsui-dialog-buttons">
+      <li><button class="febsui-dialog-cancel">cancel</button></li>
+      <li><button class="febsui-dialog-ok">ok</button></li>
+    </ul>
+  </div>
 </div> */
 
  .febsui-mask {
@@ -668,6 +674,9 @@
    min-height: 36px;
    text-align: center;
    color: #1f1f21;
+   
+   max-height: 80%;
+   overflow: auto;
  }
  
  .febsui-dialog .febsui-dialog-container .febsui-dialog-edit {
@@ -759,8 +768,8 @@
   margin: 0;
   margin-left: auto;
   margin-right: auto;
-  overflow: auto;
-  max-height: 80%;
+  /* overflow: auto;
+  max-height: 80%; */
   display: block;
   border: none;
   max-width: inherit !important;
@@ -1606,42 +1615,94 @@
 
 /* 
 <div class="febsui-swiper">
-  <div class="febsui-swiper-page"></div>
-  <div class="febsui-swiper-page"></div>
-  <div class="febsui-swiper-page"></div>
-  <div class="febsui-swiper-page"></div>
+  <div class="febsui-swiper-pages">
+    <div class="febsui-swiper-page"></div>
+    <div class="febsui-swiper-page"></div>
+    <div class="febsui-swiper-page"></div>
+    <div class="febsui-swiper-page"></div>
+  </div>
   <div class="febsui-swiper-dots">
     <span class="febsui-swiper-dot-active"></span>
-    <span class="febsui-swiper-dot"></span>
-    <span class="febsui-swiper-dot"></span>
-    <span class="febsui-swiper-dot"></span>
-    <span class="febsui-swiper-dot"></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
 </div> */
 
 
 .febsui-swiper {
   min-height: 40px;
+  background-color: #ececec;
+  overflow: hidden;
+  position: relative;
 }
 
-.febsui-swiper .febsui-swiper-page {
-  background-color: #000;
+.febsui-swiper .febsui-swiper-pages {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  white-space: nowrap;
+  transform: translate3d(0px, 0px, 0px);
+  touch-action: pan-x pan-y manipulation;
+}
+
+.febsui-swiper .febsui-swiper-animation {
+  transition: all 0.25s cubic-bezier(0.4, 0.7, 0.5, 1);
+}
+
+.febsui-swiper .febsui-swiper-pages .febsui-swiper-page {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 .febsui-swiper .febsui-swiper-dots {
   text-align: center;
   font-size: 16px;
-  color: #fff;
   position: absolute;
-  bottom: 40px;
+  bottom: 5px;
   left: 0;
   right: 0;
+  height: 12px;
 }
 
-.febsui-swiper .febsui-swiper-dots span::after {
-  content: '●' /* ○ */
+.febsui-swiper .febsui-swiper-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: inline-block;
+  margin: 3px;
+  opacity: 0.35;
 }
 
-.febsui-swiper .febsui-swiper-dots .febsui-swiper-dot {
-  opacity: 0.2;
+.febsui-swiper .febsui-swiper-dots .febsui-swiper-dot-active {
+  /* content: '●'; */
+  width: 7px;
+  height: 7px;
+  opacity: 1;
+}
+
+/* swiper vertical */
+
+.febsui-swiper-vertical .febsui-swiper-pages .febsui-swiper-page {
+  display: block;
+}
+
+.febsui-swiper-vertical .febsui-swiper-dots {
+  bottom: 0px;
+  top: 0px;
+  right: 5px;
+  width: 10px;
+  left: auto;
+  margin: auto;
+  display: table;
+}
+
+.febsui-swiper-vertical .febsui-swiper-dots span {
+  display: inline-block;
 }

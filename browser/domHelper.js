@@ -59,14 +59,12 @@ exports.maskPreventEvent = function(ee) {
   if (window.febs.utils.browserIsMobile()) {
     children.off('touchmove', maskPreventHandler2);
     children.on('touchmove', maskPreventHandler2);
-
     ee.off('touchmove', maskPreventHandler);
     ee.on('touchmove', maskPreventHandler);
   }
   else {
     children.off('mousewheel', maskPreventHandler2);
     children.on('mousewheel', maskPreventHandler2);
-
     ee.off('mousewheel', maskPreventHandler);
     ee.on('mousewheel', maskPreventHandler);
   }
@@ -90,10 +88,7 @@ function mobile_onTouchend(event) {
   event = event || window.event;
   delete event.target.__touchstart_at;
 }
-function mobile_onTouchcancel(event) {
-  event = event || window.event;
-  delete event.target.__touchstart_at;
-}
+var mobile_onTouchcancel = mobile_onTouchend;
 
 /**
 * @desc: 
@@ -102,12 +97,22 @@ function mobile_onTouchcancel(event) {
 exports.mobile_preventTouchEvent = function(dom) {
   if (window.febs.utils.browserIsMobile()) {
     if (dom.addEventListener) {
-      dom.addEventListener('touchstart', mobile_onTouchstart);
-      dom.addEventListener('touchmove', mobile_onTouchmove);
-      dom.addEventListener('touchend', mobile_onTouchend);
-      dom.addEventListener('touchcancel', mobile_onTouchcancel);
+      dom.removeEventListener('touchstart', mobile_onTouchstart);
+      dom.removeEventListener('touchmove', mobile_onTouchmove);
+      dom.removeEventListener('touchend', mobile_onTouchend);
+      dom.removeEventListener('touchcancel', mobile_onTouchcancel);
+      
+      dom.addEventListener('touchstart', mobile_onTouchstart, true);
+      dom.addEventListener('touchmove', mobile_onTouchmove, true);
+      dom.addEventListener('touchend', mobile_onTouchend, true);
+      dom.addEventListener('touchcancel', mobile_onTouchcancel, true);
     }
     else {
+      dom.detachEvent('ontouchstart', mobile_onTouchstart);
+      dom.detachEvent('ontouchmove', mobile_onTouchmove);
+      dom.detachEvent('ontouchend', mobile_onTouchend);
+      dom.detachEvent('ontouchcancel', mobile_onTouchcancel);
+      
       dom.attachEvent('ontouchstart', mobile_onTouchstart);
       dom.attachEvent('ontouchmove', mobile_onTouchmove);
       dom.attachEvent('ontouchend', mobile_onTouchend);
