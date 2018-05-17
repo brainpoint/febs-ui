@@ -1291,6 +1291,14 @@
   position: absolute;
 }
 
+/* iphone x */
+@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3){
+  .febsui-actionsheet .febsui-actionsheet-container {
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
 .febsui-actionsheet.febsui-visible .febsui-actionsheet-container {
   -webkit-transform: translateY(0);
   -moz-transform: translateY(0);
@@ -1589,4 +1597,51 @@
 
 :disabled:active+.febsui-checkbox-mark:before {
   background: transparent
+}
+
+
+/****************************************************/
+ /* swiper */
+/****************************************************/
+
+/* 
+<div class="febsui-swiper">
+  <div class="febsui-swiper-page"></div>
+  <div class="febsui-swiper-page"></div>
+  <div class="febsui-swiper-page"></div>
+  <div class="febsui-swiper-page"></div>
+  <div class="febsui-swiper-dots">
+    <span class="febsui-swiper-dot-active"></span>
+    <span class="febsui-swiper-dot"></span>
+    <span class="febsui-swiper-dot"></span>
+    <span class="febsui-swiper-dot"></span>
+    <span class="febsui-swiper-dot"></span>
+  </div>
+</div> */
+
+
+.febsui-swiper {
+  min-height: 40px;
+}
+
+.febsui-swiper .febsui-swiper-page {
+  background-color: #000;
+}
+
+.febsui-swiper .febsui-swiper-dots {
+  text-align: center;
+  font-size: 16px;
+  color: #fff;
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+}
+
+.febsui-swiper .febsui-swiper-dots span::after {
+  content: '●' /* ○ */
+}
+
+.febsui-swiper .febsui-swiper-dots .febsui-swiper-dot {
+  opacity: 0.2;
 }

@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" /> 
   <meta name="apple-touch-fullscreen" content="yes" /> 
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <link rel="stylesheet" type="text/css" href="./febsui-0.8.3/febsui.css" />
   <script charset='UTF-8' type="text/javascript" src="./febs-0.8.19/febs.js"></script>
   <script charset='UTF-8' type="text/javascript" src="./febsui-0.8.3/febsui.js"></script>
@@ -78,6 +78,7 @@
 
   <!-- all -->
   <div class="febsui-popover" id="allControl" style="top:50px; left:50px;" data-attach="#popoverAttachAll" data-offset="5">
+    <div class="febsui-popover-cell" onclick="window.location.href='#anchor_swiper'">swiper</div>
     <div class="febsui-popover-cell" onclick="window.location.href='#anchor_page'">page</div>
     <div class="febsui-popover-cell" onclick="window.location.href='#anchor_button'">button</div>
     <div class="febsui-popover-cell" onclick="window.location.href='#anchor_loading'">loading</div>
@@ -121,6 +122,31 @@
   <div class="febsui-icon febsui-icon-arrow-right"></div>
 
   <br>
+
+  <!-- swiper -->
+  <a class="title" id="anchor_swiper" href="#anchor_swiper">swiper</a>
+  <div class="febsui-dialog" id="h2Swiper">
+    <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
+    ]]></script>
+
+    <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
+  </div>
+  <button style="font-size:10px;" onclick="$('#h2Swiper').dialogShow()">[Code]</button> 
+  <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#swiper')">[Readme]</button><br>
+  
+  <div class="febsui-swiper">
+    <div class="febsui-swiper-page"></div>
+    <div class="febsui-swiper-page"></div>
+    <div class="febsui-swiper-page"></div>
+    <div class="febsui-swiper-page"></div>
+    <div class="febsui-swiper-dots">
+      <span class="febsui-swiper-dot-active"></span>
+      <span class="febsui-swiper-dot"></span>
+      <span class="febsui-swiper-dot"></span>
+      <span class="febsui-swiper-dot"></span>
+      <span class="febsui-swiper-dot"></span>
+    </div>
+  </div>
 
   <!-- page -->
   <a class="title" id="anchor_page" href="#anchor_page">page:</a>
