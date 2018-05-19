@@ -1,3 +1,21 @@
+function removeEventListener(dom, eventName, foo) {
+  if (!dom) return;
+  if (dom.addEventListener) {
+    dom.removeEventListener(eventName, foo);
+  }
+  else {
+    dom.detachEvent('on'+eventName, foo);
+  }
+}
+function addEventListener(dom, eventName, foo, useCapture) {
+  if (!dom) return;
+  if (dom.addEventListener) {
+    dom.addEventListener(eventName, foo, useCapture);
+  }
+  else {
+    dom.attachEvent('on'+eventName, foo);
+  }
+}
 
 /**
 * @desc: 复制属性. 不会复制class属性.
@@ -42,31 +60,20 @@ exports.copyClass = function(from, to) {
 
 
 function maskPreventHandler(event){
-  event.preventDefault();
-}
-
-
-function maskPreventHandler2(event){
-  event.stopPropagation();
-  // event.preventDefault();
+  if (event.target == event.currentTarget)
+    event.preventDefault();
 }
 
 // event.
 exports.maskPreventEvent = function(ee) {
 
-  var children = ee.children();
-  
   if (window.febs.utils.browserIsMobile()) {
-    children.off('touchmove', maskPreventHandler2);
-    children.on('touchmove', maskPreventHandler2);
-    ee.off('touchmove', maskPreventHandler);
-    ee.on('touchmove', maskPreventHandler);
+    removeEventListener(ee[0], 'touchmove', maskPreventHandler);
+    addEventListener(ee[0], 'touchmove', maskPreventHandler);
   }
   else {
-    children.off('mousewheel', maskPreventHandler2);
-    children.on('mousewheel', maskPreventHandler2);
-    ee.off('mousewheel', maskPreventHandler);
-    ee.on('mousewheel', maskPreventHandler);
+    removeEventListener(ee[0], 'mousewheel', maskPreventHandler);
+    addEventListener(ee[0], 'mousewheel', maskPreventHandler);
   }
 }
 
@@ -80,6 +87,7 @@ function mobile_onTouchmove(event) {
   event = event || window.event;
   if (event.target.__touchstart_at && Date.now()-event.target.__touchstart_at > 450) {
     event.preventDefault();
+    // return false;
   } else {
     delete event.target.__touchstart_at;
   }
@@ -96,27 +104,14 @@ var mobile_onTouchcancel = mobile_onTouchend;
 */
 exports.mobile_preventTouchEvent = function(dom) {
   if (window.febs.utils.browserIsMobile()) {
-    if (dom.addEventListener) {
-      dom.removeEventListener('touchstart', mobile_onTouchstart);
-      dom.removeEventListener('touchmove', mobile_onTouchmove);
-      dom.removeEventListener('touchend', mobile_onTouchend);
-      dom.removeEventListener('touchcancel', mobile_onTouchcancel);
-      
-      dom.addEventListener('touchstart', mobile_onTouchstart, true);
-      dom.addEventListener('touchmove', mobile_onTouchmove, true);
-      dom.addEventListener('touchend', mobile_onTouchend, true);
-      dom.addEventListener('touchcancel', mobile_onTouchcancel, true);
-    }
-    else {
-      dom.detachEvent('ontouchstart', mobile_onTouchstart);
-      dom.detachEvent('ontouchmove', mobile_onTouchmove);
-      dom.detachEvent('ontouchend', mobile_onTouchend);
-      dom.detachEvent('ontouchcancel', mobile_onTouchcancel);
-      
-      dom.attachEvent('ontouchstart', mobile_onTouchstart);
-      dom.attachEvent('ontouchmove', mobile_onTouchmove);
-      dom.attachEvent('ontouchend', mobile_onTouchend);
-      dom.attachEvent('ontouchcancel', mobile_onTouchcancel);
-    }
+    removeEventListener(dom, 'touchstart', mobile_onTouchstart);
+    removeEventListener(dom, 'touchmove', mobile_onTouchmove);
+    removeEventListener(dom, 'touchend', mobile_onTouchend);
+    removeEventListener(dom, 'touchcancel', mobile_onTouchcancel);
+    
+    addEventListener(dom, 'touchstart', mobile_onTouchstart, true);
+    addEventListener(dom, 'touchmove', mobile_onTouchmove, true);
+    addEventListener(dom, 'touchend', mobile_onTouchend, true);
+    addEventListener(dom, 'touchcancel', mobile_onTouchcancel, true);
   } // if.
 }

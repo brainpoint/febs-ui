@@ -247,18 +247,18 @@
     // laoding.
     function showLoading() {
       febsui.loading_show('3秒后关闭');
-      febs.utils.sleep(1000)
-        .then(function () {
-          febsui.loading_show('2秒后关闭');
-          return febs.utils.sleep(1000)
-        })
-        .then(function () {
-          febsui.loading_show('1秒后关闭');
-          return febs.utils.sleep(1000)
-        })
-        .then(function () {
-          febsui.loading_hide();
-        })
+      // febs.utils.sleep(1000)
+      //   .then(function () {
+      //     febsui.loading_show('2秒后关闭');
+      //     return febs.utils.sleep(1000)
+      //   })
+      //   .then(function () {
+      //     febsui.loading_show('1秒后关闭');
+      //     return febs.utils.sleep(1000)
+      //   })
+      //   .then(function () {
+      //     febsui.loading_hide();
+      //   })
     }
   </script>
 
