@@ -14,7 +14,7 @@ function escape_string(str) {
   return str;
 }
 
-var ie9 = window.febs.utils.browserIEVer() <= 9;
+var is_IE9 = window.febs.utils.browserIEVer() <= 9;
 
 'use strict';
 
@@ -50,7 +50,7 @@ exports.loading_isVisiable = function() {
 */
 function loading_show(text, timeout, spinClass) {
 
-  if (ie9)
+  if (is_IE9)
     spinClass = spinClass||'febsui-icon-spin3-white';
   else
     spinClass = spinClass||'febsui-icon-spin1-white';
@@ -164,7 +164,7 @@ var ie9Spins;
 var spinTotal = 0;
 var spinTimer;
 var spinFoo;
-if (ie9) {
+if (is_IE9) {
   var now = Date.now();
   var timeSpan = 2000;
   
@@ -191,7 +191,7 @@ if (ie9) {
 */
 exports.spin_init = function() {
   // ie9.
-  if (ie9) {
+  if (is_IE9) {
     ie9Spins = $('.febsui-animation-spin');
     if (ie9Spins.length > 0) {
       spinTimer = requestAnimationFrame(spinFoo);

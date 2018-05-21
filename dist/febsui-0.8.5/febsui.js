@@ -1292,7 +1292,7 @@ function escape_string(str) {
   return str;
 }
 
-var ie9 = window.febs.utils.browserIEVer() <= 9;
+var is_IE9 = window.febs.utils.browserIEVer() <= 9;
 
 'use strict';
 
@@ -1326,7 +1326,7 @@ exports.loading_isVisiable = function () {
 */
 function loading_show(text, timeout, spinClass) {
 
-  if (ie9) spinClass = spinClass || 'febsui-icon-spin3-white';else spinClass = spinClass || 'febsui-icon-spin1-white';
+  if (is_IE9) spinClass = spinClass || 'febsui-icon-spin3-white';else spinClass = spinClass || 'febsui-icon-spin1-white';
 
   text = escape_string(text);
 
@@ -1434,7 +1434,7 @@ var ie9Spins;
 var spinTotal = 0;
 var spinTimer;
 var _spinFoo;
-if (ie9) {
+if (is_IE9) {
   var now = Date.now();
   var timeSpan = 2000;
 
@@ -1461,7 +1461,7 @@ if (ie9) {
 */
 exports.spin_init = function () {
   // ie9.
-  if (ie9) {
+  if (is_IE9) {
     ie9Spins = $('.febsui-animation-spin');
     if (ie9Spins.length > 0) {
       spinTimer = requestAnimationFrame(_spinFoo);
@@ -1545,8 +1545,8 @@ function upload(cfg) {
   // ie9.
   var uid = 'febsuifile' + uuid.uuid();
   uid = window.febs.string.replace(uid, '-', '');
-  var ie99 = window.febs.utils.browserIEVer() <= 9;
-  if (ie99) {
+  var is_IE9 = window.febs.utils.browserIEVer() <= 9;
+  if (is_IE9) {
     cfg.formObj.attr('target', uid);
     cfg.formObj.attr('action', control_upload_url);
     cfg.formObj.attr('method', 'post');
@@ -2397,6 +2397,39 @@ $.fn.popoverHide = function () {
 "use strict";
 
 
+// ie9.
+var is_IE9 = window.febs.utils.browserIEVer() <= 9;
+var ie9_animation_durtion = 250;
+var ie9_animation_start_at = 0;
+var ie9_animation_obj = [];
+var _ie9_animation_foo;
+var ie9_animation_frame;
+if (is_IE9) {
+  _ie9_animation_foo = function ie9_animation_foo(tm) {
+
+    var elpase = Date.now() - ie9_animation_start_at;
+    if (elpase >= ie9_animation_durtion) {
+      for (var i = 0; i < ie9_animation_obj.length; i++) {
+        var obj = ie9_animation_obj[i];
+        obj.obj.css('-ms-transform', obj.vertical ? 'translateY(' + obj.offset + 'px)' : 'translateX(' + obj.offset + 'px)');
+      }
+      ie9_animation_obj = [];
+      ie9_animation_frame = null;
+      return;
+    } // if.
+
+    for (var i = 0; i < ie9_animation_obj.length; i++) {
+      var obj = ie9_animation_obj[i];
+
+      var offset = obj.offsetCur + (obj.offset - obj.offsetCur) * elpase / ie9_animation_durtion;
+      obj.obj.css('-ms-transform', obj.vertical ? 'translateY(' + offset + 'px)' : 'translateX(' + offset + 'px)');
+    } // for.
+
+    ie9_animation_frame = requestAnimationFrame(_ie9_animation_foo);
+  };
+} // for ie9.
+
+
 function resizeSwiper() {
   var elems = $('.febsui-swiper');
   for (var i = 0; i < elems.length; i++) {
@@ -2545,6 +2578,17 @@ $.fn.swiperTo = function (index, animation, trigger) {
   if (typeof animation === 'undefined') {
     animation = true;
   }
+  if (ie9_animation_frame) {
+    cancelAnimationFrame(ie9_animation_frame);
+    ie9_animation_frame = null;
+    for (var i = 0; i < ie9_animation_obj.length; i++) {
+      var obj = ie9_animation_obj[i];
+      obj.obj.css('-ms-transform', obj.vertical ? 'translateY(' + obj.offset + 'px)' : 'translateX(' + obj.offset + 'px)');
+    }
+  }
+
+  ie9_animation_start_at = Date.now();
+  ie9_animation_obj = [];
 
   for (var i = 0; i < _this.length; i++) {
     var elem = $(_this[i]);
@@ -2588,9 +2632,9 @@ $.fn.swiperTo = function (index, animation, trigger) {
 
       for (var j = 0; j < indexp; j++) {
         if (directionVertical) {
-          offset += pages[j].offsetHeight;
+          offset += pages[j].clientHeight; //pages[j].offsetHeight;
         } else {
-          offset += pages[j].offsetWidth;
+          offset += pages[j].clientWidth; //pages[j].offsetWidth;
         }
       }
 
@@ -2602,19 +2646,61 @@ $.fn.swiperTo = function (index, animation, trigger) {
         pagesContainer.removeClass('febsui-swiper-animation');
       }
 
-      if (directionVertical) {
-        offset -= (elem[0].offsetHeight - pages[indexp].offsetHeight) / 2;
-        pagesContainer.css('-webkit-transform', 'translate3d(0px, ' + -offset + 'px, 0px)');
-        pagesContainer.css('-moz-transform', 'translate3d(0px, ' + -offset + 'px, 0px)');
-        pagesContainer.css('-ms-transform', 'translateY(' + -offset + 'px)');
-        pagesContainer.css('transform', 'translate3d(0px, ' + -offset + 'px, 0px)');
+      if (is_IE9 && animation) {
+
+        ie9_animation_obj = [];
+        ie9_animation_obj.push({
+          obj: pagesContainer
+          // offsetCur,
+          // offset,
+          // vertical
+        });
+
+        if (directionVertical) {
+          offset -= (elem[0].offsetHeight - pages[indexp].clientHeight) / 2;
+          ie9_animation_obj[ie9_animation_obj.length - 1].offset = -offset;
+          ie9_animation_obj[ie9_animation_obj.length - 1].vertical = true;
+
+          var offsetCur = pagesContainer.css('-ms-transform');
+          if (offsetCur) {
+            offsetCur = window.febs.string.replace(offsetCur, 'translateY(', '');
+            offsetCur = window.febs.string.replace(offsetCur, 'px)', '');
+            offsetCur = parseFloat(offsetCur);
+          } else {
+            offsetCur = 0;
+          }
+          ie9_animation_obj[ie9_animation_obj.length - 1].offsetCur = offsetCur;
+        } else {
+          offset -= (elem[0].offsetWidth - pages[indexp].clientWidth) / 2;
+          ie9_animation_obj[ie9_animation_obj.length - 1].offset = -offset;
+          ie9_animation_obj[ie9_animation_obj.length - 1].vertical = false;
+
+          var offsetCur = pagesContainer.css('-ms-transform');
+          if (offsetCur) {
+            offsetCur = window.febs.string.replace(offsetCur, 'translateX(', '');
+            offsetCur = window.febs.string.replace(offsetCur, 'px)', '');
+            offsetCur = parseFloat(offsetCur);
+          } else {
+            offsetCur = 0;
+          }
+          ie9_animation_obj[ie9_animation_obj.length - 1].offsetCur = offsetCur;
+        }
       } else {
-        offset -= (elem[0].offsetWidth - pages[indexp].offsetWidth) / 2;
-        pagesContainer.css('-webkit-transform', 'translate3d(' + -offset + 'px, 0px, 0px)');
-        pagesContainer.css('-moz-transform', 'translate3d(' + -offset + 'px, 0px, 0px)');
-        pagesContainer.css('-ms-transform', 'translateX(' + -offset + 'px)');
-        pagesContainer.css('transform', 'translate3d(' + -offset + 'px, 0px, 0px)');
-      }
+        if (directionVertical) {
+          offset -= (elem[0].offsetHeight - pages[indexp].offsetHeight) / 2;
+          pagesContainer.css('-webkit-transform', 'translate3d(0px, ' + -offset + 'px, 0px)');
+          pagesContainer.css('-moz-transform', 'translate3d(0px, ' + -offset + 'px, 0px)');
+          pagesContainer.css('-ms-transform', 'translateY(' + -offset + 'px)');
+          pagesContainer.css('transform', 'translate3d(0px, ' + -offset + 'px, 0px)');
+        } else {
+          offset -= (elem[0].offsetWidth - pages[indexp].offsetWidth) / 2;
+          pagesContainer.css('-webkit-transform', 'translate3d(' + -offset + 'px, 0px, 0px)');
+          pagesContainer.css('-moz-transform', 'translate3d(' + -offset + 'px, 0px, 0px)');
+          pagesContainer.css('-ms-transform', 'translateX(' + -offset + 'px)');
+          pagesContainer.css('transform', 'translate3d(' + -offset + 'px, 0px, 0px)');
+        }
+      } // if.
+
       pagesContainer.attr('data-offset', offset);
 
       if (!animation) {
@@ -2636,6 +2722,13 @@ $.fn.swiperTo = function (index, animation, trigger) {
       }
     } // if.
   } // for.
+
+  if (is_IE9 && animation) {
+    if (ie9_animation_obj.length > 0) {
+      ie9_animation_frame = requestAnimationFrame(_ie9_animation_foo);
+    }
+  }
+
   return this;
 };
 
@@ -4674,7 +4767,7 @@ var uploadErr = __webpack_require__(15);
 var dialog = __webpack_require__(30);
 
 // ie9.
-var ie99 = window.febs.utils.browserIEVer() <= 9;
+var is_IE9 = window.febs.utils.browserIEVer() <= 9;
 
 exports.uploader_init = uploader_init;
 
@@ -4722,7 +4815,7 @@ function uploader_init(elem) {
       dom.html('');
 
       var submitHtml = '';
-      if (ie99) {
+      if (is_IE9) {
         submitHtml = '<input type="submit" value="submit">';
       }
 
@@ -4833,7 +4926,7 @@ function uploader_init(elem) {
 
             var filename = '';
 
-            if (ie99) {
+            if (is_IE9) {
               var indexsp = fileObj[0].value.lastIndexOf('\\');
               if (indexsp > 0) {
                 indexsp = fileObj[0].value.substr(indexsp + 1);

@@ -18,7 +18,7 @@ var uploadErr = require('./upload.err');
 var dialog = require('./dialog');
 
 // ie9.
-var ie99 = window.febs.utils.browserIEVer() <= 9;
+var is_IE9 = window.febs.utils.browserIEVer() <= 9;
 
 exports.uploader_init = uploader_init;
 
@@ -68,7 +68,7 @@ function uploader_init(elem) {
       dom.html('');
 
       var submitHtml = '';
-      if (ie99) {
+      if (is_IE9) {
         submitHtml = `<input type="submit" value="submit">`;
       }
 
@@ -191,7 +191,7 @@ function uploader_init(elem) {
 
               var filename = '';
 
-              if (ie99) {
+              if (is_IE9) {
                 var indexsp = fileObj[0].value.lastIndexOf('\\');
                 if (indexsp > 0) {
                   indexsp = fileObj[0].value.substr(indexsp+1);

@@ -65,8 +65,8 @@ function upload(cfg) {
   // ie9.
   var uid = 'febsuifile' + uuid.uuid();
   uid = window.febs.string.replace(uid, '-', '');
-  var ie99 = window.febs.utils.browserIEVer() <= 9;
-  if (ie99) {
+  var is_IE9 = window.febs.utils.browserIEVer() <= 9;
+  if (is_IE9) {
     cfg.formObj.attr('target', uid);
     cfg.formObj.attr('action', control_upload_url);
     cfg.formObj.attr('method', 'post');
