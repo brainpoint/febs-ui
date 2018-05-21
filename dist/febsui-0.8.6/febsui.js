@@ -3730,14 +3730,21 @@ exports.ajaxSubmit = function ajaxSubmit(formObj, fileObj, options) {
     throw new Error('only support multipart/form-data');
   }
 
+  var headers;
   if (options.headers) {
-    delete options.headers['Content-Type'];
+    // delete options.headers['Content-Type'];
+    headers = options.headers;
+  } else {
+    headers = {};
   }
+
+  headers['Content-Type'] = false;
 
   return window.febs.net.ajax({
     url: options.url,
     type: options.method,
-    headers: options.headers,
+    headers: headers,
+    processData: false,
     data: options.data,
     timeout: options.timeout,
     withCredentials: options.credentials,
