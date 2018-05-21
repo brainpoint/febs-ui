@@ -44,6 +44,7 @@ febsui.dialog_showToast({content:'即将开始', icon:'ok'});
 以下列方式使用
 
 ```js
+import febs from 'febs-browser'; // or 'febs'
 import febsui from 'febs-ui';
 import 'febs-ui/febsui.css';  // 或是在html头部引用样式.
 

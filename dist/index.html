@@ -11,9 +11,9 @@
   <meta name="apple-touch-fullscreen" content="yes" /> 
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <script charset='UTF-8' type="text/javascript" src="./febs-0.8.21/febs.js"></script>
-  <script charset='UTF-8' type="text/javascript" src="./febsui-0.8.6/febsui.js"></script>
-  <link rel="stylesheet" type="text/css" href="./febsui-0.8.6/febsui.css" />
+  <script charset='UTF-8' type="text/javascript" src="./febs-0.8.22/febs.js"></script>
+  <script charset='UTF-8' type="text/javascript" src="./febsui-0.8.7/febsui.js"></script>
+  <link rel="stylesheet" type="text/css" href="./febsui-0.8.7/febsui.css" />
   
   <script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
 	<script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/shCore.js"></script>
@@ -247,18 +247,18 @@
     // laoding.
     function showLoading() {
       febsui.loading_show('3秒后关闭');
-      // febs.utils.sleep(1000)
-      //   .then(function () {
-      //     febsui.loading_show('2秒后关闭');
-      //     return febs.utils.sleep(1000)
-      //   })
-      //   .then(function () {
-      //     febsui.loading_show('1秒后关闭');
-      //     return febs.utils.sleep(1000)
-      //   })
-      //   .then(function () {
-      //     febsui.loading_hide();
-      //   })
+      febs.utils.sleep(1000)
+        .then(function () {
+          febsui.loading_show('2秒后关闭');
+          return febs.utils.sleep(1000)
+        })
+        .then(function () {
+          febsui.loading_show('1秒后关闭');
+          return febs.utils.sleep(1000)
+        })
+        .then(function () {
+          febsui.loading_hide();
+        })
     }
   </script>
 

@@ -4966,7 +4966,7 @@ function ajax(ctx) {
     if (ctx.processData && typeof data_content !== 'string') {
       try {
 
-        if (ctx.headers['Content-Type'] && ctx.headers['Content-Type'].toLowerCase().indexOf('json') >= 0) {
+        if (ctx.headers && ctx.headers['Content-Type'] && ctx.headers['Content-Type'].toLowerCase().indexOf('json') >= 0) {
           data_content = _JSON$stringify(data_content);
         } else {
           var data_tt = '';
