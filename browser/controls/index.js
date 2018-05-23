@@ -45,6 +45,9 @@ exports.ui_uploader_init = uploadera.uploader_init;
 var checkboxa = require('./checkbox');
 exports.ui_checkbox_init = checkboxa.checkbox_init;
 
+var radioa = require('./radio');
+exports.ui_radio_init = radioa.radio_init;
+
 var loadinga = require('./loading');
 exports.ui_spin_init = loadinga.spin_init;
 
@@ -68,6 +71,7 @@ exports.ui_init = function() {
   actionsheeta.actionsheet_init();
   uploadera.uploader_init();
   checkboxa.checkbox_init();
+  radioa.radio_init();
   loadinga.spin_init();
   buttona.button_init();
 }

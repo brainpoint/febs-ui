@@ -41,6 +41,10 @@
   user-select: auto;
  }
 
+ label {
+   cursor: pointer;
+ }
+
  /**
    * text.
    */
@@ -792,7 +796,7 @@
   <span class="febsui-switch-slider"></span>
 </div> */
 
- switch, .febsui-switch {
+.febsui-switch {
    position: relative;
    display: inline-block;
    width: 50px !important;
@@ -803,7 +807,7 @@
    line-height: 32px !important;
  }
  
- switch, .febsui-switch,
+.febsui-switch,
  .febsui-switch-on {
    box-shadow: #4AD562 0px 0px 0px 16px inset;
    transition: border 0.4s, box-shadow 0.2s, background-color 1.2s;
@@ -823,7 +827,6 @@
    top: 1px;
  } 
 
- switch .febsui-switch-slider,
  .febsui-switch .febsui-switch-slider,
  .febsui-switch-on .febsui-switch-slider {
    top: 2px;
@@ -844,7 +847,6 @@
    cursor: pointer;
  }
  
- switch.febsui-switch-disabled,
  .febsui-switch.febsui-switch-disabled,
  .febsui-switch-on.febsui-switch-disabled {
    opacity: .5;
@@ -1532,6 +1534,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  cursor: pointer;
 }
 
 .febsui-checkbox,.febsui-checkbox-mark {
@@ -1546,7 +1549,7 @@
   font-family: -apple-system,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-weight: 400
+  font-weight: 400;
 }
 
 .febsui-checkbox .febsui-checkbox-mark {
@@ -1608,6 +1611,115 @@
 }
 
 :disabled:active+.febsui-checkbox-mark:before {
+  background: transparent
+}
+ 
+/****************************************************/
+ /* radio */
+/****************************************************/
+
+/* 
+<div class="febsui-radio">
+  <input id="radio1" type="radio">
+  <div class="febsui-radio-mark"></div>
+</div> */
+
+.febsui-radio {
+  line-height: 22px;
+}
+
+.febsui-radio input, .febsui-radio input:checked {
+  position: absolute;
+  right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  z-index: 0;
+  vertical-align: top;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.febsui-radio,.febsui-radio-mark {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-family: -apple-system,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400
+}
+
+.febsui-radio .febsui-radio-mark {
+  box-sizing: border-box;
+  background-clip: padding-box;
+  height: 22px;
+  width: 22px;
+  pointer-events: none
+}
+
+.febsui-radio .febsui-radio-mark:before {
+  content: "";
+  position: absolute;
+  box-sizing: border-box;
+  background-clip: padding-box;
+  width: 22px;
+  height: 22px;
+  background: transparent;
+  left: 0
+}
+
+.febsui-radio .febsui-radio-mark:after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 5px;
+  width: 11px;
+  height: 5px;
+  background: transparent;
+  border: 2px solid #0276ff;
+  border-width: 1px;
+  border-top: none;
+  border-right: none;
+  border-radius: 0;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+
+  opacity: 0
+}
+
+:checked+.febsui-radio-mark:before {
+  border: none
+}
+
+:checked+.febsui-radio-mark:after {
+  opacity: 1
+}
+
+:disabled+.febsui-radio-mark {
+  opacity: .3;
+  cursor: default;
+  pointer-events: none
+}
+
+:disabled:active+.febsui-radio-mark:before {
   background: transparent
 }
 

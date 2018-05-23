@@ -28,12 +28,6 @@ export class dom {
   switch(cb?:(e:any)=>void):dom;
   switchOn(isOn:boolean, trigger?:boolean):dom;
 
-  /** checkbox */
-  isCheckbox():boolean;
-  checkboxIsChecked():boolean;
-  checkboxChange(cb?:(e:any)=>void):dom;
-  checkboxChecked(isChecked:boolean, trigger?:boolean):dom;
-
   /** popover */
   isPopover():boolean;
   popoverShow(mask?:boolean, attachNode?:any) : dom;
@@ -256,6 +250,12 @@ export function ui_switch_init(elem?:any):void;
  *       默认在页面加载完成时会调用一次; 加入新的checkbox控件时需调用一次.
  */
 export function ui_checkbox_init(elem?:any):void;
+
+/**
+ * @desc 初始化页面上所有radio控件 (带febsui-radio类的控件)
+ *       默认在页面加载完成时会调用一次; 加入新的radio控件时需调用一次.
+ */
+export function ui_radio_init(elem?:any):void;
 
 /**
 * @desc: 初始化popover控件.

@@ -67,6 +67,7 @@ febsui.dialog_showToast({content:'即将开始', icon:'ok'});
   - [paging](#page)
   - [switch](#switch)
   - [checkbox](#checkbox)
+  - [radio](#checkbox)
   - [swiper](#swiper)
   - [popover](#popover)
   - [actionSheet](#actionsheet)
@@ -123,6 +124,12 @@ febsui.ui_switch_init(elem?:any);
  *       默认在页面加载完成时会调用一次; 加入新的checkbox控件时需调用一次.
  */
 febsui.ui_checkbox_init(elem?:any);
+
+/**
+ * @desc 初始化页面上所有radio控件 (带febsui-radio类的控件)
+ *       默认在页面加载完成时会调用一次; 加入新的radio控件时需调用一次.
+ */
+febsui.ui_radio_init(elem?:any);
 /**
 * @desc: 初始化popover控件.
 *        对页面上 的所有 <popover> 元素进行初始化.
@@ -449,39 +456,26 @@ $('.febsui-switch').switchIsOn();
 </html>
 ```
 
+radio 同checkbox一样使用.
 
-方法
+```html
+<html>
 
-```js
-/**
- * @desc 判断是否是checkbox
- */
-$('.febsui-checkbox').isCheckbox();
-/**
- * @desc 监听变化事件
- */
-$('.febsui-checkbox').checkboxChange(function(){
-  // 
-});
+<input name="radio" id="radio1" type="radio" value="male" class="febsui-radio" checked>
+<label for="radio1">male</label>
 
-/**
- * @desc 手动触发事件
- */
-$('.febsui-checkbox').checkboxChange();
+<input name="radio" id="radio2" type="radio" value="female" class="febsui-radio">
+<label for="radio2">female</label>
 
-/**
- * @desc 改变状态
- * @param checked: 设置控件的状态.
- * @param trigger: 可选, 是否触发事件监听 (状态未改变不触发).
- */
-$('.febsui-checkbox').checkboxChecked(checked, trigger);
+<script>
+// get value.
+$('input[name="radio"]:checked').val()
+// set value.
+$('#radio2')[0].checked = true;
+</script>
 
-/**
- * @desc 返回当前控件的状态.
- */
-$('.febsui-checkbox').checkboxIsChecked();
+</html>
 ```
-
 
 ### swiper
 
