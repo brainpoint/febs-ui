@@ -114,6 +114,12 @@ $('').hasVisibile();
 febsui.ui_init();
 
 /**
+ * @desc 初始化页面上所有swiper控件
+ *       默认在页面加载完成时会调用一次; 加入新的swiper控件时需调用一次.
+ */
+febsui.ui_swiper_init(elem?:any);
+
+/**
  * @desc 初始化页面上所有switch控件
  *       默认在页面加载完成时会调用一次; 加入新的switch控件时需调用一次.
  */
@@ -536,6 +542,11 @@ $('.febsui-swiper').trigger('swiper');
  * @desc 设置指示器颜色.
  */
 $('.febsui-swiper').swiperDotColor(color);
+
+/**
+ * @desc 获取当前页面索引.
+ */
+$('.febsui-swiper').swiperCurrent();
 
 /**
  * @desc 移动到前一页.
