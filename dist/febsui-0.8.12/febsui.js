@@ -2477,8 +2477,9 @@ $.fn.swiperTo = function (index, animation, trigger) {
         continue;
       }
 
-      index %= dots.length;
-      index = index < 0 ? dots.length + index : index;
+      var nindex = index;
+      nindex %= dots.length;
+      nindex = nindex < 0 ? dots.length + nindex : nindex;
 
       var directionVertical = elem.hasClass('febsui-swiper-vertical');
 
@@ -2487,29 +2488,29 @@ $.fn.swiperTo = function (index, animation, trigger) {
       var offset = 0;
       var indexp;
       if (loop) {
-        indexp = index + 1;
-        if (current == 0 && index == dots.length - 1) {
+        indexp = nindex + 1;
+        if (current == 0 && nindex == dots.length - 1) {
           indexp = 0;
           resetPostion = true;
-        } else if (current == dots.length - 1 && index == 0) {
+        } else if (current == dots.length - 1 && nindex == 0) {
           indexp = pages.length - 1;
           resetPostion = true;
         }
       } else {
-        indexp = index;
+        indexp = nindex;
       }
 
       for (var j = 0; j < indexp; j++) {
         if (directionVertical) {
-          offset += pages[j].clientHeight; //pages[j].offsetHeight;
+          offset += pages[j].clientHeight;
         } else {
-          offset += pages[j].clientWidth; //pages[j].offsetWidth;
+          offset += pages[j].clientWidth;
         }
       }
 
       dots.removeClass('febsui-swiper-dot-active');
-      $(dots[index]).addClass('febsui-swiper-dot-active');
-      elem.attr('data-current', index);
+      $(dots[nindex]).addClass('febsui-swiper-dot-active');
+      elem.attr('data-current', nindex);
 
       if (!animation) {
         pagesContainer.removeClass('febsui-swiper-animation');
@@ -2526,7 +2527,7 @@ $.fn.swiperTo = function (index, animation, trigger) {
         });
 
         if (directionVertical) {
-          offset -= (elem[0].offsetHeight - pages[indexp].clientHeight) / 2;
+          offset -= (elem[0].clientHeight - pages[indexp].clientHeight) / 2;
           ie9_animation_obj[ie9_animation_obj.length - 1].offset = -offset;
           ie9_animation_obj[ie9_animation_obj.length - 1].vertical = true;
 
@@ -2540,7 +2541,7 @@ $.fn.swiperTo = function (index, animation, trigger) {
           }
           ie9_animation_obj[ie9_animation_obj.length - 1].offsetCur = offsetCur;
         } else {
-          offset -= (elem[0].offsetWidth - pages[indexp].clientWidth) / 2;
+          offset -= (elem[0].clientWidth - pages[indexp].clientWidth) / 2;
           ie9_animation_obj[ie9_animation_obj.length - 1].offset = -offset;
           ie9_animation_obj[ie9_animation_obj.length - 1].vertical = false;
 
@@ -2556,13 +2557,13 @@ $.fn.swiperTo = function (index, animation, trigger) {
         }
       } else {
         if (directionVertical) {
-          offset -= (elem[0].offsetHeight - pages[indexp].offsetHeight) / 2;
+          offset -= (elem[0].clientHeight - pages[indexp].clientHeight) / 2.0;
           pagesContainer.css('-webkit-transform', 'translate3d(0px, ' + -offset + 'px, 0px)');
           pagesContainer.css('-moz-transform', 'translate3d(0px, ' + -offset + 'px, 0px)');
           pagesContainer.css('-ms-transform', 'translateY(' + -offset + 'px)');
           pagesContainer.css('transform', 'translate3d(0px, ' + -offset + 'px, 0px)');
         } else {
-          offset -= (elem[0].offsetWidth - pages[indexp].offsetWidth) / 2;
+          offset -= (elem[0].clientWidth - pages[indexp].clientWidth) / 2.0;
           pagesContainer.css('-webkit-transform', 'translate3d(' + -offset + 'px, 0px, 0px)');
           pagesContainer.css('-moz-transform', 'translate3d(' + -offset + 'px, 0px, 0px)');
           pagesContainer.css('-ms-transform', 'translateX(' + -offset + 'px)');
@@ -2575,7 +2576,7 @@ $.fn.swiperTo = function (index, animation, trigger) {
       if (!animation) {
         setTimeout(function () {
           this.addClass('febsui-swiper-animation');
-        }.bind(pagesContainer), 10);
+        }.bind(pagesContainer), 30);
       }
 
       // 重置正确的位置.
@@ -2583,7 +2584,7 @@ $.fn.swiperTo = function (index, animation, trigger) {
         setTimeout(function () {
           var current = parseInt(this.attr('data-current')) || 0;
           this.swiperTo(current, false);
-        }.bind(elem), 250);
+        }.bind(elem), 210);
       }
 
       if (trigger) {
@@ -4056,6 +4057,8 @@ var touchEventPrevent = __webpack_require__(0).mobile_preventTouchEvent;
 
 exports.swiper_init = swiper_init;
 
+var default_swiper_auto = 7000;
+
 //
 // event.
 function mobile_onTouchstart(event) {
@@ -4203,6 +4206,19 @@ function mobile_onTouchend(event) {
 }
 var mobile_onTouchcancel = mobile_onTouchend;
 
+function swiper_animation() {
+  if (this.children('.febsui-swiper-pages')[0].__swiper_start !== true) {
+    this.swiperNext(true);
+  }
+
+  var dataAutotick = this.attr('data-auto');
+  dataAutotick = window.febs.string.isEmpty(dataAutotick) ? 0 : parseInt(dataAutotick);
+  dataAutotick = dataAutotick === 0 ? 0 : dataAutotick ? dataAutotick : default_swiper_auto;
+  if (dataAutotick > 0) {
+    setTimeout(swiper_animation.bind(this), dataAutotick);
+  }
+}
+
 /**
 * @desc: 初始化swiper控件.
 */
@@ -4225,7 +4241,7 @@ function swiper_init(elem) {
     dataShowDots = window.febs.string.isEmpty(dataShowDots) ? true : 'true' == dataShowDots;
     dataLoop = window.febs.string.isEmpty(dataLoop) ? true : 'true' == dataLoop;
     dataAuto = window.febs.string.isEmpty(dataAuto) ? 0 : parseInt(dataAuto);
-    dataAuto = dataAuto === 0 ? 0 : dataAuto ? dataAuto : 7000;
+    dataAuto = dataAuto === 0 ? 0 : dataAuto ? dataAuto : default_swiper_auto;
 
     var domChildren = dom.children();
     if (!domChildren.hasClass('febsui-swiper-pages')) {
@@ -4242,6 +4258,9 @@ function swiper_init(elem) {
             page1 = domChildren[j];
           }
           page0 = domChildren[j];
+          // 解决小数问题.
+          $(page0).css('height', dom[0].clientHeight + 'px');
+          $(page0).css('width', dom[0].clientWidth + 'px');
           pages.append(domChildren[j]);
           pagesCount++;
         }
@@ -4280,7 +4299,7 @@ function swiper_init(elem) {
       dom.append(pages);
       dom.append(dots);
       dom.attr('data-current', 0);
-      if (dataActiveIndex != 0) dom.swiperTo(dataActiveIndex, false);
+      dom.swiperTo(dataActiveIndex, false);
 
       if (dom.hasClass('febsui-swiper-vertical')) {
         pages[0].__swiper_vertical = true;
@@ -4290,10 +4309,8 @@ function swiper_init(elem) {
         this.addClass('febsui-swiper-animation');
       }.bind(pages), 10);
 
-      if (dataAuto) {
-        setInterval(function () {
-          this.swiperNext(true);
-        }.bind(dom), dataAuto);
+      if (dataAuto > 0) {
+        setTimeout(swiper_animation.bind(dom), dataAuto);
       }
 
       //

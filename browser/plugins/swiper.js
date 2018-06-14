@@ -89,7 +89,6 @@ $.fn.swiperDotColor = function(color) {
   return this;
 }
 
-
 $.fn.swiperPre = function(trigger) {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
@@ -218,8 +217,9 @@ $.fn.swiperTo = function(index, animation, trigger) {
         continue;
       }
 
-      index %= dots.length;
-      index = index < 0 ? dots.length+index : index;
+      var nindex = index;
+      nindex %= dots.length;
+      nindex = nindex < 0 ? dots.length+nindex : nindex;
 
       var directionVertical = elem.hasClass('febsui-swiper-vertical');
       
@@ -228,32 +228,32 @@ $.fn.swiperTo = function(index, animation, trigger) {
       var offset = 0;
       var indexp;
       if (loop) {
-        indexp = index + 1;
-        if (current == 0 && index == dots.length-1) {
+        indexp = nindex + 1;
+        if (current == 0 && nindex == dots.length-1) {
           indexp = 0;
           resetPostion = true;
         }
-        else if (current == dots.length-1 && index == 0) {
+        else if (current == dots.length-1 && nindex == 0) {
           indexp = pages.length-1;
           resetPostion = true;
         }
       }
       else {
-        indexp = index;
+        indexp = nindex;
       }
 
       for (var j = 0; j < indexp; j++) {
         if (directionVertical) {
-          offset += pages[j].clientHeight;//pages[j].offsetHeight;
+          offset += pages[j].clientHeight;
         }
         else {
-          offset += pages[j].clientWidth;//pages[j].offsetWidth;
+          offset += pages[j].clientWidth;
         }
       }
 
       dots.removeClass('febsui-swiper-dot-active');
-      $(dots[index]).addClass('febsui-swiper-dot-active');
-      elem.attr('data-current', index);
+      $(dots[nindex]).addClass('febsui-swiper-dot-active');
+      elem.attr('data-current', nindex);
 
       if (!animation) {
         pagesContainer.removeClass('febsui-swiper-animation');
@@ -270,7 +270,7 @@ $.fn.swiperTo = function(index, animation, trigger) {
         });
 
         if (directionVertical) {
-          offset -= (elem[0].offsetHeight - pages[indexp].clientHeight) / 2;
+          offset -= (elem[0].clientHeight - pages[indexp].clientHeight) / 2;
           ie9_animation_obj[ie9_animation_obj.length-1].offset = -offset;
           ie9_animation_obj[ie9_animation_obj.length-1].vertical = true;
 
@@ -283,7 +283,7 @@ $.fn.swiperTo = function(index, animation, trigger) {
           ie9_animation_obj[ie9_animation_obj.length-1].offsetCur = offsetCur;
         }
         else {
-          offset -= (elem[0].offsetWidth - pages[indexp].clientWidth) / 2;
+          offset -= (elem[0].clientWidth - pages[indexp].clientWidth) / 2;
           ie9_animation_obj[ie9_animation_obj.length-1].offset = -offset;
           ie9_animation_obj[ie9_animation_obj.length-1].vertical = false;
 
@@ -298,14 +298,14 @@ $.fn.swiperTo = function(index, animation, trigger) {
       }
       else {
         if (directionVertical) {
-          offset -= (elem[0].offsetHeight - pages[indexp].offsetHeight) / 2;
+          offset -= (elem[0].clientHeight - pages[indexp].clientHeight) / 2.0;
           pagesContainer.css('-webkit-transform', `translate3d(0px, ${-offset}px, 0px)`);
           pagesContainer.css('-moz-transform', `translate3d(0px, ${-offset}px, 0px)`);
           pagesContainer.css('-ms-transform', `translateY(${-offset}px)`);
           pagesContainer.css('transform', `translate3d(0px, ${-offset}px, 0px)`);
         }
         else {
-          offset -= (elem[0].offsetWidth - pages[indexp].offsetWidth) / 2;
+          offset -= (elem[0].clientWidth - pages[indexp].clientWidth) / 2.0;
           pagesContainer.css('-webkit-transform', `translate3d(${-offset}px, 0px, 0px)`);
           pagesContainer.css('-moz-transform', `translate3d(${-offset}px, 0px, 0px)`);
           pagesContainer.css('-ms-transform', `translateX(${-offset}px)`);
@@ -318,7 +318,7 @@ $.fn.swiperTo = function(index, animation, trigger) {
       if (!animation) {
         setTimeout(function() {
           this.addClass('febsui-swiper-animation');
-        }.bind(pagesContainer), 10);
+        }.bind(pagesContainer), 30);
       }
 
       // 重置正确的位置.
@@ -326,7 +326,7 @@ $.fn.swiperTo = function(index, animation, trigger) {
         setTimeout(function() {
           var current = parseInt(this.attr('data-current')) || 0;
           this.swiperTo(current, false);
-        }.bind(elem), 250);
+        }.bind(elem), 210);
       }
 
       if (trigger) {

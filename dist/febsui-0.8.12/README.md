@@ -492,7 +492,7 @@ $('#radio2')[0].checked = true;
 ```html
 <html>
 
-<div class="febsui-swiper" style="height: 80px;" data-loop="true" data-activeindex="2" data-dot-color="#000000">
+<div class="febsui-swiper" style="height: 80px;" data-loop="true" data-current="2" data-dot-color="#000000">
   <div class="febsui-swiper-page" style="background-color: #ff0000;">1</div>
   <div class="febsui-swiper-page" style="background-color: #00ff00;">2</div>
   <div class="febsui-swiper-page" style="background-color: #ff00ff;">3</div>
@@ -510,7 +510,7 @@ $('#radio2')[0].checked = true;
 | data-dots |  表明是否显示当前页指示器; (默认 true) | 允许的值: true, false  |
 | data-loop |  表明是否允许循环显示. (默认 true)  | 允许的值: true, false  |
 | data-dot-color |  指示器颜色  | 例如: #ffffff  |
-| data-auto |  自动切换动画; 如果存在则会在指定时间内自动切换动画. 其他非数值值将默认为 7000  | 例如: 3000  |
+| data-auto |  自动切换动画; 如果存在则会在指定时间内自动切换动画. 其他非数值值将默认为 7000; 改变此属性后, 动画速度会改变, 但不可从0(禁止)变为动画.  | 例如: 3000  |
 
 
 方法

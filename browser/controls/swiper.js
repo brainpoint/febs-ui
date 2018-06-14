@@ -4,6 +4,8 @@ var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
 exports.swiper_init = swiper_init;
 
 
+var default_swiper_auto = 7000;
+
 //
 // event.
 function mobile_onTouchstart(event) {
@@ -171,6 +173,18 @@ function mobile_onTouchend(event) {
 }
 var mobile_onTouchcancel = mobile_onTouchend;
 
+function swiper_animation() {
+  if (this.children('.febsui-swiper-pages')[0].__swiper_start !== true) {
+    this.swiperNext(true);
+  }
+
+  var dataAutotick = this.attr('data-auto');
+  dataAutotick = window.febs.string.isEmpty(dataAutotick) ? 0 : parseInt(dataAutotick);
+  dataAutotick = dataAutotick === 0 ? 0 : (dataAutotick ? dataAutotick : default_swiper_auto);
+  if (dataAutotick > 0) {
+    setTimeout(swiper_animation.bind(this), dataAutotick);
+  }
+}
 
 
 /**
@@ -195,7 +209,7 @@ function swiper_init(elem) {
     dataShowDots = window.febs.string.isEmpty(dataShowDots) ? true : ('true' == dataShowDots);
     dataLoop = window.febs.string.isEmpty(dataLoop) ? true : ('true' == dataLoop);
     dataAuto = window.febs.string.isEmpty(dataAuto) ? 0 : parseInt(dataAuto);
-    dataAuto = dataAuto === 0 ? 0 : (dataAuto ? dataAuto : 7000);
+    dataAuto = dataAuto === 0 ? 0 : (dataAuto ? dataAuto : default_swiper_auto);
 
     var domChildren = dom.children();
     if (!domChildren.hasClass('febsui-swiper-pages')) {
@@ -212,6 +226,9 @@ function swiper_init(elem) {
             page1 = domChildren[j];
           }
           page0 = domChildren[j];
+          // 解决小数问题.
+          $(page0).css('height', dom[0].clientHeight+'px');
+          $(page0).css('width', dom[0].clientWidth+'px');
           pages.append(domChildren[j]);
           pagesCount ++;
         }
@@ -252,8 +269,7 @@ function swiper_init(elem) {
       dom.append(pages);
       dom.append(dots);
       dom.attr('data-current', 0);
-      if (dataActiveIndex != 0)
-        dom.swiperTo(dataActiveIndex, false);
+      dom.swiperTo(dataActiveIndex, false);
 
       if (dom.hasClass('febsui-swiper-vertical')) {
         pages[0].__swiper_vertical = true;
@@ -263,10 +279,8 @@ function swiper_init(elem) {
         this.addClass('febsui-swiper-animation');
       }.bind(pages), 10);
 
-      if (dataAuto) {
-        setInterval(function(){
-          this.swiperNext(true);
-        }.bind(dom), dataAuto);
+      if (dataAuto > 0) {
+        setTimeout(swiper_animation.bind(dom), dataAuto);
       }
 
       //
