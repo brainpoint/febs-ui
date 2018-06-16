@@ -89,6 +89,23 @@ $.fn.swiperDotColor = function(color) {
   return this;
 }
 
+$.fn.swiperSpeed = function(ms) {
+
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
+
+  ms = parseInt(ms);
+
+  for (var i = 0; i < _this.length; i++) {
+    var elem = $(_this[i]);
+
+    if (elem.hasClass('febsui-swiper')) {
+      elem.attr('data-auto', ms);
+    }
+  } // for.
+
+  return this;
+}
+
 $.fn.swiperPre = function(trigger) {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;

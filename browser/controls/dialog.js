@@ -151,6 +151,11 @@ function showAlert(ctx) {
 * ctx.cancelText:
 */
 function showConfirm(ctx) {
+  
+  if (typeof ctx !== 'object') {
+    ctx = {content:ctx&&ctx.toString()};
+  }
+
 	if (!ctx.okText) ctx.okText = "确认";
   if (!ctx.cancelText) ctx.cancelText = "取消";
   
@@ -220,6 +225,11 @@ function showConfirm(ctx) {
 * ctx.cancelText:
 */
 function showConfirmEdit(ctx) {
+    
+  if (typeof ctx !== 'object') {
+    ctx = {content:ctx&&ctx.toString()};
+  }
+
 	if (!ctx.okText) ctx.okText = "确认";
   if (!ctx.cancelText) ctx.cancelText = "取消";
   

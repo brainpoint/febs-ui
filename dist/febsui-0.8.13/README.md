@@ -205,9 +205,10 @@ febsui.loading_isVisiable()
 * @param text: 提示文本.
 * @param timeout: 延时显示, 默认为0.
 * @param spinClass: 默认为 febsui-icon-spin1-white ; ie9以下浏览器使用 febsui-icon-spin3-white
+* @param spinLeft: 是否在左侧显示spin.
 * @return: 
 */
-febsui.loading_show(text, timeout, spinClass)
+febsui.loading_show(text, timeout, spinClass, spinLeft)
 
 /**
 * @desc: 通过每500ms改变文本的方式显示加载框; 例如显示 3,2,1,3,2,1循环显示.
@@ -483,6 +484,28 @@ $('#radio2')[0].checked = true;
 </html>
 ```
 
+方法
+
+```js
+/**
+ * @desc 判断是否是radio
+ */
+$('.febsui-radio').isRadio();
+/**
+ * @desc 获得radio组当前值.
+ */
+$('.febsui-radio').radioGetValue();
+/**
+ * @desc 设置radio组当前值.
+ */
+$('.febsui-radio').radioSetValue(value:string, trigger?:boolean);
+/**
+ * @desc 监听变化事件
+ */
+$('input[name="radioGroup"]').on('change', function(){});
+
+```
+
 ### swiper
 
 跑马灯效果
@@ -542,6 +565,13 @@ $('.febsui-swiper').trigger('swiper');
  * @desc 设置指示器颜色.
  */
 $('.febsui-swiper').swiperDotColor(color);
+
+
+/**
+ * @desc 设置动画速度, ms为下一次变换的间隔时间, 0则无动画.
+ *      如果当前为0, 则无效.
+ */
+$('.febsui-swiper').swiperSpeed(ms);
 
 /**
  * @desc 获取当前页面索引.

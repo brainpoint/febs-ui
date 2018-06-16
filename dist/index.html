@@ -11,9 +11,9 @@
   <meta name="apple-touch-fullscreen" content="yes" /> 
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <link rel="stylesheet" type="text/css" href="./febsui-0.8.12/febsui.css" />
+  <link rel="stylesheet" type="text/css" href="./febsui-0.8.13/febsui.css" />
   <script charset='UTF-8' type="text/javascript" src="./febs-0.8.34/febs.js"></script>
-  <script charset='UTF-8' type="text/javascript" src="./febsui-0.8.12/febsui.js"></script>
+  <script charset='UTF-8' type="text/javascript" src="./febsui-0.8.13/febsui.js"></script>
   
   <script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
 	<script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/shCore.js"></script>
@@ -235,6 +235,7 @@
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#loading')">[Readme]</button><br>
 
   <button onclick="showLoading()">loading</button>
+  <button onclick="showLoading(true)">loading left spin</button>
   <button><div class="febsui-icon febsui-icon-spin1 febsui-animation-spin"></div></button>
   <button class="btn-primary"><div class="febsui-icon febsui-icon-spin1-white febsui-animation-spin"></div></button>
   <button><div class="febsui-icon febsui-icon-spin2 febsui-animation-spin"></div></button>
@@ -243,21 +244,20 @@
   <br>
 
   <script type="text/javascript">
-
     // laoding.
-    function showLoading() {
-      febsui.loading_show('3秒后关闭');
+    function showLoading(leftSpin) {
+      febsui.loading_show('3秒后关闭', null, null, leftSpin);
       febs.utils.sleep(1000)
         .then(function () {
-          febsui.loading_show('2秒后关闭');
+          febsui.loading_show('2秒后关闭', null, null, leftSpin);
           return febs.utils.sleep(1000)
         })
         .then(function () {
-          febsui.loading_show('1秒后关闭');
+          febsui.loading_show('1秒后关闭', null, null, leftSpin);
           return febs.utils.sleep(1000)
         })
         .then(function () {
-          febsui.loading_hide();
+          // febsui.loading_hide();
         })
     }
   </script>
@@ -705,13 +705,15 @@
       ]]></script>
 
       <script type="syntaxhighlighter" class="brush: js"><![CDATA[
+        // 仅需使用radio组中的一个元素来操作整个组.
+
         // get value.
-        $('input[name="radioGroup"]:checked').val()
+        $('#radio1').radioGetValue();
 
         // set value.
-        $('#radio2')[0].checked = true;
+        $('#radio1').radioSetValue('male');
 
-        // change cb.
+        // change cb. 监听需使用组选择器.
         $('input[name="radioGroup"]').on('change', function(e){
 
         });
@@ -731,7 +733,8 @@
   
   <script>
     $('input[name="radioGroup"]').on('change', function(e){
-      febsui.toast($('input[name="radioGroup"]:checked').val());
+      // febsui.toast($('input[name="radioGroup"]:checked').val());
+      febsui.toast($('#radio1').radioGetValue());
     });  
   </script>
   <br>

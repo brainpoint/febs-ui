@@ -19,3 +19,8 @@
 ==================
   - add radio
   
+0.8.13
+==================
+  - add left spin loading
+  - add radio method
+

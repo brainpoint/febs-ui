@@ -45,10 +45,11 @@ exports.loading_isVisiable = function() {
 * @desc: 使用延时显示加载框.
 * @param text: 提示文本.
 * @param timeout: 延时显示, 默认为0.
+* @param spinLeft: 是否在左侧显示spin. 
 * @param spinClass: 默认为 febsui-icon-spin1-white
 * @return: 
 */
-function loading_show(text, timeout, spinClass) {
+function loading_show(text, timeout, spinClass, spinLeft) {
 
   if (is_IE9)
     spinClass = spinClass||'febsui-icon-spin3-white';
@@ -70,9 +71,10 @@ function loading_show(text, timeout, spinClass) {
     }, timeout);
   }
   else {
+    spinLeft = spinLeft ? ' febsui-loading-left' : '';
     var ee = $('#' + loading_tag_name);
     if (window.febs.string.isEmpty(ee.html())) {
-      ee.html('<div class="febsui-loading-c"><div class="febsui-loading"><div class="' + spinClass + ' febsui-animation-spin febsui-loading-spin"></div><p>' + (text ? text : '') + '</p></div></div>');
+      ee.html('<div class="febsui-loading-c"><div class="febsui-loading'+spinLeft+'"><div class="' + spinClass + ' febsui-animation-spin febsui-loading-spin"></div><p>' + (text ? text : '') + '</p></div></div>');
     } else {
       var eee = $(ee.children('.febsui-loading-c')[0]);
       eee = $(eee.children('.febsui-loading')[0]);

@@ -41,12 +41,18 @@ export class dom {
   /** swiper */
   isSwiper():boolean;
   swiperDotColor(color?:string):dom;
+  swiperSpeed(ms:number):dom;
   swiperPre(trigger?:boolean):dom;
   swiperNext(trigger?:boolean):dom;
   swiperCurrent():number;
   swiperTotal():number;
   swiperTo(index:number, animation?:boolean, trigger?:boolean):dom;
   swiper(cb?:(e:any)=>void):dom;
+
+  /** radio */
+  isRadio():boolean;
+  radioGetValue():string;
+  radioSetValue(value:string, trigger?:boolean):dom; 
 }
 
 
@@ -55,9 +61,10 @@ export class dom {
 * @param text: 提示文本.
 * @param timeout: 延时显示, 默认为0.
 * @param spinClass: 默认为 febsui-icon-spin1-white
+* @param spinLeft: 是否在左侧显示spin.
 * @return: 
 */
-export  function loading_show(text: string, timeout?: number, spinClass?: string): any;
+export  function loading_show(text: string, timeout?: number, spinClass?: string, spinLeft?:boolean): any;
 
 /**
 * @desc: 通过每500ms改变文本的方式显示加载框; 例如显示 3,2,1,3,2,1循环显示.

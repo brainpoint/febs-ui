@@ -64,6 +64,7 @@ require('./plugins/popover');
 require('./plugins/switch');
 require('./plugins/swiper');
 require('./plugins/uploader');
+require('./plugins/radio');
 
 return febsui;
 }

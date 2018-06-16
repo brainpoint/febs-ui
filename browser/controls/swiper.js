@@ -283,6 +283,9 @@ function swiper_init(elem) {
         setTimeout(swiper_animation.bind(dom), dataAuto);
       }
 
+      // 触发一次事件.
+      dom.trigger('swiper');
+
       //
       // event.
       pages = pages[0];

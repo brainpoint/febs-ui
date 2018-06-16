@@ -206,7 +206,7 @@
  
  .febsui-loading {
    min-width: 80px;
-   min-height: 95px;
+   min-height: 80px;
    display: inline-block;
    margin-left: auto;
    margin-right: auto;
@@ -224,8 +224,8 @@
    border-radius: 8px;
    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=70);
    z-index: 20002;
-   -webkit-backdrop-filter: blur(2px);
-   backdrop-filter: blur(2px);
+   -webkit-backdrop-filter: blur(3px);
+   backdrop-filter: blur(3px);
  }
 
  .febsui-loading-spin {
@@ -267,6 +267,33 @@
    min-width: inherit;
    max-width:200px;
  }
+
+
+ .febsui-loading.febsui-loading-left {
+  min-width: 100px;
+  max-width: 250px;
+  min-height: 50px;
+ }
+
+ .febsui-loading.febsui-loading-left .febsui-loading-spin{
+  margin-top: auto;
+  margin-bottom: auto;
+  position: absolute;
+  left: 13px;
+  top: 0;
+  bottom: 0;
+  display: block;
+ }
+
+ .febsui-loading.febsui-loading-left p{
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 43px;
+  display: block;
+  text-align: center;
+ }
+
+
  
 
 /****************************************************/
@@ -689,7 +716,7 @@
  .febsui-dialog .febsui-dialog-container .febsui-dialog-edit {
    width: 100%;
    height: 38px;
-   padding-bottom: 8px;
+   margin-bottom: 8px;
  }
  
  .febsui-dialog .febsui-dialog-container .febsui-dialog-edit .febsui-input-text-noborder {
@@ -1200,12 +1227,11 @@
    color: #000;
 
    border-bottom: 1px solid #eee;
-   border-bottom: none;
    background-color: rgba(0, 0, 0, 0);
    background-size: 100% 1px;
    background-repeat: no-repeat;
    background-position: bottom;
-   background-image: linear-gradient(0deg,#eee,#eee 100%);
+   background-image: linear-gradient(0deg,#ccc,#ccc 50%,transparent 0);
 
    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.07);
  }
@@ -1229,7 +1255,8 @@
  @media (-webkit-min-device-pixel-ratio: 2),(min-resolution:192dpi) {
   .febsui-popover .febsui-popover-cell,
   .febsui-actionsheet .febsui-actionsheet-cell {
-      background-image:linear-gradient(0deg,#ccc,#ccc 50%,transparent 0);
+    border-bottom: none;
+    background-image:linear-gradient(0deg,#ccc,#ccc 50%,transparent 0);
   }
  }
 
@@ -1322,7 +1349,7 @@
 }
 
 .febsui-actionsheet .febsui-actionsheet-container .febsui-actionsheet-group {
-  background-color: rgba(255, 255, 255, 0.93);
+  background-color: rgba(255, 255, 255, 0.98);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px 8px 8px 8px;
 }
