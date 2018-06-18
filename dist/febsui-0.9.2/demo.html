@@ -11,9 +11,9 @@
   <meta name="apple-touch-fullscreen" content="yes" /> 
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <link rel="stylesheet" type="text/css" href="./febsui-0.8.13/febsui.css" />
+  <link rel="stylesheet" type="text/css" href="./febsui-0.9.2/febsui.css" />
   <script charset='UTF-8' type="text/javascript" src="./febs-0.8.34/febs.js"></script>
-  <script charset='UTF-8' type="text/javascript" src="./febsui-0.8.13/febsui.js"></script>
+  <script charset='UTF-8' type="text/javascript" src="./febsui-0.9.2/febsui.js"></script>
   
   <script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
 	<script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/shCore.js"></script>
@@ -542,7 +542,7 @@
   <div class="febsui-dialog" id="h2actionsheet">
     <div class="febsui-dialog-content">
       <script type="syntaxhighlighter" class="brush: xml"><![CDATA[
-        <div class="febsui-actionsheet">
+        <div class="febsui-actionsheet" id="actionsheet1">
           <div class="febsui-actionsheet-cell">menu 1</div>
           <div class="febsui-actionsheet-cell">menu 2</div>
           <div class="febsui-actionsheet-cell">menu 3</div>
@@ -552,7 +552,7 @@
       ]]></script>
 
       <script type="syntaxhighlighter" class="brush: js"><![CDATA[
-        $('.febsui-actionsheet').actionsheetShow()
+        $('#actionsheet1').actionsheetShow()
       ]]></script>
     </div>
     <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
@@ -560,8 +560,8 @@
   <button style="font-size:10px;" onclick="$('#h2actionsheet').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#actionsheet')">[Readme]</button><br>
 
-  <button onclick="$('.febsui-actionsheet').actionsheetShow();">show</button>
-  <div class="febsui-actionsheet">
+  <button onclick="$('#actionsheet1').actionsheetShow();">show</button>
+  <div class="febsui-actionsheet" id="actionsheet1">
     <div class="febsui-actionsheet-cell">menu 1</div>
     <div class="febsui-actionsheet-cell">menu 2</div>
     <div class="febsui-actionsheet-cell">menu 3</div>

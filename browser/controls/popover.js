@@ -20,7 +20,16 @@ function popover_init(elem) {
 
     if (!dom.hasClass('febsui-popover-inited') && !dom.children().hasClass('febsui-popover-arrow')) {
       
-      var dd = $("<div class='febsui-popover febsui-popover-inited'></div>");
+      var domid = dom.attr('id');
+      if (febs.string.isEmpty(domid)) {
+        throw new Error('must have a "id" attribute in febsui-popover');
+      }
+
+      var ddd = $("<div class='febsui-popover febsui-popover-inited' id='" + domid + "' style='display:none !important;'></div>");
+      ddd.insertBefore(dom);
+      dom.removeAttr('id');
+
+      var dd = $("<div class='febsui-popover febsui-popover-inited' data-id='"+domid+"'></div>");
       
       // data-direction
       var direction = dom.attr('data-direction');

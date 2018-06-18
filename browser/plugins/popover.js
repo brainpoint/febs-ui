@@ -32,6 +32,37 @@ $.fn.isPopover = function() {
   return false;
 }
 
+
+$.fn.popoverIsVisibile = function() {
+
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
+
+  if (_this[0]) {
+    var ee = $(_this[0]);
+    
+    if (ee.hasClass('febsui-popover-container')) {
+    // if (ee[0].nodeName.toLowerCase() == 'actionsheet') {
+      ee = ee.parent();
+    }
+
+    if (ee.hasClass('febsui-popover-inited')) {
+
+      var domid = ee.attr('id');
+      if (febs.string.isEmpty(domid)) {
+        return ee._isVisibile();
+      }
+
+      ee = $('.febsui-actionsheet[data-id="'+domid+'"]');
+      if (!ee[0])
+        return false;
+      
+      return ee._isVisibile();
+    }
+  }
+
+  return false;
+}
+
 $.fn.popoverShow = function(mask, attachNode) {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
@@ -50,7 +81,14 @@ $.fn.popoverShow = function(mask, attachNode) {
     
     if (ee.hasClass('febsui-popover-inited')) {
 
-      if (ee.isVisibile())
+      var domid = ee.attr('id');
+      if (!febs.string.isEmpty(domid)) {
+        ee = $('.febsui-popover[data-id="'+domid+'"]');
+        if (!ee[0])
+          continue;
+      }
+
+      if (ee._isVisibile())
         continue;
 
       ee.one('click', function(){
@@ -334,6 +372,14 @@ $.fn.popoverHide = function() {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-popover-inited')) {
+
+      var domid = ee.attr('id');
+      if (!febs.string.isEmpty(domid)) {
+        ee = $('.febsui-popover[data-id="'+domid+'"]');
+        if (!ee[0])
+          continue;
+      }
+
       // setTimeout(function(){
         ee.removeClass('febsui-visible').addClass('febsui-invisible');
       // }, 100);

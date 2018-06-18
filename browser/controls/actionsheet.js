@@ -18,6 +18,15 @@ function actionsheet_init(elem) {
 
     if (!dom.hasClass('febsui-actionsheet-inited')) {
 
+      var domid = dom.attr('id');
+      if (febs.string.isEmpty(domid)) {
+        throw new Error('must have a "id" attribute in febsui-actionsheet');
+      }
+
+      var ddd = $("<div class='febsui-actionsheet febsui-actionsheet-inited' id='" + domid + "' style='display:none !important;'></div>");
+      ddd.insertBefore(dom);
+      dom.removeAttr('id');
+
       var domChildren = dom.children();
       var ddChildren;
       if (domChildren[0]) {
@@ -47,7 +56,9 @@ function actionsheet_init(elem) {
         }
       }
 
-      var dd = $("<div class='febsui-actionsheet febsui-actionsheet-inited'></div>");
+      $('.febsui-actionsheet[data-id="'+domid+'"]').remove();
+
+      var dd = $("<div class='febsui-actionsheet febsui-actionsheet-inited'"+ ' data-id="'+ domid +'"'  +"></div>");
       $('body').append(dd);
       
       // copy attri.

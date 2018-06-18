@@ -224,8 +224,8 @@
    border-radius: 8px;
    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=70);
    z-index: 20002;
-   -webkit-backdrop-filter: blur(3px);
-   backdrop-filter: blur(3px);
+   -webkit-backdrop-filter: blur(2px);
+   backdrop-filter: blur(2px);
  }
 
  .febsui-loading-spin {
@@ -272,7 +272,7 @@
  .febsui-loading.febsui-loading-left {
   min-width: 100px;
   max-width: 250px;
-  min-height: 50px;
+  min-height: 40px;
  }
 
  .febsui-loading.febsui-loading-left .febsui-loading-spin{
@@ -289,7 +289,10 @@
   margin-left: auto;
   margin-right: auto;
   padding-left: 43px;
-  display: block;
+  padding-top: 0px;
+  display: table-cell;
+  vertical-align: middle;
+  height: 40px;
   text-align: center;
  }
 

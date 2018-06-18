@@ -24,3 +24,6 @@
   - add left spin loading
   - add radio method
 
+0.9.0
+==================
+  - actionsheet / popover must provide a id attribute.

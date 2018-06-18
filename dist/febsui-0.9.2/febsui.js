@@ -1792,6 +1792,35 @@ $.fn.isActionsheet = function () {
   return false;
 };
 
+$.fn.actionsheetIsVisibile = function () {
+
+  var _this = typeof this.length === 'undefined' ? $(this) : this;
+
+  if (_this[0]) {
+    var ee = $(_this[0]);
+
+    if (ee.hasClass('febsui-actionsheet-container')) {
+      // if (ee[0].nodeName.toLowerCase() == 'actionsheet') {
+      ee = ee.parent();
+    }
+
+    if (ee.hasClass('febsui-actionsheet-inited')) {
+
+      var domid = ee.attr('id');
+      if (febs.string.isEmpty(domid)) {
+        return ee._isVisibile();
+      }
+
+      ee = $('.febsui-actionsheet[data-id="' + domid + '"]');
+      if (!ee[0]) return false;
+
+      return ee._isVisibile();
+    }
+  }
+
+  return false;
+};
+
 $.fn.actionsheetShow = function () {
 
   var _this = typeof this.length === 'undefined' ? $(this) : this;
@@ -1806,7 +1835,13 @@ $.fn.actionsheetShow = function () {
 
     if (ee.hasClass('febsui-actionsheet-inited')) {
 
-      if (ee.isVisibile()) continue;
+      var domid = ee.attr('id');
+      if (!febs.string.isEmpty(domid)) {
+        ee = $('.febsui-actionsheet[data-id="' + domid + '"]');
+        if (!ee[0]) continue;
+      }
+
+      if (ee._isVisibile()) continue;
 
       var mask = '';
       if (!$('.febsui-mask').hasVisibile()) {
@@ -1841,6 +1876,13 @@ $.fn.actionsheetHide = function () {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-actionsheet-inited')) {
+
+      var domid = ee.attr('id');
+      if (!febs.string.isEmpty(domid)) {
+        ee = $('.febsui-actionsheet[data-id="' + domid + '"]');
+        if (!ee[0]) continue;
+      }
+
       // setTimeout(function(){
       ee.removeClass('febsui-visible').addClass('febsui-invisible');
       // }, 100);
@@ -1936,6 +1978,36 @@ $.fn.isVisibile = function () {
   var _this = typeof this.length === 'undefined' ? $(this) : this;
 
   if (_this.length > 0) {
+
+    // actionsheet.
+    if (_this.isActionsheet()) {
+      return _this.actionsheetIsVisibile();
+    }
+    // popover.
+    else if (_this.isPopover()) {
+        return _this.popoverIsVisibile();
+      }
+
+    // other.
+    if (!!!(_this[0].offsetWidth || _this[0].offsetHeight || _this[0].getClientRects().length)) {
+      return false;
+    } else {
+      var style = window.getComputedStyle(_this[0]);
+      return style.width !== 0 && style.height !== 0 && style.opacity !== 0 && style.display !== 'none' && style.visibility !== 'hidden';
+    }
+  }
+
+  return false;
+};
+
+// 单纯判断.
+$.fn._isVisibile = function () {
+
+  var _this = typeof this.length === 'undefined' ? $(this) : this;
+
+  if (_this.length > 0) {
+
+    // other.
     if (!!!(_this[0].offsetWidth || _this[0].offsetHeight || _this[0].getClientRects().length)) {
       return false;
     } else {
@@ -1983,6 +2055,35 @@ $.fn.isPopover = function () {
   return false;
 };
 
+$.fn.popoverIsVisibile = function () {
+
+  var _this = typeof this.length === 'undefined' ? $(this) : this;
+
+  if (_this[0]) {
+    var ee = $(_this[0]);
+
+    if (ee.hasClass('febsui-popover-container')) {
+      // if (ee[0].nodeName.toLowerCase() == 'actionsheet') {
+      ee = ee.parent();
+    }
+
+    if (ee.hasClass('febsui-popover-inited')) {
+
+      var domid = ee.attr('id');
+      if (febs.string.isEmpty(domid)) {
+        return ee._isVisibile();
+      }
+
+      ee = $('.febsui-actionsheet[data-id="' + domid + '"]');
+      if (!ee[0]) return false;
+
+      return ee._isVisibile();
+    }
+  }
+
+  return false;
+};
+
 $.fn.popoverShow = function (mask, attachNode) {
 
   var _this = typeof this.length === 'undefined' ? $(this) : this;
@@ -2001,7 +2102,13 @@ $.fn.popoverShow = function (mask, attachNode) {
 
     if (ee.hasClass('febsui-popover-inited')) {
 
-      if (ee.isVisibile()) continue;
+      var domid = ee.attr('id');
+      if (!febs.string.isEmpty(domid)) {
+        ee = $('.febsui-popover[data-id="' + domid + '"]');
+        if (!ee[0]) continue;
+      }
+
+      if (ee._isVisibile()) continue;
 
       ee.one('click', function () {
         $(this).popoverHide();
@@ -2263,6 +2370,13 @@ $.fn.popoverHide = function () {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-popover-inited')) {
+
+      var domid = ee.attr('id');
+      if (!febs.string.isEmpty(domid)) {
+        ee = $('.febsui-popover[data-id="' + domid + '"]');
+        if (!ee[0]) continue;
+      }
+
       // setTimeout(function(){
       ee.removeClass('febsui-visible').addClass('febsui-invisible');
       // }, 100);
@@ -3759,6 +3873,15 @@ function actionsheet_init(elem) {
 
     if (!dom.hasClass('febsui-actionsheet-inited')) {
 
+      var domid = dom.attr('id');
+      if (febs.string.isEmpty(domid)) {
+        throw new Error('must have a "id" attribute in febsui-actionsheet');
+      }
+
+      var ddd = $("<div class='febsui-actionsheet febsui-actionsheet-inited' id='" + domid + "' style='display:none !important;'></div>");
+      ddd.insertBefore(dom);
+      dom.removeAttr('id');
+
       var domChildren = dom.children();
       var ddChildren;
       if (domChildren[0]) {
@@ -3788,7 +3911,9 @@ function actionsheet_init(elem) {
         }
       }
 
-      var dd = $("<div class='febsui-actionsheet febsui-actionsheet-inited'></div>");
+      $('.febsui-actionsheet[data-id="' + domid + '"]').remove();
+
+      var dd = $("<div class='febsui-actionsheet febsui-actionsheet-inited'" + ' data-id="' + domid + '"' + "></div>");
       $('body').append(dd);
 
       // copy attri.
@@ -4020,7 +4145,16 @@ function popover_init(elem) {
 
     if (!dom.hasClass('febsui-popover-inited') && !dom.children().hasClass('febsui-popover-arrow')) {
 
-      var dd = $("<div class='febsui-popover febsui-popover-inited'></div>");
+      var domid = dom.attr('id');
+      if (febs.string.isEmpty(domid)) {
+        throw new Error('must have a "id" attribute in febsui-popover');
+      }
+
+      var ddd = $("<div class='febsui-popover febsui-popover-inited' id='" + domid + "' style='display:none !important;'></div>");
+      ddd.insertBefore(dom);
+      dom.removeAttr('id');
+
+      var dd = $("<div class='febsui-popover febsui-popover-inited' data-id='" + domid + "'></div>");
 
       // data-direction
       var direction = dom.attr('data-direction');

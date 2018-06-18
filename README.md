@@ -613,7 +613,7 @@ $('.febsui-swiper').swiperTotal();
 <html>
 
 <!-- 使用 top, left 样式来指定位置 -->
-<div class="febsui-popover" style="top:50px; left:50px;">
+<div class="febsui-popover" id="popover1" style="top:50px; left:50px;">
   <div class="febsui-popover-cell">cell1</div>
   <div class="febsui-popover-cell">cell2</div>
   <div class="febsui-popover-cell">cell3</div>
@@ -627,6 +627,8 @@ $('.febsui-swiper').swiperTotal();
 
 </html>
 ```
+
+> must provide a `id` attrubute
 
 属性
 
@@ -642,18 +644,18 @@ $('.febsui-swiper').swiperTotal();
 /**
  * @desc 判断是否是popover
  */
-$('.febsui-popover').isPopover();
+$('#popover1').isPopover();
 /**
  * @desc 显示popover
  * @param mask 是否显示掩码背景.
  * @param attachNode 附加到此节点上显示. 如果不存在, 则查询 data-attach 属性.
  */
-$('.febsui-popover').popoverShow(mask?:boolean, attachNode?:selector);
+$('#popover1').popoverShow(mask?:boolean, attachNode?:selector);
 
 /**
  * @desc 隐藏popover; 显示后点击也会隐藏.
  */
-$('.febsui-popover').popoverHide();
+$('#popover1').popoverHide();
 ```
 
 ### actionsheet
@@ -665,7 +667,7 @@ $('.febsui-popover').popoverHide();
 ```html
 <html>
 
-<div class="febsui-actionsheet">
+<div class="febsui-actionsheet" id="actionsheet1">
   <div class="febsui-actionsheet-cell">cell1</div>
   <div class="febsui-actionsheet-cell">cell2</div>
 
@@ -674,6 +676,8 @@ $('.febsui-popover').popoverHide();
 
 </html>
 ```
+
+> must provide a `id` attrubute
 
 类
 
@@ -688,16 +692,16 @@ $('.febsui-popover').popoverHide();
 /**
  * @desc 判断是否是actionsheet
  */
-$('.febsui-actionsheet').isActionsheet();
+$('#actionsheet1').isActionsheet();
 /**
  * @desc 显示actionsheet
  */
-$('.febsui-actionsheet').actionsheetShow();
+$('#actionsheet1').actionsheetShow();
 
 /**
  * @desc 隐藏actionsheet; 显示后点击也会隐藏.
  */
-$('.febsui-actionsheet').actionsheetHide();
+$('#actionsheet1').actionsheetHide();
 ```
 
 
