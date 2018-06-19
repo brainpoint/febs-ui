@@ -110,23 +110,32 @@ $.fn.popoverShow = function(mask, attachNode) {
         // data-attach.
         var attrAttach = attachNode ? attachNode : eee.attr('data-attach');
         var attach = $(attrAttach)[0];
+
+        var attrDirection = eee.attr('data-direction');
+        attrDirection = attrDirection ? attrDirection.toLowerCase() : 'auto';
+
+        var width, height, attachOffset;
+
         if (attach) {
-          
-          var attachOffset = window.febs.dom.getElementOffset(attach);
-          
+          width = attach.offsetWidth;
+          height = attach.offsetHeight;
+          attachOffset = window.febs.dom.getElementOffset(attach);
+        }
+        else {
+          width = 0;
+          height = 0;
+          attachOffset = {top:0, left:0};
+          attrDirection = 'center';
+        }
+
           var top = attachOffset.top;
           var left = attachOffset.left;
-          var width = attach.offsetWidth;
-          var height = attach.offsetHeight;
 
           var width2 = eee[0].offsetWidth;
           var height2 = eee[0].offsetHeight;
 
           var offset = eee.attr('data-offset');
           offset = window.febs.string.isEmpty(offset) ? 0 : parseInt(offset);
-
-          var attrDirection = eee.attr('data-direction');
-          attrDirection = attrDirection ? attrDirection.toLowerCase() : 'auto';
           
           var dis2 = 11;
           var dis = dis2 + 4;
@@ -352,7 +361,6 @@ $.fn.popoverShow = function(mask, attachNode) {
           } // if..else.
 
         }
-      }
 
       ee.removeClass('febsui-invisible').addClass('febsui-visible');
     }

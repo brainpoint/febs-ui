@@ -29,6 +29,7 @@ function popover_init(elem) {
       ddd.insertBefore(dom);
       dom.removeAttr('id');
 
+      $('.febsui-popover[data-id="'+domid+'"]').remove();
       var dd = $("<div class='febsui-popover febsui-popover-inited' data-id='"+domid+"'></div>");
       
       // data-direction
