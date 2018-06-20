@@ -9,7 +9,6 @@
 var crypt = window.febs.crypt;
 var err = require('./upload.err');
 var ajaxSubmit = require('../ajaxSubmit').ajaxSubmit;
-var uuid = require('../uuid');
 
 // var responseText = $('iframe')[0].contentDocument.body.textContent;
 //     var responseData = JSON.parse(responseText) || {};
@@ -63,7 +62,7 @@ function upload(cfg) {
   }
   
   // ie9.
-  var uid = 'febsuifile' + uuid.uuid();
+  var uid = 'febsuifile' + febs.crypt.uuid();
   uid = window.febs.string.replace(uid, '-', '');
   var is_IE9 = window.febs.utils.browserIEVer() <= 9;
   if (is_IE9) {

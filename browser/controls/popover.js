@@ -1,6 +1,5 @@
 var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
 
-var uuid = require('../uuid');
 var domHelper = require('../domHelper');
 
 exports.popover_init = popover_init;

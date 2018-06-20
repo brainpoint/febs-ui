@@ -449,6 +449,12 @@ febs.crypt.md5( strOrBuffer )
  */
 febs.crypt.sha1( strOrBuffer )
 
+
+/**
+* @desc: 生成一个uuid (客户端为v4 random, 服务端为v1 timestamp).
+* @return: 
+*/
+febs.crypt.uuid()
 ```
 
 # animationFrame

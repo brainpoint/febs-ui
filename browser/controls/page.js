@@ -3,8 +3,6 @@
  * Author: lipengxiang
  * Desc:
  */
-
-var crypt = require('../uuid');
 var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
 
 'use strict';
@@ -24,7 +22,7 @@ function page_init(elem, curPage, pageCount, totalCount, pageCallback) {
 
   elem = $(elem);
 
-  var foo = 'page'+crypt.uuid();
+  var foo = 'page'+febs.crypt.uuid();
   window['febscontrolspage_map'][foo] = pageCallback;
   foo = 'javascript:window[\'febscontrolspage_map\'][\''+foo+'\']';
 

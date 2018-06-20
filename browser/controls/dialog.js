@@ -1,4 +1,3 @@
-var uuid = require('../uuid');
 var resizeDialog = require('../plugins/dialog').resizeDialog;
 var maskPrevent = require('../domHelper').maskPreventEvent;
 
@@ -102,7 +101,7 @@ function showAlert(ctx) {
 	// 	$('.febsui-dialog').remove();
   // }
 
-  var uid = 'febs-'+uuid.uuid();
+  var uid = 'febs-'+febs.crypt.uuid();
 
   var mask = '';
   if (!$('.febsui-mask').hasVisibile()) {
@@ -167,7 +166,7 @@ function showConfirm(ctx) {
 	// 	$('.febsui-dialog').remove();
 	// }
 
-  var uid = 'febs-'+uuid.uuid();
+  var uid = 'febs-'+febs.crypt.uuid();
 
   var mask = '';
   if (!$('.febsui-mask').hasVisibile()) {
@@ -242,7 +241,7 @@ function showConfirmEdit(ctx) {
 	// 	$('.febsui-dialog').remove();
 	// }
 
-  var uid = 'febs-'+uuid.uuid();
+  var uid = 'febs-'+febs.crypt.uuid();
 
   var mask = '';
   if (!$('.febsui-mask').hasVisibile()) {

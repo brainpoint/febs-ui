@@ -1,4 +1,3 @@
-var uuid = require('../uuid');
 var domHelper = require('../domHelper');
 
 exports.actionsheet_init = actionsheet_init;

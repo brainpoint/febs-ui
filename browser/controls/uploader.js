@@ -12,7 +12,6 @@
 var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
 var escape_string = require('../escape').escape_string;
 
-var uuid = require('../uuid');
 var upload = require('./upload');
 var uploadErr = require('./upload.err');
 var dialog = require('./dialog');
@@ -62,7 +61,7 @@ function uploader_init(elem) {
       }
 
 
-      var uid = 'febsui-uploader-'+uuid.uuid();
+      var uid = 'febsui-uploader-'+febs.crypt.uuid();
 
       var html = dom.html();
       dom.html('');
@@ -223,7 +222,7 @@ function uploader_init(elem) {
                   }
                 }
                 if (i >= _dataBegin.length) {
-                  var controlId = 'febsui-cancel-'+uuid.uuid();
+                  var controlId = 'febsui-cancel-'+febs.crypt.uuid();
 
                   eval(_dataBegin+`(window["febsui-uploader-controller-${uid}"], "${filename}")`);
                 }
@@ -306,7 +305,7 @@ function uploader_init(elem) {
                     
                   if (i >= _dataFinish.length) {
 
-                    var finishData = 'febsui-finish-'+uuid.uuid();
+                    var finishData = 'febsui-finish-'+febs.crypt.uuid();
                     window[finishData] = serverData;
 
                     eval(_dataFinish+`(window["febsui-uploader-controller-${uid}"], window["${finishData}"])`);
