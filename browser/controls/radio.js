@@ -32,6 +32,14 @@ function radio_init(elem) {
       // copy class.
       domHelper.copyClass(dom, dd);
 
+      // 阻止事件传递.
+      dom.click(function(env){
+        if (env) {
+          env.stopPropagation();
+          env.cancelBubble = true;
+        }
+      });
+      
       dd.insertBefore(dom);
       dd.append(dom);
       dd.append('<div class="febsui-radio-mark"></div>');
@@ -48,6 +56,11 @@ function radio_init(elem) {
           if (ee[0]) {
             ee[0].checked = !ee[0].checked;
             ee.parent().checkboxChange();
+          }
+
+          if (env) {
+            env.stopPropagation();
+            env.cancelBubble = true;
           }
         });
       } // if.

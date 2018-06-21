@@ -27,3 +27,7 @@
 0.9.0
 ==================
   - actionsheet / popover must provide a id attribute.
+
+0.9.6
+==================
+  - switch, checkbox, radio click event stopPropagation.

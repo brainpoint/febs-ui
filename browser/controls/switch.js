@@ -19,7 +19,7 @@ function switch_init(elem) {
 
     if (!dom.children().hasClass('febsui-switch-slider')) {
       dom.append("<span class='febsui-switch-slider'></span>");
-      dom.click(function() {
+      dom.click(function(event) {
         var ee = $(this);
         if (ee.hasClass("febsui-switch-disabled")) {
           return;
@@ -31,6 +31,11 @@ function switch_init(elem) {
         }
 
         ee.switch();
+
+        if (event) {
+          event.stopPropagation();
+          event.cancelBubble = true;
+        }
       });
 
       touchEventPrevent(dom[0]);

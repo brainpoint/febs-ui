@@ -3985,6 +3985,14 @@ function checkbox_init(elem) {
       // copy class.
       domHelper.copyClass(dom, dd);
 
+      // 阻止事件传递.
+      dom.click(function (env) {
+        if (env) {
+          env.stopPropagation();
+          env.cancelBubble = true;
+        }
+      });
+
       dd.insertBefore(dom);
       dd.append(dom);
       dd.append('<div class="febsui-checkbox-mark"></div>');
@@ -4001,6 +4009,10 @@ function checkbox_init(elem) {
           if (ee[0]) {
             ee[0].checked = !ee[0].checked;
             ee.parent().checkboxChange();
+          }
+          if (env) {
+            env.stopPropagation();
+            env.cancelBubble = true;
           }
         });
       } // if.
@@ -4238,6 +4250,14 @@ function radio_init(elem) {
       // copy class.
       domHelper.copyClass(dom, dd);
 
+      // 阻止事件传递.
+      dom.click(function (env) {
+        if (env) {
+          env.stopPropagation();
+          env.cancelBubble = true;
+        }
+      });
+
       dd.insertBefore(dom);
       dd.append(dom);
       dd.append('<div class="febsui-radio-mark"></div>');
@@ -4254,6 +4274,11 @@ function radio_init(elem) {
           if (ee[0]) {
             ee[0].checked = !ee[0].checked;
             ee.parent().checkboxChange();
+          }
+
+          if (env) {
+            env.stopPropagation();
+            env.cancelBubble = true;
           }
         });
       } // if.
@@ -4612,7 +4637,7 @@ function switch_init(elem) {
 
     if (!dom.children().hasClass('febsui-switch-slider')) {
       dom.append("<span class='febsui-switch-slider'></span>");
-      dom.click(function () {
+      dom.click(function (event) {
         var ee = $(this);
         if (ee.hasClass("febsui-switch-disabled")) {
           return;
@@ -4624,6 +4649,11 @@ function switch_init(elem) {
         }
 
         ee['switch']();
+
+        if (event) {
+          event.stopPropagation();
+          event.cancelBubble = true;
+        }
       });
 
       touchEventPrevent(dom[0]);
