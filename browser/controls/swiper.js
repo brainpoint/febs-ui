@@ -213,53 +213,40 @@ function swiper_init_event(dom) {
   // event.
   var pages = dom.children('.febsui-swiper-pages')[0];
   if (pages) {
+    let namestart, namemove, nameend, namecancel;
     if (typeof pages.ontouchstart !== 'undefined') {
-      if (pages.addEventListener) {
-        pages.removeEventListener('touchstart', mobile_onTouchstart);
-        pages.removeEventListener('touchmove', mobile_onTouchmove);
-        pages.removeEventListener('touchend', mobile_onTouchend);
-        pages.removeEventListener('touchcancel', mobile_onTouchcancel);
+      namestart = 'touchstart';
+      namemove = 'touchmove';
+      nameend = 'touchend';
+      namecancel = 'touchcancel';
+    } else {
+      namestart = 'mousedown';
+      namemove = 'mousemove';
+      nameend = 'mouseup';
+      namecancel = 'mouseout';
+    }
 
-        pages.addEventListener('touchstart', mobile_onTouchstart, true);
-        pages.addEventListener('touchmove', mobile_onTouchmove, true);
-        pages.addEventListener('touchend', mobile_onTouchend, true);
-        pages.addEventListener('touchcancel', mobile_onTouchcancel, true);
-      }
-      else {
-        pages.detachEvent('ontouchstart', mobile_onTouchstart);
-        pages.detachEvent('ontouchmove', mobile_onTouchmove);
-        pages.detachEvent('ontouchend', mobile_onTouchend);
-        pages.detachEvent('ontouchcancel', mobile_onTouchcancel);
+    if (pages.addEventListener) {
+      pages.removeEventListener(namestart, mobile_onTouchstart);
+      pages.removeEventListener(namemove, mobile_onTouchmove);
+      pages.removeEventListener(nameend, mobile_onTouchend);
+      pages.removeEventListener(namecancel, mobile_onTouchcancel);
 
-        pages.attachEvent('ontouchstart', mobile_onTouchstart);
-        pages.attachEvent('ontouchmove', mobile_onTouchmove);
-        pages.attachEvent('ontouchend', mobile_onTouchend);
-        pages.attachEvent('ontouchcancel', mobile_onTouchcancel);
-      }
+      pages.addEventListener(namestart, mobile_onTouchstart, true);
+      pages.addEventListener(namemove, mobile_onTouchmove, true);
+      pages.addEventListener(nameend, mobile_onTouchend, true);
+      pages.addEventListener(namecancel, mobile_onTouchcancel, true);
     }
     else {
-      if (pages.addEventListener) {
-        pages.removeEventListener('mousedown', mobile_onTouchstart);
-        pages.removeEventListener('mousemove', mobile_onTouchmove);
-        pages.removeEventListener('mouseup', mobile_onTouchend);
-        pages.removeEventListener('mouseout', mobile_onTouchcancel);
+      pages.detachEvent('on'+namestart, mobile_onTouchstart);
+      pages.detachEvent('on'+namemove, mobile_onTouchmove);
+      pages.detachEvent('on'+nameend, mobile_onTouchend);
+      pages.detachEvent('on'+namecancel, mobile_onTouchcancel);
 
-        pages.addEventListener('mousedown', mobile_onTouchstart, true);
-        pages.addEventListener('mousemove', mobile_onTouchmove, true);
-        pages.addEventListener('mouseup', mobile_onTouchend, true);
-        pages.addEventListener('mouseout', mobile_onTouchcancel, true);
-      }
-      else {
-        pages.detachEvent('onmousedown', mobile_onTouchstart);
-        pages.detachEvent('onmousemove', mobile_onTouchmove);
-        pages.detachEvent('onmouseup', mobile_onTouchend);
-        pages.detachEvent('onmouseout', mobile_onTouchcancel);
-
-        pages.attachEvent('onmousedown', mobile_onTouchstart);
-        pages.attachEvent('onmousemove', mobile_onTouchmove);
-        pages.attachEvent('onmouseup', mobile_onTouchend);
-        pages.attachEvent('onmouseout', mobile_onTouchcancel);
-      }
+      pages.attachEvent('on'+namestart, mobile_onTouchstart);
+      pages.attachEvent('on'+namemove, mobile_onTouchmove);
+      pages.attachEvent('on'+nameend, mobile_onTouchend);
+      pages.attachEvent('on'+namecancel, mobile_onTouchcancel);
     }
   } // if.
 }
