@@ -3,6 +3,45 @@ var domHelper = require('../domHelper');
 var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
 
 exports.radio_init = radio_init;
+exports.radio_init_event = radio_init_event;
+
+
+/**
+* @desc: 对元素注册初始化事件.
+*/
+function radio_init_event(dom) {
+  if (!dom) return;
+
+  // 阻止事件传递.
+  $(dom.children('input')[0]).click(function(env){
+    if (env) {
+      env.stopPropagation();
+      env.cancelBubble = true;
+    }
+  });
+  
+  touchEventPrevent(dom[0]);
+
+  // ie. for checked.
+  if (window.febs.utils.browserIsIE()) {
+    var mark = $(dom.children('.febsui-radio-mark')[0]);
+    mark.click(function(env){
+      var ee = $(env.target);
+      ee = ee.prev('input');
+      if (ee[0]) {
+        ee[0].checked = !ee[0].checked;
+        ee.trigger('change');
+      }
+
+      if (env) {
+        env.stopPropagation();
+        env.cancelBubble = true;
+      }
+    });
+  } // if.
+
+}
+
 
 /**
 * @desc: 初始化radio控件.
@@ -31,39 +70,17 @@ function radio_init(elem) {
 
       // copy class.
       domHelper.copyClass(dom, dd);
-
-      // 阻止事件传递.
-      dom.click(function(env){
-        if (env) {
-          env.stopPropagation();
-          env.cancelBubble = true;
-        }
-      });
       
       dd.insertBefore(dom);
       dd.append(dom);
       dd.append('<div class="febsui-radio-mark"></div>');
-      
-      touchEventPrevent(dd[0]);
 
       // ie. for checked.
       if (window.febs.utils.browserIsIE()) {
         dom.css('display', 'none');
-        var mark = $(dd.children('.febsui-radio-mark')[0]);
-        mark.click(function(env){
-          var ee = $(env.target);
-          ee = ee.prev('input');
-          if (ee[0]) {
-            ee[0].checked = !ee[0].checked;
-            ee.parent().checkboxChange();
-          }
-
-          if (env) {
-            env.stopPropagation();
-            env.cancelBubble = true;
-          }
-        });
       } // if.
+
+      radio_init_event(dd);
 
     }
   } // for.

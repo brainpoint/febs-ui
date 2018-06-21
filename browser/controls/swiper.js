@@ -2,6 +2,8 @@
 var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
 
 exports.swiper_init = swiper_init;
+exports.swiper_init_event = swiper_init_event;
+
 
 
 var default_swiper_auto = 7000;
@@ -188,6 +190,82 @@ function swiper_animation() {
 
 
 /**
+* @desc: 对元素注册初始化事件.
+*/
+function swiper_init_event(dom) {
+
+  if (!dom)
+    return;
+
+  var dataAuto = dom.attr('data-auto');
+
+  dataAuto = window.febs.string.isEmpty(dataAuto) ? 0 : parseInt(dataAuto);
+  dataAuto = dataAuto === 0 ? 0 : (dataAuto ? dataAuto : default_swiper_auto);
+
+  if (dataAuto > 0) {
+    setTimeout(swiper_animation.bind(dom), dataAuto);
+  }
+
+  // 触发一次事件.
+  dom.trigger('swiper');
+
+  //
+  // event.
+  var pages = dom.children('.febsui-swiper-pages')[0];
+  if (pages) {
+    if (typeof pages.ontouchstart !== 'undefined') {
+      if (pages.addEventListener) {
+        pages.removeEventListener('touchstart', mobile_onTouchstart);
+        pages.removeEventListener('touchmove', mobile_onTouchmove);
+        pages.removeEventListener('touchend', mobile_onTouchend);
+        pages.removeEventListener('touchcancel', mobile_onTouchcancel);
+
+        pages.addEventListener('touchstart', mobile_onTouchstart, true);
+        pages.addEventListener('touchmove', mobile_onTouchmove, true);
+        pages.addEventListener('touchend', mobile_onTouchend, true);
+        pages.addEventListener('touchcancel', mobile_onTouchcancel, true);
+      }
+      else {
+        pages.detachEvent('ontouchstart', mobile_onTouchstart);
+        pages.detachEvent('ontouchmove', mobile_onTouchmove);
+        pages.detachEvent('ontouchend', mobile_onTouchend);
+        pages.detachEvent('ontouchcancel', mobile_onTouchcancel);
+
+        pages.attachEvent('ontouchstart', mobile_onTouchstart);
+        pages.attachEvent('ontouchmove', mobile_onTouchmove);
+        pages.attachEvent('ontouchend', mobile_onTouchend);
+        pages.attachEvent('ontouchcancel', mobile_onTouchcancel);
+      }
+    }
+    else {
+      if (pages.addEventListener) {
+        pages.removeEventListener('mousedown', mobile_onTouchstart);
+        pages.removeEventListener('mousemove', mobile_onTouchmove);
+        pages.removeEventListener('mouseup', mobile_onTouchend);
+        pages.removeEventListener('mouseout', mobile_onTouchcancel);
+
+        pages.addEventListener('mousedown', mobile_onTouchstart, true);
+        pages.addEventListener('mousemove', mobile_onTouchmove, true);
+        pages.addEventListener('mouseup', mobile_onTouchend, true);
+        pages.addEventListener('mouseout', mobile_onTouchcancel, true);
+      }
+      else {
+        pages.detachEvent('onmousedown', mobile_onTouchstart);
+        pages.detachEvent('onmousemove', mobile_onTouchmove);
+        pages.detachEvent('onmouseup', mobile_onTouchend);
+        pages.detachEvent('onmouseout', mobile_onTouchcancel);
+
+        pages.attachEvent('onmousedown', mobile_onTouchstart);
+        pages.attachEvent('onmousemove', mobile_onTouchmove);
+        pages.attachEvent('onmouseup', mobile_onTouchend);
+        pages.attachEvent('onmouseout', mobile_onTouchcancel);
+      }
+    }
+  } // if.
+}
+
+
+/**
 * @desc: 初始化swiper控件.
 */
 function swiper_init(elem) {
@@ -204,12 +282,9 @@ function swiper_init(elem) {
     var dataShowDots = dom.attr('data-dots');
     var dataLoop = dom.attr('data-loop');
     var dataDotColor = dom.attr('data-dot-color');
-    var dataAuto = dom.attr('data-auto');
 
     dataShowDots = window.febs.string.isEmpty(dataShowDots) ? true : ('true' == dataShowDots);
     dataLoop = window.febs.string.isEmpty(dataLoop) ? true : ('true' == dataLoop);
-    dataAuto = window.febs.string.isEmpty(dataAuto) ? 0 : parseInt(dataAuto);
-    dataAuto = dataAuto === 0 ? 0 : (dataAuto ? dataAuto : default_swiper_auto);
 
     var domChildren = dom.children();
     if (!domChildren.hasClass('febsui-swiper-pages')) {
@@ -279,66 +354,7 @@ function swiper_init(elem) {
         this.addClass('febsui-swiper-animation');
       }.bind(pages), 10);
 
-      if (dataAuto > 0) {
-        setTimeout(swiper_animation.bind(dom), dataAuto);
-      }
-
-      // 触发一次事件.
-      dom.trigger('swiper');
-
-      //
-      // event.
-      pages = pages[0];
-      if (pages) {
-        if (typeof pages.ontouchstart !== 'undefined') {
-          if (pages.addEventListener) {
-            pages.removeEventListener('touchstart', mobile_onTouchstart);
-            pages.removeEventListener('touchmove', mobile_onTouchmove);
-            pages.removeEventListener('touchend', mobile_onTouchend);
-            pages.removeEventListener('touchcancel', mobile_onTouchcancel);
-
-            pages.addEventListener('touchstart', mobile_onTouchstart, true);
-            pages.addEventListener('touchmove', mobile_onTouchmove, true);
-            pages.addEventListener('touchend', mobile_onTouchend, true);
-            pages.addEventListener('touchcancel', mobile_onTouchcancel, true);
-          }
-          else {
-            pages.detachEvent('ontouchstart', mobile_onTouchstart);
-            pages.detachEvent('ontouchmove', mobile_onTouchmove);
-            pages.detachEvent('ontouchend', mobile_onTouchend);
-            pages.detachEvent('ontouchcancel', mobile_onTouchcancel);
-
-            pages.attachEvent('ontouchstart', mobile_onTouchstart);
-            pages.attachEvent('ontouchmove', mobile_onTouchmove);
-            pages.attachEvent('ontouchend', mobile_onTouchend);
-            pages.attachEvent('ontouchcancel', mobile_onTouchcancel);
-          }
-        }
-        else {
-          if (pages.addEventListener) {
-            pages.removeEventListener('mousedown', mobile_onTouchstart);
-            pages.removeEventListener('mousemove', mobile_onTouchmove);
-            pages.removeEventListener('mouseup', mobile_onTouchend);
-            pages.removeEventListener('mouseout', mobile_onTouchcancel);
-
-            pages.addEventListener('mousedown', mobile_onTouchstart, true);
-            pages.addEventListener('mousemove', mobile_onTouchmove, true);
-            pages.addEventListener('mouseup', mobile_onTouchend, true);
-            pages.addEventListener('mouseout', mobile_onTouchcancel, true);
-          }
-          else {
-            pages.detachEvent('onmousedown', mobile_onTouchstart);
-            pages.detachEvent('onmousemove', mobile_onTouchmove);
-            pages.detachEvent('onmouseup', mobile_onTouchend);
-            pages.detachEvent('onmouseout', mobile_onTouchcancel);
-
-            pages.attachEvent('onmousedown', mobile_onTouchstart);
-            pages.attachEvent('onmousemove', mobile_onTouchmove);
-            pages.attachEvent('onmouseup', mobile_onTouchend);
-            pages.attachEvent('onmouseout', mobile_onTouchcancel);
-          }
-        }
-      } // if.
+      swiper_init_event(dom);
     }
   } // for.
 }

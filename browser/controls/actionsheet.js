@@ -2,6 +2,7 @@ var domHelper = require('../domHelper');
 
 exports.actionsheet_init = actionsheet_init;
 
+
 /**
 * @desc: 初始化actionsheet控件.
 *        对页面上 的所有 <.febsui-actionsheet> 元素进行初始化.

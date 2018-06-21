@@ -2,6 +2,36 @@
 var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
 
 exports.switch_init = switch_init;
+exports.switch_init_event = switch_init_event;
+
+
+/**
+* @desc: 对switch元素注册初始化事件.
+*/
+function switch_init_event(dom) {
+  if (!dom) return;
+  
+  dom.click(function(event) {
+    var ee = $(this);
+    if (ee.hasClass("febsui-switch-disabled")) {
+      return;
+    }
+    if (!ee.hasClass("febsui-switch-off")) {
+      ee.removeClass("febsui-switch-on").addClass("febsui-switch-off");
+    } else {
+      ee.removeClass("febsui-switch-off").addClass("febsui-switch-on");
+    }
+
+    ee.switch();
+
+    if (event) {
+      event.stopPropagation();
+      event.cancelBubble = true;
+    }
+  });
+
+  touchEventPrevent(dom[0]);
+}
 
 /**
 * @desc: 初始化switch控件.
@@ -19,26 +49,8 @@ function switch_init(elem) {
 
     if (!dom.children().hasClass('febsui-switch-slider')) {
       dom.append("<span class='febsui-switch-slider'></span>");
-      dom.click(function(event) {
-        var ee = $(this);
-        if (ee.hasClass("febsui-switch-disabled")) {
-          return;
-        }
-        if (!ee.hasClass("febsui-switch-off")) {
-          ee.removeClass("febsui-switch-on").addClass("febsui-switch-off");
-        } else {
-          ee.removeClass("febsui-switch-off").addClass("febsui-switch-on");
-        }
-
-        ee.switch();
-
-        if (event) {
-          event.stopPropagation();
-          event.cancelBubble = true;
-        }
-      });
-
-      touchEventPrevent(dom[0]);
+      
+      switch_init_event(dom);
     }
   } // for.
 }

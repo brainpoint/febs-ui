@@ -247,45 +247,46 @@ export function uploadBase64(cfg: {
 export function page_init(elem: any, curPage: number, pageCount: number, totalCount: number, pageCallback: (page: any) => void): void;
 
 /**
- * @desc 初始化页面上所有switch控件
+ * @desc 初始化页面上所有switch控件 (会进行事件初始化)
  *       默认在页面加载完成时会调用一次; 加入新的switch控件时需调用一次.
  */
 export function ui_switch_init(elem?:any):void;
 
+
 /**
- * @desc 初始化页面上所有checkbox控件 (带febsui-checkbox类的控件)
+ * @desc 初始化页面上所有checkbox控件 (带febsui-checkbox类的控件)(会进行事件初始化)
  *       默认在页面加载完成时会调用一次; 加入新的checkbox控件时需调用一次.
  */
 export function ui_checkbox_init(elem?:any):void;
 
 /**
- * @desc 初始化页面上所有radio控件 (带febsui-radio类的控件)
+ * @desc 初始化页面上所有radio控件 (带febsui-radio类的控件)(会进行事件初始化)
  *       默认在页面加载完成时会调用一次; 加入新的radio控件时需调用一次.
  */
 export function ui_radio_init(elem?:any):void;
 
 /**
-* @desc: 初始化popover控件.
+* @desc: 初始化popover控件.(会进行事件初始化)
 *        对页面上 的所有 <popover> 元素进行初始化.
 *        在增加新的popover到页面后, 需要手动调用此方法.
 */
 export function ui_popover_init(elem?:any):void;
 
 /**
-* @desc: 初始化actionSheet控件.
+* @desc: 初始化actionSheet控件.(会进行事件初始化)
 *        对页面上 的所有 <actionsheet> 元素进行初始化.
 *        在增加新的actionsheet到页面后, 需要手动调用此方法.
 */
 export function ui_actionSheet_init(elem?:any):void;
 
 /**
-* @desc: 初始化dialog控件.
+* @desc: 初始化dialog控件.(会进行事件初始化)
 *        对页面上 的所有 <dialog> 元素进行初始化.
 *        在增加新的dialog到页面后, 需要手动调用此方法.
 */
 export function ui_dialog_init(elem?:any):void;
 /**
-* @desc: 初始化uploader控件.
+* @desc: 初始化uploader控件.(会进行事件初始化)
 *        对页面上 的所有 <uploader> 元素进行初始化.
 *        在增加新的uploader到页面后, 需要手动调用此方法.
 */
@@ -295,15 +296,42 @@ export function ui_uploader_init(elem?:any):void;
 */
 export function ui_spin_init(elem?:any):void;
 /**
-* @desc: 对所有的button控件进行初始化, 保证移动端touch穿透体验.
+* @desc: 对所有的button控件进行初始化, 保证移动端touch穿透体验.(会进行事件初始化)
 */
 export function ui_button_init(elem?:any):void;
 /**
-* @desc: 对所有的swiper控件进行初始化.
+* @desc: 对所有的swiper控件进行初始化.(会进行事件初始化)
 */
 export function ui_swiper_init(elem?:any):void;
 /**
-* @desc: 对页面上所有ui控件进行初始化.
+* @desc: 对页面上所有ui控件进行初始化.(会进行事件初始化)
 */
 export function ui_init():void;
+
+
+/**
+ * @desc 对元素进行事件初始化.
+ * @param elem: switch元素, 已经是完整的样式. 
+ */
+export function ui_switch_init_event(elem:any):void;
+/**
+ * @desc 对元素进行事件初始化.
+ * @param elem: checkbox元素, 已经是完整的样式. 
+ */
+export function ui_checkbox_init_event(elem:any):void;
+/**
+ * @desc 对元素进行事件初始化.
+ * @param elem: radio元素, 已经是完整的样式. 
+ */
+export function ui_radio_init_event(elem:any):void;
+/**
+ * @desc 对元素进行事件初始化.
+ * @param elem: button元素, 已经是完整的样式. 
+ */
+export function ui_button_init_event(elem:any):void;
+/**
+ * @desc 对元素进行事件初始化.
+ * @param elem: swiper元素, 已经是完整的样式. 
+ */
+export function ui_swiper_init_event(elem:any):void;
 

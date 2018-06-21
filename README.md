@@ -171,6 +171,44 @@ febsui.ui_spin_init(elem?:any):void;
 febsui.ui_button_init(elem?:any):void;
 ```
 
+
+调用ui初始化方法之后, 会对html元素结构进行操作后初始化事件. 如果需要手动设置初始化事件, 可以调用如下方法.
+
+```js
+
+/**
+ * @desc 对元素进行事件初始化.
+ * @param elem: 已经是完整的样式. 
+ */
+febsui.ui_swiper_init_event(elem:selector);
+
+/**
+ * @desc 对元素进行事件初始化.
+ * @param elem: 已经是完整的样式. 
+ */
+febsui.ui_switch_init_event(elem:selector);
+
+/**
+ * @desc 对元素进行事件初始化.
+ * @param elem: 已经是完整的样式. 
+ */
+febsui.ui_checkbox_init_event(elem:selector);
+
+/**
+ * @desc 对元素进行事件初始化.
+ * @param elem: 已经是完整的样式. 
+ */
+febsui.ui_radio_init_event(elem:selector);
+
+/**
+ * @desc 对元素进行事件初始化.
+ * @param elem: 已经是完整的样式. 
+ */
+febsui.ui_button_init_event(elem:selector):void;
+```
+
+
+
 ### button
 
 ![](doc/ui/control-button.png)

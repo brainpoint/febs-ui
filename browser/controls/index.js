@@ -29,6 +29,7 @@ exports.dialog_showConfirmEdit = dialog.showConfirmEdit;
 
 var switcha = require('./switch');
 exports.ui_switch_init = switcha.switch_init;
+exports.ui_switch_init_event = switcha.switch_init_event;
 
 var popovera = require('./popover');
 exports.ui_popover_init = popovera.popover_init;
@@ -44,18 +45,22 @@ exports.ui_uploader_init = uploadera.uploader_init;
 
 var checkboxa = require('./checkbox');
 exports.ui_checkbox_init = checkboxa.checkbox_init;
+exports.ui_checkbox_init_event = checkboxa.checkbox_init_event;
 
 var radioa = require('./radio');
 exports.ui_radio_init = radioa.radio_init;
+exports.ui_radio_init_event = radioa.radio_init_event;
 
 var loadinga = require('./loading');
 exports.ui_spin_init = loadinga.spin_init;
 
 var buttona = require('./button');
 exports.ui_button_init = buttona.button_init;
+exports.ui_button_init_event = buttona.button_init_event;
 
 var swipera = require('./swiper');
 exports.ui_swiper_init = swipera.swiper_init;
+exports.ui_swiper_init_event = swipera.swiper_init_event;
 
 
 

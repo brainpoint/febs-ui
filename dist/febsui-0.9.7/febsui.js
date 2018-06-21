@@ -1671,6 +1671,7 @@ exports.dialog_showConfirmEdit = dialog.showConfirmEdit;
 
 var switcha = __webpack_require__(94);
 exports.ui_switch_init = switcha.switch_init;
+exports.ui_switch_init_event = switcha.switch_init_event;
 
 var popovera = __webpack_require__(91);
 exports.ui_popover_init = popovera.popover_init;
@@ -1686,18 +1687,22 @@ exports.ui_uploader_init = uploadera.uploader_init;
 
 var checkboxa = __webpack_require__(89);
 exports.ui_checkbox_init = checkboxa.checkbox_init;
+exports.ui_checkbox_init_event = checkboxa.checkbox_init_event;
 
 var radioa = __webpack_require__(92);
 exports.ui_radio_init = radioa.radio_init;
+exports.ui_radio_init_event = radioa.radio_init_event;
 
 var loadinga = __webpack_require__(41);
 exports.ui_spin_init = loadinga.spin_init;
 
 var buttona = __webpack_require__(88);
 exports.ui_button_init = buttona.button_init;
+exports.ui_button_init_event = buttona.button_init_event;
 
 var swipera = __webpack_require__(93);
 exports.ui_swiper_init = swipera.swiper_init;
+exports.ui_swiper_init_event = swipera.swiper_init_event;
 
 /**
 * @desc: 初始化所有ui
@@ -3928,6 +3933,14 @@ function actionsheet_init(elem) {
 var touchEventPrevent = __webpack_require__(0).mobile_preventTouchEvent;
 
 exports.button_init = button_init;
+exports.button_init_event = button_init_event;
+
+/**
+* @desc: 对元素注册初始化事件.
+*/
+function button_init_event(dom) {
+  touchEventPrevent(dom);
+}
 
 /**
 * @desc: 初始化botton控件. 防止mobile端事件穿透.
@@ -3940,7 +3953,7 @@ function button_init() {
       dom.addClass('febsui-button-inited');
       dom = dom[0];
 
-      touchEventPrevent(dom);
+      button_init_event(dom);
     }
   } // for.
 }
@@ -3956,6 +3969,41 @@ var domHelper = __webpack_require__(0);
 var touchEventPrevent = __webpack_require__(0).mobile_preventTouchEvent;
 
 exports.checkbox_init = checkbox_init;
+exports.checkbox_init_event = checkbox_init_event;
+
+/**
+* @desc: 对元素注册初始化事件.
+*/
+function checkbox_init_event(dom) {
+  if (!dom) return;
+
+  // 阻止事件传递.
+  $(dom.children('input')[0]).click(function (env) {
+    if (env) {
+      env.stopPropagation();
+      env.cancelBubble = true;
+    }
+  });
+
+  touchEventPrevent(dom[0]);
+
+  // ie. for checked.
+  if (window.febs.utils.browserIsIE()) {
+    var mark = $(dom.children('.febsui-checkbox-mark')[0]);
+    mark.click(function (env) {
+      var ee = $(env.target);
+      ee = ee.prev('input');
+      if (ee[0]) {
+        ee[0].checked = !ee[0].checked;
+        ee.trigger('change');
+      }
+      if (env) {
+        env.stopPropagation();
+        env.cancelBubble = true;
+      }
+    });
+  } // if.
+}
 
 /**
 * @desc: 初始化checkbox控件.
@@ -3985,37 +4033,16 @@ function checkbox_init(elem) {
       // copy class.
       domHelper.copyClass(dom, dd);
 
-      // 阻止事件传递.
-      dom.click(function (env) {
-        if (env) {
-          env.stopPropagation();
-          env.cancelBubble = true;
-        }
-      });
-
       dd.insertBefore(dom);
       dd.append(dom);
       dd.append('<div class="febsui-checkbox-mark"></div>');
 
-      touchEventPrevent(dd[0]);
-
       // ie. for checked.
       if (window.febs.utils.browserIsIE()) {
         dom.css('display', 'none');
-        var mark = $(dd.children('.febsui-checkbox-mark')[0]);
-        mark.click(function (env) {
-          var ee = $(env.target);
-          ee = ee.prev('input');
-          if (ee[0]) {
-            ee[0].checked = !ee[0].checked;
-            ee.parent().checkboxChange();
-          }
-          if (env) {
-            env.stopPropagation();
-            env.cancelBubble = true;
-          }
-        });
       } // if.
+
+      checkbox_init_event(dd);
     }
   } // for.
 }
@@ -4221,6 +4248,42 @@ var domHelper = __webpack_require__(0);
 var touchEventPrevent = __webpack_require__(0).mobile_preventTouchEvent;
 
 exports.radio_init = radio_init;
+exports.radio_init_event = radio_init_event;
+
+/**
+* @desc: 对元素注册初始化事件.
+*/
+function radio_init_event(dom) {
+  if (!dom) return;
+
+  // 阻止事件传递.
+  $(dom.children('input')[0]).click(function (env) {
+    if (env) {
+      env.stopPropagation();
+      env.cancelBubble = true;
+    }
+  });
+
+  touchEventPrevent(dom[0]);
+
+  // ie. for checked.
+  if (window.febs.utils.browserIsIE()) {
+    var mark = $(dom.children('.febsui-radio-mark')[0]);
+    mark.click(function (env) {
+      var ee = $(env.target);
+      ee = ee.prev('input');
+      if (ee[0]) {
+        ee[0].checked = !ee[0].checked;
+        ee.trigger('change');
+      }
+
+      if (env) {
+        env.stopPropagation();
+        env.cancelBubble = true;
+      }
+    });
+  } // if.
+}
 
 /**
 * @desc: 初始化radio控件.
@@ -4250,38 +4313,16 @@ function radio_init(elem) {
       // copy class.
       domHelper.copyClass(dom, dd);
 
-      // 阻止事件传递.
-      dom.click(function (env) {
-        if (env) {
-          env.stopPropagation();
-          env.cancelBubble = true;
-        }
-      });
-
       dd.insertBefore(dom);
       dd.append(dom);
       dd.append('<div class="febsui-radio-mark"></div>');
 
-      touchEventPrevent(dd[0]);
-
       // ie. for checked.
       if (window.febs.utils.browserIsIE()) {
         dom.css('display', 'none');
-        var mark = $(dd.children('.febsui-radio-mark')[0]);
-        mark.click(function (env) {
-          var ee = $(env.target);
-          ee = ee.prev('input');
-          if (ee[0]) {
-            ee[0].checked = !ee[0].checked;
-            ee.parent().checkboxChange();
-          }
-
-          if (env) {
-            env.stopPropagation();
-            env.cancelBubble = true;
-          }
-        });
       } // if.
+
+      radio_init_event(dd);
     }
   } // for.
 }
@@ -4296,6 +4337,7 @@ function radio_init(elem) {
 var touchEventPrevent = __webpack_require__(0).mobile_preventTouchEvent;
 
 exports.swiper_init = swiper_init;
+exports.swiper_init_event = swiper_init_event;
 
 var default_swiper_auto = 7000;
 
@@ -4460,6 +4502,77 @@ function swiper_animation() {
 }
 
 /**
+* @desc: 对元素注册初始化事件.
+*/
+function swiper_init_event(dom) {
+
+  if (!dom) return;
+
+  var dataAuto = dom.attr('data-auto');
+
+  dataAuto = window.febs.string.isEmpty(dataAuto) ? 0 : parseInt(dataAuto);
+  dataAuto = dataAuto === 0 ? 0 : dataAuto ? dataAuto : default_swiper_auto;
+
+  if (dataAuto > 0) {
+    setTimeout(swiper_animation.bind(dom), dataAuto);
+  }
+
+  // 触发一次事件.
+  dom.trigger('swiper');
+
+  //
+  // event.
+  var pages = dom.children('.febsui-swiper-pages')[0];
+  if (pages) {
+    if (typeof pages.ontouchstart !== 'undefined') {
+      if (pages.addEventListener) {
+        pages.removeEventListener('touchstart', mobile_onTouchstart);
+        pages.removeEventListener('touchmove', mobile_onTouchmove);
+        pages.removeEventListener('touchend', mobile_onTouchend);
+        pages.removeEventListener('touchcancel', mobile_onTouchcancel);
+
+        pages.addEventListener('touchstart', mobile_onTouchstart, true);
+        pages.addEventListener('touchmove', mobile_onTouchmove, true);
+        pages.addEventListener('touchend', mobile_onTouchend, true);
+        pages.addEventListener('touchcancel', mobile_onTouchcancel, true);
+      } else {
+        pages.detachEvent('ontouchstart', mobile_onTouchstart);
+        pages.detachEvent('ontouchmove', mobile_onTouchmove);
+        pages.detachEvent('ontouchend', mobile_onTouchend);
+        pages.detachEvent('ontouchcancel', mobile_onTouchcancel);
+
+        pages.attachEvent('ontouchstart', mobile_onTouchstart);
+        pages.attachEvent('ontouchmove', mobile_onTouchmove);
+        pages.attachEvent('ontouchend', mobile_onTouchend);
+        pages.attachEvent('ontouchcancel', mobile_onTouchcancel);
+      }
+    } else {
+      if (pages.addEventListener) {
+        pages.removeEventListener('mousedown', mobile_onTouchstart);
+        pages.removeEventListener('mousemove', mobile_onTouchmove);
+        pages.removeEventListener('mouseup', mobile_onTouchend);
+        pages.removeEventListener('mouseout', mobile_onTouchcancel);
+
+        pages.addEventListener('mousedown', mobile_onTouchstart, true);
+        pages.addEventListener('mousemove', mobile_onTouchmove, true);
+        pages.addEventListener('mouseup', mobile_onTouchend, true);
+        pages.addEventListener('mouseout', mobile_onTouchcancel, true);
+      } else {
+        pages.detachEvent('onmousedown', mobile_onTouchstart);
+        pages.detachEvent('onmousemove', mobile_onTouchmove);
+        pages.detachEvent('onmouseup', mobile_onTouchend);
+        pages.detachEvent('onmouseout', mobile_onTouchcancel);
+
+        pages.attachEvent('onmousedown', mobile_onTouchstart);
+        pages.attachEvent('onmousemove', mobile_onTouchmove);
+        pages.attachEvent('onmouseup', mobile_onTouchend);
+        pages.attachEvent('onmouseout', mobile_onTouchcancel);
+      }
+    }
+  } // if.
+}
+
+/**
 * @desc: 初始化swiper控件.
 */
 function swiper_init(elem) {
@@ -4476,12 +4589,9 @@ function swiper_init(elem) {
     var dataShowDots = dom.attr('data-dots');
     var dataLoop = dom.attr('data-loop');
     var dataDotColor = dom.attr('data-dot-color');
-    var dataAuto = dom.attr('data-auto');
 
     dataShowDots = window.febs.string.isEmpty(dataShowDots) ? true : 'true' == dataShowDots;
     dataLoop = window.febs.string.isEmpty(dataLoop) ? true : 'true' == dataLoop;
-    dataAuto = window.febs.string.isEmpty(dataAuto) ? 0 : parseInt(dataAuto);
-    dataAuto = dataAuto === 0 ? 0 : dataAuto ? dataAuto : default_swiper_auto;
 
     var domChildren = dom.children();
     if (!domChildren.hasClass('febsui-swiper-pages')) {
@@ -4549,63 +4659,7 @@ function swiper_init(elem) {
         this.addClass('febsui-swiper-animation');
       }.bind(pages), 10);
 
-      if (dataAuto > 0) {
-        setTimeout(swiper_animation.bind(dom), dataAuto);
-      }
-
-      // 触发一次事件.
-      dom.trigger('swiper');
-
-      //
-      // event.
-      pages = pages[0];
-      if (pages) {
-        if (typeof pages.ontouchstart !== 'undefined') {
-          if (pages.addEventListener) {
-            pages.removeEventListener('touchstart', mobile_onTouchstart);
-            pages.removeEventListener('touchmove', mobile_onTouchmove);
-            pages.removeEventListener('touchend', mobile_onTouchend);
-            pages.removeEventListener('touchcancel', mobile_onTouchcancel);
-
-            pages.addEventListener('touchstart', mobile_onTouchstart, true);
-            pages.addEventListener('touchmove', mobile_onTouchmove, true);
-            pages.addEventListener('touchend', mobile_onTouchend, true);
-            pages.addEventListener('touchcancel', mobile_onTouchcancel, true);
-          } else {
-            pages.detachEvent('ontouchstart', mobile_onTouchstart);
-            pages.detachEvent('ontouchmove', mobile_onTouchmove);
-            pages.detachEvent('ontouchend', mobile_onTouchend);
-            pages.detachEvent('ontouchcancel', mobile_onTouchcancel);
-
-            pages.attachEvent('ontouchstart', mobile_onTouchstart);
-            pages.attachEvent('ontouchmove', mobile_onTouchmove);
-            pages.attachEvent('ontouchend', mobile_onTouchend);
-            pages.attachEvent('ontouchcancel', mobile_onTouchcancel);
-          }
-        } else {
-          if (pages.addEventListener) {
-            pages.removeEventListener('mousedown', mobile_onTouchstart);
-            pages.removeEventListener('mousemove', mobile_onTouchmove);
-            pages.removeEventListener('mouseup', mobile_onTouchend);
-            pages.removeEventListener('mouseout', mobile_onTouchcancel);
-
-            pages.addEventListener('mousedown', mobile_onTouchstart, true);
-            pages.addEventListener('mousemove', mobile_onTouchmove, true);
-            pages.addEventListener('mouseup', mobile_onTouchend, true);
-            pages.addEventListener('mouseout', mobile_onTouchcancel, true);
-          } else {
-            pages.detachEvent('onmousedown', mobile_onTouchstart);
-            pages.detachEvent('onmousemove', mobile_onTouchmove);
-            pages.detachEvent('onmouseup', mobile_onTouchend);
-            pages.detachEvent('onmouseout', mobile_onTouchcancel);
-
-            pages.attachEvent('onmousedown', mobile_onTouchstart);
-            pages.attachEvent('onmousemove', mobile_onTouchmove);
-            pages.attachEvent('onmouseup', mobile_onTouchend);
-            pages.attachEvent('onmouseout', mobile_onTouchcancel);
-          }
-        }
-      } // if.
+      swiper_init_event(dom);
     }
   } // for.
 }
@@ -4620,6 +4674,35 @@ function swiper_init(elem) {
 var touchEventPrevent = __webpack_require__(0).mobile_preventTouchEvent;
 
 exports.switch_init = switch_init;
+exports.switch_init_event = switch_init_event;
+
+/**
+* @desc: 对switch元素注册初始化事件.
+*/
+function switch_init_event(dom) {
+  if (!dom) return;
+
+  dom.click(function (event) {
+    var ee = $(this);
+    if (ee.hasClass("febsui-switch-disabled")) {
+      return;
+    }
+    if (!ee.hasClass("febsui-switch-off")) {
+      ee.removeClass("febsui-switch-on").addClass("febsui-switch-off");
+    } else {
+      ee.removeClass("febsui-switch-off").addClass("febsui-switch-on");
+    }
+
+    ee["switch"]();
+
+    if (event) {
+      event.stopPropagation();
+      event.cancelBubble = true;
+    }
+  });
+
+  touchEventPrevent(dom[0]);
+}
 
 /**
 * @desc: 初始化switch控件.
@@ -4637,26 +4720,8 @@ function switch_init(elem) {
 
     if (!dom.children().hasClass('febsui-switch-slider')) {
       dom.append("<span class='febsui-switch-slider'></span>");
-      dom.click(function (event) {
-        var ee = $(this);
-        if (ee.hasClass("febsui-switch-disabled")) {
-          return;
-        }
-        if (!ee.hasClass("febsui-switch-off")) {
-          ee.removeClass("febsui-switch-on").addClass("febsui-switch-off");
-        } else {
-          ee.removeClass("febsui-switch-off").addClass("febsui-switch-on");
-        }
 
-        ee['switch']();
-
-        if (event) {
-          event.stopPropagation();
-          event.cancelBubble = true;
-        }
-      });
-
-      touchEventPrevent(dom[0]);
+      switch_init_event(dom);
     }
   } // for.
 }
