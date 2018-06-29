@@ -53,6 +53,13 @@ $.fn.dialogShow = function() {
     }
     if (ee.hasClass('febsui-dialog-init')) {
 
+      var domid = ee.attr('id');
+      if (!febs.string.isEmpty(domid)) {
+        ee = $('.febsui-dialog[data-id="'+domid+'"]');
+        if (!ee[0])
+          continue;
+      }
+
       if (!$('.febsui-mask').hasVisibile()) {
         ee.addClass('febsui-mask');
       }
@@ -80,6 +87,14 @@ $.fn.dialogHide = function() {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-dialog-init')) {
+
+      var domid = ee.attr('id');
+      if (!febs.string.isEmpty(domid)) {
+        ee = $('.febsui-dialog[data-id="'+domid+'"]');
+        if (!ee[0])
+          continue;
+      }
+      
       ee.removeClass('febsui-visible').addClass('febsui-invisible');
     }
   }

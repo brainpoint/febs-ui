@@ -124,6 +124,11 @@ febs.string.replace();
   * @return: 
   */
   febs.dom.getElementOffset(e:any):{left:number, top:number};
+  /**
+  * @desc: 判断是否是dom对象.
+  * @return: boolean.
+  */
+  febs.dom.isDom(e: any): boolean;
 ```
 
 # date

@@ -863,13 +863,18 @@ function dialog_init(elem) {
     if (!dom.hasClass('febsui-dialog-init')) {
       dom.addClass('febsui-dialog-container').removeClass('febsui-dialog');
 
-      var dd = $("<div class='febsui-dialog febsui-dialog-init febsui-dialog-custom' role='alert'></div>");
-      $('body').append(dd);
-      var did = dom.attr('id');
-      if (did) {
-        dd.attr('id', did);
-        dom.removeAttr('id');
+      var domid = dom.attr('id');
+      if (febs.string.isEmpty(domid)) {
+        throw new Error('must have a "id" attribute in custom febsui-dialog');
       }
+
+      var ddd = $("<div class='febsui-dialog febsui-dialog-init' id='" + domid + "' style='display:none !important;'></div>");
+      ddd.insertBefore(dom);
+      dom.removeAttr('id');
+
+      $('.febsui-dialog[data-id="' + domid + '"]').remove();
+      var dd = $("<div class='febsui-dialog febsui-dialog-init febsui-dialog-custom' role='alert' data-id='" + domid + "'></div>");
+      $('body').append(dd);
       dd.append(dom);
 
       //close popup
@@ -952,6 +957,12 @@ $.fn.dialogShow = function () {
     }
     if (ee.hasClass('febsui-dialog-init')) {
 
+      var domid = ee.attr('id');
+      if (!febs.string.isEmpty(domid)) {
+        ee = $('.febsui-dialog[data-id="' + domid + '"]');
+        if (!ee[0]) continue;
+      }
+
       if (!$('.febsui-mask').hasVisibile()) {
         ee.addClass('febsui-mask');
       } else {
@@ -978,6 +989,13 @@ $.fn.dialogHide = function () {
       ee = ee.parent();
     }
     if (ee.hasClass('febsui-dialog-init')) {
+
+      var domid = ee.attr('id');
+      if (!febs.string.isEmpty(domid)) {
+        ee = $('.febsui-dialog[data-id="' + domid + '"]');
+        if (!ee[0]) continue;
+      }
+
       ee.removeClass('febsui-visible').addClass('febsui-invisible');
     }
   }
