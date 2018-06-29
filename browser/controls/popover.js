@@ -24,7 +24,7 @@ function popover_init(elem) {
         throw new Error('must have a "id" attribute in febsui-popover');
       }
 
-      var ddd = $("<div class='febsui-popover febsui-popover-inited' id='" + domid + "' style='display:none !important;'></div>");
+      var ddd = $("<div class='febsui-popover febsui-popover-inited" + ' id-'+domid + "' id='" + domid + "' style='display:none !important;'></div>");
       ddd.insertBefore(dom);
       dom.removeAttr('id');
 

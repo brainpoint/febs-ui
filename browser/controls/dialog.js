@@ -326,7 +326,7 @@ function dialog_init(elem) {
       dom.removeAttr('id');
 
       $('.febsui-dialog[data-id="'+domid+'"]').remove();
-      var dd = $("<div class='febsui-dialog febsui-dialog-init febsui-dialog-custom' role='alert' data-id='"+domid+"'></div>");
+      var dd = $("<div class='febsui-dialog febsui-dialog-init febsui-dialog-custom"+ ' id-'+domid +"' role='alert' data-id='"+domid+"'></div>");
       $('body').append(dd);
       dd.append(dom);
 

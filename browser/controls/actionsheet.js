@@ -58,7 +58,7 @@ function actionsheet_init(elem) {
 
       $('.febsui-actionsheet[data-id="'+domid+'"]').remove();
 
-      var dd = $("<div class='febsui-actionsheet febsui-actionsheet-inited'"+ ' data-id="'+ domid +'"'  +"></div>");
+      var dd = $("<div class='febsui-actionsheet febsui-actionsheet-inited"+ ' id-'+domid +"'"+ ' data-id="'+ domid +'"'  +"></div>");
       $('body').append(dd);
       
       // copy attri.
