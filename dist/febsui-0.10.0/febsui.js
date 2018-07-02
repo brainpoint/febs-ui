@@ -868,9 +868,8 @@ function dialog_init(elem) {
         throw new Error('must have a "id" attribute in custom febsui-dialog');
       }
 
-      var ddd = $("<div class='febsui-dialog febsui-dialog-init' id='" + domid + "' style='display:none !important;'></div>");
+      var ddd = $("<div class='febsui-dialog febsui-dialog-init' style='display:none !important;'></div>");
       ddd.insertBefore(dom);
-      dom.removeAttr('id');
 
       $('.febsui-dialog[data-id="' + domid + '"]').remove();
       var dd = $("<div class='febsui-dialog febsui-dialog-init febsui-dialog-custom" + ' id-' + domid + "' role='alert' data-id='" + domid + "'></div>");
@@ -3884,9 +3883,9 @@ function actionsheet_init(elem) {
         throw new Error('must have a "id" attribute in febsui-actionsheet');
       }
 
-      var ddd = $("<div class='febsui-actionsheet febsui-actionsheet-inited' id='" + domid + "' style='display:none !important;'></div>");
+      var ddd = $("<div class='febsui-actionsheet febsui-actionsheet-inited' style='display:none !important;'></div>");
       ddd.insertBefore(dom);
-      dom.removeAttr('id');
+      // dom.removeAttr('id');
 
       var domChildren = dom.children();
       var ddChildren;
@@ -3924,7 +3923,7 @@ function actionsheet_init(elem) {
 
       // copy attri.
       domHelper.copyAttrs(dom, dd, function (name) {
-        if ('id' == name) return true;
+        // if ('id' == name) return true;
         return name.indexOf('data-') == 0;
       });
 
@@ -4187,12 +4186,12 @@ function popover_init(elem) {
         throw new Error('must have a "id" attribute in febsui-popover');
       }
 
-      var ddd = $("<div class='febsui-popover febsui-popover-inited" + ' id-' + domid + "' id='" + domid + "' style='display:none !important;'></div>");
+      var ddd = $("<div class='febsui-popover febsui-popover-inited' style='display:none !important;'></div>");
       ddd.insertBefore(dom);
-      dom.removeAttr('id');
+      // dom.removeAttr('id');
 
       $('.febsui-popover[data-id="' + domid + '"]').remove();
-      var dd = $("<div class='febsui-popover febsui-popover-inited' data-id='" + domid + "'></div>");
+      var dd = $("<div class='febsui-popover febsui-popover-inited" + ' id-' + domid + "' data-id='" + domid + "'></div>");
 
       // data-direction
       var direction = dom.attr('data-direction');
@@ -4244,7 +4243,7 @@ function popover_init(elem) {
 
       // copy attri.
       domHelper.copyAttrs(dom, dd, function (name) {
-        if ('id' == name) return true;
+        // if ('id' == name) return true;
         return name.indexOf('data-') == 0;
       });
 

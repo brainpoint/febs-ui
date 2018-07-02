@@ -321,9 +321,8 @@ function dialog_init(elem) {
         throw new Error('must have a "id" attribute in custom febsui-dialog');
       }
 
-      var ddd = $("<div class='febsui-dialog febsui-dialog-init' id='" + domid + "' style='display:none !important;'></div>");
+      var ddd = $("<div class='febsui-dialog febsui-dialog-init' style='display:none !important;'></div>");
       ddd.insertBefore(dom);
-      dom.removeAttr('id');
 
       $('.febsui-dialog[data-id="'+domid+'"]').remove();
       var dd = $("<div class='febsui-dialog febsui-dialog-init febsui-dialog-custom"+ ' id-'+domid +"' role='alert' data-id='"+domid+"'></div>");

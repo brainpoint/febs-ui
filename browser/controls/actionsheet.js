@@ -23,9 +23,9 @@ function actionsheet_init(elem) {
         throw new Error('must have a "id" attribute in febsui-actionsheet');
       }
 
-      var ddd = $("<div class='febsui-actionsheet febsui-actionsheet-inited' id='" + domid + "' style='display:none !important;'></div>");
+      var ddd = $("<div class='febsui-actionsheet febsui-actionsheet-inited' style='display:none !important;'></div>");
       ddd.insertBefore(dom);
-      dom.removeAttr('id');
+      // dom.removeAttr('id');
 
       var domChildren = dom.children();
       var ddChildren;
@@ -63,7 +63,7 @@ function actionsheet_init(elem) {
       
       // copy attri.
       domHelper.copyAttrs(dom,dd, function(name){
-        if ('id' == name) return true;
+        // if ('id' == name) return true;
         return name.indexOf('data-') == 0;
       });
 
