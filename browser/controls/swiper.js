@@ -335,6 +335,9 @@ function swiper_init(elem) {
 
       if (dom.hasClass('febsui-swiper-vertical')) {
         pages[0].__swiper_vertical = true;
+        dom.css('touch-action', 'pan-y');
+      } else {
+        dom.css('touch-action', 'pan-x');
       }
 
       setTimeout(function(){
