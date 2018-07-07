@@ -4,6 +4,11 @@
  * font.
  */
 
+ body {
+  touch-action: manipulation;   /* no 300ms delay */
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+ }
 
  [class|=febsui],
  [class|=btn],
