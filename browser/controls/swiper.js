@@ -277,10 +277,16 @@ function swiper_init(elem) {
     if (!domChildren.hasClass('febsui-swiper-pages')) {
 
       // pages.
-      var pages = $("<div class='febsui-swiper-pages'></div>");
-      var pagesCount = 0;
+      var pages;
+      var pagesCount;
       var page1;
       var page0;
+
+      pages = $("<div class='febsui-swiper-pages'></div>");
+      pagesCount = 0;
+      page1 = null;
+      page0 = null;
+
       for (var j = 0; j < domChildren.length; j++) {
         if ($(domChildren[j]).hasClass('febsui-swiper-page')) {
           $(domChildren[j]).attr('data-ispage', '1');
