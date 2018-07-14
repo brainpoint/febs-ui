@@ -134,12 +134,14 @@ exports.copyClass = function (from, to) {
 };
 
 function maskPreventHandler(event) {
-  if (event.target == event.currentTarget) event.preventDefault();
+  // if (event.target == event.currentTarget) {
+  event.preventDefault();
+  return false;
+  // }
 }
 
 // event.
 exports.maskPreventEvent = function (ee) {
-
   if (window.febs.utils.browserIsMobile()) {
     removeEventListener(ee[0], 'touchmove', maskPreventHandler);
     addEventListener(ee[0], 'touchmove', maskPreventHandler);
@@ -659,21 +661,23 @@ function showAlert(ctx) {
   var uid = 'febs-' + febs.crypt.uuid();
 
   var mask = '';
-  if (!$('.febsui-mask').hasVisibile()) {
+  if (!$('.febsui-mask').hasVisible()) {
     mask = ' febsui-mask';
   }
 
   $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init' + mask + '" role="alert"><div class="febsui-dialog-container">' + (ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '') + '<div class="febsui-dialog-content">' + (ctx.content ? ctx.content : ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><button class="febsui-dialog-cancel">' + ctx.okText + '</button></li></ul></div></div>'));
   resizeDialog();
 
-  maskPrevent($('#' + uid));
+  var eee = $('#' + uid);
+  maskPrevent(eee);
+  maskPrevent(eee.children('.febsui-dialog-container'));
 
   setTimeout(function () {
-    $('#' + uid).addClass('febsui-visible');
+    eee.addClass('febsui-visible');
   }, 10);
 
   //close popup
-  var ele = $('#' + uid);
+  var ele = eee;
   ele.on('click', function (event) {
     if ($(event.target).hasClass('febsui-dialog-cancel') /*|| $(event.target).hasClass('febsui-dialog')*/) {
         event.preventDefault();
@@ -724,7 +728,7 @@ function showConfirm(ctx) {
   var uid = 'febs-' + febs.crypt.uuid();
 
   var mask = '';
-  if (!$('.febsui-mask').hasVisibile()) {
+  if (!$('.febsui-mask').hasVisible()) {
     mask = ' febsui-mask';
   }
 
@@ -797,7 +801,7 @@ function showConfirmEdit(ctx) {
   var uid = 'febs-' + febs.crypt.uuid();
 
   var mask = '';
-  if (!$('.febsui-mask').hasVisibile()) {
+  if (!$('.febsui-mask').hasVisible()) {
     mask = ' febsui-mask';
   }
 
@@ -962,7 +966,7 @@ $.fn.dialogShow = function () {
         if (!ee[0]) continue;
       }
 
-      if (!$('.febsui-mask').hasVisibile()) {
+      if (!$('.febsui-mask').hasVisible()) {
         ee.addClass('febsui-mask');
       } else {
         ee.removeClass('febsui-mask');
@@ -1292,7 +1296,7 @@ var maskPrevent = __webpack_require__(0).maskPreventEvent;
 function escape_string(str) {
   // 转义.
   if (str) {
-    str = window.febs.string.escapeHtml(str);
+    str = window.febs.string.escapeHtml(str || '');
   }
   return str;
 }
@@ -1791,7 +1795,7 @@ $.fn.isActionsheet = function () {
   return false;
 };
 
-$.fn.actionsheetIsVisibile = function () {
+$.fn.actionsheetIsVisible = function () {
 
   var _this = typeof this.length === 'undefined' ? $(this) : this;
 
@@ -1807,13 +1811,13 @@ $.fn.actionsheetIsVisibile = function () {
 
       var domid = ee.attr('id');
       if (febs.string.isEmpty(domid)) {
-        return ee._isVisibile();
+        return ee._isVisible();
       }
 
       ee = $('.febsui-actionsheet[data-id="' + domid + '"]');
       if (!ee[0]) return false;
 
-      return ee._isVisibile();
+      return ee._isVisible();
     }
   }
 
@@ -1840,10 +1844,10 @@ $.fn.actionsheetShow = function () {
         if (!ee[0]) continue;
       }
 
-      if (ee._isVisibile()) continue;
+      if (ee._isVisible()) continue;
 
       var mask = '';
-      if (!$('.febsui-mask').hasVisibile()) {
+      if (!$('.febsui-mask').hasVisible()) {
         ee.addClass('febsui-mask');
       } else {
         ee.removeClass('febsui-mask');
@@ -1944,7 +1948,7 @@ $.fn.setDisabled = function (isDisable) {
 /**
  * 元素中是否存在可见的.
  */
-$.fn.hasVisibile = function () {
+$.fn.hasVisible = function () {
 
   var _this = typeof this.length === 'undefined' ? $(this) : this;
 
@@ -1972,7 +1976,7 @@ $.fn.hasVisibile = function () {
 /**
  * 仅返回第一个元素的情况.
  */
-$.fn.isVisibile = function () {
+$.fn.isVisible = function () {
 
   var _this = typeof this.length === 'undefined' ? $(this) : this;
 
@@ -2000,7 +2004,7 @@ $.fn.isVisibile = function () {
 };
 
 // 单纯判断.
-$.fn._isVisibile = function () {
+$.fn._isVisible = function () {
 
   var _this = typeof this.length === 'undefined' ? $(this) : this;
 
@@ -2054,7 +2058,7 @@ $.fn.isPopover = function () {
   return false;
 };
 
-$.fn.popoverIsVisibile = function () {
+$.fn.popoverIsVisible = function () {
 
   var _this = typeof this.length === 'undefined' ? $(this) : this;
 
@@ -2070,13 +2074,13 @@ $.fn.popoverIsVisibile = function () {
 
       var domid = ee.attr('id');
       if (febs.string.isEmpty(domid)) {
-        return ee._isVisibile();
+        return ee._isVisible();
       }
 
       ee = $('.febsui-actionsheet[data-id="' + domid + '"]');
       if (!ee[0]) return false;
 
-      return ee._isVisibile();
+      return ee._isVisible();
     }
   }
 
@@ -2107,7 +2111,7 @@ $.fn.popoverShow = function (mask, attachNode) {
         if (!ee[0]) continue;
       }
 
-      if (ee._isVisibile()) continue;
+      if (ee._isVisible()) continue;
 
       ee.one('click', function () {
         $(this).popoverHide();
@@ -4513,7 +4517,8 @@ function swiper_animation() {
   var dataAutotick = this.attr('data-auto');
   dataAutotick = window.febs.string.isEmpty(dataAutotick) ? 0 : parseInt(dataAutotick);
   dataAutotick = dataAutotick === 0 ? 0 : dataAutotick ? dataAutotick : default_swiper_auto;
-  if (dataAutotick > 0) {
+  if (dataAutotick > 0 && this.isVisible()) {
+    // un visible can't do next.
     setTimeout(swiper_animation.bind(this), dataAutotick);
   }
 }
@@ -4606,10 +4611,16 @@ function swiper_init(elem) {
     if (!domChildren.hasClass('febsui-swiper-pages')) {
 
       // pages.
-      var pages = $("<div class='febsui-swiper-pages'></div>");
-      var pagesCount = 0;
+      var pages;
+      var pagesCount;
       var page1;
       var page0;
+
+      pages = $("<div class='febsui-swiper-pages'></div>");
+      pagesCount = 0;
+      page1 = null;
+      page0 = null;
+
       for (var j = 0; j < domChildren.length; j++) {
         if ($(domChildren[j]).hasClass('febsui-swiper-page')) {
           $(domChildren[j]).attr('data-ispage', '1');

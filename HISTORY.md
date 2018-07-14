@@ -31,3 +31,7 @@
 0.9.6
 ==================
   - switch, checkbox, radio click event stopPropagation.
+
+0.11.0
+=================
+  - fix swiper animate bug.

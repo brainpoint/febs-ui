@@ -46,8 +46,8 @@
 /**
  * jquery plugins.
  */
-require('./plugins/isVisibile');
-require('./plugins/hasVisibile');
+require('./plugins/isVisible');
+require('./plugins/hasVisible');
 
 var febsui = require('./controls');
 window['febsui'] = febsui;

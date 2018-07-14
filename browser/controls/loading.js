@@ -9,7 +9,7 @@ var maskPrevent = require('../domHelper').maskPreventEvent;
 function escape_string(str) {
   // 转义.
   if (str) {
-    str =  window.febs.string.escapeHtml(str);
+    str =  window.febs.string.escapeHtml(str||'');
   }
   return str;
 }

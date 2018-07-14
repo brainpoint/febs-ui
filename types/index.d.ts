@@ -11,11 +11,11 @@ export class dom {
   /**
    * 判断第一个元素是否可见.
    */
-  isVisibile():boolean;
+  isVisible():boolean;
   /**
    * 判断是否存在可见元素.
    */
-  hasVisibile():boolean;
+  hasVisible():boolean;
 
   /** dialog */
   isDialog():boolean;

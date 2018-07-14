@@ -104,21 +104,23 @@ function showAlert(ctx) {
   var uid = 'febs-'+febs.crypt.uuid();
 
   var mask = '';
-  if (!$('.febsui-mask').hasVisibile()) {
+  if (!$('.febsui-mask').hasVisible()) {
     mask = ' febsui-mask';
   }
 
   $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><button class="febsui-dialog-cancel">' + ctx.okText + '</button></li></ul></div></div>'));
   resizeDialog();
 
-  maskPrevent($('#'+uid));
-
+  var eee = $('#'+uid);
+  maskPrevent(eee);
+  maskPrevent(eee.children('.febsui-dialog-container'));
+  
 	setTimeout(function () {
-		$('#'+uid).addClass('febsui-visible');
+		eee.addClass('febsui-visible');
 	}, 10);
 
   //close popup
-  var ele = $('#'+uid);
+  var ele = eee;
 	ele.on('click', function (event) {
 		if ($(event.target).hasClass('febsui-dialog-cancel') /*|| $(event.target).hasClass('febsui-dialog')*/) {
 			event.preventDefault();
@@ -169,7 +171,7 @@ function showConfirm(ctx) {
   var uid = 'febs-'+febs.crypt.uuid();
 
   var mask = '';
-  if (!$('.febsui-mask').hasVisibile()) {
+  if (!$('.febsui-mask').hasVisible()) {
     mask = ' febsui-mask';
   }
 
@@ -244,7 +246,7 @@ function showConfirmEdit(ctx) {
   var uid = 'febs-'+febs.crypt.uuid();
 
   var mask = '';
-  if (!$('.febsui-mask').hasVisibile()) {
+  if (!$('.febsui-mask').hasVisible()) {
     mask = ' febsui-mask';
   }
 

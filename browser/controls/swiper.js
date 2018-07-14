@@ -183,7 +183,7 @@ function swiper_animation() {
   var dataAutotick = this.attr('data-auto');
   dataAutotick = window.febs.string.isEmpty(dataAutotick) ? 0 : parseInt(dataAutotick);
   dataAutotick = dataAutotick === 0 ? 0 : (dataAutotick ? dataAutotick : default_swiper_auto);
-  if (dataAutotick > 0) {
+  if (dataAutotick > 0 && this.isVisible()) { // un visible can't do next.
     setTimeout(swiper_animation.bind(this), dataAutotick);
   }
 }

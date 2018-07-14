@@ -3,7 +3,7 @@
 /**
  * 仅返回第一个元素的情况.
  */
-$.fn.isVisibile = function() {
+$.fn.isVisible = function() {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
   
@@ -37,7 +37,7 @@ $.fn.isVisibile = function() {
 }
 
 // 单纯判断.
-$.fn._isVisibile = function() {
+$.fn._isVisible = function() {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
   

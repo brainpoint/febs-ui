@@ -33,7 +33,7 @@ $.fn.isPopover = function() {
 }
 
 
-$.fn.popoverIsVisibile = function() {
+$.fn.popoverIsVisible = function() {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
 
@@ -49,14 +49,14 @@ $.fn.popoverIsVisibile = function() {
 
       var domid = ee.attr('id');
       if (febs.string.isEmpty(domid)) {
-        return ee._isVisibile();
+        return ee._isVisible();
       }
 
       ee = $('.febsui-actionsheet[data-id="'+domid+'"]');
       if (!ee[0])
         return false;
       
-      return ee._isVisibile();
+      return ee._isVisible();
     }
   }
 
@@ -88,7 +88,7 @@ $.fn.popoverShow = function(mask, attachNode) {
           continue;
       }
 
-      if (ee._isVisibile())
+      if (ee._isVisible())
         continue;
 
       ee.one('click', function(){

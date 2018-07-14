@@ -91,11 +91,11 @@ $('').isDisabled();
 /**
  * @desc 判断第一个元素是否可见.
  */
-$('').isVisibile();
+$('').isVisible();
 /**
  * @desc 判断是否存在可见元素.
  */
-$('').hasVisibile();
+$('').hasVisible();
 
 ```
 

@@ -4,6 +4,12 @@
  * font.
  */
 
+ * {
+  touch-action: manipulation;   /* no 300ms delay */
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+ }
+
  body {
   touch-action: manipulation;   /* no 300ms delay */
   -webkit-overflow-scrolling: touch;
@@ -469,6 +475,8 @@
    top: 0;
    width: 100%;
    z-index: 20001;
+   touch-action: none;
+   pointer-events: none;
  }
  
  .febsui-toast .febsui-toast-container {
@@ -845,7 +853,7 @@
 .febsui-switch,
  .febsui-switch-on {
    box-shadow: #4AD562 0px 0px 0px 16px inset;
-   transition: border 0.4s, box-shadow 0.2s, background-color 1.2s;
+   transition: border 0.4s, box-shadow 0.1s, background-color 1.2s;
    background-color: white;
    cursor: pointer;
  }
@@ -877,7 +885,7 @@
  
  .febsui-switch-off {
   box-shadow: inset 0 0 0 1.5px #e6e6e6;
-   transition: border 0.4s, box-shadow 0.4s;
+   transition: border 0.2s, box-shadow 0.4s;
    background-color: #FEFEFE;
    cursor: pointer;
  }
@@ -1811,6 +1819,7 @@
   height: 100%;
   margin: 0px;
   padding: 0px;
+  vertical-align: top;
   /* border: solid 1px rgba(0, 0, 0, .01); */
 }
 

@@ -60,7 +60,7 @@ $.fn.dialogShow = function() {
           continue;
       }
 
-      if (!$('.febsui-mask').hasVisibile()) {
+      if (!$('.febsui-mask').hasVisible()) {
         ee.addClass('febsui-mask');
       }
       else {

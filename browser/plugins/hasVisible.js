@@ -3,7 +3,7 @@
 /**
  * 元素中是否存在可见的.
  */
-$.fn.hasVisibile = function() {
+$.fn.hasVisible = function() {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
   

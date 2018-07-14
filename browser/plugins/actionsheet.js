@@ -38,7 +38,7 @@ $.fn.isActionsheet = function() {
 }
 
 
-$.fn.actionsheetIsVisibile = function() {
+$.fn.actionsheetIsVisible = function() {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
 
@@ -54,14 +54,14 @@ $.fn.actionsheetIsVisibile = function() {
 
       var domid = ee.attr('id');
       if (febs.string.isEmpty(domid)) {
-        return ee._isVisibile();
+        return ee._isVisible();
       }
 
       ee = $('.febsui-actionsheet[data-id="'+domid+'"]');
       if (!ee[0])
         return false;
       
-      return ee._isVisibile();
+      return ee._isVisible();
     }
   }
 
@@ -89,11 +89,11 @@ $.fn.actionsheetShow = function() {
           continue;
       }
 
-      if (ee._isVisibile())
+      if (ee._isVisible())
         continue;
 
       var mask = '';
-      if (!$('.febsui-mask').hasVisibile()) {
+      if (!$('.febsui-mask').hasVisible()) {
         ee.addClass('febsui-mask');
       }
       else {

@@ -60,13 +60,14 @@ exports.copyClass = function(from, to) {
 
 
 function maskPreventHandler(event){
-  if (event.target == event.currentTarget)
+  // if (event.target == event.currentTarget) {
     event.preventDefault();
+    return false;
+  // }
 }
 
 // event.
 exports.maskPreventEvent = function(ee) {
-
   if (window.febs.utils.browserIsMobile()) {
     removeEventListener(ee[0], 'touchmove', maskPreventHandler);
     addEventListener(ee[0], 'touchmove', maskPreventHandler);
