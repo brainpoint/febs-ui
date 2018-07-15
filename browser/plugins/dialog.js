@@ -12,7 +12,7 @@ function resizeDialog(){
 
   var viewport = window.febs.dom.getViewPort();
   for (var i = 0; i < elem.length; i++) {
-    $(elem[i]).css('margin-top', parseInt((viewport.height - elem[i].clientHeight) / 2) + 'px');
+    $(elem[i]).css('margin-top', parseInt((viewport.height - elem[i].clientHeight) / 2) - 30 + 'px');
   }
 }
 

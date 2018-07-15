@@ -335,3 +335,7 @@ export function ui_button_init_event(elem:any):void;
  */
 export function ui_swiper_init_event(elem:any):void;
 
+/**
+* @desc: 阻止在elem上的move或touchmove事件.
+*/
+export function preventEvent(elem:any):void;
