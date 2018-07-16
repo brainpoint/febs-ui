@@ -81,6 +81,7 @@ function hide(selector) {
 
 /**
 * ctx.title:    标题.
+* ctx.cssClass: 自定义扩展样式.
 * ctx.content:	内容文字.
 * ctx.contentHtml: 使用html方式的内容.
 * ctx.confirm: function(){}	// 点击确认键的回调.
@@ -106,6 +107,10 @@ function showAlert(ctx) {
   var mask = '';
   if (!$('.febsui-mask').hasVisible()) {
     mask = ' febsui-mask';
+  }
+
+  if (ctx.cssClass) {
+    mask += ' ' + ctx.cssClass;
   }
 
   $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><button class="febsui-dialog-cancel">' + ctx.okText + '</button></li></ul></div></div>'));
@@ -144,6 +149,7 @@ function showAlert(ctx) {
 
 /**
 * ctx.title:    标题.
+* ctx.cssClass: 自定义扩展样式.
 * ctx.content:		 内容文字.
 * ctx.contentHtml: html方式的内容.
 * ctx.confirm: function(){}	// 点击确认键的回调.
@@ -173,6 +179,10 @@ function showConfirm(ctx) {
   var mask = '';
   if (!$('.febsui-mask').hasVisible()) {
     mask = ' febsui-mask';
+  }
+
+  if (ctx.cssClass) {
+    mask += ' ' + ctx.cssClass;
   }
 
 	$("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li' + (isIE9?' style="'+styleBorder+'"':'') + '><button class="febsui-dialog-cancel">' + ctx.cancelText + '</button></li><li'+(isIE9?' style="'+styleBorder+'"':'')+'><button class="febsui-dialog-ok">' + ctx.okText + '</button></li></ul></div></div>'));
@@ -217,6 +227,7 @@ function showConfirm(ctx) {
 
 /**
 * ctx.title:    标题.
+* ctx.cssClass: 自定义扩展样式.
 * ctx.content:		 内容文字.
 * ctx.contentHtml: html方式的内容.
 * ctx.editText:		 输入框文字.
@@ -248,6 +259,10 @@ function showConfirmEdit(ctx) {
   var mask = '';
   if (!$('.febsui-mask').hasVisible()) {
     mask = ' febsui-mask';
+  }
+
+  if (ctx.cssClass) {
+    mask += ' ' + ctx.cssClass;
   }
 
   var elems = '<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init'+mask+'" role="alert"><div class="febsui-dialog-container">' 
