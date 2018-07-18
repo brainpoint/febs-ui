@@ -56,6 +56,7 @@ buildSrc(webpackConfig('browser/index.build.js', 'febsui.js', 'dist/'+dir))
   formatDotDefault();
   
   setTimeout(function() {
+    febs.file.fileRemove(path.join(root, 'febsui.css'));
     febs.file.fileCopy(path.join(root, `dist/${dir}/febsui.css`), path.join(root, 'febsui.css'));
     spinner.stop()
     console.log(chalk.cyan('  Build complete.\n'))
