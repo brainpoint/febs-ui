@@ -6,9 +6,6 @@
 // require('../third-party/bluebird.min.js');
 // require('../third-party/bignumber.min.js');
 
-import '../febsui.scss';
-
-
 ( function( global, factory ) {
 
 	"use strict";

@@ -46,15 +46,17 @@ function buildSrc(config) {
 }
 
 // start.
-buildSrc(webpackConfig('browser/index.js', 'febsui.js', 'dist/'+dir))
-.then(()=>buildSrc(webpackConfigMin('browser/index.js', 'febsui.min.js', 'dist/'+dir))) 
+buildSrc(webpackConfig('browser/index.build.js', 'febsui.js', 'dist/'+dir))
+.then(()=>buildSrc(webpackConfigMin('browser/index.build.js', 'febsui.min.js', 'dist/'+dir))) 
 .then(()=>{
   spinner.stop()
 
   // 等待文件flush到磁盘.
   spinner.start();
   formatDotDefault();
+  
   setTimeout(function() {
+    febs.file.fileCopy(path.join(root, `dist/${dir}/febsui.css`), path.join(root, 'febsui.css'));
     spinner.stop()
     console.log(chalk.cyan('  Build complete.\n'))
     console.log(chalk.yellow(
