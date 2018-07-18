@@ -83,5 +83,5 @@
     "prepare": "node scripts/webpack.build.js"
   },
   "name": "febs-ui",
-  "version": "0.12.4"
+  "version": "0.12.5"
 }
