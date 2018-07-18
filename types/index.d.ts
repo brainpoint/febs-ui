@@ -6,53 +6,53 @@
 export class dom {
 
   /** common */
-  setDisabled(isDisable:boolean):dom;
-  isDisabled():boolean;
+  setDisabled(isDisable: boolean): dom;
+  isDisabled(): boolean;
   /**
    * 判断第一个元素是否可见.
    */
-  isVisible():boolean;
+  isVisible(): boolean;
   /**
    * 判断是否存在可见元素.
    */
-  hasVisible():boolean;
+  hasVisible(): boolean;
 
   /** dialog */
-  isDialog():boolean;
-  dialogShow():dom;
-  dialogHide():dom;
+  isDialog(): boolean;
+  dialogShow(): dom;
+  dialogHide(): dom;
 
   /** switch */
-  isSwitch():boolean;
-  switchIsOn():boolean;
-  switch(cb?:(e:any)=>void):dom;
-  switchOn(isOn:boolean, trigger?:boolean):dom;
+  isSwitch(): boolean;
+  switchIsOn(): boolean;
+  switch(cb?: (e: any) => void): dom;
+  switchOn(isOn: boolean, trigger?: boolean): dom;
 
   /** popover */
-  isPopover():boolean;
-  popoverShow(mask?:boolean, attachNode?:any) : dom;
+  isPopover(): boolean;
+  popoverShow(mask?: boolean, attachNode?: any): dom;
   popoverHide(): dom;
 
   /** actionsheet */
-  isActionsheet():boolean;
-  actionsheetShow():dom;
-  actionsheetHide():dom;
+  isActionsheet(): boolean;
+  actionsheetShow(): dom;
+  actionsheetHide(): dom;
 
   /** swiper */
-  isSwiper():boolean;
-  swiperDotColor(color?:string):dom;
-  swiperSpeed(ms:number):dom;
-  swiperPre(trigger?:boolean):dom;
-  swiperNext(trigger?:boolean):dom;
-  swiperCurrent():number;
-  swiperTotal():number;
-  swiperTo(index:number, animation?:boolean, trigger?:boolean):dom;
-  swiper(cb?:(e:any)=>void):dom;
+  isSwiper(): boolean;
+  swiperDotColor(color?: string): dom;
+  swiperSpeed(ms: number): dom;
+  swiperPre(trigger?: boolean): dom;
+  swiperNext(trigger?: boolean): dom;
+  swiperCurrent(): number;
+  swiperTotal(): number;
+  swiperTo(index: number, animation?: boolean, trigger?: boolean): dom;
+  swiper(cb?: (e: any) => void): dom;
 
   /** radio */
-  isRadio():boolean;
-  radioGetValue():string;
-  radioSetValue(value:string, trigger?:boolean):dom; 
+  isRadio(): boolean;
+  radioGetValue(): string;
+  radioSetValue(value: string, trigger?: boolean): dom;
 }
 
 
@@ -62,9 +62,10 @@ export class dom {
 * @param timeout: 延时显示, 默认为0.
 * @param spinClass: 默认为 febsui-icon-spin1-white
 * @param spinLeft: 是否在左侧显示spin.
+* @param whiteBg: 使用白色背景
 * @return: 
 */
-export  function loading_show(text: string, timeout?: number, spinClass?: string, spinLeft?:boolean): any;
+export function loading_show(text: string, timeout?: number, spinClass?: string, spinLeft?: boolean, whiteBg?: boolean): any;
 
 /**
 * @desc: 通过每500ms改变文本的方式显示加载框; 例如显示 3,2,1,3,2,1循环显示.
@@ -91,24 +92,25 @@ export function loading_hide(): void;
   * ctx.callback: function(){}	// 对话框消失后的回调.
   * }
   */
- export function toast( ctx: { content?:string, durable?:number, icon?:'ok'|'error'|'warn', center?:boolean, callback?:()=>void } ): void;
+export function toast(ctx: { content?: string, durable?: number, icon?: 'ok' | 'error' | 'warn', center?: boolean, callback?: () => void }): void;
 
- /**
-  * @desc 手动隐藏toast.
-  */
- export function toast_hide();
+/**
+ * @desc 手动隐藏toast.
+ */
+export function toast_hide();
 
 /**
 * @desc: 隐藏对话框
 * @param selector: 关闭指定的窗口; null则关闭所有.
 * @return: 
 */
-export function dialog_hide(selector?:any): void;
+export function dialog_hide(selector?: any): void;
 
 /**
  * @desc: 显示警告对话框. (回调函数的上下文为当前窗口)
  * @param ctx: {
 * ctx.cssClass: 自定义的扩展样式.
+* ctx.blackBg:  使用黑色背景.
 * ctx.title:    标题.
 * ctx.content:	内容文字.
 * ctx.contentHtml: html格式的内容 (与content二选一)
@@ -116,12 +118,13 @@ export function dialog_hide(selector?:any): void;
 * ctx.okText
 * }
 */
-export function dialog_showAlert( ctx: { cssClass?:string, title?:string, content?:string, contentHtml?:string, confirm?:()=>void, okText?:string } ): void;
+export function dialog_showAlert(ctx: { cssClass?: string, blackBg?: boolean, title?: string, content?: string, contentHtml?: string, confirm?: () => void, okText?: string }): void;
 
 /**
  * @desc: 显示确认对话框. (回调函数的上下文为当前窗口)
  * @param ctx: {
 * ctx.cssClass: 自定义的扩展样式.
+* ctx.blackBg:  使用黑色背景.
 * ctx.title:    标题.
 * ctx.content:	内容文字.
 * ctx.contentHtml: html格式的内容 (与content二选一)
@@ -131,13 +134,14 @@ export function dialog_showAlert( ctx: { cssClass?:string, title?:string, conten
 * ctx.cancelText: 取消按钮文字
 * }
 */
-export function dialog_showConfirm( ctx: { cssClass?:string, title?:string, content?:string, contentHtml?:string, confirm?:()=>void, cancel?:()=>void, okText?:string, cancelText?:string } ): void;
+export function dialog_showConfirm(ctx: { cssClass?: string, blackBg?: boolean, title?: string, content?: string, contentHtml?: string, confirm?: () => void, cancel?: () => void, okText?: string, cancelText?: string }): void;
 
 
 /**
  * @desc: 显示文本输入确认对话框. (回调函数的上下文为当前窗口)
  * @param ctx: {
 * ctx.cssClass: 自定义的扩展样式.
+* ctx.blackBg:  使用黑色背景.
 * ctx.title:    标题.
 * ctx.content:		 内容文字.
 * ctx.contentHtml: html格式的内容 (与content二选一)
@@ -148,17 +152,17 @@ export function dialog_showConfirm( ctx: { cssClass?:string, title?:string, cont
 * ctx.cancelText:
 * }
 */
-export function dialog_showConfirmEdit( ctx: { cssClass?:string, title?:string, content?:string, contentHtml?:string, editText?:string, confirm?:(text:string)=>void, cancel?:()=>void, okText?:string, cancelText?:string } ): void;
+export function dialog_showConfirmEdit(ctx: { cssClass?: string, blackBg?: boolean, title?: string, content?: string, contentHtml?: string, editText?: string, confirm?: (text: string) => void, cancel?: () => void, okText?: string, cancelText?: string }): void;
 
 export namespace uploadErr {
   /** 未选择文件 */
-  const nofile:'nofile error';
+  const nofile: 'nofile error';
   /** 文件太大 */
-  const sizeExceed:'sizeExceed error';
+  const sizeExceed: 'sizeExceed error';
   /** 计算本地文件hash值时错误 */
-  const crc32:'crc32 error';
+  const crc32: 'crc32 error';
   /** 网络出错 */
-  const net:'network error';
+  const net: 'network error';
 }
 
 /** [客户端调用] 需要 jquery,jquery.form 库支持.
@@ -188,16 +192,16 @@ export namespace uploadErr {
 *              }
 */
 export function upload(cfg: {
-  data?:       string,
-  formObj:    any,
-  fileObj:    any,
-  uploadUrl:  string,
-  maxFileSize?:  number,
-  fileType?:    string,
-  beginCB?:     (uploader:{abort:()=>void})=>void,
-  finishCB?:    (err:any, fileObj:any, serverData:any)=>void,
-  progressCB?:  (fileObj:any, percent:number)=>void,
-  headers?:  any,
+  data?: string,
+  formObj: any,
+  fileObj: any,
+  uploadUrl: string,
+  maxFileSize?: number,
+  fileType?: string,
+  beginCB?: (uploader: { abort: () => void }) => void,
+  finishCB?: (err: any, fileObj: any, serverData: any) => void,
+  progressCB?: (fileObj: any, percent: number) => void,
+  headers?: any,
   crossDomain?: boolean,
   withCredentials?: boolean,
 }): void;
@@ -228,15 +232,15 @@ export function upload(cfg: {
  *              }
  */
 export function uploadBase64(cfg: {
-  data?:       string,
-  fileBase64Str:    string,
-  headerUrl:        string,
-  uploadUrl:        string,
-  chunkSize?:        number,
-  beginCB?:     (uploader:{abort:()=>void})=>void,
-  finishCB?:         (err:any, serverData:any)=>void,
-  progressCB?:  (percent:number)=>void,
-  headers?:  any,
+  data?: string,
+  fileBase64Str: string,
+  headerUrl: string,
+  uploadUrl: string,
+  chunkSize?: number,
+  beginCB?: (uploader: { abort: () => void }) => void,
+  finishCB?: (err: any, serverData: any) => void,
+  progressCB?: (percent: number) => void,
+  headers?: any,
   crossDomain?: boolean,
   withCredentials?: boolean,
 }): void;
@@ -256,92 +260,92 @@ export function page_init(elem: any, curPage: number, pageCount: number, totalCo
  * @desc 初始化页面上所有switch控件 (会进行事件初始化)
  *       默认在页面加载完成时会调用一次; 加入新的switch控件时需调用一次.
  */
-export function ui_switch_init(elem?:any):void;
+export function ui_switch_init(elem?: any): void;
 
 
 /**
  * @desc 初始化页面上所有checkbox控件 (带febsui-checkbox类的控件)(会进行事件初始化)
  *       默认在页面加载完成时会调用一次; 加入新的checkbox控件时需调用一次.
  */
-export function ui_checkbox_init(elem?:any):void;
+export function ui_checkbox_init(elem?: any): void;
 
 /**
  * @desc 初始化页面上所有radio控件 (带febsui-radio类的控件)(会进行事件初始化)
  *       默认在页面加载完成时会调用一次; 加入新的radio控件时需调用一次.
  */
-export function ui_radio_init(elem?:any):void;
+export function ui_radio_init(elem?: any): void;
 
 /**
 * @desc: 初始化popover控件.(会进行事件初始化)
 *        对页面上 的所有 <popover> 元素进行初始化.
 *        在增加新的popover到页面后, 需要手动调用此方法.
 */
-export function ui_popover_init(elem?:any):void;
+export function ui_popover_init(elem?: any): void;
 
 /**
 * @desc: 初始化actionSheet控件.(会进行事件初始化)
 *        对页面上 的所有 <actionsheet> 元素进行初始化.
 *        在增加新的actionsheet到页面后, 需要手动调用此方法.
 */
-export function ui_actionSheet_init(elem?:any):void;
+export function ui_actionSheet_init(elem?: any): void;
 
 /**
 * @desc: 初始化dialog控件.(会进行事件初始化)
 *        对页面上 的所有 <dialog> 元素进行初始化.
 *        在增加新的dialog到页面后, 需要手动调用此方法.
 */
-export function ui_dialog_init(elem?:any):void;
+export function ui_dialog_init(elem?: any): void;
 /**
 * @desc: 初始化uploader控件.(会进行事件初始化)
 *        对页面上 的所有 <uploader> 元素进行初始化.
 *        在增加新的uploader到页面后, 需要手动调用此方法.
 */
-export function ui_uploader_init(elem?:any):void;
+export function ui_uploader_init(elem?: any): void;
 /**
 * @desc: 用于解决ie9下不支持css:animation; 初始化<div class="febsui-icon-spin1/febsui-icon-spin1-white">控件.
 */
-export function ui_spin_init(elem?:any):void;
+export function ui_spin_init(elem?: any): void;
 /**
 * @desc: 对所有的button控件进行初始化, 保证移动端touch穿透体验.(会进行事件初始化)
 */
-export function ui_button_init(elem?:any):void;
+export function ui_button_init(elem?: any): void;
 /**
 * @desc: 对所有的swiper控件进行初始化.(会进行事件初始化)
 */
-export function ui_swiper_init(elem?:any):void;
+export function ui_swiper_init(elem?: any): void;
 /**
 * @desc: 对页面上所有ui控件进行初始化.(会进行事件初始化)
 */
-export function ui_init():void;
+export function ui_init(): void;
 
 
 /**
  * @desc 对元素进行事件初始化.
  * @param elem: switch元素, 已经是完整的样式. 
  */
-export function ui_switch_init_event(elem:any):void;
+export function ui_switch_init_event(elem: any): void;
 /**
  * @desc 对元素进行事件初始化.
  * @param elem: checkbox元素, 已经是完整的样式. 
  */
-export function ui_checkbox_init_event(elem:any):void;
+export function ui_checkbox_init_event(elem: any): void;
 /**
  * @desc 对元素进行事件初始化.
  * @param elem: radio元素, 已经是完整的样式. 
  */
-export function ui_radio_init_event(elem:any):void;
+export function ui_radio_init_event(elem: any): void;
 /**
  * @desc 对元素进行事件初始化.
  * @param elem: button元素, 已经是完整的样式. 
  */
-export function ui_button_init_event(elem:any):void;
+export function ui_button_init_event(elem: any): void;
 /**
  * @desc 对元素进行事件初始化.
  * @param elem: swiper元素, 已经是完整的样式. 
  */
-export function ui_swiper_init_event(elem:any):void;
+export function ui_swiper_init_event(elem: any): void;
 
 /**
 * @desc: 阻止在elem上的move或touchmove事件.
 */
-export function preventEvent(elem:any):void;
+export function preventEvent(elem: any): void;

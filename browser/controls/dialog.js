@@ -81,6 +81,7 @@ function hide(selector) {
 
 /**
 * ctx.title:    标题.
+* ctx.blackBg:  使用黑色背景.
 * ctx.cssClass: 自定义扩展样式.
 * ctx.content:	内容文字.
 * ctx.contentHtml: 使用html方式的内容.
@@ -113,7 +114,14 @@ function showAlert(ctx) {
     mask += ' ' + ctx.cssClass;
   }
 
-  $("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><button class="febsui-dialog-cancel">' + ctx.okText + '</button></li></ul></div></div>'));
+  var blackBgClass = ctx.blackBg? ' febsui-dialog-container-black' : '';
+
+  var htmlElem = '<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init'+mask+'" role="alert"><div class="febsui-dialog-container' + blackBgClass + '">';
+  htmlElem += (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'');
+  htmlElem += (ctx.content||ctx.contentHtml) ? ('<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div>') : '';
+  htmlElem += '<ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><button class="febsui-dialog-cancel">' + ctx.okText + '</button></li></ul></div></div>';
+
+  $("body").append($(htmlElem));
   resizeDialog();
 
   var eee = $('#'+uid);
@@ -149,6 +157,7 @@ function showAlert(ctx) {
 
 /**
 * ctx.title:    标题.
+* ctx.blackBg:  使用黑色背景.
 * ctx.cssClass: 自定义扩展样式.
 * ctx.content:		 内容文字.
 * ctx.contentHtml: html方式的内容.
@@ -185,7 +194,14 @@ function showConfirm(ctx) {
     mask += ' ' + ctx.cssClass;
   }
 
-	$("body").append($('<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init'+mask+'" role="alert"><div class="febsui-dialog-container">' + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div><ul class="febsui-dialog-buttons"><li' + (isIE9?' style="'+styleBorder+'"':'') + '><button class="febsui-dialog-cancel">' + ctx.cancelText + '</button></li><li'+(isIE9?' style="'+styleBorder+'"':'')+'><button class="febsui-dialog-ok">' + ctx.okText + '</button></li></ul></div></div>'));
+  var blackBgClass = ctx.blackBg? ' febsui-dialog-container-black' : '';
+
+  var htmlElem = '<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init'+mask+'" role="alert"><div class="febsui-dialog-container' + blackBgClass + '">';
+  htmlElem += (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'');
+  htmlElem += (ctx.content||ctx.contentHtml) ? ('<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div>') : '';
+  htmlElem += '<ul class="febsui-dialog-buttons"><li' + (isIE9?' style="'+styleBorder+'"':'') + '><button class="febsui-dialog-cancel">' + ctx.cancelText + '</button></li><li'+(isIE9?' style="'+styleBorder+'"':'')+'><button class="febsui-dialog-ok">' + ctx.okText + '</button></li></ul></div></div>';
+
+	$("body").append($(htmlElem));
   resizeDialog();
 
   maskPrevent($('#'+uid));
@@ -227,6 +243,7 @@ function showConfirm(ctx) {
 
 /**
 * ctx.title:    标题.
+* ctx.blackBg:  使用黑色背景.
 * ctx.cssClass: 自定义扩展样式.
 * ctx.content:		 内容文字.
 * ctx.contentHtml: html方式的内容.
@@ -265,9 +282,11 @@ function showConfirmEdit(ctx) {
     mask += ' ' + ctx.cssClass;
   }
 
-  var elems = '<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init'+mask+'" role="alert"><div class="febsui-dialog-container">' 
+  var blackBgClass = ctx.blackBg? ' febsui-dialog-container-black' : '';
+
+  var elems = '<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init'+mask+'" role="alert"><div class="febsui-dialog-container' + blackBgClass + '">';
   + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') 
-  + '<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div>' 
+  + ((ctx.content||ctx.contentHtml) ? ('<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div>') : '') 
   + '<div class="febsui-dialog-edit"><input class="febsui-input-text-noborder" type="text" value="' + (ctx.editText?ctx.editText:'') + '">' + '</div>' 
   + '<ul class="febsui-dialog-buttons"><li'+(isIE9?' style="'+styleBorder+'"':'')+'><button class="febsui-dialog-cancel">' + ctx.cancelText + '</button></li><li'+(isIE9?' style="'+styleBorder+'"':'')+'><button class="febsui-dialog-ok">' + ctx.okText + '</button></li></ul></div></div>';
 

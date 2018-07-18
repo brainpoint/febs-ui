@@ -33,6 +33,14 @@ function popover_init(elem) {
       
       // data-direction
       var direction = dom.attr('data-direction');
+      // data-blackBg
+      var blackBg = dom.attr('data-blackBg');
+      blackBg = window.febs.string.isEmpty(blackBg) ? false : ('true' == blackBg);
+
+      if (blackBg) {
+        dd.addClass('febsui-popover-black');
+      }
+      
       direction = window.febs.string.isEmpty(direction) ? 'auto' : direction;
       direction = direction.toLowerCase();
       if (direction != 'auto') {

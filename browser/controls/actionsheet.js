@@ -18,12 +18,19 @@ function actionsheet_init(elem) {
 
     if (!dom.hasClass('febsui-actionsheet-inited')) {
 
+      // data-blackBg
+      var blackBg = dom.attr('data-blackBg');
+      blackBg = window.febs.string.isEmpty(blackBg) ? false : ('true' == blackBg);
+
       var domid = dom.attr('id');
       if (febs.string.isEmpty(domid)) {
         throw new Error('must have a "id" attribute in febsui-actionsheet');
       }
 
       var ddd = $("<div class='febsui-actionsheet febsui-actionsheet-inited' style='display:none !important;'></div>");
+      if (blackBg) {
+        ddd.addClass('febsui-actionsheet-black');
+      }
       ddd.insertBefore(dom);
       // dom.removeAttr('id');
 
@@ -59,6 +66,9 @@ function actionsheet_init(elem) {
       $('.febsui-actionsheet[data-id="'+domid+'"]').remove();
 
       var dd = $("<div class='febsui-actionsheet febsui-actionsheet-inited"+ ' id-'+domid +"'"+ ' data-id="'+ domid +'"'  +"></div>");
+      if (blackBg) {
+        dd.addClass('febsui-actionsheet-black');
+      }
       $('body').append(dd);
       
       // copy attri.

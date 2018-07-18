@@ -47,14 +47,17 @@ exports.loading_isVisiable = function() {
 * @param timeout: 延时显示, 默认为0.
 * @param spinLeft: 是否在左侧显示spin. 
 * @param spinClass: 默认为 febsui-icon-spin1-white
+* @param whiteBg: 使用白色背景
 * @return: 
 */
-function loading_show(text, timeout, spinClass, spinLeft) {
+function loading_show(text, timeout, spinClass, spinLeft, whiteBg) {
+
+  var defaultSpinClass = whiteBg ? '' : '-white';
 
   if (is_IE9)
-    spinClass = spinClass||'febsui-icon-spin3-white';
+    spinClass = spinClass||('febsui-icon-spin3'+defaultSpinClass);
   else
-    spinClass = spinClass||'febsui-icon-spin1-white';
+    spinClass = spinClass||('febsui-icon-spin1'+defaultSpinClass);
 
   text = escape_string(text);
 
@@ -72,6 +75,9 @@ function loading_show(text, timeout, spinClass, spinLeft) {
   }
   else {
     spinLeft = spinLeft ? ' febsui-loading-left' : '';
+    if (whiteBg) {
+      spinLeft += ' febsui-loading-white';
+    }
     var ee = $('#' + loading_tag_name);
     if (window.febs.string.isEmpty(ee.html())) {
       ee.html('<div class="febsui-loading-c"><div class="febsui-loading'+spinLeft+'"><div class="' + spinClass + ' febsui-animation-spin febsui-loading-spin"></div><p>' + (text ? text : '') + '</p></div></div>');

@@ -17,11 +17,11 @@ spinner.start()
 
 var root = path.resolve(__dirname, '../');
 var febs = require('febs');
-febs.file.fileRemove(path.join(root, `dist/${dir}/febsui.css`));
-febs.file.fileRemove(path.join(root, `dist/${dir}/febsui-icon.css`));
 febs.file.fileRemove(path.join(root, `dist/${dir}/README.md`));
-febs.file.fileCopy(path.join(root, 'febsui.css'),         path.join(root, `dist/${dir}/febsui.css`));
-febs.file.fileCopy(path.join(root, 'febsui-icon.css'),    path.join(root, `dist/${dir}/febsui-icon.css`));
+febs.file.fileRemove(path.join(root, `dist/${dir}/demo.html`));
+febs.file.dirRemoveRecursive(path.join(root, `dist/${dir}/icons`));
+// febs.file.fileCopy(path.join(root, 'febsui.css'),         path.join(root, `dist/${dir}/febsui.css`));
+// febs.file.fileCopy(path.join(root, 'febsui-icon.css'),    path.join(root, `dist/${dir}/febsui-icon.css`));
 febs.file.fileCopy(path.join(root, 'README.md'),          path.join(root, `dist/${dir}/README.md`));
 febs.file.fileCopy(path.join(root, 'dist/index.html'),    path.join(root, `dist/${dir}/demo.html`));
 febs.file.dirCopy(path.join(root, 'resource/icons'),    path.join(root, `dist/${dir}/icons`));
@@ -47,7 +47,7 @@ function buildSrc(config) {
 
 // start.
 buildSrc(webpackConfig('browser/index.js', 'febsui.js', 'dist/'+dir))
-.then(()=>buildSrc(webpackConfigMin('browser/index.js', 'febsui.min.js', 'dist/'+dir)))
+.then(()=>buildSrc(webpackConfigMin('browser/index.js', 'febsui.min.js', 'dist/'+dir))) 
 .then(()=>{
   spinner.stop()
 
@@ -64,6 +64,7 @@ buildSrc(webpackConfig('browser/index.js', 'febsui.js', 'dist/'+dir))
   }, 1000);
 })
 .catch(err=>{
+  console.log(err);
   spinner.stop();
 });
 

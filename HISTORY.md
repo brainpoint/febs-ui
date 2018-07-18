@@ -35,3 +35,7 @@
 0.11.0
 =================
   - fix swiper animate bug.
+
+0.12.0
+=================
+  - add black theme.

@@ -1,6 +1,8 @@
 
 var path = require('path')
 var webpack = require('webpack')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var styleLoader = require('./style-loader');
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -11,10 +13,13 @@ module.exports = function(main, output, outputDir){
   entry:  resolve(main),
   output: {
     path: resolve(outputDir),
-    filename: output
+    filename: output,
   },
   module: {
-    rules: [
+    rules: styleLoader.styleLoaders({
+      extract: true,
+      sourceMap: false,
+    }).concat([
       {
         test: /\.js$/,
         loader: 'babel-loader',
@@ -30,18 +35,21 @@ module.exports = function(main, output, outputDir){
         }
       },
       {
-        test: /.js$/,
+        test: /\.js$/,
         include: [resolve('browser'), resolve('browser/controls'), resolve('third-party'), resolve('dist/febsui')],
         enforce: 'post', // post-loader处理
         loader: 'es3ify-loader'
-      }
-    ]
+      },
+    ])
   },
   devtool: '#source-map',
   plugins: [
     new webpack.DefinePlugin({
       'process.env': 'production'
-    })
+    }),
+    new ExtractTextPlugin({
+      filename: 'febsui.css'
+    }),
   ]
 }
 }
