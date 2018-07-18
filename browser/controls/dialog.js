@@ -285,10 +285,10 @@ function showConfirmEdit(ctx) {
   var blackBgClass = ctx.blackBg? ' febsui-dialog-container-black' : '';
 
   var elems = '<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init'+mask+'" role="alert"><div class="febsui-dialog-container' + blackBgClass + '">';
-  + (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') 
-  + ((ctx.content||ctx.contentHtml) ? ('<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div>') : '') 
-  + '<div class="febsui-dialog-edit"><input class="febsui-input-text-noborder" type="text" value="' + (ctx.editText?ctx.editText:'') + '">' + '</div>' 
-  + '<ul class="febsui-dialog-buttons"><li'+(isIE9?' style="'+styleBorder+'"':'')+'><button class="febsui-dialog-cancel">' + ctx.cancelText + '</button></li><li'+(isIE9?' style="'+styleBorder+'"':'')+'><button class="febsui-dialog-ok">' + ctx.okText + '</button></li></ul></div></div>';
+  elems += (ctx.title?('<div class="febsui-dialog-title">' + ctx.title + '</div>'):'') 
+  elems += ((ctx.content||ctx.contentHtml) ? ('<div class="febsui-dialog-content">' + (ctx.content? ctx.content: ctx.contentHtml) + '</div>') : '') 
+  elems += '<div class="febsui-dialog-edit"><input class="febsui-input-text-noborder" type="text" value="' + (ctx.editText?ctx.editText:'') + '">' + '</div>' 
+  elems += '<ul class="febsui-dialog-buttons"><li'+(isIE9?' style="'+styleBorder+'"':'')+'><button class="febsui-dialog-cancel">' + ctx.cancelText + '</button></li><li'+(isIE9?' style="'+styleBorder+'"':'')+'><button class="febsui-dialog-ok">' + ctx.okText + '</button></li></ul></div></div>';
 
   $("body").append($(elems));
   resizeDialog();
