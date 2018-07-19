@@ -1,0 +1,140 @@
+
+
+/****************************************************/
+
+/* uploader */
+
+/****************************************************/
+
+/* 
+<febsui-uploader>
+  <form method="post" role="form" enctype="multipart/form-data" style="display:none">
+    <input type="file">
+  </form>
+  <label>
+    <div class="btn">上传图片</div>
+    <div class="febsui-uploader-progress">
+      <span class="febsui-uploader-filename febsui-ellipsis"></span>
+      <div class="febsui-uploader-progress-bg" style="width:0%;"></div>
+      <span class="febsui-uploader-right">0%</span>
+    </div>
+  </label>
+  <div class="febsui-uploader-progress-cancel"></div>
+</febsui-uploader> */
+
+.febsui-uploader {
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  min-width: 120px;
+  min-height: 38px;
+  line-height: 38px;
+}
+
+.febsui-uploader label {
+  cursor: pointer;
+  margin: 0px auto;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.febsui-uploader label .btn {
+  margin: 0px auto;
+  padding: 0;
+  line-height: 38px;
+}
+
+.febsui-uploader .febsui-uploader-progress {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 30px;
+}
+
+.febsui-uploader .febsui-uploader-progress-bg {
+  position: absolute;
+  left: 0px;
+  top: 50%;
+  bottom: 0px;
+  width: 10%;
+  border-radius: .25rem;
+  background-color: #1991EB;
+}
+
+.febsui-uploader .febsui-uploader-progress span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: #3c3c3c;
+  font-size: 10px;
+}
+
+.febsui-uploader .febsui-uploader-progress .febsui-uploader-right {
+  text-align: right;
+  left: auto;
+  right: 5px;
+  top: 50%;
+  line-height: 19px;
+}
+
+.febsui-uploader .febsui-uploader-progress .febsui-uploader-filename {
+  text-align: left;
+  left: 5px;
+  right: 5px;
+  line-height: 19px;
+  bottom: 50%;
+}
+
+.febsui-uploader .febsui-uploader-progress-cancel {
+  display: none;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  bottom: 0px;
+  right: 0px;
+  width: 30px;
+  height: 16px;
+  padding: 2px;
+  border-radius: 50%;
+  line-height: 19px;
+}
+
+.febsui-uploader .febsui-uploader-progress-cancel::after {
+  content: '取消';
+  font-size: 10px;
+  color: #2e86d4;
+}
+
+/* uploader .febsui-uploader-progress .febsui-uploader-progress-cancel,
+ .febsui-uploader .febsui-uploader-progress .febsui-uploader-progress-cancel {
+   cursor: pointer;
+   display: none;
+   position: absolute;
+   top: -5px;
+   right: -5px;
+   width: 16px;
+   height: 16px;
+   padding: 2px;
+   border-radius: 50%;
+ } */
+
+/* uploader .febsui-uploader-progress .febsui-uploader-progress-cancel .febsui-icon,
+ .febsui-uploader .febsui-uploader-progress .febsui-uploader-progress-cancel .febsui-icon {
+   width: 100%;
+   height: 100%;
+ } */
+
+/* uploader:hover .febsui-uploader-progress-cancel,
+ .febsui-uploader:hover .febsui-uploader-progress-cancel {
+   display: block;
+ } */

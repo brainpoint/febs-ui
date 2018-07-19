@@ -1,0 +1,70 @@
+
+/* switch
+/****************************************************/
+
+/*
+<div class="febsui-switch febsui-switch-on">
+  <span class="febsui-switch-slider"></span>
+</div> */
+
+.febsui-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px !important;
+  height: 32px !important;
+  border-radius: 16px !important;
+  box-sizing: border-box;
+  border: none;
+  line-height: 32px !important;
+}
+
+.febsui-switch,
+.febsui-switch-on {
+  box-shadow: #4AD562 0px 0px 0px 16px inset;
+  transition: border 0.4s, box-shadow 0.1s, background-color 1.2s;
+  background-color: white;
+  cursor: pointer;
+}
+
+.febsui-switch-slider {
+  position: absolute;
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  background: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  left: 1px;
+  top: 1px;
+}
+
+.febsui-switch .febsui-switch-slider,
+.febsui-switch-on .febsui-switch-slider {
+  top: 2px;
+  left: 20px;
+  transition: background-color 0.4s, left 0.2s;
+}
+
+.febsui-switch-off .febsui-switch-slider {
+  top: 2px;
+  left: 1px;
+  transition: background-color 0.4s, left 0.2s;
+}
+
+.febsui-switch-off {
+  box-shadow: inset 0 0 0 1.5px #e6e6e6;
+  transition: border 0.2s, box-shadow 0.4s;
+  background-color: #FEFEFE;
+  cursor: pointer;
+}
+
+.febsui-switch.febsui-switch-disabled,
+.febsui-switch-on.febsui-switch-disabled {
+  opacity: .5;
+  cursor: auto;
+}
+
+.febsui-switch-off.febsui-switch-disabled {
+  background-color: #F0F0F0 !important;
+  cursor: auto;
+}

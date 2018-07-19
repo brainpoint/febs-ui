@@ -1,0 +1,108 @@
+
+/****************************************************/
+
+/* swiper */
+
+/****************************************************/
+
+/* 
+<div class="febsui-swiper">
+  <div class="febsui-swiper-pages">
+    <div class="febsui-swiper-page"></div>
+    <div class="febsui-swiper-page"></div>
+    <div class="febsui-swiper-page"></div>
+    <div class="febsui-swiper-page"></div>
+  </div>
+  <div class="febsui-swiper-dots">
+    <span class="febsui-swiper-dot-active"></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div> */
+
+.febsui-swiper {
+  min-height: 40px;
+  background-color: #ececec;
+  overflow: hidden;
+  position: relative;
+}
+
+.febsui-swiper .febsui-swiper-pages {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  white-space: nowrap;
+  -webkit-transform: translate3d(0px, 0px, 0px);
+  -moz-transform: translate3d(0px, 0px, 0px);
+  -ms-transform: translate3d(0px, 0px, 0px);
+  -o-transform: translate3d(0px, 0px, 0px);
+  transform: translate3d(0px, 0px, 0px);
+  touch-action: pan-x pan-y manipulation;
+}
+
+.febsui-swiper .febsui-swiper-animation {
+  transition: all 0.25s cubic-bezier(0.4, 0.7, 0.5, 1);
+}
+
+.febsui-swiper .febsui-swiper-pages .febsui-swiper-page {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  vertical-align: top;
+  /* border: solid 1px rgba(0, 0, 0, .01); */
+}
+
+.febsui-swiper .febsui-swiper-dots {
+  text-align: center;
+  font-size: 16px;
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  height: 12px;
+}
+
+.febsui-swiper .febsui-swiper-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: #ffffff;
+  display: inline-block;
+  margin: 3px;
+  opacity: 0.35;
+}
+
+.febsui-swiper .febsui-swiper-dots .febsui-swiper-dot-active {
+  /* content: '●'; */
+  width: 7px;
+  height: 7px;
+  opacity: 1;
+}
+
+.febsui-swiper .febsui-swiper-dots .febsui-swiper-dot-active {
+  border-radius: 3.5px;
+}
+
+/* swiper vertical */
+
+.febsui-swiper-vertical .febsui-swiper-pages .febsui-swiper-page {
+  display: block;
+}
+
+.febsui-swiper-vertical .febsui-swiper-dots {
+  bottom: 0px;
+  top: 0px;
+  right: 5px;
+  width: 10px;
+  left: auto;
+  margin: auto;
+  display: table;
+}
+
+.febsui-swiper-vertical .febsui-swiper-dots span {
+  display: inline-block;
+}

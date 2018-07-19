@@ -1,0 +1,114 @@
+
+/****************************************************/
+
+/* control pager */
+
+/****************************************************/
+
+/*
+ <div class="febsui-pagin">
+  <div class="febsui-paginMessage"> 共<i class="blue">25</i>条记录，当前显示第<i class="blue">12</i>页 </div>
+  <ul class="febsui-paginList">
+    <li class="febsui-paginItem"><a><span class="febsui-pagepre febsui-icon-arrow-left"></span></a></li>
+    <li class="febsui-paginItem"><a>1</a></li>
+    <li class="febsui-paginItem"><a>2</a></li>
+    <li class="febsui-paginItem"><a>3</a></li>
+    <li class="febsui-paginItem febsui-pagin-current"><a>4</a></li>
+    <li class="febsui-paginItem"><a>5</a></li>
+    <li class="febsui-paginItem"><a>...</a></li>
+    <li class="febsui-paginItem"><a><span class="febsui-pagenxt febsui-icon-arrow-right"></span></a></li>
+  </ul>
+</div> */
+
+.febsui-pagin {
+  position: relative;
+  margin-top: 10px;
+  padding: 0;
+  min-height: 30px;
+
+  .blue {
+    color: #056dae;
+    font-style: normal;
+  }
+
+  @media only screen and (min-width: 500px) {
+    .febsui-paginList {
+      float: right;
+      padding: 0;
+      margin: 0;
+    }
+    .febsui-paginMessage {
+      float: left;
+    }
+  }
+
+  @media only screen and (max-width: 500px) {
+    text-align: center;
+    .febsui-paginList {
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+      margin-top: 5px;
+    }
+  }
+
+  .febsui-paginList {
+    .febsui-paginItem {
+      float: left;
+      a {
+        float: left;
+        width: 31px;
+        height: 28px;
+        border: 1px solid #DDD;
+        text-align: center;
+        line-height: 30px;
+        border-left: none;
+        color: #3399d5;
+        text-decoration: none;
+      }
+
+      &:first-child a {
+        border-left: 1px solid #DDD;
+        border-bottom-left-radius: 5px;
+        border-top-left-radius: 5px;
+      }
+
+      &:last-child a {
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+
+      &:hover {
+        background: #f5f5f5;
+      }
+    }
+
+    .febsui-paginItem.febsui-pagin-more,
+    .febsui-paginItem.febsui-pagin-more a:hover {
+      cursor: default;
+    }
+    .febsui-paginItem.febsui-pagin-more:hover {
+      background: #FFF;
+    }    
+    .febsui-paginItem.febsui-pagin-more a {
+      color: #737373;
+    }
+
+    .febsui-paginItem.febsui-pagin-current,
+    .febsui-paginItem.febsui-pagin-current a {
+      background: #f5f5f5;
+      cursor: default;
+      color: #737373;
+    }
+  }
+
+  .febsui-pagepre {
+    width: 31px;
+    height: 28px;
+  }
+
+  .febsui-pagenxt {
+    width: 31px;
+    height: 28px;
+  }
+}

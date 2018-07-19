@@ -6,5 +6,5 @@
 // require('../third-party/bluebird.min.js');
 // require('../third-party/bignumber.min.js');
 
-import '../febsui.scss';
+import '../styles/febsui.scss';
 require('./index');

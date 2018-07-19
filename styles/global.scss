@@ -1,0 +1,209 @@
+
+$blackBgBorderColor: #565656;
+$blackBgBorderColorNotImage: #424242;
+$blackBgColor: rgba(0, 0, 0, 0.8);
+$blackBgColorNotBlur: rgba(41, 41, 41, 1);
+$blackTintColor: #ececec;
+
+$whiteBgBorderColor: #ccc;
+$whiteBgBorderColorNotImage: #eee;
+$whiteBgColor: rgba(255, 255, 255, 0.88);
+$whiteBgColorNotBlur: rgba(255, 255, 255, 0.99);
+$whiteTintColor: #1f1f21;
+
+
+
+/**
+ * font.
+ */
+
+* {
+  touch-action: manipulation;
+  /* no 300ms delay */
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
+
+body {
+  touch-action: manipulation;
+  /* no 300ms delay */
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
+
+[class|=febsui],
+[class|=btn],
+button,
+label {
+  font-family: -apple-system, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  /* no 300ms delay */
+}
+
+[class|=febsui-input],
+input,
+.febsui-dialog,
+.febsui-mask,
+.febsui-visible,
+.febsui-dialog-container,
+.febsui-dialog-content,
+.febsui-dialog-edit {
+  -webkit-user-select: auto;
+  -khtml-user-select: auto;
+  -moz-user-select: auto;
+  -ms-user-select: auto;
+  user-select: auto;
+}
+
+label {
+  cursor: pointer;
+}
+
+/**
+   * text.
+   */
+
+.febsui-ellipsis {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.febsui-ellipsis-multiline {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/****************************************************/
+
+/* input */
+
+/****************************************************/
+
+.febsui-input-text {
+  background-clip: padding-box;
+  padding: 0;
+  border: none;
+  vertical-align: top;
+  outline: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  box-sizing: border-box;
+  height: 36px;
+  line-height: 36px;
+  font-size: 15px;
+  background-color: #E2E3E7;
+  box-shadow: none;
+  color: $whiteTintColor;
+  padding: 0 8px 0 28px;
+  margin: 0;
+  border-radius: 8px;
+  background-position: 8px;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  font-weight: 400;
+  display: inline-block;
+  text-indent: 0;
+  width: 100%;
+}
+
+.febsui-input-text-noborder {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  vertical-align: top;
+  outline: none;
+  letter-spacing: 0;
+  box-shadow: none;
+  color: $whiteTintColor;
+  padding: 0;
+  margin: 0;
+  height: 36px;
+  line-height: 36px;
+  font-size: 15px;
+  font-weight: 400;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border: none;
+  background-color: transparent;
+  border-bottom: 1px solid $whiteBgBorderColorNotImage;
+  border-radius: 0;
+  display: inline-block;
+  text-indent: 0;
+}
+
+/****************************************************/
+
+/* animation */
+
+/****************************************************/
+
+/* animation to visible or hide */
+
+.febsui-visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  -webkit-transition: opacity 0.3s 0s, visibility 0s 0s !important;
+  -moz-transition: opacity 0.3s 0s, visibility 0s 0s !important;
+  transition: opacity 0.3s 0s, visibility 0s 0s !important;
+}
+
+.febsui-invisible {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  -webkit-transition: opacity 0.3s 0s, visibility 0.3s 0s !important;
+  -moz-transition: opacity 0.3s 0s, visibility 0.3s 0s !important;
+  transition: opacity 0.3s 0s, visibility 0.3s 0s !important;
+}
+
+@-webkit-keyframes febsui-animation-spin-keyframes {
+  0% {
+    -webkit-transform: rotate(0deg)
+  }
+  to {
+    -webkit-transform: rotate(360deg)
+  }
+}
+
+@keyframes febsui-animation-spin-keyframes {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg)
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg)
+  }
+}
+
+.febsui-animation-spin {
+  -webkit-animation: febsui-animation-spin-keyframes 1.6s infinite linear;
+  -moz-animation: febsui-animation-spin-keyframes 1.6s infinite linear;
+  animation: febsui-animation-spin-keyframes 1.6s infinite linear;
+}

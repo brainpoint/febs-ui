@@ -1,4 +1,5 @@
 
+var maskPrevent = require('../domHelper').maskPreventEvent;
 
 function resizePopover() {
   $('.febsui-popover').popoverHide();
@@ -102,6 +103,10 @@ $.fn.popoverShow = function(mask, attachNode) {
         ee.addClass('febsui-mask');
       } else {
         ee.removeClass('febsui-mask');
+      }
+
+      if (window.febs.utils.browserIsMobile()) {
+        maskPrevent(ee);
       }
 
       var eee = ee.children('.febsui-popover-container');

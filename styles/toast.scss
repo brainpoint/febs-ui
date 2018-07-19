@@ -1,0 +1,126 @@
+
+/* febsui-toast */
+
+/****************************************************/
+
+/* no icon */
+
+/****************************************************/
+
+/*
+<div class="febsui-toast" role="alert">
+ <div class="febsui-toast-container">
+   <div class="febsui-dialog-msg">这是一个toast提示</div>
+ </div>
+</div> */
+
+/****************************************************/
+
+/* with icon */
+
+/****************************************************/
+
+/*
+<div class="febsui-toast" role="alert">
+ <div class="febsui-toast-container">
+   <div class="febsui-icon febsui-icon-ok"></div>
+   <div class="febsui-dialog-msg" style="padding-left:30px;">这是一个toast提示</div>
+ </div>
+</div> */
+
+/****************************************************/
+
+/* show in center */
+
+/****************************************************/
+
+/*
+<div class="febsui-toast febsui-toast-center" role="alert">
+  <div class="febsui-toast-container">
+    <div class="febsui-icon febsui-icon-ok"></div>
+    <div class="febsui-dialog-msg">完成</div>
+  </div>
+</div> */
+
+.febsui-toast {
+  text-align: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 20001;
+  touch-action: none;
+  pointer-events: none;
+
+  .febsui-toast-container {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 400;
+    color: #ffffff;
+    position: relative;
+    max-width: 320px;
+    min-width: 120px;
+    margin: 0 auto;
+    top: 5px;
+    /* height: 36px; */
+    /* line-height: 36px; */
+    background: rgba(20, 18, 20, .85);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    transition-property: transform;
+    transition-duration: .3s;
+    padding: 10px;
+
+    .febsui-dialog-msg {
+      line-height: 22px;
+    }
+  }
+} 
+
+.febsui-toast.febsui-toast-center {
+  text-align: center;
+  position: fixed;
+  left: 0;
+  /* bottom: 0; */
+  right: 0;
+  /* top: 0; */
+  min-width: 100px;
+  height: 100px;
+  z-index: 20001;
+  margin: auto;
+
+  @media only screen and (max-height: 420px) {
+    top: 80px;
+  }
+
+  @media only screen and (min-height: 420px) {
+    top: 200px;
+  }
+
+  @media only screen and (min-height: 700px) {
+    top: 300px;
+  }
+
+  .febsui-toast-container {
+    min-width: 80px;
+    min-height: 80px;
+    margin: auto;
+    text-align: center;
+
+    .febsui-dialog-msg {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      max-width: 200px;
+      margin-top: 10px;
+    }
+    
+    .febsui-icon {
+      float: none;
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+    }
+  }
+}

@@ -11,9 +11,9 @@
   <meta name="apple-touch-fullscreen" content="yes" /> 
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <link rel="stylesheet" type="text/css" href="./febsui-0.12.5/febsui.css" />
+  <link rel="stylesheet" type="text/css" href="./febsui-0.12.6/febsui.css" />
   <script charset='UTF-8' type="text/javascript" src="./febs-0.8.39/febs.js"></script>
-  <script charset='UTF-8' type="text/javascript" src="./febsui-0.12.5/febsui.js"></script>
+  <script charset='UTF-8' type="text/javascript" src="./febsui-0.12.6/febsui.js"></script>
   
   <script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
 	<script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/shCore.js"></script>
@@ -257,7 +257,7 @@
           return febs.utils.sleep(1000)
         })
         .then(function () {
-          // febsui.loading_hide();
+          febsui.loading_hide();
         })
     }
   </script>
@@ -375,6 +375,7 @@
   <button style="font-size:10px;" onclick="$('#h2dialog').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#dialog')">[Readme]</button><br>
 
+  <button onclick="showDialogBlack()">black theme</button>
   <button onclick="showDialogAlert()">alert</button>
   <button onclick="showDialogConfirm()">confirm</button>
   <button onclick="showDialogText()">confirm text input</button>
@@ -391,6 +392,18 @@
 
   <script type="text/javascript">
     // dialog.
+    function showDialogBlack() {
+      febsui.dialog_showAlert({
+        blackBg: true,
+        title: '提示',
+        content: '这是一个alert',
+        okText: '这是确定',
+        confirm: function () {
+          febsui.toast('你点击了确定按钮');
+          febsui.dialog_hide(this);
+        }
+      });
+    }
     function showDialogAlert() {
       febsui.dialog_showAlert({
         title: '提示',
