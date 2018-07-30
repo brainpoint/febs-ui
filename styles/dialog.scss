@@ -1,6 +1,3 @@
-@import './global.scss';
-@import './border.scss';
-
 
 /* febsui-dialog */
 
@@ -225,7 +222,7 @@ ul {
         -moz-transition: background-color 0.2s;
         transition: background-color 0.2s;
 
-        @include borderTopLeft($whiteBgBorderColorNotImage, $whiteBgBorderColor);
+        @include borderTopLeft($whiteBgBorderColor);
       }
       button:hover {
         background: rgba(234, 234, 234, 0.5);
@@ -243,7 +240,7 @@ ul {
 
       &:nth-child(1) button {
         /* background: #fc7169; */
-        @include borderTop($whiteBgBorderColorNotImage, $whiteBgBorderColor);
+        @include borderTop($whiteBgBorderColor);
         border-left: none;
       }
     }
@@ -257,14 +254,14 @@ ul {
   color: $blackTintColor;
   .febsui-dialog-buttons li button {
     /* background: #b6bece; */
-    @include borderTopLeft($blackBgBorderColorNotImage, $blackBgBorderColor);
+    @include borderTopLeft($blackBgBorderColor);
     &:hover {
       background-color: rgba(255, 255, 255, 0.02);
     }
   }
   .febsui-dialog-buttons li:nth-child(1) button {
     /* background: #fc7169; */
-    @include borderTop($blackBgBorderColorNotImage, $blackBgBorderColor);
+    @include borderTop($blackBgBorderColor);
     border-left: none;
   }
 

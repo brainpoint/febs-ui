@@ -11,9 +11,9 @@
   <meta name="apple-touch-fullscreen" content="yes" /> 
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <link rel="stylesheet" type="text/css" href="./febsui-0.12.6/febsui.css" />
-  <script charset='UTF-8' type="text/javascript" src="./febs-0.8.39/febs.js"></script>
-  <script charset='UTF-8' type="text/javascript" src="./febsui-0.12.6/febsui.js"></script>
+  <link rel="stylesheet" type="text/css" href="./febsui-0.12.8/febsui.css" />
+  <script charset='UTF-8' type="text/javascript" src="./febs-0.8.40/febs.js"></script>
+  <script charset='UTF-8' type="text/javascript" src="./febsui-0.12.8/febsui.js"></script>
   
   <script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
 	<script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/shCore.js"></script>
@@ -143,7 +143,7 @@
   <button style="font-size:10px;" onclick="$('#h2Swiper').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#swiper')">[Readme]</button><br>
 
-  <div class="febsui-swiper" style="height: 80px; width: 48%; display:inline-block;" data-loop="true" data-auto="7000" data-current="2" data-dot-color="#ffffff">
+  <div class="febsui-swiper" id="swiper1" style="height: 80px; width: 48%; display:inline-block;" data-loop="true" data-auto="7000" data-current="2" data-dot-color="#ffffff">
     <div class="febsui-swiper-page" style="background-color: #ff0000;">1</div>
     <div class="febsui-swiper-page" style="background-color: #00ff00;">2</div>
     <div class="febsui-swiper-page" style="background-color: #ff00ff;">3</div>
@@ -151,12 +151,21 @@
   </div>
 
 
-  <div class="febsui-swiper febsui-swiper-vertical" style="height: 80px; width: 48%; display:inline-block;" data-loop="true" data-auto="7000" data-current="2" data-dot-color="#ffffff">
+  <div class="febsui-swiper febsui-swiper-vertical" id="swiper2" style="height: 80px; width: 48%; display:inline-block;" data-loop="true" data-auto="7000" data-current="2" data-dot-color="#ffffff">
     <div class="febsui-swiper-page" style="background-color: #ff0000;">1</div>
     <div class="febsui-swiper-page" style="background-color: #00ff00;">2</div>
     <div class="febsui-swiper-page" style="background-color: #ff00ff;">3</div>
     <div class="febsui-swiper-page" style="background-color: #0000ff;">4</div>
   </div>
+
+  <script type="text/javascript">
+    $('#swiper1').swiperMoving(function(percent) {
+      febsui.toast(percent.toString());
+    });
+    $('#swiper2').swiperMoving(function(percent) {
+      febsui.toast(percent.toString());
+    });
+  </script>
 
   <!-- page -->
   <a class="title" id="anchor_page" href="#anchor_page">page:</a>
@@ -637,8 +646,7 @@
   <button style="font-size:10px;" onclick="$('#h2uploader').dialogShow()">[Code]</button> 
   <button style="font-size:10px;" onclick="window.open('https://www.npmjs.com/package/febs-ui#upload')">[Readme]</button><br>
 
-  <div class="febsui-uploader" data-api="http://test2.citongs.com/api/upload" 
-         data-accept="application/zip" 
+  <div class="febsui-uploader" data-api="http://test2.citongs.com/api/upload"
        data-filename="true" 
           data-begin="onUploadBegin"
           data-finish="onUploadFinish"

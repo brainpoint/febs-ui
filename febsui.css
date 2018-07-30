@@ -226,174 +226,7 @@ label {
 
 .febsui-ellipsis-multiline {
   display: -webkit-box;
-  -webkit-box-orient: vertical;
-  box-orient: vertical;
-  -webkit-line-clamp: 4;
-  line-clamp: 4;
-  text-overflow: ellipsis;
-  overflow: hidden; }
-
-/****************************************************/
-/* input */
-/****************************************************/
-.febsui-input-text {
-  background-clip: padding-box;
-  padding: 0;
-  border: none;
-  vertical-align: top;
-  outline: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
-  appearance: textfield;
-  box-sizing: border-box;
-  height: 36px;
-  line-height: 36px;
-  font-size: 15px;
-  background-color: #E2E3E7;
-  box-shadow: none;
-  color: #1f1f21;
-  padding: 0 8px 0 28px;
-  margin: 0;
-  border-radius: 8px;
-  background-position: 8px;
-  background-repeat: no-repeat;
-  background-size: 16px;
-  font-weight: 400;
-  display: inline-block;
-  text-indent: 0;
-  width: 100%; }
-
-.febsui-input-text-noborder {
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
-  appearance: textfield;
-  vertical-align: top;
-  outline: none;
-  letter-spacing: 0;
-  box-shadow: none;
-  color: #1f1f21;
-  padding: 0;
-  margin: 0;
-  height: 36px;
-  line-height: 36px;
-  font-size: 15px;
-  font-weight: 400;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  border: none;
-  background-color: transparent;
-  border-bottom: 1px solid #eee;
-  border-radius: 0;
-  display: inline-block;
-  text-indent: 0; }
-
-/****************************************************/
-/* animation */
-/****************************************************/
-/* animation to visible or hide */
-.febsui-visible {
-  opacity: 1 !important;
-  visibility: visible !important;
-  -webkit-transition: opacity 0.3s 0s, visibility 0s 0s !important;
-  -moz-transition: opacity 0.3s 0s, visibility 0s 0s !important;
-  transition: opacity 0.3s 0s, visibility 0s 0s !important; }
-
-.febsui-invisible {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  -webkit-transition: opacity 0.3s 0s, visibility 0.3s 0s !important;
-  -moz-transition: opacity 0.3s 0s, visibility 0.3s 0s !important;
-  transition: opacity 0.3s 0s, visibility 0.3s 0s !important; }
-
-@-webkit-keyframes febsui-animation-spin-keyframes {
-  0% {
-    -webkit-transform: rotate(0deg); }
-  to {
-    -webkit-transform: rotate(360deg); } }
-
-@keyframes febsui-animation-spin-keyframes {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg); }
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg); } }
-
-.febsui-animation-spin {
-  -webkit-animation: febsui-animation-spin-keyframes 1.6s infinite linear;
-  -moz-animation: febsui-animation-spin-keyframes 1.6s infinite linear;
-  animation: febsui-animation-spin-keyframes 1.6s infinite linear; }
-
-/**
- * font.
- */
-* {
-  touch-action: manipulation;
-  /* no 300ms delay */
-  -webkit-overflow-scrolling: touch;
-  overflow-scrolling: touch; }
-
-body {
-  touch-action: manipulation;
-  /* no 300ms delay */
-  -webkit-overflow-scrolling: touch;
-  overflow-scrolling: touch; }
-
-[class|=febsui],
-[class|=btn],
-button,
-label {
-  font-family: -apple-system, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  -webkit-overflow-scrolling: touch;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  touch-action: manipulation;
-  /* no 300ms delay */ }
-
-[class|=febsui-input],
-input,
-.febsui-dialog,
-.febsui-mask,
-.febsui-visible,
-.febsui-dialog-container,
-.febsui-dialog-content,
-.febsui-dialog-edit {
-  -webkit-user-select: auto;
-  -khtml-user-select: auto;
-  -moz-user-select: auto;
-  -ms-user-select: auto;
-  user-select: auto; }
-
-label {
-  cursor: pointer; }
-
-/**
-   * text.
-   */
-.febsui-ellipsis {
-  text-overflow: ellipsis;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  white-space: nowrap; }
-
-.febsui-ellipsis-multiline {
-  display: -webkit-box;
+  white-space: normal;
   -webkit-box-orient: vertical;
   box-orient: vertical;
   -webkit-line-clamp: 4;
@@ -774,174 +607,6 @@ label {
       width: 40px;
       height: 40px; }
 
-/**
- * font.
- */
-* {
-  touch-action: manipulation;
-  /* no 300ms delay */
-  -webkit-overflow-scrolling: touch;
-  overflow-scrolling: touch; }
-
-body {
-  touch-action: manipulation;
-  /* no 300ms delay */
-  -webkit-overflow-scrolling: touch;
-  overflow-scrolling: touch; }
-
-[class|=febsui],
-[class|=btn],
-button,
-label {
-  font-family: -apple-system, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  -webkit-overflow-scrolling: touch;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  touch-action: manipulation;
-  /* no 300ms delay */ }
-
-[class|=febsui-input],
-input,
-.febsui-dialog,
-.febsui-mask,
-.febsui-visible,
-.febsui-dialog-container,
-.febsui-dialog-content,
-.febsui-dialog-edit {
-  -webkit-user-select: auto;
-  -khtml-user-select: auto;
-  -moz-user-select: auto;
-  -ms-user-select: auto;
-  user-select: auto; }
-
-label {
-  cursor: pointer; }
-
-/**
-   * text.
-   */
-.febsui-ellipsis {
-  text-overflow: ellipsis;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  white-space: nowrap; }
-
-.febsui-ellipsis-multiline {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  box-orient: vertical;
-  -webkit-line-clamp: 4;
-  line-clamp: 4;
-  text-overflow: ellipsis;
-  overflow: hidden; }
-
-/****************************************************/
-/* input */
-/****************************************************/
-.febsui-input-text {
-  background-clip: padding-box;
-  padding: 0;
-  border: none;
-  vertical-align: top;
-  outline: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
-  appearance: textfield;
-  box-sizing: border-box;
-  height: 36px;
-  line-height: 36px;
-  font-size: 15px;
-  background-color: #E2E3E7;
-  box-shadow: none;
-  color: #1f1f21;
-  padding: 0 8px 0 28px;
-  margin: 0;
-  border-radius: 8px;
-  background-position: 8px;
-  background-repeat: no-repeat;
-  background-size: 16px;
-  font-weight: 400;
-  display: inline-block;
-  text-indent: 0;
-  width: 100%; }
-
-.febsui-input-text-noborder {
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
-  appearance: textfield;
-  vertical-align: top;
-  outline: none;
-  letter-spacing: 0;
-  box-shadow: none;
-  color: #1f1f21;
-  padding: 0;
-  margin: 0;
-  height: 36px;
-  line-height: 36px;
-  font-size: 15px;
-  font-weight: 400;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  border: none;
-  background-color: transparent;
-  border-bottom: 1px solid #eee;
-  border-radius: 0;
-  display: inline-block;
-  text-indent: 0; }
-
-/****************************************************/
-/* animation */
-/****************************************************/
-/* animation to visible or hide */
-.febsui-visible {
-  opacity: 1 !important;
-  visibility: visible !important;
-  -webkit-transition: opacity 0.3s 0s, visibility 0s 0s !important;
-  -moz-transition: opacity 0.3s 0s, visibility 0s 0s !important;
-  transition: opacity 0.3s 0s, visibility 0s 0s !important; }
-
-.febsui-invisible {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  -webkit-transition: opacity 0.3s 0s, visibility 0.3s 0s !important;
-  -moz-transition: opacity 0.3s 0s, visibility 0.3s 0s !important;
-  transition: opacity 0.3s 0s, visibility 0.3s 0s !important; }
-
-@-webkit-keyframes febsui-animation-spin-keyframes {
-  0% {
-    -webkit-transform: rotate(0deg); }
-  to {
-    -webkit-transform: rotate(360deg); } }
-
-@keyframes febsui-animation-spin-keyframes {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg); }
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg); } }
-
-.febsui-animation-spin {
-  -webkit-animation: febsui-animation-spin-keyframes 1.6s infinite linear;
-  -moz-animation: febsui-animation-spin-keyframes 1.6s infinite linear;
-  animation: febsui-animation-spin-keyframes 1.6s infinite linear; }
-
 /* febsui-dialog */
 /****************************************************/
 /* alert */
@@ -1129,8 +794,8 @@ ul {
     -webkit-transition: background-color 0.2s;
     -moz-transition: background-color 0.2s;
     transition: background-color 0.2s;
-    border-top: 1px solid #eee;
-    border-left: 1px solid #eee; }
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc; }
     @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
       .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons li button {
         border-top: none;
@@ -1138,7 +803,7 @@ ul {
         background-size: 100% 1px, 1px 100%;
         background-repeat: no-repeat;
         background-position: top, left;
-        background-image: linear-gradient(0deg, transparent, transparent 50%, #ccc 50%), linear-gradient(90deg, transparent, transparent 50%, #ccc 50%); } }
+        background-image: linear-gradient(180deg, #ccc 50%, transparent 50%, transparent), linear-gradient(90deg, #ccc 50%, transparent 50%, transparent); } }
   .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons li button:hover {
     background: rgba(234, 234, 234, 0.5); }
   .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons li:nth-child(1) button {
@@ -1149,7 +814,7 @@ ul {
     border-bottom-right-radius: 12px; }
   .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons li:nth-child(1) button {
     /* background: #fc7169; */
-    border-top: 1px solid #eee;
+    border-top: 1px solid #ccc;
     border-left: none; }
     @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
       .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons li:nth-child(1) button {
@@ -1157,7 +822,7 @@ ul {
         background-size: 100% 1px;
         background-repeat: no-repeat;
         background-position: top;
-        background-image: linear-gradient(0deg, transparent, transparent 50%, #ccc 50%); } }
+        background-image: linear-gradient(180deg, #ccc 50%, transparent 50%, transparent); } }
 
 /** black bg */
 .febsui-dialog .febsui-dialog-container-black {
@@ -1165,8 +830,8 @@ ul {
   color: #ececec; }
   .febsui-dialog .febsui-dialog-container-black .febsui-dialog-buttons li button {
     /* background: #b6bece; */
-    border-top: 1px solid #424242;
-    border-left: 1px solid #424242; }
+    border-top: 1px solid #565656;
+    border-left: 1px solid #565656; }
     @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
       .febsui-dialog .febsui-dialog-container-black .febsui-dialog-buttons li button {
         border-top: none;
@@ -1174,12 +839,12 @@ ul {
         background-size: 100% 1px, 1px 100%;
         background-repeat: no-repeat;
         background-position: top, left;
-        background-image: linear-gradient(0deg, transparent, transparent 50%, #565656 50%), linear-gradient(90deg, transparent, transparent 50%, #565656 50%); } }
+        background-image: linear-gradient(180deg, #565656 50%, transparent 50%, transparent), linear-gradient(90deg, #565656 50%, transparent 50%, transparent); } }
     .febsui-dialog .febsui-dialog-container-black .febsui-dialog-buttons li button:hover {
       background-color: rgba(255, 255, 255, 0.02); }
   .febsui-dialog .febsui-dialog-container-black .febsui-dialog-buttons li:nth-child(1) button {
     /* background: #fc7169; */
-    border-top: 1px solid #424242;
+    border-top: 1px solid #565656;
     border-left: none; }
     @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
       .febsui-dialog .febsui-dialog-container-black .febsui-dialog-buttons li:nth-child(1) button {
@@ -1187,7 +852,7 @@ ul {
         background-size: 100% 1px;
         background-repeat: no-repeat;
         background-position: top;
-        background-image: linear-gradient(0deg, transparent, transparent 50%, #565656 50%); } }
+        background-image: linear-gradient(180deg, #565656 50%, transparent 50%, transparent); } }
   @supports not (backdrop-filter: blur(2px)) {
     .febsui-dialog .febsui-dialog-container-black {
       background-color: #292929; } }
@@ -1436,174 +1101,6 @@ button:disabled:active,
   background-color: #FF0017;
   border-color: #FF0017; }
 
-/**
- * font.
- */
-* {
-  touch-action: manipulation;
-  /* no 300ms delay */
-  -webkit-overflow-scrolling: touch;
-  overflow-scrolling: touch; }
-
-body {
-  touch-action: manipulation;
-  /* no 300ms delay */
-  -webkit-overflow-scrolling: touch;
-  overflow-scrolling: touch; }
-
-[class|=febsui],
-[class|=btn],
-button,
-label {
-  font-family: -apple-system, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  -webkit-overflow-scrolling: touch;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  touch-action: manipulation;
-  /* no 300ms delay */ }
-
-[class|=febsui-input],
-input,
-.febsui-dialog,
-.febsui-mask,
-.febsui-visible,
-.febsui-dialog-container,
-.febsui-dialog-content,
-.febsui-dialog-edit {
-  -webkit-user-select: auto;
-  -khtml-user-select: auto;
-  -moz-user-select: auto;
-  -ms-user-select: auto;
-  user-select: auto; }
-
-label {
-  cursor: pointer; }
-
-/**
-   * text.
-   */
-.febsui-ellipsis {
-  text-overflow: ellipsis;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  white-space: nowrap; }
-
-.febsui-ellipsis-multiline {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  box-orient: vertical;
-  -webkit-line-clamp: 4;
-  line-clamp: 4;
-  text-overflow: ellipsis;
-  overflow: hidden; }
-
-/****************************************************/
-/* input */
-/****************************************************/
-.febsui-input-text {
-  background-clip: padding-box;
-  padding: 0;
-  border: none;
-  vertical-align: top;
-  outline: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
-  appearance: textfield;
-  box-sizing: border-box;
-  height: 36px;
-  line-height: 36px;
-  font-size: 15px;
-  background-color: #E2E3E7;
-  box-shadow: none;
-  color: #1f1f21;
-  padding: 0 8px 0 28px;
-  margin: 0;
-  border-radius: 8px;
-  background-position: 8px;
-  background-repeat: no-repeat;
-  background-size: 16px;
-  font-weight: 400;
-  display: inline-block;
-  text-indent: 0;
-  width: 100%; }
-
-.febsui-input-text-noborder {
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
-  appearance: textfield;
-  vertical-align: top;
-  outline: none;
-  letter-spacing: 0;
-  box-shadow: none;
-  color: #1f1f21;
-  padding: 0;
-  margin: 0;
-  height: 36px;
-  line-height: 36px;
-  font-size: 15px;
-  font-weight: 400;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  border: none;
-  background-color: transparent;
-  border-bottom: 1px solid #eee;
-  border-radius: 0;
-  display: inline-block;
-  text-indent: 0; }
-
-/****************************************************/
-/* animation */
-/****************************************************/
-/* animation to visible or hide */
-.febsui-visible {
-  opacity: 1 !important;
-  visibility: visible !important;
-  -webkit-transition: opacity 0.3s 0s, visibility 0s 0s !important;
-  -moz-transition: opacity 0.3s 0s, visibility 0s 0s !important;
-  transition: opacity 0.3s 0s, visibility 0s 0s !important; }
-
-.febsui-invisible {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  -webkit-transition: opacity 0.3s 0s, visibility 0.3s 0s !important;
-  -moz-transition: opacity 0.3s 0s, visibility 0.3s 0s !important;
-  transition: opacity 0.3s 0s, visibility 0.3s 0s !important; }
-
-@-webkit-keyframes febsui-animation-spin-keyframes {
-  0% {
-    -webkit-transform: rotate(0deg); }
-  to {
-    -webkit-transform: rotate(360deg); } }
-
-@keyframes febsui-animation-spin-keyframes {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg); }
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg); } }
-
-.febsui-animation-spin {
-  -webkit-animation: febsui-animation-spin-keyframes 1.6s infinite linear;
-  -moz-animation: febsui-animation-spin-keyframes 1.6s infinite linear;
-  animation: febsui-animation-spin-keyframes 1.6s infinite linear; }
-
 /****************************************************/
 /* popover */
 /****************************************************/
@@ -1649,7 +1146,7 @@ label {
   outline-offset: 0;
   text-decoration: none;
   color: inherit;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #ccc;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0.07); }
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .febsui-popover .febsui-popover-cell,
@@ -1658,7 +1155,7 @@ label {
       background-size: 100% 1px;
       background-repeat: no-repeat;
       background-position: bottom;
-      background-image: linear-gradient(0deg, transparent, transparent 50%, #ccc 50%); } }
+      background-image: linear-gradient(0deg, #ccc 49%, transparent 51%, transparent); } }
 
 .febsui-popover {
   /* position: fixed; */
@@ -1778,14 +1275,14 @@ label {
   background-color: #292929;
   color: #ececec; }
   .febsui-popover-black .febsui-popover-container .febsui-popover-cell {
-    border-bottom: 1px solid #424242; }
+    border-bottom: 1px solid #565656; }
     @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
       .febsui-popover-black .febsui-popover-container .febsui-popover-cell {
         border-bottom: none;
         background-size: 100% 1px;
         background-repeat: no-repeat;
         background-position: bottom;
-        background-image: linear-gradient(0deg, transparent, transparent 50%, #565656 50%); } }
+        background-image: linear-gradient(0deg, #565656 49%, transparent 51%, transparent); } }
 
 .febsui-popover-black .febsui-popover-arrow {
   /* ie9 */
@@ -1927,14 +1424,14 @@ label {
 
 .febsui-actionsheet-black .febsui-actionsheet-container .febsui-actionsheet-cell {
   color: #ececec;
-  border-bottom: 1px solid #424242; }
+  border-bottom: 1px solid #565656; }
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .febsui-actionsheet-black .febsui-actionsheet-container .febsui-actionsheet-cell {
       border-bottom: none;
       background-size: 100% 1px;
       background-repeat: no-repeat;
       background-position: bottom;
-      background-image: linear-gradient(0deg, transparent, transparent 50%, #565656 50%); } }
+      background-image: linear-gradient(0deg, #565656 49%, transparent 51%, transparent); } }
   .febsui-actionsheet-black .febsui-actionsheet-container .febsui-actionsheet-cell:hover, .febsui-actionsheet-black .febsui-actionsheet-container .febsui-actionsheet-cell:active {
     color: #ececec;
     background-color: rgba(255, 255, 255, 0.02); }

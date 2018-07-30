@@ -411,6 +411,8 @@ febsui.page_init(elem, curPage, pageCount, totalCount, pageCallback)
 
 > 将为自定义dialog元素添加一个 `'id-'+元素id` 的类; 对自定义dialog样式设定时, 使用这个类名, 而不要使用id来定义
 
+> 在页面中查找dialog可以使用 `$('.id-元素id')` 或 `$('.febsui-dialog[data-id="元素id"]')` 来查找
+
 属性
 
 | 属性 | 说明 | 值 |
@@ -603,29 +605,11 @@ $('input[name="radioGroup"]').on('change', function(){});
  * @desc 判断是否是swiper
  */
 $('.febsui-swiper').isSwiper();
-/**
- * @desc 监听变化事件
- */
-$('.febsui-swiper').swiper(function(){});
-
-or
-
-$('.febsui-swiper').on('swiper', function(){});
-
-/**
- * @desc 手动触发事件
- */
-$('.febsui-swiper').swiper();
-
-or
-
-$('.febsui-swiper').trigger('swiper');
 
 /**
  * @desc 设置指示器颜色.
  */
 $('.febsui-swiper').swiperDotColor(color);
-
 
 /**
  * @desc 设置动画速度, ms为下一次变换的间隔时间, 0则无动画.
@@ -664,6 +648,35 @@ $('.febsui-swiper').swiperTo(index:number, animation?:boolean, trigger?:boolean)
 $('.febsui-swiper').swiperTotal();
 ```
 
+事件
+
+```js
+
+/**
+ * @desc (特殊方法) 正在进行手动移动监听. 传入null方法则取消回调.
+ * @param percent: 移动到下一个page的百分比; 负数表示移到到上一个page.
+ */
+$('.febsui-swiper').swiperMoving(function(percent){});
+
+/**
+ * @desc 监听变化事件
+ */
+$('.febsui-swiper').swiper(function(){});
+
+or
+
+$('.febsui-swiper').on('swiper', function(){});
+
+/**
+ * @desc 手动触发事件
+ */
+$('.febsui-swiper').swiper();
+
+or
+
+$('.febsui-swiper').trigger('swiper');
+```
+
 ### popover
 ![](doc/ui/control-popover.png)
 
@@ -691,6 +704,8 @@ $('.febsui-swiper').swiperTotal();
 > must provide a `id` attrubute
 
 > 将为popover元素添加一个 `'id-'+元素id` 的类; 对popover样式设定时, 使用这个类名, 而不要使用id来定义
+
+> 在页面中查找popover可以使用 `$('.id-元素id')` 或 `$('.febsui-popover[data-id="元素id"]')` 来查找
 
 属性
 
@@ -743,6 +758,8 @@ $('#popover1').popoverHide();
 > must provide a `id` attrubute
 
 > 将为actionsheet元素添加一个 `'id-'+元素id` 的类; 对actionsheet样式设定时, 使用这个类名, 而不要使用id来定义
+
+> 在页面中查找actionsheet可以使用 `$('.id-元素id')` 或 `$('.febsui-actionsheet[data-id="元素id"]')` 来查找
 
 类
 

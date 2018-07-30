@@ -400,7 +400,7 @@ febs.string.replace(str, strSrc, strDest)
  */
 febs.string.trim(str)
 /**
-* @desc: 对字符串中的 <> 标签进行转义为 &lt;, &gt;
+* @desc: 对字符串中的 <>空格"& 标签进行转义为 & lt;, & gt;
 * @return: string.
 */
 febs.string.escapeHtml(str); 

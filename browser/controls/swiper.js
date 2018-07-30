@@ -24,7 +24,66 @@ function mobile_onTouchstart(event) {
   if (touch) {
     if (event.target.getAttribute('data-ispage') === '1') {
       var target = event.target.parentNode;
-      $(target).removeClass('febsui-swiper-animation');
+      var target_t = $(target);
+      var parentTarget = target_t.parent();
+
+      var dataLoop = parentTarget.attr('data-loop');
+      var isDataLoop = window.febs.string.isEmpty(dataLoop) ? true : ('true' == dataLoop);
+
+      target.removeClass('febsui-swiper-animation');
+      
+      // 获取前一个和后一个page.
+      var currentPage;
+      currentPage = Number(parentTarget.attr('data-current'));
+      var nextPage, prePage;
+      nextPage = null;
+      prePage = null;
+
+      var allPage = target_t.children('.febsui-swiper-page');
+      var totalPage = allPage.length;
+
+      if (isDataLoop) { currentPage += 1; }
+
+      if (target.__swiper_vertical) {
+        var pageOffset = 0;
+        var widthValue;
+        for (var i = 0; i < currentPage; i++) {
+          widthValue = $(allPage[i]).css('height');
+          pageOffset += parseFloat((widthValue.substring(0, widthValue.length-2)||allPage[i].clientHeight));
+        }
+
+        if (currentPage > 0) {
+          widthValue = $(allPage[currentPage-1]).css('height');
+          prePage = pageOffset - parseFloat((widthValue.substring(0, widthValue.length-2)||allPage[currentPage-1].clientHeight));
+        }
+
+        if (currentPage < totalPage-1) {
+          widthValue = $(allPage[currentPage+1]).css('height');
+          nextPage = pageOffset + parseFloat((widthValue.substring(0, widthValue.length-2)||allPage[currentPage+1].clientHeight));  
+        }
+      }
+      else {
+        var pageOffset = 0;
+        var widthValue;
+        for (var i = 0; i < currentPage; i++) {
+          widthValue = $(allPage[i]).css('width');
+          pageOffset += parseFloat((widthValue.substring(0, widthValue.length-2)||allPage[i].clientWidth));
+        }
+
+        if (currentPage > 0) {
+          widthValue = $(allPage[currentPage-1]).css('width');
+          prePage = pageOffset - parseFloat((widthValue.substring(0, widthValue.length-2)||allPage[currentPage-1].clientWidth));
+        }
+
+        if (currentPage < totalPage-1) {
+          widthValue = $(allPage[currentPage+1]).css('width');
+          nextPage = pageOffset + parseFloat((widthValue.substring(0, widthValue.length-2)||allPage[currentPage+1].clientWidth));  
+        }
+      } // if..else.
+
+      target.__offsetCurrent = pageOffset;
+      target.__offsetPre = prePage;
+      target.__offsetNext = nextPage;
 
       target.__swiper_start = true;
       delete target.__swiper_start_scroll;
@@ -107,6 +166,15 @@ function mobile_onTouchmove(event) {
         target.style['-ms-transform'] = `translateX(${-offset}px)`;
         target.style['transform'] = `translate3d(${-offset}px, 0px, 0px)`;
       }
+
+      if (target.parentNode.__swiperMoving) {
+        if (offset < target.__offsetCurrent && target.__offsetPre !== null) {
+          target.parentNode.__swiperMoving( (offset-target.__offsetCurrent) / (target.__offsetCurrent-target.__offsetPre) );
+        }
+        else if (offset > target.__offsetCurrent && target.__offsetNext !== null) {
+          target.parentNode.__swiperMoving( (offset-target.__offsetCurrent) / (target.__offsetNext-target.__offsetCurrent) );
+        }
+      }
     }
   }
 
@@ -133,6 +201,9 @@ function mobile_onTouchend(event) {
         return;
 
       delete targetPage.__swiper_start;
+      delete targetPage.__offsetCurrent;
+      delete targetPage.__offsetPre;
+      delete targetPage.__offsetNext;
 
       target = target.parentNode.parentNode;
       var current = target.getAttribute('data-current');

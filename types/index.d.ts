@@ -48,6 +48,7 @@ export class dom {
   swiperTotal(): number;
   swiperTo(index: number, animation?: boolean, trigger?: boolean): dom;
   swiper(cb?: (e: any) => void): dom;
+  swiperMoving(cb: (percent:number)=>void);
 
   /** radio */
   isRadio(): boolean;

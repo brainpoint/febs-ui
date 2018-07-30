@@ -64,6 +64,21 @@ $.fn.isSwiper = function() {
   return false;
 }
 
+$.fn.swiperMoving = function(foo) {
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
+
+  for (var i = 0; i < _this.length; i++) {
+    var elem = $(_this[i]);
+
+    if (elem.hasClass('febsui-swiper')) {
+      elem[0].__swiperMoving = foo;
+    }
+  } // for.
+
+  return this;
+}
+
+
 $.fn.swiperDotColor = function(color) {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
