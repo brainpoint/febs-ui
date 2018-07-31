@@ -3258,7 +3258,7 @@ function mobile_onTouchstart(event) {
       var dataLoop = parentTarget.attr('data-loop');
       var isDataLoop = window.febs.string.isEmpty(dataLoop) ? true : 'true' == dataLoop;
 
-      target.removeClass('febsui-swiper-animation');
+      target_t.removeClass('febsui-swiper-animation');
 
       // 获取前一个和后一个page.
       var currentPage;
