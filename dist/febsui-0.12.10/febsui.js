@@ -5208,9 +5208,9 @@ $.fn.swiperPre = function (trigger) {
       index = parseInt(index) - 1;
 
       if (loop || index >= 0) {
-        elem.swiperTo(index, true, trigger);
+        elem.swiperTo(index, true, trigger, false);
       } else {
-        elem.swiperTo(0, true, trigger);
+        elem.swiperTo(0, true, trigger, false);
       }
     }
   } // for.
@@ -5237,9 +5237,9 @@ $.fn.swiperNext = function (trigger) {
       var length = elem.children('.febsui-swiper-dots').children('span').length;
 
       if (loop || index < length) {
-        elem.swiperTo(index, true, trigger);
+        elem.swiperTo(index, true, trigger, true);
       } else {
-        elem.swiperTo(length - 1 < 0 ? 0 : length - 1, true, trigger);
+        elem.swiperTo(length - 1 < 0 ? 0 : length - 1, true, trigger, true);
       }
     }
   } // for.
@@ -5278,7 +5278,11 @@ $.fn.swiperTotal = function () {
   return -1;
 };
 
-$.fn.swiperTo = function (index, animation, trigger) {
+/**
+* @desc: 
+* @param directNext: 方向是否为next. 
+*/
+$.fn.swiperTo = function (index, animation, trigger, directNext) {
 
   var _this = typeof this.length === 'undefined' ? $(this) : this;
 
@@ -5330,11 +5334,27 @@ $.fn.swiperTo = function (index, animation, trigger) {
       if (loop) {
         indexp = nindex + 1;
         if (current == 0 && nindex == dots.length - 1) {
-          indexp = 0;
-          resetPostion = true;
+          if (nindex - 1 == current) {
+            // 仅大一个数.
+            if (false === directNext) {
+              indexp = 0;
+              resetPostion = true;
+            }
+          } else {
+            indexp = 0;
+            resetPostion = true;
+          }
         } else if (current == dots.length - 1 && nindex == 0) {
-          indexp = pages.length - 1;
-          resetPostion = true;
+          if (nindex + 1 == current) {
+            // 仅大一个数.
+            if (true === directNext) {
+              indexp = pages.length - 1;
+              resetPostion = true;
+            }
+          } else {
+            indexp = pages.length - 1;
+            resetPostion = true;
+          }
         }
       } else {
         indexp = nindex;
