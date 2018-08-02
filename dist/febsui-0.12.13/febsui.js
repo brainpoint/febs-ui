@@ -3249,87 +3249,83 @@ function mobile_onTouchstart(event) {
     touch = { clientX: event.clientX, clientY: event.clientY };
   }
 
-  if (touch) {
-    if (event.target.getAttribute('data-ispage') === '1') {
-      var target = event.target.parentNode;
-      var target_t = $(target);
-      var parentTarget = target_t.parent();
+  var currentTarget = event.currentTarget;
+  if (touch && currentTarget) {
+    var target = currentTarget;
+    var target_t = $(target);
+    var parentTarget = target_t.parent();
 
-      var dataLoop = parentTarget.attr('data-loop');
-      var isDataLoop = window.febs.string.isEmpty(dataLoop) ? true : 'true' == dataLoop;
+    var dataLoop = parentTarget.attr('data-loop');
+    var isDataLoop = window.febs.string.isEmpty(dataLoop) ? true : 'true' == dataLoop;
 
-      target_t.removeClass('febsui-swiper-animation');
+    target_t.removeClass('febsui-swiper-animation');
 
-      // 获取前一个和后一个page.
-      var currentPage;
-      currentPage = Number(parentTarget.attr('data-current'));
-      var nextPage, prePage;
-      nextPage = null;
-      prePage = null;
+    // 获取前一个和后一个page.
+    var currentPage;
+    currentPage = Number(parentTarget.attr('data-current'));
+    var nextPage, prePage;
+    nextPage = null;
+    prePage = null;
 
-      var allPage = target_t.children('.febsui-swiper-page');
-      var totalPage = allPage.length;
+    var allPage = target_t.children('.febsui-swiper-page');
+    var totalPage = allPage.length;
 
-      if (isDataLoop) {
-        currentPage += 1;
-      }
-
-      if (target.__swiper_vertical) {
-        var pageOffset = 0;
-        var widthValue;
-        for (var i = 0; i < currentPage; i++) {
-          widthValue = $(allPage[i]).css('height');
-          pageOffset += parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[i].clientHeight);
-        }
-
-        if (currentPage > 0) {
-          widthValue = $(allPage[currentPage - 1]).css('height');
-          prePage = pageOffset - parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage - 1].clientHeight);
-        }
-
-        if (currentPage < totalPage - 1) {
-          widthValue = $(allPage[currentPage + 1]).css('height');
-          nextPage = pageOffset + parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage + 1].clientHeight);
-        }
-      } else {
-        var pageOffset = 0;
-        var widthValue;
-        for (var i = 0; i < currentPage; i++) {
-          widthValue = $(allPage[i]).css('width');
-          pageOffset += parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[i].clientWidth);
-        }
-
-        if (currentPage > 0) {
-          widthValue = $(allPage[currentPage - 1]).css('width');
-          prePage = pageOffset - parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage - 1].clientWidth);
-        }
-
-        if (currentPage < totalPage - 1) {
-          widthValue = $(allPage[currentPage + 1]).css('width');
-          nextPage = pageOffset + parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage + 1].clientWidth);
-        }
-      } // if..else.
-
-      target.__offsetCurrent = pageOffset;
-      target.__offsetPre = prePage;
-      target.__offsetNext = nextPage;
-
-      target.__swiper_start = true;
-      delete target.__swiper_start_scroll;
-
-      if (target.__swiper_vertical) {
-        target.__swiper_touch = touch.clientY;
-        target.__swiper_touch1 = touch.clientX;
-      } else {
-        target.__swiper_touch = touch.clientX;
-        target.__swiper_touch1 = touch.clientY;
-      }
-
-      target.__swiper_touch_at = Date.now();
-      return true;
-    } else {
-      return true;
+    if (isDataLoop) {
+      currentPage += 1;
     }
+
+    if (target.__swiper_vertical) {
+      var pageOffset = 0;
+      var widthValue;
+      for (var i = 0; i < currentPage; i++) {
+        widthValue = $(allPage[i]).css('height');
+        pageOffset += parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[i].clientHeight);
+      }
+
+      if (currentPage > 0) {
+        widthValue = $(allPage[currentPage - 1]).css('height');
+        prePage = pageOffset - parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage - 1].clientHeight);
+      }
+
+      if (currentPage < totalPage - 1) {
+        widthValue = $(allPage[currentPage + 1]).css('height');
+        nextPage = pageOffset + parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage + 1].clientHeight);
+      }
+    } else {
+      var pageOffset = 0;
+      var widthValue;
+      for (var i = 0; i < currentPage; i++) {
+        widthValue = $(allPage[i]).css('width');
+        pageOffset += parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[i].clientWidth);
+      }
+
+      if (currentPage > 0) {
+        widthValue = $(allPage[currentPage - 1]).css('width');
+        prePage = pageOffset - parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage - 1].clientWidth);
+      }
+
+      if (currentPage < totalPage - 1) {
+        widthValue = $(allPage[currentPage + 1]).css('width');
+        nextPage = pageOffset + parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage + 1].clientWidth);
+      }
+    } // if..else.
+
+    target.__offsetCurrent = pageOffset;
+    target.__offsetPre = prePage;
+    target.__offsetNext = nextPage;
+
+    target.__swiper_start = true;
+    delete target.__swiper_start_scroll;
+
+    if (target.__swiper_vertical) {
+      target.__swiper_touch = touch.clientY;
+      target.__swiper_touch1 = touch.clientX;
+    } else {
+      target.__swiper_touch = touch.clientX;
+      target.__swiper_touch1 = touch.clientY;
+    }
+
+    target.__swiper_touch_at = Date.now();
   }
 }
 function mobile_onTouchmove(event) {
@@ -3342,65 +3338,70 @@ function mobile_onTouchmove(event) {
     touch = { clientX: event.clientX, clientY: event.clientY };
   }
 
-  if (touch) {
-    var target = event.target;
-    if (target.getAttribute('data-ispage') === '1') {
-      target = target.parentNode;
-      if (!target.__swiper_start) return;
+  var currentTarget = event.currentTarget;
+  if (touch && currentTarget) {
+    var target = currentTarget;
+    if (!target.__swiper_start) return;
 
-      if (!target.__swiper_start_scroll) {
-        var span1;
-        var span2;
-
-        if (target.__swiper_vertical) {
-          span1 = Math.abs(target.__swiper_touch - touch.clientY);
-          span2 = Math.abs(target.__swiper_touch1 - touch.clientX);
-        } else {
-          span1 = Math.abs(target.__swiper_touch - touch.clientX);
-          span2 = Math.abs(target.__swiper_touch1 - touch.clientY);
-        }
-
-        if (span1 > span2) {
-          if (span1 > 30) {
-            target.__swiper_start_scroll = true;
-          }
-        } else {
-          if (span2 > 30) {
-            delete target.__swiper_start;
-          }
-        }
-
-        return;
-      }
-
-      var offset = target.getAttribute('data-offset');
-      offset = parseFloat(offset) || 0;
+    if (!target.__swiper_start_scroll) {
+      var span1;
+      var span2;
 
       if (target.__swiper_vertical) {
-        offset += target.__swiper_touch - touch.clientY;
-        target.style['-webkit-transform'] = 'translate3d(0px, ' + -offset + 'px, 0px)';
-        target.style['-moz-transform'] = 'translate3d(0px, ' + -offset + 'px, 0px)';
-        target.style['-ms-transform'] = 'translateY(' + -offset + 'px)';
-        target.style['transform'] = 'translate3d(0px, ' + -offset + 'px, 0px)';
+        // span1 = Math.abs(target.__swiper_touch-touch.clientY);
+        // span2 = Math.abs(target.__swiper_touch1-touch.clientX);
+
+        // 垂直不允许滚动.
+        target.__swiper_start_scroll = true;
+        event.preventDefault();
+        return false;
       } else {
-        offset += target.__swiper_touch - touch.clientX;
-        target.style['-webkit-transform'] = 'translate3d(' + -offset + 'px, 0px, 0px)';
-        target.style['-moz-transform'] = 'translate3d(' + -offset + 'px, 0px, 0px)';
-        target.style['-ms-transform'] = 'translateX(' + -offset + 'px)';
-        target.style['transform'] = 'translate3d(' + -offset + 'px, 0px, 0px)';
+        span1 = Math.abs(target.__swiper_touch - touch.clientX);
+        span2 = Math.abs(target.__swiper_touch1 - touch.clientY);
       }
 
-      if (target.parentNode.__swiperMoving) {
-        if (offset < target.__offsetCurrent && target.__offsetPre !== null) {
-          target.parentNode.__swiperMoving((offset - target.__offsetCurrent) / (target.__offsetCurrent - target.__offsetPre));
-        } else if (offset > target.__offsetCurrent && target.__offsetNext !== null) {
-          target.parentNode.__swiperMoving((offset - target.__offsetCurrent) / (target.__offsetNext - target.__offsetCurrent));
+      if (span1 > span2) {
+        if (span1 > 30) {
+          target.__swiper_start_scroll = true;
+          event.preventDefault();
+          return false;
+        }
+      } else {
+        if (span2 > 30) {
+          delete target.__swiper_start;
         }
       }
+      return;
     }
-  }
 
-  event.preventDefault();
+    var offset = target.getAttribute('data-offset');
+    offset = parseFloat(offset) || 0;
+
+    if (target.__swiper_vertical) {
+      offset += target.__swiper_touch - touch.clientY;
+      target.style['-webkit-transform'] = 'translate3d(0px, ' + -offset + 'px, 0px)';
+      target.style['-moz-transform'] = 'translate3d(0px, ' + -offset + 'px, 0px)';
+      target.style['-ms-transform'] = 'translateY(' + -offset + 'px)';
+      target.style['transform'] = 'translate3d(0px, ' + -offset + 'px, 0px)';
+    } else {
+      offset += target.__swiper_touch - touch.clientX;
+      target.style['-webkit-transform'] = 'translate3d(' + -offset + 'px, 0px, 0px)';
+      target.style['-moz-transform'] = 'translate3d(' + -offset + 'px, 0px, 0px)';
+      target.style['-ms-transform'] = 'translateX(' + -offset + 'px)';
+      target.style['transform'] = 'translate3d(' + -offset + 'px, 0px, 0px)';
+    }
+
+    if (target.parentNode.__swiperMoving) {
+      if (offset < target.__offsetCurrent && target.__offsetPre !== null) {
+        target.parentNode.__swiperMoving((offset - target.__offsetCurrent) / (target.__offsetCurrent - target.__offsetPre));
+      } else if (offset > target.__offsetCurrent && target.__offsetNext !== null) {
+        target.parentNode.__swiperMoving((offset - target.__offsetCurrent) / (target.__offsetNext - target.__offsetCurrent));
+      }
+    }
+
+    event.preventDefault();
+    return false;
+  }
 }
 function mobile_onTouchend(event) {
   event = event || window.event;
@@ -3412,46 +3413,46 @@ function mobile_onTouchend(event) {
     touch = { clientX: event.clientX, clientY: event.clientY };
   }
 
-  if (touch) {
-    var target = event.target;
-    if (target.getAttribute('data-ispage') === '1') {
-      $(target.parentNode).addClass('febsui-swiper-animation');
+  var currentTarget = event.currentTarget;
+  if (touch && currentTarget) {
+    var target = currentTarget;
+    $(target).addClass('febsui-swiper-animation');
 
-      var targetPage = target.parentNode;
-      if (!targetPage.__swiper_start) return;
+    var targetPage = target;
+    if (!targetPage.__swiper_start) return;
 
-      delete targetPage.__swiper_start;
-      delete targetPage.__offsetCurrent;
-      delete targetPage.__offsetPre;
-      delete targetPage.__offsetNext;
+    delete targetPage.__swiper_start;
+    delete targetPage.__offsetCurrent;
+    delete targetPage.__offsetPre;
+    delete targetPage.__offsetNext;
 
-      target = target.parentNode.parentNode;
-      var current = target.getAttribute('data-current');
+    target = target.parentNode;
+    var current = target.getAttribute('data-current');
 
-      var swipeSpan = 0;
-      if (targetPage.__swiper_vertical) {
-        swipeSpan = Math.abs(targetPage.__swiper_touch - touch.clientY);
+    var swipeSpan = 0;
+    if (targetPage.__swiper_vertical) {
+      swipeSpan = Math.abs(targetPage.__swiper_touch - touch.clientY);
+    } else {
+      swipeSpan = Math.abs(targetPage.__swiper_touch - touch.clientX);
+    }
+
+    var swipe = swipeSpan > 140 || Date.now() - targetPage.__swiper_touch_at < 200 && swipeSpan > 30;
+
+    if (targetPage.__swiper_vertical) {
+      if (swipe || swipeSpan >= target.offsetHeight / 2) {
+        if (targetPage.__swiper_touch > touch.clientY) $(target).swiperNext(true);else $(target).swiperPre(true);
       } else {
-        swipeSpan = Math.abs(targetPage.__swiper_touch - touch.clientX);
+        $(target).swiperTo(current, true, true);
       }
-
-      var swipe = swipeSpan > 140 || Date.now() - targetPage.__swiper_touch_at < 200 && swipeSpan > 30;
-
-      if (targetPage.__swiper_vertical) {
-        if (swipe || swipeSpan >= target.offsetHeight / 2) {
-          if (targetPage.__swiper_touch > touch.clientY) $(target).swiperNext(true);else $(target).swiperPre(true);
-        } else {
-          $(target).swiperTo(current, true, true);
-        }
+    } else {
+      if (swipe || swipeSpan >= target.offsetWidth / 2) {
+        if (targetPage.__swiper_touch > touch.clientX) $(target).swiperNext(true);else $(target).swiperPre(true);
       } else {
-        if (swipe || swipeSpan >= target.offsetWidth / 2) {
-          if (targetPage.__swiper_touch > touch.clientX) $(target).swiperNext(true);else $(target).swiperPre(true);
-        } else {
-          $(target).swiperTo(current, true, true);
-        }
+        $(target).swiperTo(current, true, true);
       }
     }
   }
+  return;
 }
 var mobile_onTouchcancel = mobile_onTouchend;
 
@@ -3514,10 +3515,10 @@ function swiper_init_event(dom) {
       pages.removeEventListener(nameend, mobile_onTouchend);
       pages.removeEventListener(namecancel, mobile_onTouchcancel);
 
-      pages.addEventListener(namestart, mobile_onTouchstart, true);
-      pages.addEventListener(namemove, mobile_onTouchmove, true);
-      pages.addEventListener(nameend, mobile_onTouchend, true);
-      pages.addEventListener(namecancel, mobile_onTouchcancel, true);
+      pages.addEventListener(namestart, mobile_onTouchstart);
+      pages.addEventListener(namemove, mobile_onTouchmove);
+      pages.addEventListener(nameend, mobile_onTouchend);
+      pages.addEventListener(namecancel, mobile_onTouchcancel);
     } else {
       pages.detachEvent('on' + namestart, mobile_onTouchstart);
       pages.detachEvent('on' + namemove, mobile_onTouchmove);
@@ -3569,7 +3570,7 @@ function swiper_init(elem) {
 
       for (var j = 0; j < domChildren.length; j++) {
         if ($(domChildren[j]).hasClass('febsui-swiper-page')) {
-          $(domChildren[j]).attr('data-ispage', '1');
+          // $(domChildren[j]).attr('data-ispage', '1');
           if (!page1) {
             page1 = domChildren[j];
           }
@@ -3619,9 +3620,10 @@ function swiper_init(elem) {
 
       if (dom.hasClass('febsui-swiper-vertical')) {
         pages[0].__swiper_vertical = true;
+        pages.css('touch-action', 'pan-y');
         dom.css('touch-action', 'pan-y');
       } else {
-        dom.css('touch-action', 'pan-x');
+        // dom.css('touch-action', 'pan-x');
       }
 
       setTimeout(function () {
