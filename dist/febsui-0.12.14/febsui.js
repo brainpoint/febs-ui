@@ -3353,6 +3353,9 @@ function mobile_onTouchmove(event) {
 
         // 垂直不允许滚动.
         target.__swiper_start_scroll = true;
+
+        event.cancelBubble = true;
+        event.stopPropagation();
         event.preventDefault();
         return false;
       } else {
@@ -3363,6 +3366,9 @@ function mobile_onTouchmove(event) {
       if (span1 > span2) {
         if (span1 > 30) {
           target.__swiper_start_scroll = true;
+
+          event.cancelBubble = true;
+          event.stopPropagation();
           event.preventDefault();
           return false;
         }
@@ -3399,6 +3405,8 @@ function mobile_onTouchmove(event) {
       }
     }
 
+    event.cancelBubble = true;
+    event.stopPropagation();
     event.preventDefault();
     return false;
   }
