@@ -125,8 +125,6 @@ $.fn.swiperPre = function(trigger) {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
 
-  index = parseInt(index);
-
   for (var i = 0; i < _this.length; i++) {
     var elem = $(_this[i]);
 
@@ -135,7 +133,7 @@ $.fn.swiperPre = function(trigger) {
       var loop = elem.attr('data-loop');
       loop = window.febs.string.isEmpty(loop) ? true : ('true' == loop);
 
-      index = parseInt(index) - 1;
+      index = (parseInt(index)||0) - 1;
 
       if (loop || index >= 0) {
         elem.swiperTo(index, true, trigger, false);
@@ -153,8 +151,6 @@ $.fn.swiperNext = function(trigger) {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
 
-  index = parseInt(index);
-
   for (var i = 0; i < _this.length; i++) {
     var elem = $(_this[i]);
 
@@ -163,7 +159,7 @@ $.fn.swiperNext = function(trigger) {
       var loop = elem.attr('data-loop');
       loop = window.febs.string.isEmpty(loop) ? true : ('true' == loop);
 
-      index = parseInt(index) + 1;
+      index = (parseInt(index)||0) + 1;
 
       var length = elem.children('.febsui-swiper-dots').children('span').length;
 

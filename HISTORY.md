@@ -39,3 +39,8 @@
 0.12.0
 =================
   - add black theme.
+
+0.12.15
+=================
+  - enhancment swiper touch event.
+  

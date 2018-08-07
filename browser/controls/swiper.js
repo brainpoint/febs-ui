@@ -249,6 +249,11 @@ function mobile_onTouchend(event) {
         $(target).swiperTo(current, true, true);
       }
     }
+
+    event.cancelBubble = true;
+    event.stopPropagation();
+    event.preventDefault();
+    return false;
   }
   return;
 }
