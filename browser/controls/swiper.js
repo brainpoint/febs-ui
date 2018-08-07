@@ -353,6 +353,13 @@ function swiper_init(elem) {
     var dataShowDots = dom.attr('data-dots');
     var dataLoop = dom.attr('data-loop');
     var dataDotColor = dom.attr('data-dot-color');
+    var dataAlign = dom.attr('data-align');
+
+    if (!window.febs.string.isEmpty(dataAlign)) {
+      if (dataAlign != 'center' && parseInt(dataAlign).toString() != dataAlign) {
+        throw new Error('swiper data-align only can be "center" or integer');
+      }
+    }
 
     dataShowDots = window.febs.string.isEmpty(dataShowDots) ? true : ('true' == dataShowDots);
     dataLoop = window.febs.string.isEmpty(dataLoop) ? true : ('true' == dataLoop);

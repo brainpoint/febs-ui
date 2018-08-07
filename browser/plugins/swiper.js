@@ -237,6 +237,15 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
     if (elem.hasClass('febsui-swiper')) {
     // if (_this[0].nodeName.toLowerCase() == 'swiper') {
 
+      // 偏移位置.
+      var align = elem.attr('data-align');
+      if (window.febs.string.isEmpty(align)) {
+        align = 'center';
+      }
+      if (align != 'center') {
+        align = parseInt(align);
+      }
+
       var current = parseInt(elem.attr('data-current')) || 0;
       var loop = elem.attr('data-loop');
       loop = window.febs.string.isEmpty(loop) ? true : ('true' == loop);
@@ -316,7 +325,11 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
         });
 
         if (directionVertical) {
-          offset -= (elem[0].clientHeight - pages[indexp].clientHeight) / 2;
+          if (align == 'center') {
+            offset -= (elem[0].clientHeight - pages[indexp].clientHeight) / 2;
+          } else {
+            offset -= align;  
+          }
           ie9_animation_obj[ie9_animation_obj.length-1].offset = -offset;
           ie9_animation_obj[ie9_animation_obj.length-1].vertical = true;
 
@@ -329,7 +342,11 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
           ie9_animation_obj[ie9_animation_obj.length-1].offsetCur = offsetCur;
         }
         else {
-          offset -= (elem[0].clientWidth - pages[indexp].clientWidth) / 2;
+          if (align == 'center') {
+            offset -= (elem[0].clientWidth - pages[indexp].clientWidth) / 2;
+          } else {
+            offset -= align;  
+          }
           ie9_animation_obj[ie9_animation_obj.length-1].offset = -offset;
           ie9_animation_obj[ie9_animation_obj.length-1].vertical = false;
 
@@ -344,14 +361,22 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
       }
       else {
         if (directionVertical) {
-          offset -= (elem[0].clientHeight - pages[indexp].clientHeight) / 2.0;
+          if (align == 'center') {
+            offset -= (elem[0].clientHeight - pages[indexp].clientHeight) / 2.0;
+          } else {
+            offset -= align;
+          }
           pagesContainer.css('-webkit-transform', `translate3d(0px, ${-offset}px, 0px)`);
           pagesContainer.css('-moz-transform', `translate3d(0px, ${-offset}px, 0px)`);
           pagesContainer.css('-ms-transform', `translateY(${-offset}px)`);
           pagesContainer.css('transform', `translate3d(0px, ${-offset}px, 0px)`);
         }
         else {
-          offset -= (elem[0].clientWidth - pages[indexp].clientWidth) / 2.0;
+          if (align == 'center') {
+            offset -= (elem[0].clientWidth - pages[indexp].clientWidth) / 2.0;
+          } else {
+            offset -= align;
+          }
           pagesContainer.css('-webkit-transform', `translate3d(${-offset}px, 0px, 0px)`);
           pagesContainer.css('-moz-transform', `translate3d(${-offset}px, 0px, 0px)`);
           pagesContainer.css('-ms-transform', `translateX(${-offset}px)`);

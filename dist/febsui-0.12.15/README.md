@@ -598,6 +598,7 @@ $('input[name="radioGroup"]').on('change', function(){});
 | data-loop |  表明是否允许循环显示. (默认 true)  | 允许的值: true, false  |
 | data-dot-color |  指示器颜色  | 例如: #ffffff  |
 | data-auto |  自动切换动画; 如果存在则会在指定时间内自动切换动画. 其他非数值值将默认为 7000; 改变此属性后, 动画速度会改变, 但不可从0(禁止)变为动画.  | 例如: 3000  |
+| data-align | 指明当前page在页面中的对齐方式, (默认 center) | 允许的值: 'center', 偏移像素数值 |
 
 
 方法
