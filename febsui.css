@@ -1794,6 +1794,8 @@ button:disabled:active,
   -o-transform: translate3d(0px, 0px, 0px);
   transform: translate3d(0px, 0px, 0px);
   touch-action: pan-x pan-y manipulation; }
+  .febsui-swiper .febsui-swiper-pages .febsui-swiper-page {
+    transition: width 0.2s, height 0.2s; }
 
 .febsui-swiper .febsui-swiper-animation {
   transition: all 0.25s cubic-bezier(0.4, 0.7, 0.5, 1); }

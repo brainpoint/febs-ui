@@ -44,3 +44,7 @@
 =================
   - enhancment swiper touch event.
   
+0.12.17
+=================
+  - enhancment: swiper 支持旋转后resize以及小幅page滑动.
+  

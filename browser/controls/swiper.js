@@ -81,6 +81,15 @@ function mobile_onTouchstart(event) {
       }
     } // if..else.
 
+    // 记录前后的宽高.
+    if (target.__swiper_vertical) {
+      target.__swiper_currentSize = allPage[currentPage].clientHeight;
+    } else {
+      target.__swiper_currentSize = allPage[currentPage].clientWidth;
+    }
+
+    target.__swiper_currentPage = currentPage;
+    target.__swiper_totalPage = totalPage;
     target.__offsetCurrent = pageOffset;
     target.__offsetPre = prePage;
     target.__offsetNext = nextPage;
@@ -158,15 +167,31 @@ function mobile_onTouchmove(event) {
     var offset = target.getAttribute('data-offset');
     offset = parseFloat(offset) || 0;
     
+    var off;
     if (target.__swiper_vertical) {
-      offset += (target.__swiper_touch-touch.clientY);
+      off = (target.__swiper_touch-touch.clientY);
+    }
+    else {
+      off = (target.__swiper_touch-touch.clientX);
+    }
+
+    // 超出小幅移动.
+    if (!target.__swiper_loop) {
+      if (off <=0 && target.__swiper_currentPage == 0 || off>=0 && target.__swiper_currentPage >= target.__swiper_totalPage-1)
+      {
+        off /= 3;
+      }
+    }
+
+    if (target.__swiper_vertical) {
+      offset += off;
       target.style['-webkit-transform'] = `translate3d(0px, ${-offset}px, 0px)`;
       target.style['-moz-transform'] = `translate3d(0px, ${-offset}px, 0px)`;
       target.style['-ms-transform'] = `translateY(${-offset}px)`;
       target.style['transform'] = `translate3d(0px, ${-offset}px, 0px)`;
     }
     else {
-      offset += (target.__swiper_touch-touch.clientX);
+      offset += off;
       target.style['-webkit-transform'] = `translate3d(${-offset}px, 0px, 0px)`;
       target.style['-moz-transform'] = `translate3d(${-offset}px, 0px, 0px)`;
       target.style['-ms-transform'] = `translateX(${-offset}px)`;
@@ -228,7 +253,7 @@ function mobile_onTouchend(event) {
     var swipe = swipeSpan > 140 || Date.now()-targetPage.__swiper_touch_at < 200 && swipeSpan > 30;
 
     if (targetPage.__swiper_vertical) {
-      if (swipe || swipeSpan >= target.offsetHeight/2) {
+      if (swipe || swipeSpan >= targetPage.__swiper_currentSize/2) {
         if (targetPage.__swiper_touch>touch.clientY)
           $(target).swiperNext(true);
         else
@@ -239,7 +264,7 @@ function mobile_onTouchend(event) {
       }      
     }
     else {
-      if (swipe || swipeSpan >= target.offsetWidth/2) {
+      if (swipe || swipeSpan >= targetPage.__swiper_currentSize/2) {
         if (targetPage.__swiper_touch>touch.clientX)
           $(target).swiperNext(true);
         else
@@ -287,7 +312,10 @@ function swiper_init_event(dom) {
   dataAuto = dataAuto === 0 ? 0 : (dataAuto ? dataAuto : default_swiper_auto);
 
   if (dataAuto > 0) {
-    setTimeout(swiper_animation.bind(dom), dataAuto);
+    if (!dom.hasClass('febsui-swiper-animate-timer')) {
+      setTimeout(swiper_animation.bind(dom), dataAuto);
+      dom.addClass('febsui-swiper-animate-timer');
+    }
   }
 
   // 触发一次事件.
@@ -348,6 +376,12 @@ function swiper_init(elem) {
       continue;
     }
 
+    if (dom.hasClass('febsui-swiper-inited')) {
+      continue;
+    }
+
+    dom.addClass('febsui-swiper-inited');
+
     // attri data.
     var dataActiveIndex = parseInt(dom.attr('data-current')) || 0;
     var dataShowDots = dom.attr('data-dots');
@@ -365,7 +399,7 @@ function swiper_init(elem) {
     dataLoop = window.febs.string.isEmpty(dataLoop) ? true : ('true' == dataLoop);
 
     var domChildren = dom.children();
-    if (!domChildren.hasClass('febsui-swiper-pages')) {
+    {
 
       // pages.
       var pages;
@@ -373,7 +407,16 @@ function swiper_init(elem) {
       var page1;
       var page0;
 
-      pages = $("<div class='febsui-swiper-pages'></div>");
+      var needDealLoopPage = true;
+
+      if (domChildren.hasClass('febsui-swiper-pages')) {
+        pages = $(domChildren[0]);
+        domChildren = domChildren.children();
+        needDealLoopPage = false;
+      } else {
+        pages = $("<div class='febsui-swiper-pages'></div>");
+      }
+
       pagesCount = 0;
       page1 = null;
       page0 = null;
@@ -385,64 +428,108 @@ function swiper_init(elem) {
             page1 = domChildren[j];
           }
           page0 = domChildren[j];
+          var page0Obj = $(page0);
           // 解决小数问题.
-          $(page0).css('height', dom[0].clientHeight+'px');
-          $(page0).css('width', dom[0].clientWidth+'px');
-          pages.append(domChildren[j]);
+          var pageSize;
+          pageSize = page0Obj.attr('data-size-height');
+          if (!window.febs.string.isEmpty(pageSize)) {
+            page0Obj.css('height', pageSize);
+          }
+          else {
+            if (!needDealLoopPage) {
+              page0Obj.css('height', dom[0].clientHeight+'px');
+            } else {
+              var pageCssHeight = page0Obj.css('height');
+              if (window.febs.string.isEmpty(pageCssHeight)) {
+                page0Obj.css('height', dom[0].clientHeight+'px');
+              } else {
+                page0Obj.attr('data-size-height', pageCssHeight);
+              }
+            }
+          }
+          
+          pageSize = page0Obj.attr('data-size-width');
+          if (!window.febs.string.isEmpty(pageSize)) {
+            page0Obj.css('width', pageSize);
+          }
+          else {
+            if (!needDealLoopPage) {
+              page0Obj.css('width', dom[0].clientWidth+'px');
+            } else {
+              var pageCssWidth = page0Obj.css('width');
+              if (window.febs.string.isEmpty(pageCssWidth)) {
+                page0Obj.css('width', dom[0].clientWidth+'px');
+              } else {
+                page0Obj.attr('data-size-width', pageCssWidth);
+              }
+            }
+          }
+
+          if (needDealLoopPage) {
+            pages.append(domChildren[j]);
+          }
           pagesCount ++;
         }
       }
 
+      if (!needDealLoopPage && dataLoop) {
+        pagesCount -= 2;
+      }
+
       // loop.
-      if (pagesCount > 1 && dataLoop) {
+      if (needDealLoopPage && pagesCount > 1 && dataLoop) {
         pages.prepend(page0.cloneNode(true));
         pages.append(page1.cloneNode(true));
       }
       
-      // dots.
-      if (pagesCount == 0) {
-        dataActiveIndex = 0;
-      }
-      else {
-        dataActiveIndex %= pagesCount;
-        dataActiveIndex = dataActiveIndex < 0 ? pagesCount+dataActiveIndex : dataActiveIndex
-      }
-
-      var dots = dataShowDots ? ("<div class='febsui-swiper-dots'></div>") : ("<div class='febsui-swiper-dots febsui-invisible'></div>");
-      dots = $(dots);
-
-      for (var j = 0; j < pagesCount; j++) {
-        if (j == dataActiveIndex) {
-          dots.append('<span class="febsui-swiper-dot-active"></span>');
+      if (needDealLoopPage) {
+        // dots.
+        if (pagesCount == 0) {
+          dataActiveIndex = 0;
         }
         else {
-          dots.append('<span></span>');
+          dataActiveIndex %= pagesCount;
+          dataActiveIndex = dataActiveIndex < 0 ? pagesCount+dataActiveIndex : dataActiveIndex
         }
-      }
 
-      if (dataDotColor) {
-        dots.children('span').css('background-color', dataDotColor);
-      }
+        var dots = dataShowDots ? ("<div class='febsui-swiper-dots'></div>") : ("<div class='febsui-swiper-dots febsui-invisible'></div>");
+        dots = $(dots);
 
-      dom.html('');
-      dom.append(pages);
-      dom.append(dots);
-      dom.attr('data-current', 0);
-      dom.swiperTo(dataActiveIndex, false);
+        for (var j = 0; j < pagesCount; j++) {
+          if (j == dataActiveIndex) {
+            dots.append('<span class="febsui-swiper-dot-active"></span>');
+          }
+          else {
+            dots.append('<span></span>');
+          }
+        }
 
-      if (dom.hasClass('febsui-swiper-vertical')) {
-        pages[0].__swiper_vertical = true;
-        pages.css('touch-action', 'pan-y');
-        dom.css('touch-action', 'pan-y');
-      } else {
-        // dom.css('touch-action', 'pan-x');
-      }
+        if (dataDotColor) {
+          dots.children('span').css('background-color', dataDotColor);
+        }
 
-      setTimeout(function(){
-        this.addClass('febsui-swiper-animation');
-      }.bind(pages), 10);
+        dom.html('');
+        dom.append(pages);
+        dom.append(dots);
+        dom.attr('data-current', 0);
+        dom.swiperTo(dataActiveIndex, false);
 
-      swiper_init_event(dom);
+        if (dom.hasClass('febsui-swiper-vertical')) {
+          pages[0].__swiper_vertical = true;
+          pages.css('touch-action', 'pan-y');
+          dom.css('touch-action', 'pan-y');
+        } else {
+          // dom.css('touch-action', 'pan-x');
+        }
+
+        pages[0].__swiper_loop = !!dataLoop;
+
+        setTimeout(function(){
+          this.addClass('febsui-swiper-animation');
+        }.bind(pages), 10);
+
+        swiper_init_event(dom);
+      } // if.
     }
   } // for.
 }

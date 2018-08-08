@@ -263,7 +263,7 @@ exports.f = __webpack_require__(3) ? Object.defineProperty : function defineProp
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(57);
+var IObject = __webpack_require__(58);
 var defined = __webpack_require__(16);
 module.exports = function (it) {
   return IObject(defined(it));
@@ -387,11 +387,11 @@ module.exports = {
 
 exports.__esModule = true;
 
-var _iterator = __webpack_require__(47);
+var _iterator = __webpack_require__(48);
 
 var _iterator2 = _interopRequireDefault(_iterator);
 
-var _symbol = __webpack_require__(46);
+var _symbol = __webpack_require__(47);
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
@@ -557,7 +557,7 @@ exports.f = __webpack_require__(7);
 
 var _typeof = __webpack_require__(15)['default'];
 
-var resizeDialog = __webpack_require__(42).resizeDialog;
+var resizeDialog = __webpack_require__(43).resizeDialog;
 var maskPrevent = __webpack_require__(0).maskPreventEvent;
 
 exports.hide = hide;
@@ -968,7 +968,7 @@ module.exports = function (it) {
 
 var global = __webpack_require__(1);
 var core = __webpack_require__(10);
-var ctx = __webpack_require__(54);
+var ctx = __webpack_require__(55);
 var hide = __webpack_require__(4);
 var has = __webpack_require__(2);
 var PROTOTYPE = 'prototype';
@@ -1050,9 +1050,9 @@ var $export = __webpack_require__(32);
 var redefine = __webpack_require__(39);
 var hide = __webpack_require__(4);
 var Iterators = __webpack_require__(18);
-var $iterCreate = __webpack_require__(59);
+var $iterCreate = __webpack_require__(60);
 var setToStringTag = __webpack_require__(22);
-var getPrototypeOf = __webpack_require__(65);
+var getPrototypeOf = __webpack_require__(66);
 var ITERATOR = __webpack_require__(7)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
@@ -1121,7 +1121,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject = __webpack_require__(9);
-var dPs = __webpack_require__(62);
+var dPs = __webpack_require__(63);
 var enumBugKeys = __webpack_require__(17);
 var IE_PROTO = __webpack_require__(23)('IE_PROTO');
 var Empty = function () { /* empty */ };
@@ -1136,7 +1136,7 @@ var createDict = function () {
   var gt = '>';
   var iframeDocument;
   iframe.style.display = 'none';
-  __webpack_require__(56).appendChild(iframe);
+  __webpack_require__(57).appendChild(iframe);
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
@@ -1188,7 +1188,7 @@ exports.f = Object.getOwnPropertySymbols;
 
 var has = __webpack_require__(2);
 var toIObject = __webpack_require__(6);
-var arrayIndexOf = __webpack_require__(53)(false);
+var arrayIndexOf = __webpack_require__(54)(false);
 var IE_PROTO = __webpack_require__(23)('IE_PROTO');
 
 module.exports = function (object, names) {
@@ -1429,6 +1429,521 @@ exports.spin_init = function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+var touchEventPrevent = __webpack_require__(0).mobile_preventTouchEvent;
+
+exports.swiper_init = swiper_init;
+exports.swiper_init_event = swiper_init_event;
+
+var default_swiper_auto = 7000;
+
+//
+// event.
+function mobile_onTouchstart(event) {
+  event = event || window.event;
+
+  var touch;
+  if (event.touches) {
+    touch = event.touches[0];
+  } else {
+    touch = { clientX: event.clientX, clientY: event.clientY };
+  }
+
+  var currentTarget = event.currentTarget;
+  if (touch && currentTarget) {
+    var target = currentTarget;
+    var target_t = $(target);
+    var parentTarget = target_t.parent();
+
+    var dataLoop = parentTarget.attr('data-loop');
+    var isDataLoop = window.febs.string.isEmpty(dataLoop) ? true : 'true' == dataLoop;
+
+    target_t.removeClass('febsui-swiper-animation');
+
+    // 获取前一个和后一个page.
+    var currentPage;
+    currentPage = Number(parentTarget.attr('data-current'));
+    var nextPage, prePage;
+    nextPage = null;
+    prePage = null;
+
+    var allPage = target_t.children('.febsui-swiper-page');
+    var totalPage = allPage.length;
+
+    if (isDataLoop) {
+      currentPage += 1;
+    }
+
+    if (target.__swiper_vertical) {
+      var pageOffset = 0;
+      var widthValue;
+      for (var i = 0; i < currentPage; i++) {
+        widthValue = $(allPage[i]).css('height');
+        pageOffset += parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[i].clientHeight);
+      }
+
+      if (currentPage > 0) {
+        widthValue = $(allPage[currentPage - 1]).css('height');
+        prePage = pageOffset - parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage - 1].clientHeight);
+      }
+
+      if (currentPage < totalPage - 1) {
+        widthValue = $(allPage[currentPage + 1]).css('height');
+        nextPage = pageOffset + parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage + 1].clientHeight);
+      }
+    } else {
+      var pageOffset = 0;
+      var widthValue;
+      for (var i = 0; i < currentPage; i++) {
+        widthValue = $(allPage[i]).css('width');
+        pageOffset += parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[i].clientWidth);
+      }
+
+      if (currentPage > 0) {
+        widthValue = $(allPage[currentPage - 1]).css('width');
+        prePage = pageOffset - parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage - 1].clientWidth);
+      }
+
+      if (currentPage < totalPage - 1) {
+        widthValue = $(allPage[currentPage + 1]).css('width');
+        nextPage = pageOffset + parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage + 1].clientWidth);
+      }
+    } // if..else.
+
+    // 记录前后的宽高.
+    if (target.__swiper_vertical) {
+      target.__swiper_currentSize = allPage[currentPage].clientHeight;
+    } else {
+      target.__swiper_currentSize = allPage[currentPage].clientWidth;
+    }
+
+    target.__swiper_currentPage = currentPage;
+    target.__swiper_totalPage = totalPage;
+    target.__offsetCurrent = pageOffset;
+    target.__offsetPre = prePage;
+    target.__offsetNext = nextPage;
+
+    target.__swiper_start = true;
+    delete target.__swiper_start_scroll;
+
+    if (target.__swiper_vertical) {
+      target.__swiper_touch = touch.clientY;
+      target.__swiper_touch1 = touch.clientX;
+    } else {
+      target.__swiper_touch = touch.clientX;
+      target.__swiper_touch1 = touch.clientY;
+    }
+
+    target.__swiper_touch_at = Date.now();
+  }
+}
+function mobile_onTouchmove(event) {
+  event = event || window.event;
+
+  var touch;
+  if (event.touches) {
+    touch = event.touches[0];
+  } else {
+    touch = { clientX: event.clientX, clientY: event.clientY };
+  }
+
+  var currentTarget = event.currentTarget;
+  if (touch && currentTarget) {
+    var target = currentTarget;
+    if (!target.__swiper_start) return;
+
+    if (!target.__swiper_start_scroll) {
+      var span1;
+      var span2;
+
+      if (target.__swiper_vertical) {
+        // span1 = Math.abs(target.__swiper_touch-touch.clientY);
+        // span2 = Math.abs(target.__swiper_touch1-touch.clientX);
+
+        // 垂直不允许滚动.
+        target.__swiper_start_scroll = true;
+
+        event.cancelBubble = true;
+        event.stopPropagation();
+        event.preventDefault();
+        return false;
+      } else {
+        span1 = Math.abs(target.__swiper_touch - touch.clientX);
+        span2 = Math.abs(target.__swiper_touch1 - touch.clientY);
+      }
+
+      if (span1 > span2) {
+        if (span1 > 30) {
+          target.__swiper_start_scroll = true;
+
+          event.cancelBubble = true;
+          event.stopPropagation();
+          event.preventDefault();
+          return false;
+        }
+      } else {
+        if (span2 > 30) {
+          delete target.__swiper_start;
+        }
+      }
+      return;
+    }
+
+    var offset = target.getAttribute('data-offset');
+    offset = parseFloat(offset) || 0;
+
+    var off;
+    if (target.__swiper_vertical) {
+      off = target.__swiper_touch - touch.clientY;
+    } else {
+      off = target.__swiper_touch - touch.clientX;
+    }
+
+    // 超出小幅移动.
+    if (!target.__swiper_loop) {
+      if (off <= 0 && target.__swiper_currentPage == 0 || off >= 0 && target.__swiper_currentPage >= target.__swiper_totalPage - 1) {
+        off /= 3;
+      }
+    }
+
+    if (target.__swiper_vertical) {
+      offset += off;
+      target.style['-webkit-transform'] = 'translate3d(0px, ' + -offset + 'px, 0px)';
+      target.style['-moz-transform'] = 'translate3d(0px, ' + -offset + 'px, 0px)';
+      target.style['-ms-transform'] = 'translateY(' + -offset + 'px)';
+      target.style['transform'] = 'translate3d(0px, ' + -offset + 'px, 0px)';
+    } else {
+      offset += off;
+      target.style['-webkit-transform'] = 'translate3d(' + -offset + 'px, 0px, 0px)';
+      target.style['-moz-transform'] = 'translate3d(' + -offset + 'px, 0px, 0px)';
+      target.style['-ms-transform'] = 'translateX(' + -offset + 'px)';
+      target.style['transform'] = 'translate3d(' + -offset + 'px, 0px, 0px)';
+    }
+
+    if (target.parentNode.__swiperMoving) {
+      if (offset < target.__offsetCurrent && target.__offsetPre !== null) {
+        target.parentNode.__swiperMoving((offset - target.__offsetCurrent) / (target.__offsetCurrent - target.__offsetPre));
+      } else if (offset > target.__offsetCurrent && target.__offsetNext !== null) {
+        target.parentNode.__swiperMoving((offset - target.__offsetCurrent) / (target.__offsetNext - target.__offsetCurrent));
+      }
+    }
+
+    event.cancelBubble = true;
+    event.stopPropagation();
+    event.preventDefault();
+    return false;
+  }
+}
+function mobile_onTouchend(event) {
+  event = event || window.event;
+
+  var touch;
+  if (event.changedTouches) {
+    touch = event.changedTouches[0];
+  } else {
+    touch = { clientX: event.clientX, clientY: event.clientY };
+  }
+
+  var currentTarget = event.currentTarget;
+  if (touch && currentTarget) {
+    var target = currentTarget;
+    $(target).addClass('febsui-swiper-animation');
+
+    var targetPage = target;
+    if (!targetPage.__swiper_start) return;
+
+    delete targetPage.__swiper_start;
+    delete targetPage.__offsetCurrent;
+    delete targetPage.__offsetPre;
+    delete targetPage.__offsetNext;
+
+    target = target.parentNode;
+    var current = target.getAttribute('data-current');
+
+    var swipeSpan = 0;
+    if (targetPage.__swiper_vertical) {
+      swipeSpan = Math.abs(targetPage.__swiper_touch - touch.clientY);
+    } else {
+      swipeSpan = Math.abs(targetPage.__swiper_touch - touch.clientX);
+    }
+
+    var swipe = swipeSpan > 140 || Date.now() - targetPage.__swiper_touch_at < 200 && swipeSpan > 30;
+
+    if (targetPage.__swiper_vertical) {
+      if (swipe || swipeSpan >= targetPage.__swiper_currentSize / 2) {
+        if (targetPage.__swiper_touch > touch.clientY) $(target).swiperNext(true);else $(target).swiperPre(true);
+      } else {
+        $(target).swiperTo(current, true, true);
+      }
+    } else {
+      if (swipe || swipeSpan >= targetPage.__swiper_currentSize / 2) {
+        if (targetPage.__swiper_touch > touch.clientX) $(target).swiperNext(true);else $(target).swiperPre(true);
+      } else {
+        $(target).swiperTo(current, true, true);
+      }
+    }
+
+    event.cancelBubble = true;
+    event.stopPropagation();
+    event.preventDefault();
+    return false;
+  }
+  return;
+}
+var mobile_onTouchcancel = mobile_onTouchend;
+
+function swiper_animation() {
+  if (this.children('.febsui-swiper-pages')[0].__swiper_start !== true) {
+    this.swiperNext(true);
+  }
+
+  var dataAutotick = this.attr('data-auto');
+  dataAutotick = window.febs.string.isEmpty(dataAutotick) ? 0 : parseInt(dataAutotick);
+  dataAutotick = dataAutotick === 0 ? 0 : dataAutotick ? dataAutotick : default_swiper_auto;
+  if (dataAutotick > 0 && this.isVisible()) {
+    // un visible can't do next.
+    setTimeout(swiper_animation.bind(this), dataAutotick);
+  }
+}
+
+/**
+* @desc: 对元素注册初始化事件.
+*/
+function swiper_init_event(dom) {
+
+  if (!dom) return;
+
+  var dataAuto = dom.attr('data-auto');
+
+  dataAuto = window.febs.string.isEmpty(dataAuto) ? 0 : parseInt(dataAuto);
+  dataAuto = dataAuto === 0 ? 0 : dataAuto ? dataAuto : default_swiper_auto;
+
+  if (dataAuto > 0) {
+    if (!dom.hasClass('febsui-swiper-animate-timer')) {
+      setTimeout(swiper_animation.bind(dom), dataAuto);
+      dom.addClass('febsui-swiper-animate-timer');
+    }
+  }
+
+  // 触发一次事件.
+  dom.trigger('swiper');
+
+  //
+  // event.
+  var pages = dom.children('.febsui-swiper-pages')[0];
+  if (pages) {
+    var namestart = void 0,
+        namemove = void 0,
+        nameend = void 0,
+        namecancel = void 0;
+    if (typeof pages.ontouchstart !== 'undefined') {
+      namestart = 'touchstart';
+      namemove = 'touchmove';
+      nameend = 'touchend';
+      namecancel = 'touchcancel';
+    } else {
+      namestart = 'mousedown';
+      namemove = 'mousemove';
+      nameend = 'mouseup';
+      namecancel = 'mouseout';
+    }
+
+    if (pages.addEventListener) {
+      pages.removeEventListener(namestart, mobile_onTouchstart);
+      pages.removeEventListener(namemove, mobile_onTouchmove);
+      pages.removeEventListener(nameend, mobile_onTouchend);
+      pages.removeEventListener(namecancel, mobile_onTouchcancel);
+
+      pages.addEventListener(namestart, mobile_onTouchstart);
+      pages.addEventListener(namemove, mobile_onTouchmove);
+      pages.addEventListener(nameend, mobile_onTouchend);
+      pages.addEventListener(namecancel, mobile_onTouchcancel);
+    } else {
+      pages.detachEvent('on' + namestart, mobile_onTouchstart);
+      pages.detachEvent('on' + namemove, mobile_onTouchmove);
+      pages.detachEvent('on' + nameend, mobile_onTouchend);
+      pages.detachEvent('on' + namecancel, mobile_onTouchcancel);
+
+      pages.attachEvent('on' + namestart, mobile_onTouchstart);
+      pages.attachEvent('on' + namemove, mobile_onTouchmove);
+      pages.attachEvent('on' + nameend, mobile_onTouchend);
+      pages.attachEvent('on' + namecancel, mobile_onTouchcancel);
+    }
+  } // if.
+}
+
+/**
+* @desc: 初始化swiper控件.
+*/
+function swiper_init(elem) {
+  var elems = elem ? elem : $('.febsui-swiper');
+  for (var i = 0; i < elems.length; i++) {
+    var dom = $(elems[i]);
+
+    if (!dom.hasClass('febsui-swiper')) {
+      continue;
+    }
+
+    if (dom.hasClass('febsui-swiper-inited')) {
+      continue;
+    }
+
+    dom.addClass('febsui-swiper-inited');
+
+    // attri data.
+    var dataActiveIndex = parseInt(dom.attr('data-current')) || 0;
+    var dataShowDots = dom.attr('data-dots');
+    var dataLoop = dom.attr('data-loop');
+    var dataDotColor = dom.attr('data-dot-color');
+    var dataAlign = dom.attr('data-align');
+
+    if (!window.febs.string.isEmpty(dataAlign)) {
+      if (dataAlign != 'center' && parseInt(dataAlign).toString() != dataAlign) {
+        throw new Error('swiper data-align only can be "center" or integer');
+      }
+    }
+
+    dataShowDots = window.febs.string.isEmpty(dataShowDots) ? true : 'true' == dataShowDots;
+    dataLoop = window.febs.string.isEmpty(dataLoop) ? true : 'true' == dataLoop;
+
+    var domChildren = dom.children();
+    {
+
+      // pages.
+      var pages;
+      var pagesCount;
+      var page1;
+      var page0;
+
+      var needDealLoopPage = true;
+
+      if (domChildren.hasClass('febsui-swiper-pages')) {
+        pages = $(domChildren[0]);
+        domChildren = domChildren.children();
+        needDealLoopPage = false;
+      } else {
+        pages = $("<div class='febsui-swiper-pages'></div>");
+      }
+
+      pagesCount = 0;
+      page1 = null;
+      page0 = null;
+
+      for (var j = 0; j < domChildren.length; j++) {
+        if ($(domChildren[j]).hasClass('febsui-swiper-page')) {
+          // $(domChildren[j]).attr('data-ispage', '1');
+          if (!page1) {
+            page1 = domChildren[j];
+          }
+          page0 = domChildren[j];
+          var page0Obj = $(page0);
+          // 解决小数问题.
+          var pageSize;
+          pageSize = page0Obj.attr('data-size-height');
+          if (!window.febs.string.isEmpty(pageSize)) {
+            page0Obj.css('height', pageSize);
+          } else {
+            if (!needDealLoopPage) {
+              page0Obj.css('height', dom[0].clientHeight + 'px');
+            } else {
+              var pageCssHeight = page0Obj.css('height');
+              if (window.febs.string.isEmpty(pageCssHeight)) {
+                page0Obj.css('height', dom[0].clientHeight + 'px');
+              } else {
+                page0Obj.attr('data-size-height', pageCssHeight);
+              }
+            }
+          }
+
+          pageSize = page0Obj.attr('data-size-width');
+          if (!window.febs.string.isEmpty(pageSize)) {
+            page0Obj.css('width', pageSize);
+          } else {
+            if (!needDealLoopPage) {
+              page0Obj.css('width', dom[0].clientWidth + 'px');
+            } else {
+              var pageCssWidth = page0Obj.css('width');
+              if (window.febs.string.isEmpty(pageCssWidth)) {
+                page0Obj.css('width', dom[0].clientWidth + 'px');
+              } else {
+                page0Obj.attr('data-size-width', pageCssWidth);
+              }
+            }
+          }
+
+          if (needDealLoopPage) {
+            pages.append(domChildren[j]);
+          }
+          pagesCount++;
+        }
+      }
+
+      if (!needDealLoopPage && dataLoop) {
+        pagesCount -= 2;
+      }
+
+      // loop.
+      if (needDealLoopPage && pagesCount > 1 && dataLoop) {
+        pages.prepend(page0.cloneNode(true));
+        pages.append(page1.cloneNode(true));
+      }
+
+      if (needDealLoopPage) {
+        // dots.
+        if (pagesCount == 0) {
+          dataActiveIndex = 0;
+        } else {
+          dataActiveIndex %= pagesCount;
+          dataActiveIndex = dataActiveIndex < 0 ? pagesCount + dataActiveIndex : dataActiveIndex;
+        }
+
+        var dots = dataShowDots ? "<div class='febsui-swiper-dots'></div>" : "<div class='febsui-swiper-dots febsui-invisible'></div>";
+        dots = $(dots);
+
+        for (var j = 0; j < pagesCount; j++) {
+          if (j == dataActiveIndex) {
+            dots.append('<span class="febsui-swiper-dot-active"></span>');
+          } else {
+            dots.append('<span></span>');
+          }
+        }
+
+        if (dataDotColor) {
+          dots.children('span').css('background-color', dataDotColor);
+        }
+
+        dom.html('');
+        dom.append(pages);
+        dom.append(dots);
+        dom.attr('data-current', 0);
+        dom.swiperTo(dataActiveIndex, false);
+
+        if (dom.hasClass('febsui-swiper-vertical')) {
+          pages[0].__swiper_vertical = true;
+          pages.css('touch-action', 'pan-y');
+          dom.css('touch-action', 'pan-y');
+        } else {
+          // dom.css('touch-action', 'pan-x');
+        }
+
+        pages[0].__swiper_loop = !!dataLoop;
+
+        setTimeout(function () {
+          this.addClass('febsui-swiper-animation');
+        }.bind(pages), 10);
+
+        swiper_init_event(dom);
+      } // if.
+    }
+  } // for.
+}
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /**
  * Copyright (c) 2017 Copyright brainpoint All Rights Reserved.
  * Author: lipengxiang
@@ -1439,7 +1954,7 @@ exports.spin_init = function () {
 
 var crypt = window.febs.crypt;
 var err = __webpack_require__(14);
-var ajaxSubmit = __webpack_require__(77).ajaxSubmit;
+var ajaxSubmit = __webpack_require__(78).ajaxSubmit;
 
 // var responseText = $('iframe')[0].contentDocument.body.textContent;
 //     var responseData = JSON.parse(responseText) || {};
@@ -1594,7 +2109,7 @@ function upload(cfg) {
 exports.upload = upload;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1699,7 +2214,7 @@ $.fn.dialogHide = function () {
 };
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1753,7 +2268,7 @@ var _typeof = __webpack_require__(15)["default"];
   __webpack_require__(95);
   __webpack_require__(94);
 
-  var febsui = __webpack_require__(81);
+  var febsui = __webpack_require__(82);
 
   febsui.preventEvent = __webpack_require__(0).maskPreventEvent;
 
@@ -1765,7 +2280,7 @@ var _typeof = __webpack_require__(15)["default"];
   __webpack_require__(93);
 
   __webpack_require__(92);
-  __webpack_require__(42);
+  __webpack_require__(43);
   __webpack_require__(96);
   __webpack_require__(99);
   __webpack_require__(98);
@@ -1777,16 +2292,10 @@ var _typeof = __webpack_require__(15)["default"];
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(101)(module)))
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(48), __esModule: true };
 
 /***/ }),
 /* 46 */
@@ -1804,6 +2313,12 @@ module.exports = { "default": __webpack_require__(50), __esModule: true };
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = { "default": __webpack_require__(51), __esModule: true };
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var core = __webpack_require__(10);
 var $JSON = core.JSON || (core.JSON = { stringify: JSON.stringify });
 module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
@@ -1812,27 +2327,27 @@ module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(73);
-__webpack_require__(71);
 __webpack_require__(74);
+__webpack_require__(72);
 __webpack_require__(75);
+__webpack_require__(76);
 module.exports = __webpack_require__(10).Symbol;
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(72);
-__webpack_require__(76);
+__webpack_require__(73);
+__webpack_require__(77);
 module.exports = __webpack_require__(28).f('iterator');
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -1842,21 +2357,21 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports) {
 
 module.exports = function () { /* empty */ };
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = __webpack_require__(6);
-var toLength = __webpack_require__(68);
-var toAbsoluteIndex = __webpack_require__(67);
+var toLength = __webpack_require__(69);
+var toAbsoluteIndex = __webpack_require__(68);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIObject($this);
@@ -1878,11 +2393,11 @@ module.exports = function (IS_INCLUDES) {
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(51);
+var aFunction = __webpack_require__(52);
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -1904,7 +2419,7 @@ module.exports = function (fn, that, length) {
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
@@ -1925,7 +2440,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var document = __webpack_require__(1).document;
@@ -1933,7 +2448,7 @@ module.exports = document && document.documentElement;
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
@@ -1945,7 +2460,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
@@ -1956,7 +2471,7 @@ module.exports = Array.isArray || function isArray(arg) {
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1976,7 +2491,7 @@ module.exports = function (Constructor, NAME, next) {
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 module.exports = function (done, value) {
@@ -1985,7 +2500,7 @@ module.exports = function (done, value) {
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var META = __webpack_require__(13)('meta');
@@ -2044,7 +2559,7 @@ var meta = module.exports = {
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(5);
@@ -2063,7 +2578,7 @@ module.exports = __webpack_require__(3) ? Object.defineProperties : function def
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var pIE = __webpack_require__(21);
@@ -2085,7 +2600,7 @@ exports.f = __webpack_require__(3) ? gOPD : function getOwnPropertyDescriptor(O,
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
@@ -2110,12 +2625,12 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(2);
-var toObject = __webpack_require__(69);
+var toObject = __webpack_require__(70);
 var IE_PROTO = __webpack_require__(23)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
@@ -2129,7 +2644,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(25);
@@ -2152,7 +2667,7 @@ module.exports = function (TO_STRING) {
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(25);
@@ -2165,7 +2680,7 @@ module.exports = function (index, length) {
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
@@ -2177,7 +2692,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
@@ -2188,13 +2703,13 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(52);
-var step = __webpack_require__(60);
+var addToUnscopables = __webpack_require__(53);
+var step = __webpack_require__(61);
 var Iterators = __webpack_require__(18);
 var toIObject = __webpack_require__(6);
 
@@ -2229,18 +2744,18 @@ addToUnscopables('entries');
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports) {
 
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var $at = __webpack_require__(66)(true);
+var $at = __webpack_require__(67)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
 __webpack_require__(34)(String, 'String', function (iterated) {
@@ -2259,7 +2774,7 @@ __webpack_require__(34)(String, 'String', function (iterated) {
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2270,7 +2785,7 @@ var has = __webpack_require__(2);
 var DESCRIPTORS = __webpack_require__(3);
 var $export = __webpack_require__(32);
 var redefine = __webpack_require__(39);
-var META = __webpack_require__(61).KEY;
+var META = __webpack_require__(62).KEY;
 var $fails = __webpack_require__(11);
 var shared = __webpack_require__(24);
 var setToStringTag = __webpack_require__(22);
@@ -2278,16 +2793,16 @@ var uid = __webpack_require__(13);
 var wks = __webpack_require__(7);
 var wksExt = __webpack_require__(28);
 var wksDefine = __webpack_require__(27);
-var enumKeys = __webpack_require__(55);
-var isArray = __webpack_require__(58);
+var enumKeys = __webpack_require__(56);
+var isArray = __webpack_require__(59);
 var anObject = __webpack_require__(9);
 var isObject = __webpack_require__(8);
 var toIObject = __webpack_require__(6);
 var toPrimitive = __webpack_require__(26);
 var createDesc = __webpack_require__(12);
 var _create = __webpack_require__(35);
-var gOPNExt = __webpack_require__(64);
-var $GOPD = __webpack_require__(63);
+var gOPNExt = __webpack_require__(65);
+var $GOPD = __webpack_require__(64);
 var $DP = __webpack_require__(5);
 var $keys = __webpack_require__(20);
 var gOPD = $GOPD.f;
@@ -2500,24 +3015,24 @@ setToStringTag(global.JSON, 'JSON', true);
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(27)('asyncIterator');
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(27)('observable');
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(70);
+__webpack_require__(71);
 var global = __webpack_require__(1);
 var hide = __webpack_require__(4);
 var Iterators = __webpack_require__(18);
@@ -2539,7 +3054,7 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2618,7 +3133,7 @@ exports.ajaxSubmit = function ajaxSubmit(formObj, fileObj, options) {
 };
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2716,7 +3231,7 @@ function actionsheet_init(elem) {
 }
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2751,7 +3266,7 @@ function button_init() {
 }
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2840,7 +3355,7 @@ function checkbox_init(elem) {
 }
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2860,9 +3375,9 @@ exports.loading_show = loading.loading_show;
 exports.loading_show_text = loading.loading_show_text;
 exports.loading_hide = loading.loading_hide;
 
-exports.page_init = __webpack_require__(82).page_init;
+exports.page_init = __webpack_require__(83).page_init;
 exports.uploadBase64 = __webpack_require__(88).uploadBase64;
-exports.upload = __webpack_require__(41).upload;
+exports.upload = __webpack_require__(42).upload;
 exports.uploadErr = __webpack_require__(14);
 
 var toast = __webpack_require__(87);
@@ -2879,34 +3394,34 @@ var switcha = __webpack_require__(86);
 exports.ui_switch_init = switcha.switch_init;
 exports.ui_switch_init_event = switcha.switch_init_event;
 
-var popovera = __webpack_require__(83);
+var popovera = __webpack_require__(84);
 exports.ui_popover_init = popovera.popover_init;
 
 var dialoga = __webpack_require__(29);
 exports.ui_dialog_init = dialoga.dialog_init;
 
-var actionsheeta = __webpack_require__(78);
+var actionsheeta = __webpack_require__(79);
 exports.ui_actionsheet_init = actionsheeta.actionsheet_init;
 
 var uploadera = __webpack_require__(89);
 exports.ui_uploader_init = uploadera.uploader_init;
 
-var checkboxa = __webpack_require__(80);
+var checkboxa = __webpack_require__(81);
 exports.ui_checkbox_init = checkboxa.checkbox_init;
 exports.ui_checkbox_init_event = checkboxa.checkbox_init_event;
 
-var radioa = __webpack_require__(84);
+var radioa = __webpack_require__(85);
 exports.ui_radio_init = radioa.radio_init;
 exports.ui_radio_init_event = radioa.radio_init_event;
 
 var loadinga = __webpack_require__(40);
 exports.ui_spin_init = loadinga.spin_init;
 
-var buttona = __webpack_require__(79);
+var buttona = __webpack_require__(80);
 exports.ui_button_init = buttona.button_init;
 exports.ui_button_init_event = buttona.button_init_event;
 
-var swipera = __webpack_require__(85);
+var swipera = __webpack_require__(41);
 exports.ui_swiper_init = swipera.swiper_init;
 exports.ui_swiper_init_event = swipera.swiper_init_event;
 
@@ -2936,7 +3451,7 @@ $(document).ready(function () {
 });
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3025,7 +3540,7 @@ function page_init(elem, curPage, pageCount, totalCount, pageCallback) {
 exports.page_init = page_init;
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3134,7 +3649,7 @@ function popover_init(elem) {
 }
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3219,438 +3734,6 @@ function radio_init(elem) {
       } // if.
 
       radio_init_event(dd);
-    }
-  } // for.
-}
-
-/***/ }),
-/* 85 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var touchEventPrevent = __webpack_require__(0).mobile_preventTouchEvent;
-
-exports.swiper_init = swiper_init;
-exports.swiper_init_event = swiper_init_event;
-
-var default_swiper_auto = 7000;
-
-//
-// event.
-function mobile_onTouchstart(event) {
-  event = event || window.event;
-
-  var touch;
-  if (event.touches) {
-    touch = event.touches[0];
-  } else {
-    touch = { clientX: event.clientX, clientY: event.clientY };
-  }
-
-  var currentTarget = event.currentTarget;
-  if (touch && currentTarget) {
-    var target = currentTarget;
-    var target_t = $(target);
-    var parentTarget = target_t.parent();
-
-    var dataLoop = parentTarget.attr('data-loop');
-    var isDataLoop = window.febs.string.isEmpty(dataLoop) ? true : 'true' == dataLoop;
-
-    target_t.removeClass('febsui-swiper-animation');
-
-    // 获取前一个和后一个page.
-    var currentPage;
-    currentPage = Number(parentTarget.attr('data-current'));
-    var nextPage, prePage;
-    nextPage = null;
-    prePage = null;
-
-    var allPage = target_t.children('.febsui-swiper-page');
-    var totalPage = allPage.length;
-
-    if (isDataLoop) {
-      currentPage += 1;
-    }
-
-    if (target.__swiper_vertical) {
-      var pageOffset = 0;
-      var widthValue;
-      for (var i = 0; i < currentPage; i++) {
-        widthValue = $(allPage[i]).css('height');
-        pageOffset += parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[i].clientHeight);
-      }
-
-      if (currentPage > 0) {
-        widthValue = $(allPage[currentPage - 1]).css('height');
-        prePage = pageOffset - parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage - 1].clientHeight);
-      }
-
-      if (currentPage < totalPage - 1) {
-        widthValue = $(allPage[currentPage + 1]).css('height');
-        nextPage = pageOffset + parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage + 1].clientHeight);
-      }
-    } else {
-      var pageOffset = 0;
-      var widthValue;
-      for (var i = 0; i < currentPage; i++) {
-        widthValue = $(allPage[i]).css('width');
-        pageOffset += parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[i].clientWidth);
-      }
-
-      if (currentPage > 0) {
-        widthValue = $(allPage[currentPage - 1]).css('width');
-        prePage = pageOffset - parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage - 1].clientWidth);
-      }
-
-      if (currentPage < totalPage - 1) {
-        widthValue = $(allPage[currentPage + 1]).css('width');
-        nextPage = pageOffset + parseFloat(widthValue.substring(0, widthValue.length - 2) || allPage[currentPage + 1].clientWidth);
-      }
-    } // if..else.
-
-    target.__offsetCurrent = pageOffset;
-    target.__offsetPre = prePage;
-    target.__offsetNext = nextPage;
-
-    target.__swiper_start = true;
-    delete target.__swiper_start_scroll;
-
-    if (target.__swiper_vertical) {
-      target.__swiper_touch = touch.clientY;
-      target.__swiper_touch1 = touch.clientX;
-    } else {
-      target.__swiper_touch = touch.clientX;
-      target.__swiper_touch1 = touch.clientY;
-    }
-
-    target.__swiper_touch_at = Date.now();
-  }
-}
-function mobile_onTouchmove(event) {
-  event = event || window.event;
-
-  var touch;
-  if (event.touches) {
-    touch = event.touches[0];
-  } else {
-    touch = { clientX: event.clientX, clientY: event.clientY };
-  }
-
-  var currentTarget = event.currentTarget;
-  if (touch && currentTarget) {
-    var target = currentTarget;
-    if (!target.__swiper_start) return;
-
-    if (!target.__swiper_start_scroll) {
-      var span1;
-      var span2;
-
-      if (target.__swiper_vertical) {
-        // span1 = Math.abs(target.__swiper_touch-touch.clientY);
-        // span2 = Math.abs(target.__swiper_touch1-touch.clientX);
-
-        // 垂直不允许滚动.
-        target.__swiper_start_scroll = true;
-
-        event.cancelBubble = true;
-        event.stopPropagation();
-        event.preventDefault();
-        return false;
-      } else {
-        span1 = Math.abs(target.__swiper_touch - touch.clientX);
-        span2 = Math.abs(target.__swiper_touch1 - touch.clientY);
-      }
-
-      if (span1 > span2) {
-        if (span1 > 30) {
-          target.__swiper_start_scroll = true;
-
-          event.cancelBubble = true;
-          event.stopPropagation();
-          event.preventDefault();
-          return false;
-        }
-      } else {
-        if (span2 > 30) {
-          delete target.__swiper_start;
-        }
-      }
-      return;
-    }
-
-    var offset = target.getAttribute('data-offset');
-    offset = parseFloat(offset) || 0;
-
-    if (target.__swiper_vertical) {
-      offset += target.__swiper_touch - touch.clientY;
-      target.style['-webkit-transform'] = 'translate3d(0px, ' + -offset + 'px, 0px)';
-      target.style['-moz-transform'] = 'translate3d(0px, ' + -offset + 'px, 0px)';
-      target.style['-ms-transform'] = 'translateY(' + -offset + 'px)';
-      target.style['transform'] = 'translate3d(0px, ' + -offset + 'px, 0px)';
-    } else {
-      offset += target.__swiper_touch - touch.clientX;
-      target.style['-webkit-transform'] = 'translate3d(' + -offset + 'px, 0px, 0px)';
-      target.style['-moz-transform'] = 'translate3d(' + -offset + 'px, 0px, 0px)';
-      target.style['-ms-transform'] = 'translateX(' + -offset + 'px)';
-      target.style['transform'] = 'translate3d(' + -offset + 'px, 0px, 0px)';
-    }
-
-    if (target.parentNode.__swiperMoving) {
-      if (offset < target.__offsetCurrent && target.__offsetPre !== null) {
-        target.parentNode.__swiperMoving((offset - target.__offsetCurrent) / (target.__offsetCurrent - target.__offsetPre));
-      } else if (offset > target.__offsetCurrent && target.__offsetNext !== null) {
-        target.parentNode.__swiperMoving((offset - target.__offsetCurrent) / (target.__offsetNext - target.__offsetCurrent));
-      }
-    }
-
-    event.cancelBubble = true;
-    event.stopPropagation();
-    event.preventDefault();
-    return false;
-  }
-}
-function mobile_onTouchend(event) {
-  event = event || window.event;
-
-  var touch;
-  if (event.changedTouches) {
-    touch = event.changedTouches[0];
-  } else {
-    touch = { clientX: event.clientX, clientY: event.clientY };
-  }
-
-  var currentTarget = event.currentTarget;
-  if (touch && currentTarget) {
-    var target = currentTarget;
-    $(target).addClass('febsui-swiper-animation');
-
-    var targetPage = target;
-    if (!targetPage.__swiper_start) return;
-
-    delete targetPage.__swiper_start;
-    delete targetPage.__offsetCurrent;
-    delete targetPage.__offsetPre;
-    delete targetPage.__offsetNext;
-
-    target = target.parentNode;
-    var current = target.getAttribute('data-current');
-
-    var swipeSpan = 0;
-    if (targetPage.__swiper_vertical) {
-      swipeSpan = Math.abs(targetPage.__swiper_touch - touch.clientY);
-    } else {
-      swipeSpan = Math.abs(targetPage.__swiper_touch - touch.clientX);
-    }
-
-    var swipe = swipeSpan > 140 || Date.now() - targetPage.__swiper_touch_at < 200 && swipeSpan > 30;
-
-    if (targetPage.__swiper_vertical) {
-      if (swipe || swipeSpan >= target.offsetHeight / 2) {
-        if (targetPage.__swiper_touch > touch.clientY) $(target).swiperNext(true);else $(target).swiperPre(true);
-      } else {
-        $(target).swiperTo(current, true, true);
-      }
-    } else {
-      if (swipe || swipeSpan >= target.offsetWidth / 2) {
-        if (targetPage.__swiper_touch > touch.clientX) $(target).swiperNext(true);else $(target).swiperPre(true);
-      } else {
-        $(target).swiperTo(current, true, true);
-      }
-    }
-
-    event.cancelBubble = true;
-    event.stopPropagation();
-    event.preventDefault();
-    return false;
-  }
-  return;
-}
-var mobile_onTouchcancel = mobile_onTouchend;
-
-function swiper_animation() {
-  if (this.children('.febsui-swiper-pages')[0].__swiper_start !== true) {
-    this.swiperNext(true);
-  }
-
-  var dataAutotick = this.attr('data-auto');
-  dataAutotick = window.febs.string.isEmpty(dataAutotick) ? 0 : parseInt(dataAutotick);
-  dataAutotick = dataAutotick === 0 ? 0 : dataAutotick ? dataAutotick : default_swiper_auto;
-  if (dataAutotick > 0 && this.isVisible()) {
-    // un visible can't do next.
-    setTimeout(swiper_animation.bind(this), dataAutotick);
-  }
-}
-
-/**
-* @desc: 对元素注册初始化事件.
-*/
-function swiper_init_event(dom) {
-
-  if (!dom) return;
-
-  var dataAuto = dom.attr('data-auto');
-
-  dataAuto = window.febs.string.isEmpty(dataAuto) ? 0 : parseInt(dataAuto);
-  dataAuto = dataAuto === 0 ? 0 : dataAuto ? dataAuto : default_swiper_auto;
-
-  if (dataAuto > 0) {
-    setTimeout(swiper_animation.bind(dom), dataAuto);
-  }
-
-  // 触发一次事件.
-  dom.trigger('swiper');
-
-  //
-  // event.
-  var pages = dom.children('.febsui-swiper-pages')[0];
-  if (pages) {
-    var namestart = void 0,
-        namemove = void 0,
-        nameend = void 0,
-        namecancel = void 0;
-    if (typeof pages.ontouchstart !== 'undefined') {
-      namestart = 'touchstart';
-      namemove = 'touchmove';
-      nameend = 'touchend';
-      namecancel = 'touchcancel';
-    } else {
-      namestart = 'mousedown';
-      namemove = 'mousemove';
-      nameend = 'mouseup';
-      namecancel = 'mouseout';
-    }
-
-    if (pages.addEventListener) {
-      pages.removeEventListener(namestart, mobile_onTouchstart);
-      pages.removeEventListener(namemove, mobile_onTouchmove);
-      pages.removeEventListener(nameend, mobile_onTouchend);
-      pages.removeEventListener(namecancel, mobile_onTouchcancel);
-
-      pages.addEventListener(namestart, mobile_onTouchstart);
-      pages.addEventListener(namemove, mobile_onTouchmove);
-      pages.addEventListener(nameend, mobile_onTouchend);
-      pages.addEventListener(namecancel, mobile_onTouchcancel);
-    } else {
-      pages.detachEvent('on' + namestart, mobile_onTouchstart);
-      pages.detachEvent('on' + namemove, mobile_onTouchmove);
-      pages.detachEvent('on' + nameend, mobile_onTouchend);
-      pages.detachEvent('on' + namecancel, mobile_onTouchcancel);
-
-      pages.attachEvent('on' + namestart, mobile_onTouchstart);
-      pages.attachEvent('on' + namemove, mobile_onTouchmove);
-      pages.attachEvent('on' + nameend, mobile_onTouchend);
-      pages.attachEvent('on' + namecancel, mobile_onTouchcancel);
-    }
-  } // if.
-}
-
-/**
-* @desc: 初始化swiper控件.
-*/
-function swiper_init(elem) {
-  var elems = elem ? elem : $('.febsui-swiper');
-  for (var i = 0; i < elems.length; i++) {
-    var dom = $(elems[i]);
-
-    if (!dom.hasClass('febsui-swiper')) {
-      continue;
-    }
-
-    // attri data.
-    var dataActiveIndex = parseInt(dom.attr('data-current')) || 0;
-    var dataShowDots = dom.attr('data-dots');
-    var dataLoop = dom.attr('data-loop');
-    var dataDotColor = dom.attr('data-dot-color');
-    var dataAlign = dom.attr('data-align');
-
-    if (!window.febs.string.isEmpty(dataAlign)) {
-      if (dataAlign != 'center' && parseInt(dataAlign).toString() != dataAlign) {
-        throw new Error('swiper data-align only can be "center" or integer');
-      }
-    }
-
-    dataShowDots = window.febs.string.isEmpty(dataShowDots) ? true : 'true' == dataShowDots;
-    dataLoop = window.febs.string.isEmpty(dataLoop) ? true : 'true' == dataLoop;
-
-    var domChildren = dom.children();
-    if (!domChildren.hasClass('febsui-swiper-pages')) {
-
-      // pages.
-      var pages;
-      var pagesCount;
-      var page1;
-      var page0;
-
-      pages = $("<div class='febsui-swiper-pages'></div>");
-      pagesCount = 0;
-      page1 = null;
-      page0 = null;
-
-      for (var j = 0; j < domChildren.length; j++) {
-        if ($(domChildren[j]).hasClass('febsui-swiper-page')) {
-          // $(domChildren[j]).attr('data-ispage', '1');
-          if (!page1) {
-            page1 = domChildren[j];
-          }
-          page0 = domChildren[j];
-          // 解决小数问题.
-          $(page0).css('height', dom[0].clientHeight + 'px');
-          $(page0).css('width', dom[0].clientWidth + 'px');
-          pages.append(domChildren[j]);
-          pagesCount++;
-        }
-      }
-
-      // loop.
-      if (pagesCount > 1 && dataLoop) {
-        pages.prepend(page0.cloneNode(true));
-        pages.append(page1.cloneNode(true));
-      }
-
-      // dots.
-      if (pagesCount == 0) {
-        dataActiveIndex = 0;
-      } else {
-        dataActiveIndex %= pagesCount;
-        dataActiveIndex = dataActiveIndex < 0 ? pagesCount + dataActiveIndex : dataActiveIndex;
-      }
-
-      var dots = dataShowDots ? "<div class='febsui-swiper-dots'></div>" : "<div class='febsui-swiper-dots febsui-invisible'></div>";
-      dots = $(dots);
-
-      for (var j = 0; j < pagesCount; j++) {
-        if (j == dataActiveIndex) {
-          dots.append('<span class="febsui-swiper-dot-active"></span>');
-        } else {
-          dots.append('<span></span>');
-        }
-      }
-
-      if (dataDotColor) {
-        dots.children('span').css('background-color', dataDotColor);
-      }
-
-      dom.html('');
-      dom.append(pages);
-      dom.append(dots);
-      dom.attr('data-current', 0);
-      dom.swiperTo(dataActiveIndex, false);
-
-      if (dom.hasClass('febsui-swiper-vertical')) {
-        pages[0].__swiper_vertical = true;
-        pages.css('touch-action', 'pan-y');
-        dom.css('touch-action', 'pan-y');
-      } else {
-        // dom.css('touch-action', 'pan-x');
-      }
-
-      setTimeout(function () {
-        this.addClass('febsui-swiper-animation');
-      }.bind(pages), 10);
-
-      swiper_init_event(dom);
     }
   } // for.
 }
@@ -3846,7 +3929,7 @@ function hideToast(cb) {
 
 
 
-var _JSON$stringify = __webpack_require__(45)['default'];
+var _JSON$stringify = __webpack_require__(46)['default'];
 
 var net = window.febs.net;
 var utils = window.febs.utils;
@@ -4019,7 +4102,7 @@ exports.uploadBase64 = function uploadBase64(cfg) {
 var touchEventPrevent = __webpack_require__(0).mobile_preventTouchEvent;
 var escape_string = __webpack_require__(90).escape_string;
 
-var upload = __webpack_require__(41);
+var upload = __webpack_require__(42);
 var uploadErr = __webpack_require__(14);
 var dialog = __webpack_require__(29);
 
@@ -4358,9 +4441,9 @@ exports.escape_string = escape_string;
 "use strict";
 
 
-__webpack_require__(44);
+__webpack_require__(45);
 
-__webpack_require__(43);
+__webpack_require__(44);
 // require('es5-shim');
 // require('es5-shim/es5-sham');
 // require('console-polyfill');
@@ -5097,6 +5180,9 @@ $.fn.radioSetValue = function (value, trigger) {
 "use strict";
 
 
+var swiper_init = __webpack_require__(41).swiper_init;
+var swiper_is_in_init = false;
+
 // ie9.
 var is_IE9 = window.febs.utils.browserIEVer() <= 9;
 var ie9_animation_durtion = 250;
@@ -5131,11 +5217,27 @@ if (is_IE9) {
 
 
 function resizeSwiper() {
-  var elems = $('.febsui-swiper');
-  for (var i = 0; i < elems.length; i++) {
-    var elem = $(elems[i]);
-    elem.swiperTo(elem.swiperCurrent(), false);
-  }
+
+  $('.febsui-swiper').removeClass('febsui-swiper-inited');
+
+  // 延迟.5s后重新初始化. 保证父控件宽度变化完成.
+  setTimeout(function () {
+    if (!swiper_is_in_init) {
+      swiper_is_in_init = true;
+      swiper_init();
+
+      var elems = $('.febsui-swiper');
+
+      // 等待宽度变化完成.
+      setTimeout(function () {
+        for (var i = 0; i < elems.length; i++) {
+          var elem = $(elems[i]);
+          elem.swiperTo(elem.swiperCurrent(), false);
+        }
+      }, 210);
+      swiper_is_in_init = false;
+    }
+  }, 500);
 }
 
 // 是否支持orientationchange事件

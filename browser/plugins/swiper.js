@@ -1,4 +1,6 @@
 
+var swiper_init = require('../controls/swiper').swiper_init;
+var swiper_is_in_init = false;
 
 // ie9.
 var is_IE9 = window.febs.utils.browserIEVer() <= 9;
@@ -34,11 +36,27 @@ if (is_IE9) {
 
 
 function resizeSwiper() {
-  var elems = $('.febsui-swiper');
-  for (var i = 0; i < elems.length; i++) {
-    var elem = $(elems[i]);
-    elem.swiperTo(elem.swiperCurrent(), false);
-  }
+
+  $('.febsui-swiper').removeClass('febsui-swiper-inited');
+
+  // 延迟.5s后重新初始化. 保证父控件宽度变化完成.
+  setTimeout(function(){
+    if (!swiper_is_in_init) {
+      swiper_is_in_init = true;
+      swiper_init();
+
+      var elems = $('.febsui-swiper');
+
+      // 等待宽度变化完成.
+      setTimeout(function(){
+        for (var i = 0; i < elems.length; i++) {
+          var elem = $(elems[i]);    
+          elem.swiperTo(elem.swiperCurrent(), false);
+        }
+      }, 210);
+      swiper_is_in_init = false;
+    }
+  }, 500);
 }
 
 // 是否支持orientationchange事件
