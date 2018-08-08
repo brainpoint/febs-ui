@@ -1463,7 +1463,7 @@ function mobile_onTouchstart(event) {
 
     // 获取前一个和后一个page.
     var currentPage;
-    currentPage = Number(parentTarget.attr('data-current'));
+    currentPage = Number(parentTarget.attr('data-current')) || 0;
     var nextPage, prePage;
     nextPage = null;
     prePage = null;
