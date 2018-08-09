@@ -47,4 +47,8 @@
 0.12.17
 =================
   - enhancment: swiper 支持旋转后resize以及小幅page滑动.
+    
+0.12.19
+=================
+  - enhancment: swiper 支持跨多个page滑动时不回弹.
   

@@ -589,6 +589,8 @@ $('input[name="radioGroup"]').on('change', function(){});
 
 > 垂直模式, 默认仅将touch事件在swiper内有效, 即不会引起父控件滚动.
 
+> swiper page 之间不能有margin等空隙; 需要空隙在内部的div中实现.
+
 属性
 
 | 属性 | 说明 | 值 |

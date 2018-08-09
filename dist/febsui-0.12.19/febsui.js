@@ -1635,6 +1635,63 @@ function mobile_onTouchmove(event) {
     return false;
   }
 }
+
+function get_mobile_touchend_right_pos(current, currentRight, swipeSpan, allPage, vertical, loop) {
+  var toNext = swipeSpan > 0 ? true : false;
+
+  var backSpan = 20;
+  // 仅第一个会回弹, 其他的只要超过20就划过.
+  var swipeIndex = current;
+  if (toNext) {
+    swipeSpan -= (vertical ? allPage[currentRight].clientHeight : allPage[currentRight].clientWidth) / 2;
+    if (swipeSpan >= 0) {
+      swipeSpan -= (vertical ? allPage[currentRight].clientHeight : allPage[currentRight].clientWidth) / 2;
+      if (swipeSpan < 0) {
+        swipeIndex = current + 1;
+      } else {
+        swipeIndex = current + 1;
+        for (var i = currentRight + 1; i < allPage.length; i++) {
+          swipeSpan -= backSpan; // 未超过20回弹.
+          if (swipeSpan <= 0) break;
+          swipeIndex++;
+          swipeSpan -= (vertical ? allPage[i].clientHeight : allPage[i].clientWidth) - backSpan;
+          if (swipeSpan <= 0) break;
+        }
+      }
+    } // if.
+  } else {
+    currentRight--;
+    if (currentRight < 0) return swipeIndex;
+
+    swipeSpan += (vertical ? allPage[currentRight].clientHeight : allPage[currentRight].clientWidth) / 2;
+    if (swipeSpan <= 0) {
+      swipeSpan += (vertical ? allPage[currentRight].clientHeight : allPage[currentRight].clientWidth) / 2;
+      if (swipeSpan > 0) {
+        swipeIndex = current - 1;
+      } else {
+        swipeIndex = current - 1;
+        for (var i = currentRight - 1; i >= 0; i--) {
+          swipeSpan += backSpan; // 未超过20回弹.
+          if (swipeSpan >= 0) break;
+          swipeIndex--;
+          swipeSpan += (vertical ? allPage[i].clientHeight : allPage[i].clientWidth) - backSpan;
+          if (swipeSpan >= 0) break;
+        }
+      }
+    } // if.
+  } // if..else.
+
+  if (!loop) {
+    if (swipeIndex >= allPage.length) {
+      swipeIndex = allPage.length - 1;
+    } else if (swipeIndex < 0) {
+      swipeIndex = 0;
+    }
+  }
+
+  return swipeIndex;
+}
+
 function mobile_onTouchend(event) {
   event = event || window.event;
 
@@ -1651,15 +1708,17 @@ function mobile_onTouchend(event) {
     $(target).addClass('febsui-swiper-animation');
 
     var targetPage = target;
-    if (!targetPage.__swiper_start) return;
+    if (!targetPage.__swiper_start_scroll) return;
 
     delete targetPage.__swiper_start;
     delete targetPage.__offsetCurrent;
     delete targetPage.__offsetPre;
     delete targetPage.__offsetNext;
 
+    var allPage = $(target).children('.febsui-swiper-page');
     target = target.parentNode;
-    var current = target.getAttribute('data-current');
+    var current = parseInt(target.getAttribute('data-current') || 0);
+    var currentRight = parseInt(targetPage.__swiper_loop ? current + 1 : current);
 
     var swipeSpan = 0;
     if (targetPage.__swiper_vertical) {
@@ -1672,13 +1731,31 @@ function mobile_onTouchend(event) {
 
     if (targetPage.__swiper_vertical) {
       if (swipe || swipeSpan >= targetPage.__swiper_currentSize / 2) {
-        if (targetPage.__swiper_touch > touch.clientY) $(target).swiperNext(true);else $(target).swiperPre(true);
+        swipeSpan = targetPage.__swiper_touch - touch.clientY;
+        if (swipeSpan > 0) {
+          var swipeIndex = get_mobile_touchend_right_pos(current, currentRight, swipeSpan, allPage, targetPage.__swiper_vertical, targetPage.__swiper_loop);
+          $(target).swiperTo(swipeIndex, true, true, true);
+          // $(target).swiperNext(true);
+        } else {
+          var swipeIndex = get_mobile_touchend_right_pos(current, currentRight, swipeSpan, allPage, targetPage.__swiper_vertical, targetPage.__swiper_loop);
+          $(target).swiperTo(swipeIndex, true, true, false);
+          // $(target).swiperPre(true);
+        }
       } else {
         $(target).swiperTo(current, true, true);
       }
     } else {
       if (swipe || swipeSpan >= targetPage.__swiper_currentSize / 2) {
-        if (targetPage.__swiper_touch > touch.clientX) $(target).swiperNext(true);else $(target).swiperPre(true);
+        swipeSpan = targetPage.__swiper_touch - touch.clientX;
+        if (swipeSpan > 0) {
+          var swipeIndex = get_mobile_touchend_right_pos(current, currentRight, swipeSpan, allPage, targetPage.__swiper_vertical, targetPage.__swiper_loop);
+          $(target).swiperTo(swipeIndex, true, true, true);
+          // $(target).swiperNext(true);
+        } else {
+          var swipeIndex = get_mobile_touchend_right_pos(current, currentRight, swipeSpan, allPage, targetPage.__swiper_vertical, targetPage.__swiper_loop);
+          $(target).swiperTo(swipeIndex, true, true, false);
+          // $(target).swiperPre(true);
+        }
       } else {
         $(target).swiperTo(current, true, true);
       }
