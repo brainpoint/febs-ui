@@ -24,6 +24,7 @@ function mobile_onTouchstart(event) {
   var currentTarget = event.currentTarget;
   if (touch && currentTarget) {
     var target = currentTarget;
+    target = $(currentTarget).children('.febsui-swiper-pages')[0];
     var target_t = $(target);
     var parentTarget = target_t.parent();
 
@@ -123,6 +124,7 @@ function mobile_onTouchmove(event) {
   var currentTarget = event.currentTarget;
   if (touch && currentTarget) {
     var target = currentTarget;
+    target = $(currentTarget).children('.febsui-swiper-pages')[0];
     if (!target.__swiper_start)
       return;
 
@@ -287,6 +289,7 @@ function mobile_onTouchend(event) {
   var currentTarget = event.currentTarget;
   if (touch && currentTarget) {
     var target = currentTarget;
+    target = $(currentTarget).children('.febsui-swiper-pages')[0];
     $(target).addClass('febsui-swiper-animation');
 
     var targetPage = target;
@@ -294,6 +297,7 @@ function mobile_onTouchend(event) {
       return;
 
     delete targetPage.__swiper_start;
+    delete targetPage.__swiper_start_scroll;
     delete targetPage.__offsetCurrent;
     delete targetPage.__offsetPre;
     delete targetPage.__offsetNext;
@@ -393,12 +397,9 @@ function swiper_init_event(dom) {
     }
   }
 
-  // 触发一次事件.
-  dom.trigger('swiper');
-
   //
   // event.
-  var pages = dom.children('.febsui-swiper-pages')[0];
+  var pages = dom[0]; // dom.children('.febsui-swiper-pages')[0];
   if (pages) {
     let namestart, namemove, nameend, namecancel;
     if (typeof pages.ontouchstart !== 'undefined') {
@@ -436,6 +437,9 @@ function swiper_init_event(dom) {
       pages.attachEvent('on'+namecancel, mobile_onTouchcancel);
     }
   } // if.
+
+  // 触发一次事件.
+  dom.trigger('swiper');
 }
 
 
