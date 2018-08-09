@@ -350,13 +350,3 @@ export function ui_swiper_init_event(elem: any): void;
 * @desc: 阻止在elem上的move或touchmove事件.
 */
 export function preventEvent(elem: any): void;
-
-/**
-* @desc: 统一处理 addEventListener, attachEvent; 并提供useCapture参数问题.
-*/
-export function addEventListener(domElement:any, event:string, func:any, useCapture?:boolean):null;
-
-/**
-* @desc: 统一处理 removeEventListener, detachEvent; 并提供useCapture参数问题.
-*/
-export function removeEventListener(domElement:any, event:string, func:any, useCapture?:boolean):null;

@@ -55,9 +55,5 @@
 0.12.20
 =================
   - enhancment: swiper 事件处理提升至父容器处理.
-  
-0.12.21
-=================
-  - feature: 增加 addEventListener/removeEventListener方法
 
   

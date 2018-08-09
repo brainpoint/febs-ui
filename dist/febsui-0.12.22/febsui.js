@@ -73,26 +73,6 @@
 "use strict";
 
 
-function removeEventListener(dom, eventName, foo, useCapture) {
-  if (!dom) return;
-  if (dom.addEventListener) {
-    dom.removeEventListener(eventName, foo, useCapture);
-  } else {
-    dom.detachEvent('on' + eventName, foo);
-  }
-}
-exports.removeEventListener = removeEventListener;
-
-function addEventListener(dom, eventName, foo, useCapture) {
-  if (!dom) return;
-  if (dom.addEventListener) {
-    dom.addEventListener(eventName, foo, useCapture);
-  } else {
-    dom.attachEvent('on' + eventName, foo);
-  }
-}
-exports.addEventListener = addEventListener;
-
 /**
 * @desc: 复制属性. 不会复制class属性.
 * @param matchCB: function(attrName): boolean; 返回true表明允许复制.
@@ -146,11 +126,11 @@ function maskPreventHandler(event) {
 // event.
 exports.maskPreventEvent = function (ee) {
   if (window.febs.utils.browserIsMobile()) {
-    removeEventListener(ee[0], 'touchmove', maskPreventHandler);
-    addEventListener(ee[0], 'touchmove', maskPreventHandler);
+    window.febs.dom.removeEventListener(ee[0], 'touchmove', maskPreventHandler);
+    window.febs.dom.addEventListener(ee[0], 'touchmove', maskPreventHandler);
   } else {
-    removeEventListener(ee[0], 'mousewheel', maskPreventHandler);
-    addEventListener(ee[0], 'mousewheel', maskPreventHandler);
+    window.febs.dom.removeEventListener(ee[0], 'mousewheel', maskPreventHandler);
+    window.febs.dom.addEventListener(ee[0], 'mousewheel', maskPreventHandler);
   }
 };
 
@@ -181,15 +161,15 @@ var mobile_onTouchcancel = mobile_onTouchend;
 */
 exports.mobile_preventTouchEvent = function (dom) {
   if (window.febs.utils.browserIsMobile()) {
-    removeEventListener(dom, 'touchstart', mobile_onTouchstart);
-    removeEventListener(dom, 'touchmove', mobile_onTouchmove);
-    removeEventListener(dom, 'touchend', mobile_onTouchend);
-    removeEventListener(dom, 'touchcancel', mobile_onTouchcancel);
+    window.febs.dom.removeEventListener(dom, 'touchstart', mobile_onTouchstart);
+    window.febs.dom.removeEventListener(dom, 'touchmove', mobile_onTouchmove);
+    window.febs.dom.removeEventListener(dom, 'touchend', mobile_onTouchend);
+    window.febs.dom.removeEventListener(dom, 'touchcancel', mobile_onTouchcancel);
 
-    addEventListener(dom, 'touchstart', mobile_onTouchstart, true);
-    addEventListener(dom, 'touchmove', mobile_onTouchmove, true);
-    addEventListener(dom, 'touchend', mobile_onTouchend, true);
-    addEventListener(dom, 'touchcancel', mobile_onTouchcancel, true);
+    window.febs.dom.addEventListener(dom, 'touchstart', mobile_onTouchstart, true);
+    window.febs.dom.addEventListener(dom, 'touchmove', mobile_onTouchmove, true);
+    window.febs.dom.addEventListener(dom, 'touchend', mobile_onTouchend, true);
+    window.febs.dom.addEventListener(dom, 'touchcancel', mobile_onTouchcancel, true);
   } // if.
 };
 
@@ -1435,8 +1415,6 @@ exports.spin_init = function () {
 
 
 var touchEventPrevent = __webpack_require__(0).mobile_preventTouchEvent;
-var addEvent = __webpack_require__(0).addEventListener;
-var removeEvent = __webpack_require__(0).removeEventListener;
 
 exports.swiper_init = swiper_init;
 exports.swiper_init_event = swiper_init_event;
@@ -1545,13 +1523,13 @@ function mobile_onTouchstart(event) {
 
     // pc.
     if (typeof event.currentTarget.ontouchstart === 'undefined') {
-      removeEvent(event.currentTarget, 'mousemove', mobile_onTouchmove);
-      removeEvent(event.currentTarget, 'mouseup', mobile_onTouchend);
-      removeEvent(event.currentTarget, 'mouseout', mobile_onTouchcancel);
+      window.febs.dom.removeEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove);
+      window.febs.dom.removeEventListener(event.currentTarget, 'mouseup', mobile_onTouchend);
+      window.febs.dom.removeEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel);
 
-      addEvent(event.currentTarget, 'mousemove', mobile_onTouchmove);
-      addEvent(event.currentTarget, 'mouseup', mobile_onTouchend);
-      addEvent(event.currentTarget, 'mouseout', mobile_onTouchcancel);
+      window.febs.dom.addEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove);
+      window.febs.dom.addEventListener(event.currentTarget, 'mouseup', mobile_onTouchend);
+      window.febs.dom.addEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel);
     }
   }
 }
@@ -1731,9 +1709,9 @@ function mobile_onTouchend(event) {
     if (!targetPage.__swiper_start_scroll) {
       // pc.
       if (typeof event.currentTarget.ontouchstart === 'undefined') {
-        removeEvent(event.currentTarget, 'mousemove', mobile_onTouchmove);
-        removeEvent(event.currentTarget, 'mouseup', mobile_onTouchend);
-        removeEvent(event.currentTarget, 'mouseout', mobile_onTouchcancel);
+        window.febs.dom.removeEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove);
+        window.febs.dom.removeEventListener(event.currentTarget, 'mouseup', mobile_onTouchend);
+        window.febs.dom.removeEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel);
       }
       return;
     }
@@ -1792,9 +1770,9 @@ function mobile_onTouchend(event) {
 
     // pc.
     if (typeof event.currentTarget.ontouchstart === 'undefined') {
-      removeEvent(event.currentTarget, 'mousemove', mobile_onTouchmove);
-      removeEvent(event.currentTarget, 'mouseup', mobile_onTouchend);
-      removeEvent(event.currentTarget, 'mouseout', mobile_onTouchcancel);
+      window.febs.dom.removeEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove);
+      window.febs.dom.removeEventListener(event.currentTarget, 'mouseup', mobile_onTouchend);
+      window.febs.dom.removeEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel);
     }
 
     event.cancelBubble = true;
@@ -1805,9 +1783,9 @@ function mobile_onTouchend(event) {
 
   // pc.
   if (typeof event.currentTarget.ontouchstart === 'undefined') {
-    removeEvent(event.currentTarget, 'mousemove', mobile_onTouchmove);
-    removeEvent(event.currentTarget, 'mouseup', mobile_onTouchend);
-    removeEvent(event.currentTarget, 'mouseout', mobile_onTouchcancel);
+    window.febs.dom.removeEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove);
+    window.febs.dom.removeEventListener(event.currentTarget, 'mouseup', mobile_onTouchend);
+    window.febs.dom.removeEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel);
   }
   return;
 }
@@ -1860,30 +1838,30 @@ function swiper_init_event(dom) {
       nameend = 'touchend';
       namecancel = 'touchcancel';
 
-      removeEvent(pages, namestart, mobile_onTouchstart);
-      removeEvent(pages, namemove, mobile_onTouchmove);
-      removeEvent(pages, nameend, mobile_onTouchend);
-      removeEvent(pages, namecancel, mobile_onTouchcancel);
+      window.febs.dom.removeEventListener(pages, namestart, mobile_onTouchstart);
+      window.febs.dom.removeEventListener(pages, namemove, mobile_onTouchmove);
+      window.febs.dom.removeEventListener(pages, nameend, mobile_onTouchend);
+      window.febs.dom.removeEventListener(pages, namecancel, mobile_onTouchcancel);
 
-      addEvent(pages, namestart, mobile_onTouchstart);
-      addEvent(pages, namemove, mobile_onTouchmove);
-      addEvent(pages, nameend, mobile_onTouchend);
-      addEvent(pages, namecancel, mobile_onTouchcancel);
+      window.febs.dom.addEventListener(pages, namestart, mobile_onTouchstart);
+      window.febs.dom.addEventListener(pages, namemove, mobile_onTouchmove);
+      window.febs.dom.addEventListener(pages, nameend, mobile_onTouchend);
+      window.febs.dom.addEventListener(pages, namecancel, mobile_onTouchcancel);
     } else {
       namestart = 'mousedown';
       namemove = 'mousemove';
       nameend = 'mouseup';
       namecancel = 'mouseout';
 
-      removeEvent(pages, namestart, mobile_onTouchstart);
-      removeEvent(pages, namemove, mobile_onTouchmove);
-      removeEvent(pages, nameend, mobile_onTouchend);
-      removeEvent(pages, namecancel, mobile_onTouchcancel);
+      window.febs.dom.removeEventListener(pages, namestart, mobile_onTouchstart);
+      window.febs.dom.removeEventListener(pages, namemove, mobile_onTouchmove);
+      window.febs.dom.removeEventListener(pages, nameend, mobile_onTouchend);
+      window.febs.dom.removeEventListener(pages, namecancel, mobile_onTouchcancel);
 
-      addEvent(pages, namestart, mobile_onTouchstart);
-      // addEvent(pages, namemove, mobile_onTouchmove);
-      // addEvent(pages, nameend, mobile_onTouchend);
-      // addEvent(pages, namecancel, mobile_onTouchcancel);
+      window.febs.dom.addEventListener(pages, namestart, mobile_onTouchstart);
+      // window.febs.dom.addEventListener(pages, namemove, mobile_onTouchmove);
+      // window.febs.dom.addEventListener(pages, nameend, mobile_onTouchend);
+      // window.febs.dom.addEventListener(pages, namecancel, mobile_onTouchcancel);
     }
   } // if.
 
@@ -2389,8 +2367,6 @@ var _typeof = __webpack_require__(15)["default"];
   var febsui = __webpack_require__(82);
 
   febsui.preventEvent = __webpack_require__(0).maskPreventEvent;
-  febsui.addEventListener = __webpack_require__(0).addEventListener;
-  febsui.removeEventListener = __webpack_require__(0).removeEventListener;
 
   window['febsui'] = febsui;
 

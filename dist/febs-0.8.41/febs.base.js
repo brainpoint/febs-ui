@@ -3373,6 +3373,30 @@ Dom.isDom = function (e) {
   return (typeof HTMLElement === 'undefined' ? 'undefined' : _typeof(HTMLElement)) === 'object' ? e instanceof HTMLElement : e && (typeof e === 'undefined' ? 'undefined' : _typeof(e)) === 'object' && e.nodeType === 1 && typeof e.nodeName === 'string';
 };
 
+/**
+* @desc: 统一处理 removeEventListener, detachEvent; 并提供useCapture参数问题.
+*/
+Dom.removeEventListener = function (dom, eventName, foo, useCapture) {
+  if (!dom) return;
+  if (dom.addEventListener) {
+    dom.removeEventListener(eventName, foo, useCapture);
+  } else {
+    dom.detachEvent('on' + eventName, foo);
+  }
+};
+
+/**
+* @desc: 统一处理 addEventListener, attachEvent; 并提供useCapture参数问题.
+*/
+Dom.addEventListener = function (dom, eventName, foo, useCapture) {
+  if (!dom) return;
+  if (dom.addEventListener) {
+    dom.addEventListener(eventName, foo, useCapture);
+  } else {
+    dom.attachEvent('on' + eventName, foo);
+  }
+};
+
 exports.Dom = Dom;
 exports.CreateDom = CreateDom;
 

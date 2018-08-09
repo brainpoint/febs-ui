@@ -51,8 +51,6 @@ require('./plugins/hasVisible');
 var febsui = require('./controls');
 
 febsui.preventEvent = require('./domHelper').maskPreventEvent;
-febsui.addEventListener = require('./domHelper').addEventListener;
-febsui.removeEventListener = require('./domHelper').removeEventListener;
 
 window['febsui'] = febsui;
 
