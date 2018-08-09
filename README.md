@@ -114,6 +114,16 @@ $('').hasVisible();
 * @desc: 阻止在elem上的move或touchmove事件.
 */
 febsui.preventEvent(elem:any):void;
+
+/**
+* @desc: 统一处理 addEventListener, attachEvent; 并提供useCapture参数问题.
+*/
+febsui.addEventListener(domElement:any, event:string, func:any, useCapture?:boolean):null;
+
+/**
+* @desc: 统一处理 removeEventListener, detachEvent; 并提供useCapture参数问题.
+*/
+febsui.removeEventListener(domElement:any, event:string, func:any, useCapture?:boolean):null;
 ```
 
 初始化方法列表

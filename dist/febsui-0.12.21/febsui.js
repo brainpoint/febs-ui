@@ -73,14 +73,16 @@
 "use strict";
 
 
-function removeEventListener(dom, eventName, foo) {
+function removeEventListener(dom, eventName, foo, useCapture) {
   if (!dom) return;
   if (dom.addEventListener) {
-    dom.removeEventListener(eventName, foo);
+    dom.removeEventListener(eventName, foo, useCapture);
   } else {
     dom.detachEvent('on' + eventName, foo);
   }
 }
+exports.removeEventListener = removeEventListener;
+
 function addEventListener(dom, eventName, foo, useCapture) {
   if (!dom) return;
   if (dom.addEventListener) {
@@ -89,6 +91,7 @@ function addEventListener(dom, eventName, foo, useCapture) {
     dom.attachEvent('on' + eventName, foo);
   }
 }
+exports.addEventListener = addEventListener;
 
 /**
 * @desc: 复制属性. 不会复制class属性.
@@ -1432,6 +1435,8 @@ exports.spin_init = function () {
 
 
 var touchEventPrevent = __webpack_require__(0).mobile_preventTouchEvent;
+var addEvent = __webpack_require__(0).addEventListener;
+var removeEvent = __webpack_require__(0).removeEventListener;
 
 exports.swiper_init = swiper_init;
 exports.swiper_init_event = swiper_init_event;
@@ -1537,6 +1542,17 @@ function mobile_onTouchstart(event) {
     }
 
     target.__swiper_touch_at = Date.now();
+
+    // pc.
+    if (typeof event.currentTarget.ontouchstart === 'undefined') {
+      removeEvent(event.currentTarget, 'mousemove', mobile_onTouchmove);
+      removeEvent(event.currentTarget, 'mouseup', mobile_onTouchend);
+      removeEvent(event.currentTarget, 'mouseout', mobile_onTouchcancel);
+
+      addEvent(event.currentTarget, 'mousemove', mobile_onTouchmove);
+      addEvent(event.currentTarget, 'mouseup', mobile_onTouchend);
+      addEvent(event.currentTarget, 'mouseout', mobile_onTouchcancel);
+    }
   }
 }
 function mobile_onTouchmove(event) {
@@ -1589,6 +1605,7 @@ function mobile_onTouchmove(event) {
           delete target.__swiper_start;
         }
       }
+
       return;
     }
 
@@ -1711,7 +1728,15 @@ function mobile_onTouchend(event) {
     $(target).addClass('febsui-swiper-animation');
 
     var targetPage = target;
-    if (!targetPage.__swiper_start_scroll) return;
+    if (!targetPage.__swiper_start_scroll) {
+      // pc.
+      if (typeof event.currentTarget.ontouchstart === 'undefined') {
+        removeEvent(event.currentTarget, 'mousemove', mobile_onTouchmove);
+        removeEvent(event.currentTarget, 'mouseup', mobile_onTouchend);
+        removeEvent(event.currentTarget, 'mouseout', mobile_onTouchcancel);
+      }
+      return;
+    }
 
     delete targetPage.__swiper_start;
     delete targetPage.__swiper_start_scroll;
@@ -1765,10 +1790,24 @@ function mobile_onTouchend(event) {
       }
     }
 
+    // pc.
+    if (typeof event.currentTarget.ontouchstart === 'undefined') {
+      removeEvent(event.currentTarget, 'mousemove', mobile_onTouchmove);
+      removeEvent(event.currentTarget, 'mouseup', mobile_onTouchend);
+      removeEvent(event.currentTarget, 'mouseout', mobile_onTouchcancel);
+    }
+
     event.cancelBubble = true;
     event.stopPropagation();
     event.preventDefault();
     return false;
+  }
+
+  // pc.
+  if (typeof event.currentTarget.ontouchstart === 'undefined') {
+    removeEvent(event.currentTarget, 'mousemove', mobile_onTouchmove);
+    removeEvent(event.currentTarget, 'mouseup', mobile_onTouchend);
+    removeEvent(event.currentTarget, 'mouseout', mobile_onTouchcancel);
   }
   return;
 }
@@ -1820,33 +1859,31 @@ function swiper_init_event(dom) {
       namemove = 'touchmove';
       nameend = 'touchend';
       namecancel = 'touchcancel';
+
+      removeEvent(pages, namestart, mobile_onTouchstart);
+      removeEvent(pages, namemove, mobile_onTouchmove);
+      removeEvent(pages, nameend, mobile_onTouchend);
+      removeEvent(pages, namecancel, mobile_onTouchcancel);
+
+      addEvent(pages, namestart, mobile_onTouchstart);
+      addEvent(pages, namemove, mobile_onTouchmove);
+      addEvent(pages, nameend, mobile_onTouchend);
+      addEvent(pages, namecancel, mobile_onTouchcancel);
     } else {
       namestart = 'mousedown';
       namemove = 'mousemove';
       nameend = 'mouseup';
       namecancel = 'mouseout';
-    }
 
-    if (pages.addEventListener) {
-      pages.removeEventListener(namestart, mobile_onTouchstart);
-      pages.removeEventListener(namemove, mobile_onTouchmove);
-      pages.removeEventListener(nameend, mobile_onTouchend);
-      pages.removeEventListener(namecancel, mobile_onTouchcancel);
+      removeEvent(pages, namestart, mobile_onTouchstart);
+      removeEvent(pages, namemove, mobile_onTouchmove);
+      removeEvent(pages, nameend, mobile_onTouchend);
+      removeEvent(pages, namecancel, mobile_onTouchcancel);
 
-      pages.addEventListener(namestart, mobile_onTouchstart);
-      pages.addEventListener(namemove, mobile_onTouchmove);
-      pages.addEventListener(nameend, mobile_onTouchend);
-      pages.addEventListener(namecancel, mobile_onTouchcancel);
-    } else {
-      pages.detachEvent('on' + namestart, mobile_onTouchstart);
-      pages.detachEvent('on' + namemove, mobile_onTouchmove);
-      pages.detachEvent('on' + nameend, mobile_onTouchend);
-      pages.detachEvent('on' + namecancel, mobile_onTouchcancel);
-
-      pages.attachEvent('on' + namestart, mobile_onTouchstart);
-      pages.attachEvent('on' + namemove, mobile_onTouchmove);
-      pages.attachEvent('on' + nameend, mobile_onTouchend);
-      pages.attachEvent('on' + namecancel, mobile_onTouchcancel);
+      addEvent(pages, namestart, mobile_onTouchstart);
+      // addEvent(pages, namemove, mobile_onTouchmove);
+      // addEvent(pages, nameend, mobile_onTouchend);
+      // addEvent(pages, namecancel, mobile_onTouchcancel);
     }
   } // if.
 
@@ -2352,6 +2389,8 @@ var _typeof = __webpack_require__(15)["default"];
   var febsui = __webpack_require__(82);
 
   febsui.preventEvent = __webpack_require__(0).maskPreventEvent;
+  febsui.addEventListener = __webpack_require__(0).addEventListener;
+  febsui.removeEventListener = __webpack_require__(0).removeEventListener;
 
   window['febsui'] = febsui;
 

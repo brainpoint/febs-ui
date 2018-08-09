@@ -1,12 +1,15 @@
-function removeEventListener(dom, eventName, foo) {
+
+function removeEventListener(dom, eventName, foo, useCapture) {
   if (!dom) return;
   if (dom.addEventListener) {
-    dom.removeEventListener(eventName, foo);
+    dom.removeEventListener(eventName, foo, useCapture);
   }
   else {
     dom.detachEvent('on'+eventName, foo);
   }
 }
+exports.removeEventListener = removeEventListener;
+
 function addEventListener(dom, eventName, foo, useCapture) {
   if (!dom) return;
   if (dom.addEventListener) {
@@ -16,6 +19,7 @@ function addEventListener(dom, eventName, foo, useCapture) {
     dom.attachEvent('on'+eventName, foo);
   }
 }
+exports.addEventListener = addEventListener;
 
 /**
 * @desc: 复制属性. 不会复制class属性.

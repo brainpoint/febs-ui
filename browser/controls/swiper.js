@@ -1,5 +1,7 @@
 
 var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
+var addEvent = require('../domHelper').addEventListener;
+var removeEvent = require('../domHelper').removeEventListener;
 
 exports.swiper_init = swiper_init;
 exports.swiper_init_event = swiper_init_event;
@@ -108,6 +110,17 @@ function mobile_onTouchstart(event) {
     }
 
     target.__swiper_touch_at = Date.now();
+
+    // pc.
+    if (typeof event.currentTarget.ontouchstart === 'undefined') {
+      removeEvent(event.currentTarget, 'mousemove', mobile_onTouchmove);
+      removeEvent(event.currentTarget, 'mouseup', mobile_onTouchend);
+      removeEvent(event.currentTarget, 'mouseout', mobile_onTouchcancel);
+
+      addEvent(event.currentTarget, 'mousemove', mobile_onTouchmove);
+      addEvent(event.currentTarget, 'mouseup', mobile_onTouchend);
+      addEvent(event.currentTarget, 'mouseout', mobile_onTouchcancel);
+    }
   }
 }
 function mobile_onTouchmove(event) {
@@ -163,6 +176,7 @@ function mobile_onTouchmove(event) {
           delete target.__swiper_start;
         }
       }
+
       return;
     }
 
@@ -293,8 +307,15 @@ function mobile_onTouchend(event) {
     $(target).addClass('febsui-swiper-animation');
 
     var targetPage = target;
-    if (!targetPage.__swiper_start_scroll)
+    if (!targetPage.__swiper_start_scroll) {
+      // pc.
+      if (typeof event.currentTarget.ontouchstart === 'undefined') {
+        removeEvent(event.currentTarget, 'mousemove', mobile_onTouchmove);
+        removeEvent(event.currentTarget, 'mouseup', mobile_onTouchend);
+        removeEvent(event.currentTarget, 'mouseout', mobile_onTouchcancel);
+      }
       return;
+    }
 
     delete targetPage.__swiper_start;
     delete targetPage.__swiper_start_scroll;
@@ -354,10 +375,24 @@ function mobile_onTouchend(event) {
       }
     }
 
+    // pc.
+    if (typeof event.currentTarget.ontouchstart === 'undefined') {
+      removeEvent(event.currentTarget, 'mousemove', mobile_onTouchmove);
+      removeEvent(event.currentTarget, 'mouseup', mobile_onTouchend);
+      removeEvent(event.currentTarget, 'mouseout', mobile_onTouchcancel);
+    }
+
     event.cancelBubble = true;
     event.stopPropagation();
     event.preventDefault();
     return false;
+  }
+  
+  // pc.
+  if (typeof event.currentTarget.ontouchstart === 'undefined') {
+    removeEvent(event.currentTarget, 'mousemove', mobile_onTouchmove);
+    removeEvent(event.currentTarget, 'mouseup', mobile_onTouchend);
+    removeEvent(event.currentTarget, 'mouseout', mobile_onTouchcancel);
   }
   return;
 }
@@ -407,34 +442,31 @@ function swiper_init_event(dom) {
       namemove = 'touchmove';
       nameend = 'touchend';
       namecancel = 'touchcancel';
+
+      removeEvent(pages, namestart, mobile_onTouchstart);
+      removeEvent(pages, namemove, mobile_onTouchmove);
+      removeEvent(pages, nameend, mobile_onTouchend);
+      removeEvent(pages, namecancel, mobile_onTouchcancel);
+
+      addEvent(pages, namestart, mobile_onTouchstart);
+      addEvent(pages, namemove, mobile_onTouchmove);
+      addEvent(pages, nameend, mobile_onTouchend);
+      addEvent(pages, namecancel, mobile_onTouchcancel);
     } else {
       namestart = 'mousedown';
       namemove = 'mousemove';
       nameend = 'mouseup';
       namecancel = 'mouseout';
-    }
 
-    if (pages.addEventListener) {
-      pages.removeEventListener(namestart, mobile_onTouchstart);
-      pages.removeEventListener(namemove, mobile_onTouchmove);
-      pages.removeEventListener(nameend, mobile_onTouchend);
-      pages.removeEventListener(namecancel, mobile_onTouchcancel);
+      removeEvent(pages, namestart, mobile_onTouchstart);
+      removeEvent(pages, namemove, mobile_onTouchmove);
+      removeEvent(pages, nameend, mobile_onTouchend);
+      removeEvent(pages, namecancel, mobile_onTouchcancel);
 
-      pages.addEventListener(namestart, mobile_onTouchstart);
-      pages.addEventListener(namemove, mobile_onTouchmove);
-      pages.addEventListener(nameend, mobile_onTouchend);
-      pages.addEventListener(namecancel, mobile_onTouchcancel);
-    }
-    else {
-      pages.detachEvent('on'+namestart, mobile_onTouchstart);
-      pages.detachEvent('on'+namemove, mobile_onTouchmove);
-      pages.detachEvent('on'+nameend, mobile_onTouchend);
-      pages.detachEvent('on'+namecancel, mobile_onTouchcancel);
-
-      pages.attachEvent('on'+namestart, mobile_onTouchstart);
-      pages.attachEvent('on'+namemove, mobile_onTouchmove);
-      pages.attachEvent('on'+nameend, mobile_onTouchend);
-      pages.attachEvent('on'+namecancel, mobile_onTouchcancel);
+      addEvent(pages, namestart, mobile_onTouchstart);
+      // addEvent(pages, namemove, mobile_onTouchmove);
+      // addEvent(pages, nameend, mobile_onTouchend);
+      // addEvent(pages, namecancel, mobile_onTouchcancel);
     }
   } // if.
 
