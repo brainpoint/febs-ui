@@ -346,7 +346,11 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
           if (align == 'center') {
             offset -= (elem[0].clientHeight - pages[indexp].clientHeight) / 2;
           } else {
-            offset -= align;  
+            if (offset > elem[0].__swiper_maxOffset) {
+              offset = elem[0].__swiper_maxOffset;
+            } else {
+              offset -= align;
+            }
           }
           ie9_animation_obj[ie9_animation_obj.length-1].offset = -offset;
           ie9_animation_obj[ie9_animation_obj.length-1].vertical = true;
@@ -363,7 +367,11 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
           if (align == 'center') {
             offset -= (elem[0].clientWidth - pages[indexp].clientWidth) / 2;
           } else {
-            offset -= align;  
+            if (offset > elem[0].__swiper_maxOffset) {
+              offset = elem[0].__swiper_maxOffset;
+            } else {
+              offset -= align;
+            }
           }
           ie9_animation_obj[ie9_animation_obj.length-1].offset = -offset;
           ie9_animation_obj[ie9_animation_obj.length-1].vertical = false;
@@ -382,7 +390,11 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
           if (align == 'center') {
             offset -= (elem[0].clientHeight - pages[indexp].clientHeight) / 2.0;
           } else {
-            offset -= align;
+            if (offset > elem[0].__swiper_maxOffset) {
+              offset = elem[0].__swiper_maxOffset;
+            } else {
+              offset -= align;
+            }
           }
           pagesContainer.css('-webkit-transform', `translate3d(0px, ${-offset}px, 0px)`);
           pagesContainer.css('-moz-transform', `translate3d(0px, ${-offset}px, 0px)`);
@@ -393,7 +405,11 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
           if (align == 'center') {
             offset -= (elem[0].clientWidth - pages[indexp].clientWidth) / 2.0;
           } else {
-            offset -= align;
+            if (offset > elem[0].__swiper_maxOffset) {
+              offset = elem[0].__swiper_maxOffset;
+            } else {
+              offset -= align;
+            }
           }
           pagesContainer.css('-webkit-transform', `translate3d(${-offset}px, 0px, 0px)`);
           pagesContainer.css('-moz-transform', `translate3d(${-offset}px, 0px, 0px)`);

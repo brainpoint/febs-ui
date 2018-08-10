@@ -191,9 +191,20 @@ function mobile_onTouchmove(event) {
 
     // 超出小幅移动.
     if (!target.__swiper_loop) {
-      if (off <=0 && target.__swiper_currentPage == 0 || off>=0 && target.__swiper_currentPage >= target.__swiper_totalPage-1)
+      // if (off <=0 && target.__swiper_currentPage == 0 || off>=0 && target.__swiper_currentPage >= target.__swiper_totalPage-1)
+      // if (off <=0 && offset+off <= 0 || off >= 0 && offset+off >= target.__swiper_maxOffset)
+      // {
+      //   off /= 3;
+      // }
+      if (off <=0 && offset+off <= 0)
       {
-        off /= 3;
+        off = (offset+off) / 3;
+        offset = 0;
+      }
+      else if (off >= 0 && offset+off >= target.__swiper_maxOffset)
+      {
+        off = (offset+off - target.__swiper_maxOffset) / 3;
+        offset = target.__swiper_maxOffset;
       }
     }
 
@@ -220,6 +231,7 @@ function mobile_onTouchmove(event) {
         target.parentNode.__swiperMoving( (offset-target.__offsetCurrent) / (target.__offsetNext-target.__offsetCurrent) );
       }
     }
+    // console.log(target.__swiper_touch.toFixed(2), off.toFixed(2), -offset.toFixed(2));
     
     event.cancelBubble = true;
     event.stopPropagation();
@@ -590,7 +602,7 @@ function swiper_init(elem) {
         pages.prepend(page0.cloneNode(true));
         pages.append(page1.cloneNode(true));
       }
-      
+
       if (needDealLoopPage) {
         // dots.
         if (pagesCount == 0) {
@@ -621,7 +633,6 @@ function swiper_init(elem) {
         dom.append(pages);
         dom.append(dots);
         dom.attr('data-current', 0);
-        dom.swiperTo(dataActiveIndex, false);
 
         if (dom.hasClass('febsui-swiper-vertical')) {
           pages[0].__swiper_vertical = true;
@@ -631,14 +642,41 @@ function swiper_init(elem) {
           // dom.css('touch-action', 'pan-x');
         }
 
-        pages[0].__swiper_loop = !!dataLoop;
-
         setTimeout(function(){
           this.addClass('febsui-swiper-animation');
         }.bind(pages), 10);
 
         swiper_init_event(dom);
       } // if.
+
+
+      // 记录最大的偏移位置.
+      var maxOffset = 0;
+      var pageChildren = pages.children('.febsui-swiper-page');
+      var pagesLength = dataLoop? pageChildren.length-1: pageChildren.length;
+      if (dom.hasClass('febsui-swiper-vertical')) {
+        for (var j = 0; j < pagesLength; j++) {
+          maxOffset += pageChildren[j].clientHeight;
+        }
+        maxOffset -= dom[0].clientHeight;
+      }
+      else {
+        for (var j = 0; j < pagesLength; j++) {
+          maxOffset += pageChildren[j].clientWidth;
+        }
+        maxOffset -= dom[0].clientWidth;
+      } // if.
+
+      if (dataAlign != 'center') {
+        maxOffset += parseInt(dataAlign);
+      }
+      dom[0].__swiper_maxOffset = maxOffset;
+      pages[0].__swiper_maxOffset = maxOffset;
+
+      if (needDealLoopPage) {
+        dom.swiperTo(dataActiveIndex, false);
+        pages[0].__swiper_loop = !!dataLoop;
+      }
     }
   } // for.
 }
