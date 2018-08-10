@@ -1523,6 +1523,7 @@ function mobile_onTouchstart(event) {
 
     // pc.
     if (typeof event.currentTarget.ontouchstart === 'undefined') {
+      target.__swiper_pc = true;
       window.febs.dom.removeEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove);
       window.febs.dom.removeEventListener(event.currentTarget, 'mouseup', mobile_onTouchend);
       window.febs.dom.removeEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel);
@@ -1581,7 +1582,16 @@ function mobile_onTouchmove(event) {
       } else {
         if (span2 > 30) {
           delete target.__swiper_start;
+          return;
         }
+      }
+
+      // pc 不允许事件传递下去.
+      if (target.__swiper_pc) {
+        event.cancelBubble = true;
+        event.stopPropagation();
+        event.preventDefault();
+        return false;
       }
 
       return;
