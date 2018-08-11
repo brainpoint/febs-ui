@@ -1676,6 +1676,7 @@ function get_mobile_touchend_right_pos(current, currentRight, swipeSpan, allPage
         }
       }
     } // if.
+    if (swipeIndex == current) swipeIndex = current + 1;
   } else {
     currentRight--;
     if (currentRight < 0) return swipeIndex;
@@ -1696,6 +1697,8 @@ function get_mobile_touchend_right_pos(current, currentRight, swipeSpan, allPage
         }
       }
     } // if.
+
+    if (swipeIndex == current) swipeIndex = current - 1;
   } // if..else.
 
   if (!loop) {

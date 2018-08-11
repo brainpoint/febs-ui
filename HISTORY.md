@@ -63,3 +63,8 @@
 0.12.24
 =================
   - enhancement: 事件处理兼容pc与mobile, 防止pc事件穿透.
+
+0.12.25
+=================
+  - sorry for swiper bug.
+  
