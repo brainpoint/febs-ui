@@ -527,6 +527,8 @@ function swiper_init(elem) {
       if (dataAlign != 'center' && parseInt(dataAlign).toString() != dataAlign) {
         throw new Error('swiper data-align only can be "center" or integer');
       }
+    } else {
+      dataAlign = 'center';
     }
 
     dataShowDots = window.febs.string.isEmpty(dataShowDots) ? true : ('true' == dataShowDots);
