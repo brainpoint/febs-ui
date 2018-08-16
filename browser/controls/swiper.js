@@ -681,6 +681,10 @@ function swiper_init(elem) {
         }
         maxOffset -= dom[0].clientWidth;
       } // if.
+ 
+      if (maxOffset < 0) {
+        maxOffset = 0;
+      }
 
       if (dataAlign != 'center') {
         maxOffset += parseInt(dataAlign);
