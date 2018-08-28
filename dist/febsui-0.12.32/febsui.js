@@ -5755,7 +5755,7 @@ $.fn.swiperTo = function (index, animation, trigger, directNext) {
         setTimeout(function () {
           var current = parseInt(this.attr('data-current')) || 0;
           this.swiperTo(current, false);
-        }.bind(elem), 210);
+        }.bind(elem), 310);
       }
 
       if (trigger) {
