@@ -67,4 +67,7 @@
 0.12.25
 =================
   - sorry for swiper bug.
-  
+
+0.12.31
+=================
+  - [bugfix] swiper pc platform.
