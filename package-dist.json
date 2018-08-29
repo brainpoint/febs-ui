@@ -1,0 +1,42 @@
+{
+  "description": "Some UI in common use",
+  "keywords": [
+    "jquery",
+    "zepto",
+    "switch",
+    "swiper",
+    "checkbox",
+    "radio",
+    "dialog",
+    "toast",
+    "alert",
+    "loading",
+    "uploader",
+    "page",
+    "ui"
+  ],
+  "directories": {},
+  "homepage": "https://github.com/brainpoint/febs-ui#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/brainpoint/febs-ui.git"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "license": "MIT",
+  "main": "febsui.js",
+  "maintainers": [
+    {
+      "name": "brainpoint",
+      "email": "bpoint.lee@gmail.com"
+    }
+  ],
+  "scripts": {
+    "test": "tap test/*.js",
+    "build": "node scripts/webpack.build.js",
+    "prepare": "node scripts/webpack.build.js"
+  },
+  "name": "febs-ui",
+  "version": "0.12.33"
+}

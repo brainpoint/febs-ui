@@ -51,6 +51,8 @@ buildSrc(webpackConfig('browser/index.build.js', 'febsui.js', 'dist/'+dir))
 .then(()=>{
   spinner.stop()
 
+  febs.file.fileCopy(path.join(root, 'package-dist.json'),    path.join(root, `dist/${dir}/package.json`));
+
   // 等待文件flush到磁盘.
   spinner.start();
   formatDotDefault();
