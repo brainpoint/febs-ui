@@ -55,8 +55,8 @@ exports.maskPreventEvent = function(ee) {
     window.febs.dom.addEventListener(ee[0], 'touchmove', maskPreventHandler);
   }
   else {
-    window.febs.dom.removeEventListener(ee[0], 'mousewheel', maskPreventHandler);
-    window.febs.dom.addEventListener(ee[0], 'mousewheel', maskPreventHandler);
+    // window.febs.dom.removeEventListener(ee[0], 'mousewheel', maskPreventHandler);
+    // window.febs.dom.addEventListener(ee[0], 'mousewheel', maskPreventHandler);
   }
 }
 

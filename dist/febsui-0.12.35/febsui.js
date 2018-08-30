@@ -129,8 +129,8 @@ exports.maskPreventEvent = function (ee) {
     window.febs.dom.removeEventListener(ee[0], 'touchmove', maskPreventHandler);
     window.febs.dom.addEventListener(ee[0], 'touchmove', maskPreventHandler);
   } else {
-    window.febs.dom.removeEventListener(ee[0], 'mousewheel', maskPreventHandler);
-    window.febs.dom.addEventListener(ee[0], 'mousewheel', maskPreventHandler);
+    // window.febs.dom.removeEventListener(ee[0], 'mousewheel', maskPreventHandler);
+    // window.febs.dom.addEventListener(ee[0], 'mousewheel', maskPreventHandler);
   }
 };
 
@@ -1723,6 +1723,24 @@ function get_mobile_touchend_right_pos(current, currentRight, swipeSpan, allPage
 function mobile_onTouchend(event) {
   event = event || window.event;
 
+  // mouseout特殊处理.
+  if (event.type === 'mouseout') {
+    if (event.toElement) {
+      if (event.currentTarget) {
+        var tt = event.toElement;
+        while (tt) {
+          if (tt.isSameNode(event.currentTarget)) {
+            event.cancelBubble = true;
+            event.stopPropagation();
+            event.preventDefault();
+            return false;
+          }
+          tt = tt.parentNode;
+        }
+      }
+    }
+  } // if.
+
   var touch;
   if (event.changedTouches) {
     touch = event.changedTouches[0];
@@ -1765,7 +1783,7 @@ function mobile_onTouchend(event) {
       swipeSpan = Math.abs(targetPage.__swiper_touch - touch.clientX);
     }
 
-    var swipe = swipeSpan > 140 || Date.now() - targetPage.__swiper_touch_at < 200 && swipeSpan > 30;
+    var swipe = swipeSpan > 80 || Date.now() - targetPage.__swiper_touch_at < 200 && swipeSpan > 30;
 
     if (targetPage.__swiper_vertical) {
       if (swipe || swipeSpan >= targetPage.__swiper_currentSize / 2) {
