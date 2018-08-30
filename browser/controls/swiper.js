@@ -165,6 +165,15 @@ function mobile_onTouchmove(event) {
         if (span1 > 30) {
           target.__swiper_start_scroll = true;
 
+          if (target.__swiper_vertical) {
+            target.__swiper_touch = touch.clientY;
+            target.__swiper_touch1 = touch.clientX;
+          }
+          else {
+            target.__swiper_touch = touch.clientX;
+            target.__swiper_touch1 = touch.clientY;
+          }
+
           event.cancelBubble = true;
           event.stopPropagation();
           event.preventDefault();
