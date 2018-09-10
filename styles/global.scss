@@ -29,13 +29,13 @@ body {
   /* no 300ms delay */
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
+  font-family: -apple-system, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
 }
 
 [class|=febsui],
 [class|=btn],
 button,
 label {
-  font-family: -apple-system, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;

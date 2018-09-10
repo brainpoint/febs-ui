@@ -471,11 +471,20 @@ function swiper_init_event(dom) {
     return;
 
   var dataAuto = dom.attr('data-auto');
+  var dataLoop = dom.attr('data-loop');
 
   dataAuto = window.febs.string.isEmpty(dataAuto) ? 0 : parseInt(dataAuto);
   dataAuto = dataAuto === 0 ? 0 : (dataAuto ? dataAuto : default_swiper_auto);
 
-  if (dataAuto > 0) {
+  dataLoop = window.febs.string.isEmpty(dataLoop) ? true : ('true' == dataLoop);
+
+  var pageLength = dom.children('.febsui-swiper-pages');
+  pageLength = $(pageLength);
+  pageLength = pageLength.children('.febsui-swiper-page').length;
+  if (dataLoop)
+    pageLength -= 2;
+
+  if (dataAuto > 0 && pageLength > 1) {
     if (!dom.hasClass('febsui-swiper-animate-timer')) {
       setTimeout(swiper_animation.bind(dom), dataAuto);
       dom.addClass('febsui-swiper-animate-timer');

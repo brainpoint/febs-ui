@@ -218,6 +218,15 @@ febsui.ui_radio_init_event(elem:selector);
 febsui.ui_button_init_event(elem:selector):void;
 ```
 
+### 全局样式.
+
+| 类 | 说明 |
+|----|----|
+| febsui-ellipsis | 单行文字缩略. |
+| febsui-ellipsis-multiline | 多行文字缩略. 默认4行; 修改 -webkit-line-clamp: 4; line-clamp: 4; 自定义 |
+| febsui-visible | 设置为 visibility: visible |
+| febsui-invisible | 设置为 visibility: hidden |
+
 
 
 ### button
@@ -590,6 +599,10 @@ $('input[name="radioGroup"]').on('change', function(){});
 > 垂直模式, 默认仅将touch事件在swiper内有效, 即不会引起父控件滚动.
 
 > swiper page 之间不能有margin等空隙; 需要空隙在内部的div中实现.
+
+类
+
+`febsui-swiper-vertical` : 可以设置为垂直滚动样式.
 
 属性
 
