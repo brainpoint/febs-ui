@@ -1455,7 +1455,7 @@ function mobile_onTouchstart(event) {
     var allPage = target_t.children('.febsui-swiper-page');
     var totalPage = allPage.length;
 
-    if (isDataLoop) {
+    if (isDataLoop && totalPage > 1) {
       currentPage += 1;
     }
 
@@ -1664,6 +1664,8 @@ function mobile_onTouchmove(event) {
 function get_mobile_touchend_right_pos(current, currentRight, swipeSpan, allPage, vertical, loop) {
   var toNext = swipeSpan > 0 ? true : false;
 
+  if (allPage.length == 1) currentRight = 0;
+
   var backSpan = 20;
   // 仅第一个会回弹, 其他的只要超过20就划过.
   var swipeIndex = current;
@@ -1862,17 +1864,18 @@ function swiper_init_event(dom) {
   if (!dom) return;
 
   var dataAuto = dom.attr('data-auto');
-  var dataLoop = dom.attr('data-loop');
+  // var dataLoop = dom.attr('data-loop');
 
   dataAuto = window.febs.string.isEmpty(dataAuto) ? 0 : parseInt(dataAuto);
   dataAuto = dataAuto === 0 ? 0 : dataAuto ? dataAuto : default_swiper_auto;
 
-  dataLoop = window.febs.string.isEmpty(dataLoop) ? true : 'true' == dataLoop;
+  // dataLoop = window.febs.string.isEmpty(dataLoop) ? true : ('true' == dataLoop);
 
   var pageLength = dom.children('.febsui-swiper-pages');
-  pageLength = $(pageLength);
+  pageLength = $(pageLength[0]);
   pageLength = pageLength.children('.febsui-swiper-page').length;
-  if (dataLoop) pageLength -= 2;
+  // if (dataLoop)
+  //   pageLength -= 2;
 
   if (dataAuto > 0 && pageLength > 1) {
     if (!dom.hasClass('febsui-swiper-animate-timer')) {
@@ -5785,7 +5788,7 @@ $.fn.swiperTo = function (index, animation, trigger, directNext) {
       }
 
       // 重置正确的位置.
-      if (resetPostion) {
+      if (resetPostion && pages.length > 1) {
         setTimeout(function () {
           var current = parseInt(this.attr('data-current')) || 0;
           this.swiperTo(current, false);

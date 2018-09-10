@@ -427,7 +427,7 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
       }
 
       // 重置正确的位置.
-      if (resetPostion) {
+      if (resetPostion && pages.length > 1) {
         setTimeout(function() {
           var current = parseInt(this.attr('data-current')) || 0;
           this.swiperTo(current, false);

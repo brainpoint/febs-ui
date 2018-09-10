@@ -57,6 +57,7 @@ febsui.dialog_showToast({content:'即将开始', icon:'ok'});
 目前实现了如下控件.
 
   - [jquery extend](#extend)
+  - [全局样式](#全局样式)
   - [button](#button)
   - [loading](#loading)
   - [toast](#toast)
