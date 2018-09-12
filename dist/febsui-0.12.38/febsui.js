@@ -2056,6 +2056,9 @@ function swiper_init(elem) {
           dataActiveIndex = dataActiveIndex < 0 ? pagesCount + dataActiveIndex : dataActiveIndex;
         }
 
+        if (pagesCount == 1) {
+          dataShowDots = false;
+        }
         var dots = dataShowDots ? "<div class='febsui-swiper-dots'></div>" : "<div class='febsui-swiper-dots febsui-invisible'></div>";
         dots = $(dots);
 
