@@ -604,41 +604,6 @@ function swiper_init(elem) {
           }
           page0 = domChildren[j];
           var page0Obj = $(page0);
-          // 解决小数问题.
-          var pageSize;
-          pageSize = page0Obj.attr('data-size-height');
-          if (!window.febs.string.isEmpty(pageSize)) {
-            page0Obj.css('height', pageSize);
-          }
-          else {
-            if (!needDealLoopPage) {
-              page0Obj.css('height', dom[0].clientHeight+'px');
-            } else {
-              var pageCssHeight = page0Obj.css('height');
-              if (window.febs.string.isEmpty(pageCssHeight)) {
-                page0Obj.css('height', dom[0].clientHeight+'px');
-              } else {
-                page0Obj.attr('data-size-height', pageCssHeight);
-              }
-            }
-          }
-          
-          pageSize = page0Obj.attr('data-size-width');
-          if (!window.febs.string.isEmpty(pageSize)) {
-            page0Obj.css('width', pageSize);
-          }
-          else {
-            if (!needDealLoopPage) {
-              page0Obj.css('width', dom[0].clientWidth+'px');
-            } else {
-              var pageCssWidth = page0Obj.css('width');
-              if (window.febs.string.isEmpty(pageCssWidth)) {
-                page0Obj.css('width', dom[0].clientWidth+'px');
-              } else {
-                page0Obj.attr('data-size-width', pageCssWidth);
-              }
-            }
-          }
 
           if (needDealLoopPage) {
             pages.append(domChildren[j]);
@@ -698,6 +663,51 @@ function swiper_init(elem) {
         } else {
           // dom.css('touch-action', 'pan-x');
         }
+
+        // 解决小数问题.
+        var swiperPageArray = pages.children('.febsui-swiper-page');
+        setTimeout(function(){
+          for (var j = 0; j < this.childPages.length; j++) {
+            if ($(this.childPages[j]).hasClass('febsui-swiper-page')) {
+              var page0Obj = $(this.childPages[j]);
+              // 解决小数问题.
+              var pageSize;
+              pageSize = page0Obj.attr('data-size-height');
+              if (!window.febs.string.isEmpty(pageSize)) {
+                page0Obj.css('height', pageSize);
+              }
+              else {
+                if (!this.childNeedDealLoopPage) {
+                  page0Obj.css('height', this.childDom[0].clientHeight+'px');
+                } else {
+                  var pageCssHeight = page0Obj.css('height');
+                  if (window.febs.string.isEmpty(pageCssHeight)) {
+                    page0Obj.css('height', this.childDom[0].clientHeight+'px');
+                  } else {
+                    page0Obj.attr('data-size-height', pageCssHeight);
+                  }
+                }
+              }
+              
+              pageSize = page0Obj.attr('data-size-width');
+              if (!window.febs.string.isEmpty(pageSize)) {
+                page0Obj.css('width', pageSize);
+              }
+              else {
+                if (!this.childNeedDealLoopPage) {
+                  page0Obj.css('width', this.childDom[0].clientWidth+'px');
+                } else {
+                  var pageCssWidth = page0Obj.css('width');
+                  if (window.febs.string.isEmpty(pageCssWidth)) {
+                    page0Obj.css('width', this.childDom[0].clientWidth+'px');
+                  } else {
+                    page0Obj.attr('data-size-width', pageCssWidth);
+                  }
+                }
+              }
+            }
+          }
+        }.bind({childPages:swiperPageArray, childNeedDealLoopPage:needDealLoopPage, childDom: dom}), 0);
 
         setTimeout(function(){
           this.addClass('febsui-swiper-animation');

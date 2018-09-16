@@ -71,3 +71,7 @@
 0.12.31
 =================
   - [bugfix] swiper pc platform.
+
+0.12.39
+=================
+  - [enhancement] swiper data-size.
