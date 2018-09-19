@@ -2188,7 +2188,8 @@ var ajaxSubmit = __webpack_require__(78).ajaxSubmit;
  *                  'customHeader': 'value'
  *                },
  *                crossDomain: true,     // 跨域, 默认为true
- *                withCredentials: true, // 是否附带cookie, 默认为true
+ *                withCredentials: true, // 是否附带cookie, 默认为true,
+ *                checkoutCrc32: true,   // 是否上传 crc32,size,ajaxmark(防止chrome优化) 三个参数.
  *              }
  */
 
@@ -2247,6 +2248,45 @@ function upload(cfg) {
     var inputs = cfg.formObj.children('input');
     $(inputs[inputs.length - 1]).click();
   } else {
+    var uploadFile = function uploadFile() {
+      var urlpath = void 0;
+      if (this.checkoutCrc32) {
+        urlpath = this.control_upload_url + 'crc32=' + this.crc + '&size=' + this.fileObj[0].files[0].size + (this.data ? '&data=' + this.data : '');
+      } else {
+        urlpath = this.control_upload_url;
+      }
+
+      try {
+        var ctx = this;
+        var con = ajaxSubmit(this.formObj, this.fileObj, {
+          method: 'POST',
+          url: urlpath,
+          progress: function progress(percentComplete) {
+            if (ctx.control_upload_progress_cb) ctx.control_upload_progress_cb(ctx.fileObj, percentComplete ? percentComplete.toFixed(1) : 0);
+          },
+          error: function error() {
+            if (ctx.control_upload_cb) ctx.control_upload_cb(err.net, ctx.fileObj, null);ctx.fileObj[0].value = "";
+          },
+          success: function success(r) {
+            try {
+              r = JSON.parse(r);
+            } catch (e) {
+              r = {};
+            }
+
+            if (ctx.control_upload_cb) ctx.control_upload_cb(null, ctx.fileObj, r);
+            ctx.fileObj[0].value = "";
+          },
+          crossDomain: this.crossDomain,
+          headers: this.headers,
+          withCredentials: this.withCredentials
+        });
+        if (this.control_upload_begin_cb) this.control_upload_begin_cb(this.fileObj, con);
+      } catch (e) {
+        if (this.control_upload_cb) this.control_upload_cb(e, this.fileObj, null);
+        this.fileObj[0].value = "";
+      }
+    }; // function.
 
     if (!cfg.fileObj[0].files[0]) {
       if (control_upload_cb) control_upload_cb(err.nofile, cfg.fileObj, null);
@@ -2267,42 +2307,42 @@ function upload(cfg) {
     var formObj = cfg.formObj;
     var fileObj = cfg.fileObj;
 
-    crypt.crc32_file(fileObj[0].files[0], function (crc) {
-      if (crc) {
-        try {
-          var con = ajaxSubmit(formObj, fileObj, {
-            method: 'POST',
-            url: control_upload_url + 'crc32=' + crc + '&size=' + fileObj[0].files[0].size + (cfg.data ? '&data=' + cfg.data : ''),
-            progress: function progress(percentComplete) {
-              if (control_upload_progress_cb) control_upload_progress_cb(fileObj, percentComplete ? percentComplete.toFixed(1) : 0);
-            },
-            error: function error() {
-              if (control_upload_cb) control_upload_cb(err.net, fileObj, null);fileObj[0].value = "";
-            },
-            success: function success(r) {
-              try {
-                r = JSON.parse(r);
-              } catch (e) {
-                r = {};
-              }
-
-              if (control_upload_cb) control_upload_cb(null, fileObj, r);
-              fileObj[0].value = "";
-            },
-            crossDomain: cfg.crossDomain,
-            headers: cfg.headers,
-            withCredentials: cfg.withCredentials
-          });
-          if (control_upload_begin_cb) control_upload_begin_cb(cfg.fileObj, con);
-        } catch (e) {
-          if (control_upload_cb) control_upload_cb(e, fileObj, null);
-          fileObj[0].value = "";
+    if (cfg.checkoutCrc32) {
+      crypt.crc32_file(fileObj[0].files[0], function (crc) {
+        if (crc) {
+          uploadFile.bind(window.febs.utils.mergeMap(this, { crc: crc }))();
+        } else {
+          if (this.control_upload_cb) this.control_upload_cb(err.crc32, this.fileObj, null);
+          this.fileObj[0].value = "";
         }
-      } else {
-        if (control_upload_cb) control_upload_cb(err.crc32, fileObj, null);
-        fileObj[0].value = "";
-      }
-    });
+      }.bind({
+        checkoutCrc32: cfg.checkoutCrc32,
+        control_upload_url: control_upload_url,
+        fileObj: cfg.fileObj,
+        data: cfg.data,
+        formObj: cfg.formObj,
+        control_upload_progress_cb: control_upload_progress_cb,
+        control_upload_cb: control_upload_cb,
+        crossDomain: cfg.crossDomain,
+        headers: cfg.headers,
+        withCredentials: cfg.withCredentials,
+        control_upload_begin_cb: control_upload_begin_cb
+      }));
+    } else {
+      uploadFile.bind({
+        checkoutCrc32: cfg.checkoutCrc32,
+        control_upload_url: control_upload_url,
+        fileObj: cfg.fileObj,
+        data: cfg.data,
+        formObj: cfg.formObj,
+        control_upload_progress_cb: control_upload_progress_cb,
+        control_upload_cb: control_upload_cb,
+        crossDomain: cfg.crossDomain,
+        headers: cfg.headers,
+        withCredentials: cfg.withCredentials,
+        control_upload_begin_cb: control_upload_begin_cb
+      })();
+    }
   } // if..else.
 }
 

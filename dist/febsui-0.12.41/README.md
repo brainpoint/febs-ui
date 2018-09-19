@@ -219,7 +219,7 @@ febsui.ui_radio_init_event(elem:selector);
 febsui.ui_button_init_event(elem:selector):void;
 ```
 
-### 全局样式.
+### 全局样式
 
 | 类 | 说明 |
 |----|----|
@@ -947,6 +947,7 @@ $('.febsui-uploader').uploaderReset();
   *                },
   *                crossDomain: true,     // 跨域, 默认为true
   *                withCredentials: true, // 是否附带cookie, 默认为true
+  *                checkoutCrc32: true,   // 是否上传 crc32,size,ajaxmark(防止chrome优化) 三个参数.
   *              }
   */
  febsui.upload(cfg);

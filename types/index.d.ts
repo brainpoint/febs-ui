@@ -190,6 +190,7 @@ export namespace uploadErr {
 *                },
 *                crossDomain: true,     // 跨域, 默认为true
 *                withCredentials: true, // 是否附带cookie, 默认为true
+*                checkoutCrc32: true,   // 是否上传 crc32,size,ajaxmark(防止chrome优化) 三个参数.
 *              }
 */
 export function upload(cfg: {
