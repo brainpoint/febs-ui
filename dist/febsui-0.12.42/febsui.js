@@ -584,7 +584,7 @@ function hide(selector) {
       if ($(selector)[0]) {
 
         // 移除临时弹出的窗口.
-        if (!$(selector).hasClass('febsui-dialog-init')) {
+        if ($(selector).hasClass('febsui-dialog-init-sys')) {
           setTimeout(function () {
             $(selector).remove();
           }, 300);
@@ -599,7 +599,7 @@ function hide(selector) {
     // 移除临时弹出的窗口.
     for (var i = 0; i < ee.length; i++) {
       var eee = $(ee[i]);
-      if (!eee.hasClass('febsui-dialog-init')) {
+      if (eee.hasClass('febsui-dialog-init-sys')) {
         ees.push(eee);
       }
     } // for.
@@ -656,7 +656,7 @@ function showAlert(ctx) {
 
   var blackBgClass = ctx.blackBg ? ' febsui-dialog-container-black' : '';
 
-  var htmlElem = '<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init' + mask + '" role="alert"><div class="febsui-dialog-container' + blackBgClass + '">';
+  var htmlElem = '<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init-sys febsui-dialog-init' + mask + '" role="alert"><div class="febsui-dialog-container' + blackBgClass + '">';
   htmlElem += ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '';
   htmlElem += ctx.content || ctx.contentHtml ? '<div class="febsui-dialog-content">' + (ctx.content ? ctx.content : ctx.contentHtml) + '</div>' : '';
   htmlElem += '<ul class="febsui-dialog-buttons"><li style="width:100%;' + styleBorder + '"><button class="febsui-dialog-cancel">' + ctx.okText + '</button></li></ul></div></div>';
@@ -736,7 +736,7 @@ function showConfirm(ctx) {
 
   var blackBgClass = ctx.blackBg ? ' febsui-dialog-container-black' : '';
 
-  var htmlElem = '<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init' + mask + '" role="alert"><div class="febsui-dialog-container' + blackBgClass + '">';
+  var htmlElem = '<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init-sys febsui-dialog-init' + mask + '" role="alert"><div class="febsui-dialog-container' + blackBgClass + '">';
   htmlElem += ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '';
   htmlElem += ctx.content || ctx.contentHtml ? '<div class="febsui-dialog-content">' + (ctx.content ? ctx.content : ctx.contentHtml) + '</div>' : '';
   htmlElem += '<ul class="febsui-dialog-buttons"><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><button class="febsui-dialog-cancel">' + ctx.cancelText + '</button></li><li' + (isIE9 ? ' style="' + styleBorder + '"' : '') + '><button class="febsui-dialog-ok">' + ctx.okText + '</button></li></ul></div></div>';
@@ -822,7 +822,7 @@ function showConfirmEdit(ctx) {
 
   var blackBgClass = ctx.blackBg ? ' febsui-dialog-container-black' : '';
 
-  var elems = '<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init' + mask + '" role="alert"><div class="febsui-dialog-container' + blackBgClass + '">';
+  var elems = '<div' + ' id="' + uid + '" class="febsui-dialog febsui-dialog-init-sys febsui-dialog-init' + mask + '" role="alert"><div class="febsui-dialog-container' + blackBgClass + '">';
   elems += ctx.title ? '<div class="febsui-dialog-title">' + ctx.title + '</div>' : '';
   elems += ctx.content || ctx.contentHtml ? '<div class="febsui-dialog-content">' + (ctx.content ? ctx.content : ctx.contentHtml) + '</div>' : '';
   elems += '<div class="febsui-dialog-edit"><input class="febsui-input-text-noborder" type="text" value="' + (ctx.editText ? ctx.editText : '') + '">' + '</div>';
