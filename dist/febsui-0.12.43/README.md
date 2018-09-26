@@ -57,7 +57,7 @@ febsui.dialog_showToast({content:'即将开始', icon:'ok'});
 目前实现了如下控件.
 
   - [jquery extend](#extend)
-  - [全局样式](#全局样式)
+  - [css](#css)
   - [button](#button)
   - [loading](#loading)
   - [toast](#toast)
@@ -219,7 +219,7 @@ febsui.ui_radio_init_event(elem:selector);
 febsui.ui_button_init_event(elem:selector):void;
 ```
 
-### 全局样式
+### css
 
 | 类 | 说明 |
 |----|----|

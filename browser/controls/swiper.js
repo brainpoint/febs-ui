@@ -8,6 +8,9 @@ exports.swiper_init_event = swiper_init_event;
 
 var default_swiper_auto = 7000;
 
+// 当前操作的swiper元素.
+var swipre_current_capture = null;
+
 //
 // event.
 function mobile_onTouchstart(event) {
@@ -24,6 +27,15 @@ function mobile_onTouchstart(event) {
   var currentTarget = event.currentTarget;
   if (touch && currentTarget) {
     var target = currentTarget;
+
+    // capture.
+    if (typeof target.ontouchstart === 'undefined') {
+      if (swipre_current_capture) {
+        return;
+      }
+      swipre_current_capture = target;
+    }
+
     target = $(currentTarget).children('.febsui-swiper-pages')[0];
     var target_t = $(target);
     var parentTarget = target_t.parent();
@@ -112,13 +124,13 @@ function mobile_onTouchstart(event) {
     // pc.
     if (typeof event.currentTarget.ontouchstart === 'undefined') {
       target.__swiper_pc = true;
-      window.febs.dom.removeEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove, true);
-      window.febs.dom.removeEventListener(event.currentTarget, 'mouseup', mobile_onTouchend, true);
-      window.febs.dom.removeEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel, true);
+      window.febs.dom.removeEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove);
+      window.febs.dom.removeEventListener(event.currentTarget, 'mouseup', mobile_onTouchend);
+      window.febs.dom.removeEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel);
 
-      window.febs.dom.addEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove, true);
-      window.febs.dom.addEventListener(event.currentTarget, 'mouseup', mobile_onTouchend, true);
-      window.febs.dom.addEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel, true);
+      window.febs.dom.addEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove);
+      window.febs.dom.addEventListener(event.currentTarget, 'mouseup', mobile_onTouchend);
+      window.febs.dom.addEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel);
     }
   }
 }
@@ -136,6 +148,14 @@ function mobile_onTouchmove(event) {
   var currentTarget = event.currentTarget;
   if (touch && currentTarget) {
     var target = currentTarget;
+
+    // capture.
+    if (typeof target.ontouchstart === 'undefined') {
+      if (swipre_current_capture && !swipre_current_capture.isSameNode(target)) {
+        return;
+      }
+    }
+
     target = $(currentTarget).children('.febsui-swiper-pages')[0];
     if (!target.__swiper_start)
       return;
@@ -334,6 +354,14 @@ function mobile_onTouchend(event) {
         var tt = event.toElement;
         while (tt) {
           if (tt.isSameNode(event.currentTarget)) {
+            
+            if (swipre_current_capture && swipre_current_capture.isSameNode(event.currentTarget)) {
+              swipre_current_capture = null;
+            }
+
+            window.febs.dom.removeEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove);
+            window.febs.dom.removeEventListener(event.currentTarget, 'mouseup', mobile_onTouchend);
+            window.febs.dom.removeEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel);
             event.cancelBubble = true;
             event.stopPropagation();
             event.preventDefault();
@@ -356,6 +384,14 @@ function mobile_onTouchend(event) {
   var currentTarget = event.currentTarget;
   if (touch && currentTarget) {
     var target = currentTarget;
+
+    // capture.
+    if (typeof target.ontouchstart === 'undefined') {
+      if (swipre_current_capture && swipre_current_capture.isSameNode(target)) {
+        swipre_current_capture = null;
+      }
+    }
+
     target = $(currentTarget).children('.febsui-swiper-pages')[0];
     $(target).addClass('febsui-swiper-animation');
 
@@ -363,9 +399,9 @@ function mobile_onTouchend(event) {
     if (!targetPage.__swiper_start_scroll) {
       // pc.
       if (typeof event.currentTarget.ontouchstart === 'undefined') {
-        window.febs.dom.removeEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove, true);
-        window.febs.dom.removeEventListener(event.currentTarget, 'mouseup', mobile_onTouchend, true);
-        window.febs.dom.removeEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel, true);
+        window.febs.dom.removeEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove);
+        window.febs.dom.removeEventListener(event.currentTarget, 'mouseup', mobile_onTouchend);
+        window.febs.dom.removeEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel);
       }
       return;
     }
@@ -430,9 +466,9 @@ function mobile_onTouchend(event) {
 
     // pc.
     if (typeof event.currentTarget.ontouchstart === 'undefined') {
-      window.febs.dom.removeEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove, true);
-      window.febs.dom.removeEventListener(event.currentTarget, 'mouseup', mobile_onTouchend, true);
-      window.febs.dom.removeEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel, true);
+      window.febs.dom.removeEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove);
+      window.febs.dom.removeEventListener(event.currentTarget, 'mouseup', mobile_onTouchend);
+      window.febs.dom.removeEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel);
     }
 
     event.cancelBubble = true;
@@ -443,9 +479,9 @@ function mobile_onTouchend(event) {
   
   // pc.
   if (typeof event.currentTarget.ontouchstart === 'undefined') {
-    window.febs.dom.removeEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove, true);
-    window.febs.dom.removeEventListener(event.currentTarget, 'mouseup', mobile_onTouchend, true);
-    window.febs.dom.removeEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel, true);
+    window.febs.dom.removeEventListener(event.currentTarget, 'mousemove', mobile_onTouchmove);
+    window.febs.dom.removeEventListener(event.currentTarget, 'mouseup', mobile_onTouchend);
+    window.febs.dom.removeEventListener(event.currentTarget, 'mouseout', mobile_onTouchcancel);
   }
   return;
 }
@@ -520,12 +556,12 @@ function swiper_init_event(dom) {
       nameend = 'mouseup';
       namecancel = 'mouseout';
 
-      window.febs.dom.removeEventListener(pages, namestart, mobile_onTouchstart, true);
-      window.febs.dom.removeEventListener(pages, namemove, mobile_onTouchmove, true);
-      window.febs.dom.removeEventListener(pages, nameend, mobile_onTouchend, true);
-      window.febs.dom.removeEventListener(pages, namecancel, mobile_onTouchcancel, true);
+      window.febs.dom.removeEventListener(pages, namestart, mobile_onTouchstart);
+      window.febs.dom.removeEventListener(pages, namemove, mobile_onTouchmove);
+      window.febs.dom.removeEventListener(pages, nameend, mobile_onTouchend);
+      window.febs.dom.removeEventListener(pages, namecancel, mobile_onTouchcancel);
 
-      window.febs.dom.addEventListener(pages, namestart, mobile_onTouchstart, true);
+      window.febs.dom.addEventListener(pages, namestart, mobile_onTouchstart);
       // window.febs.dom.addEventListener(pages, namemove, mobile_onTouchmove);
       // window.febs.dom.addEventListener(pages, nameend, mobile_onTouchend);
       // window.febs.dom.addEventListener(pages, namecancel, mobile_onTouchcancel);
@@ -745,8 +781,11 @@ function swiper_init(elem) {
       pages[0].__swiper_maxOffset = maxOffset;
 
       if (needDealLoopPage) {
-        dom.swiperTo(dataActiveIndex, false);
         pages[0].__swiper_loop = !!dataLoop;
+
+        setTimeout(function() {
+          this.dom.swiperTo(this.dataActiveIndex, false);
+        }.bind({dom,dataActiveIndex}), 100);
       }
     }
   } // for.
