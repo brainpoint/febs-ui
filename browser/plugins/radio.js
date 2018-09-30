@@ -68,3 +68,33 @@ $.fn.radioSetValue = function(value, trigger) {
   }
   return this;
 }
+
+$.fn.radioChecked = function(checked, trigger) {
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
+
+  var o = {};
+  for (let i = 0; i < _this.length; i++) {
+    var ee = $(_this[i]);
+    if (ee.isRadio()) {
+      
+      if (ee.hasClass('febsui-radio')) {
+        ee = $(ee.children('input')[0]);
+      }
+
+      if (ee[0]) {
+        if (window.febs.utils.isNull(checked)) {
+          return ee[0].checked;
+        }
+        else {
+          if ((!!checked) ^ ee[0].checked) {
+            ee[0].checked = checked;
+            if (trigger) {
+              ee.trigger('change');
+            }
+          }
+        }
+      }
+    } // if.
+  } // for.
+  return this;
+}

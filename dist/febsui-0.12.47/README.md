@@ -68,7 +68,7 @@ febsui.dialog_showToast({content:'即将开始', icon:'ok'});
   - [paging](#page)
   - [switch](#switch)
   - [checkbox](#checkbox)
-  - [radio](#checkbox)
+  - [radio](#radio)
   - [swiper](#swiper)
   - [popover](#popover)
   - [actionSheet](#actionsheet)
@@ -225,8 +225,8 @@ febsui.ui_button_init_event(elem:selector):void;
 |----|----|
 | febsui-ellipsis | 单行文字缩略. |
 | febsui-ellipsis-multiline | 多行文字缩略. 默认4行; 修改 -webkit-line-clamp: 4; line-clamp: 4; 自定义 |
-| febsui-visible | 设置为 visibility: visible |
-| febsui-invisible | 设置为 visibility: hidden |
+| febsui-visible | 设置为 visibility: visible; febsui-visible与febsui-invisible 之间切换有渐变效果 |
+| febsui-invisible | 设置为 visibility: hidden; febsui-visible与febsui-invisible 之间切换有渐变效果 |
 
 
 
@@ -540,7 +540,55 @@ $('.febsui-switch').switchIsOn();
 <label for="checkbox1">checkbox</label>
 
 </html>
+
+<script>
+
+//
+// 原生用法.
+//
+
+// get checked.
+$('#checkbox1')[0].checked;
+// set checked.
+$('#checkbox1')[0].checked = true;
+
+//
+// febsui 用法.
+//
+
+// get value.
+$('#checkbox1').checkboxChecked();
+// set value.
+$('#checkbox1').checkboxChecked(true);
+
+</script>
+
+</html>
 ```
+
+方法
+
+```js
+/**
+ * @desc 判断是否是checkbox
+ */
+$('.febsui-checkbox').isCheckbox();
+/**
+ * @desc 设置当前checkbox的checked状态.
+ * @param checked: 当参数不存在时返回是否是checked状态. 否则设置checked状态.
+ * @return 当获取checked状态时返回 boolean; 当设置状态时返回dom.
+ */
+$('.febsui-checkbox').checkboxChecked(checked?:boolean, trigger?:boolean);
+/**
+ * @desc 监听变化事件
+ */
+$('.febsui-checkbox').on('change', function(){});
+
+```
+
+
+
+### radio
 
 radio 同checkbox一样使用.
 
@@ -554,10 +602,25 @@ radio 同checkbox一样使用.
 <label for="radio2">female</label>
 
 <script>
+
+//
+// 原生用法.
+//
+
 // get value.
 $('input[name="radio"]:checked').val()
 // set value.
 $('#radio2')[0].checked = true;
+
+//
+// febsui 用法.
+//
+
+// get value.
+$('#radio1').radioGetValue();
+// set value.
+$('#radio1').radioSetValue('male'); or $('#radio1').radioChecked(true);
+
 </script>
 
 </html>
@@ -578,6 +641,12 @@ $('.febsui-radio').radioGetValue();
  * @desc 设置radio组当前值.
  */
 $('.febsui-radio').radioSetValue(value:string, trigger?:boolean);
+/**
+ * @desc 设置当前radio的checked状态.
+ * @param checked: 当参数不存在时返回是否是checked状态. 否则设置checked状态.
+ * @return 当获取checked状态时返回 boolean; 当设置状态时返回dom.
+ */
+$('.febsui-radio').radioChecked(checked?:boolean, trigger?:boolean);
 /**
  * @desc 监听变化事件
  */

@@ -50,10 +50,15 @@ export class dom {
   swiper(cb?: (e: any) => void): dom;
   swiperMoving(cb: (percent:number)=>void);
 
+  /** checkbox */
+  isCheckbox(): boolean;
+  checkboxChecked(checked?:boolean, trigger?: boolean): boolean|dom;
+
   /** radio */
   isRadio(): boolean;
   radioGetValue(): string;
   radioSetValue(value: string, trigger?: boolean): dom;
+  radioChecked(checked?:boolean, trigger?: boolean): boolean|dom;
 }
 
 

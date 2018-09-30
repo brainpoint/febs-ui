@@ -61,6 +61,7 @@ window['febsui'] = febsui;
 require('./plugins/disabled');
 
 require('./plugins/actionsheet');
+require('./plugins/checkbox');
 require('./plugins/dialog');
 require('./plugins/popover');
 require('./plugins/switch');

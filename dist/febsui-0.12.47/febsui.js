@@ -2544,8 +2544,8 @@ var _typeof = __webpack_require__(15)["default"];
   /**
    * jquery plugins.
    */
+  __webpack_require__(96);
   __webpack_require__(95);
-  __webpack_require__(94);
 
   var febsui = __webpack_require__(82);
 
@@ -2556,19 +2556,20 @@ var _typeof = __webpack_require__(15)["default"];
   /**
    * jquery plugins.
    */
-  __webpack_require__(93);
+  __webpack_require__(94);
 
   __webpack_require__(92);
+  __webpack_require__(93);
   __webpack_require__(43);
-  __webpack_require__(96);
-  __webpack_require__(99);
-  __webpack_require__(98);
-  __webpack_require__(100);
   __webpack_require__(97);
+  __webpack_require__(100);
+  __webpack_require__(99);
+  __webpack_require__(101);
+  __webpack_require__(98);
 
   return febsui;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(101)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(102)(module)))
 
 /***/ }),
 /* 45 */
@@ -4884,6 +4885,55 @@ $.fn.actionsheetHide = function () {
 "use strict";
 
 
+$.fn.isCheckbox = function () {
+  var _this = typeof this.length === 'undefined' ? $(this) : this;
+
+  if (_this.length >= 1) {
+    var ee = $(this[0]);
+    if (ee.hasClass('febsui-checkbox') || ee[0].nodeName.toLowerCase() == 'input' && ee.attr('type') == 'checkbox') {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+$.fn.checkboxChecked = function (checked, trigger) {
+  var _this = typeof this.length === 'undefined' ? $(this) : this;
+
+  var o = {};
+  for (var i = 0; i < _this.length; i++) {
+    var ee = $(_this[i]);
+    if (ee.isCheckbox()) {
+
+      if (ee.hasClass('febsui-checkbox')) {
+        ee = $(ee.children('input')[0]);
+      }
+
+      if (ee[0]) {
+        if (window.febs.utils.isNull(checked)) {
+          return ee[0].checked;
+        } else {
+          if (!!checked ^ ee[0].checked) {
+            ee[0].checked = checked;
+            if (trigger) {
+              ee.trigger('change');
+            }
+          }
+        }
+      }
+    } // if.
+  } // for.
+  return this;
+};
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 /**
  * 仅返回第一个元素的情况.
  */
@@ -4922,7 +4972,7 @@ $.fn.setDisabled = function (isDisable) {
 };
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4950,7 +5000,7 @@ $.fn.hasVisible = function () {
 };
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5006,7 +5056,7 @@ $.fn._isVisible = function () {
 };
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5385,7 +5435,7 @@ $.fn.popoverHide = function () {
 };
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5455,8 +5505,37 @@ $.fn.radioSetValue = function (value, trigger) {
   return this;
 };
 
+$.fn.radioChecked = function (checked, trigger) {
+  var _this = typeof this.length === 'undefined' ? $(this) : this;
+
+  var o = {};
+  for (var i = 0; i < _this.length; i++) {
+    var ee = $(_this[i]);
+    if (ee.isRadio()) {
+
+      if (ee.hasClass('febsui-radio')) {
+        ee = $(ee.children('input')[0]);
+      }
+
+      if (ee[0]) {
+        if (window.febs.utils.isNull(checked)) {
+          return ee[0].checked;
+        } else {
+          if (!!checked ^ ee[0].checked) {
+            ee[0].checked = checked;
+            if (trigger) {
+              ee.trigger('change');
+            }
+          }
+        }
+      }
+    } // if.
+  } // for.
+  return this;
+};
+
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5926,7 +6005,7 @@ $.fn.swiper = function (cb) {
 };
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6016,7 +6095,7 @@ $.fn.switchDisabled = function (isDisable) {
 };
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6073,7 +6152,7 @@ $.fn.uploaderReset = function () {
 };
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
