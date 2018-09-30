@@ -11,7 +11,7 @@ exports.switch_init_event = switch_init_event;
 function switch_init_event(dom) {
   if (!dom) return;
   
-  dom.click(function(event) {
+  window.febs.dom.addEventListener(dom[0], 'click', function(event) {
     var ee = $(this);
     if (ee.hasClass("febsui-switch-disabled")) {
       return;
@@ -27,6 +27,7 @@ function switch_init_event(dom) {
     if (event) {
       event.stopPropagation();
       event.cancelBubble = true;
+      return false;
     }
   });
 

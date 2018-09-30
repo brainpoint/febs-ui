@@ -13,10 +13,11 @@ function radio_init_event(dom) {
   if (!dom) return;
 
   // 阻止事件传递.
-  $(dom.children('input')[0]).click(function(env){
+  window.febs.dom.addEventListener(dom[0], 'click', function(env){
     if (env) {
       env.stopPropagation();
       env.cancelBubble = true;
+      return false;
     }
   });
   
