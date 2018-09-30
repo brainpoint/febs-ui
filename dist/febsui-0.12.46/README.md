@@ -411,8 +411,15 @@ febsui.page_init(elem, curPage, pageCount, totalCount, pageCallback)
 
 ```html
 
-<div class="febsui-dialog" id="dialog1" data-mask-close="true" style="width: 100px; height:400px;">
-  ...
+<div class="febsui-dialog" id="dialog1" data-mask-close="true">
+  <div class="febsui-dialog-title">标题</div>
+  <div class="febsui-dialog-content" style="width: 100px; height:400px;">
+    ...
+  </div>
+  <ul class="febsui-dialog-buttons">
+    <li style=""><button class="febsui-dialog-cancel">取消</button></li>
+    <li style=""><button class="febsui-dialog-ok">确认</button></li>
+  </ul>
 </div>
 
 ```

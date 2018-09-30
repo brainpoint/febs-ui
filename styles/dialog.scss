@@ -298,9 +298,20 @@ ul {
     display: block;
     border: none;
     max-width: inherit !important;
+    position: relative;
+
+    .febsui-dialog-content {
+      padding-bottom: 46px;
+      overflow: hidden;
+    }
+
+    .febsui-dialog-buttons {
+      margin-left: auto;
+      margin-right: auto;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }  
   }
-  .febsui-dialog-buttons {
-    margin-left: auto;
-    margin-right: auto;
-  }  
 }
