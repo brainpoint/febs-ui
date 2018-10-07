@@ -108,9 +108,10 @@ export function toast_hide();
 /**
 * @desc: 隐藏对话框
 * @param selector: 关闭指定的窗口; null则关闭所有.
+* @param finishCb: 完成时的回调.
 * @return: 
 */
-export function dialog_hide(selector?: any): void;
+export function dialog_hide(selector?: any, finishCb?:()=>{}): void;
 
 /**
  * @desc: 显示警告对话框. (回调函数的上下文为当前窗口)

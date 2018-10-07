@@ -36,7 +36,8 @@ function escape_string(ctx) {
   }
 }
 
-function hide(selector) {
+
+function hide(selector, finishCb) {
   if (selector) {
     setTimeout(function(){
       $(selector).removeClass('febsui-visible').addClass('febsui-invisible');
@@ -46,7 +47,16 @@ function hide(selector) {
         if ($(selector).hasClass('febsui-dialog-init-sys')) {
           setTimeout(function(){
             $(selector).remove();
+            if (finishCb)
+              finishCb();
           }, 300);
+        }
+        else {
+          if (finishCb) {
+            setTimeout(function(){
+                finishCb();
+            }, 300);
+          }
         }
       }
     }, 100);
@@ -67,6 +77,9 @@ function hide(selector) {
     setTimeout(function(){
       for (var i = 0; i < ees.length; i++) {
         ees[i].remove();
+      }
+      if (finishCb) {
+        finishCb();
       }
     }, 300);
   }
