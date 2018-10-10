@@ -17,6 +17,10 @@
   line-height: 22px;
 }
 
+.febsui-checkbox input {
+  display: inline-block;
+}
+
 .febsui-checkbox input,
 .febsui-checkbox input:checked {
   position: absolute;
@@ -64,7 +68,7 @@
 }
 
 .febsui-checkbox .febsui-checkbox-mark:before {
-  content: "";
+  content: " ";
   position: absolute;
   box-sizing: border-box;
   background-clip: padding-box;
@@ -77,7 +81,7 @@
 }
 
 .febsui-checkbox .febsui-checkbox-mark:after {
-  content: "";
+  content: " ";
   position: absolute;
   top: 7px;
   left: 5px;

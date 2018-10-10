@@ -15,6 +15,10 @@
   line-height: 22px;
 }
 
+.febsui-radio input {
+  display: inline-block;
+}
+
 .febsui-radio input,
 .febsui-radio input:checked {
   position: absolute;
@@ -62,7 +66,7 @@
 }
 
 .febsui-radio .febsui-radio-mark:before {
-  content: "";
+  content: " ";
   position: absolute;
   box-sizing: border-box;
   background-clip: padding-box;
@@ -73,7 +77,7 @@
 }
 
 .febsui-radio .febsui-radio-mark:after {
-  content: "";
+  content: " ";
   position: absolute;
   top: 7px;
   left: 5px;

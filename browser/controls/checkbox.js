@@ -74,7 +74,7 @@ function checkbox_init(elem) {
       dd.append('<div class="febsui-checkbox-mark"></div>');
 
       // ie. for checked.
-      if (window.febs.utils.browserIsIE()) {
+      if (window.febs.utils.browserIEVer() <= 9) {
         dom.css('display', 'none');
       } // if.
 
