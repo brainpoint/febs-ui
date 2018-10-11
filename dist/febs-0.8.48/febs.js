@@ -349,37 +349,52 @@ exports.getDate2 = utils.getDate2;
 exports.mergeMap = utils.mergeMap;
 
 /**
-* @desc: 判断参数是否是null,undefined,NaN
-* @return: boolean
-*/
+ * @desc: 判断参数是否是null,undefined,NaN
+ * @return: boolean
+ */
 exports.isNull = utils.isNull;
 
 /**
-* @desc: 判断是否是ie.
-*/
+ * @desc: 判断是否是ie.
+ */
 exports.browserIsIE = function () {
   if (!!window.ActiveXObject || "ActiveXObject" in window) return true;else return false;
 };
 
 /**
-* @desc: 判断ie版本号.
-* @return number. 非ie返回Number.MAX_SAFE_INTEGER.
-*/
+ * @desc: 判断ie版本号.
+ * @return number. 非ie返回Number.MAX_SAFE_INTEGER.
+ *        如果是 edge 返回 'edge'
+ */
 exports.browserIEVer = function () {
   if (!exports.browserIsIE()) return _Number$MAX_SAFE_INTEGER;
 
-  var b_version = navigator.appVersion;
-  var version = b_version.split(";");
-  var trim_Version = version[1].replace(/[ ]/g, "");
-  if (!trim_Version || trim_Version.length < 5) {
-    var userAgent = navigator.userAgent;
-    userAgent = userAgent.toLowerCase();
-    if (userAgent.indexOf('rv:11.') > 0) return 11;
-    if (userAgent.indexOf('rv:12.') > 0) return 12;
-    return _Number$MAX_SAFE_INTEGER;
+  var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+  var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器  
+  var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器  
+  var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+  if (isIE) {
+    var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+    reIE.test(userAgent);
+    var fIEVersion = parseFloat(RegExp["$1"]);
+    if (fIEVersion == 7) {
+      return 7;
+    } else if (fIEVersion == 8) {
+      return 8;
+    } else if (fIEVersion == 9) {
+      return 9;
+    } else if (fIEVersion == 10) {
+      return 10;
+    } else {
+      return 6; //IE版本<=7
+    }
+  } else if (isEdge) {
+    return 'edge'; //edge
+  } else if (isIE11) {
+    return 11; //IE11  
+  } else {
+    _Number$MAX_SAFE_INTEGER;; //不是ie浏览器
   }
-
-  return parseInt(trim_Version[4]);
 };
 
 /**
@@ -1680,7 +1695,7 @@ exports.DefaultTimeout = 5000;
 
 exports.transfer = function (window) {
   var xhr;
-  if (window.XDomainRequest) xhr = new XDomainRequest();else if (window.XMLHttpRequest) xhr = new XMLHttpRequest();else {
+  if (window.XMLHttpRequest) xhr = new XMLHttpRequest();else if (window.XDomainRequest) xhr = new XDomainRequest();else {
     var XmlHttpVersions = new Array("MSXML2.XMLHTTP.6.0", "MSXML2.XMLHTTP.5.0", "MSXML2.XMLHTTP.4.0", "MSXML2.XMLHTTP.3.0", "MSXML2.XMLHTTP", "Microsoft.XMLHTTP");
     for (var i = 0; i < XmlHttpVersions.length && !xmlHttp; i++) {
       try {
@@ -10347,7 +10362,7 @@ function ajax(ctx) {
         xhr.setRequestHeader(key, element);
       }
     } else {
-      console.log('can\'t set headers');
+      console.log('ajax can\'t set headers');
     }
   }
 
@@ -10834,8 +10849,8 @@ if (false) {
         request.headers.forEach(function (value, name) {
           xhr.setRequestHeader(name, value);
         });
-      } else if (request.headers) {
-        console.log('can\'t set headers');
+      } else if (request.headers && request.headers.map.length > 0) {
+        console.log('fetch can\'t set headers');
       }
 
       xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit);
