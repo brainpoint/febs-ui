@@ -2,6 +2,7 @@
 exports.resizeDialog = resizeDialog;
 
 var maskPrevent = require('../domHelper').maskPreventEvent;
+var dialogs = require('../controls/dialog');
 
 
 /**
@@ -45,12 +46,14 @@ $.fn.isDialog = function() {
 $.fn.dialogShow = function() {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
+  dialogs.dialog_init(_this);
 
   for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
     if (ee.hasClass('febsui-dialog-container')) {
       ee = ee.parent();
     }
+
     if (ee.hasClass('febsui-dialog-init')) {
 
       var domid = ee.attr('id');

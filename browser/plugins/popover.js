@@ -1,5 +1,6 @@
 
 var maskPrevent = require('../domHelper').maskPreventEvent;
+var popover = require('../controls/popover');
 
 function resizePopover() {
   $('.febsui-popover').popoverHide();
@@ -67,6 +68,7 @@ $.fn.popoverIsVisible = function() {
 $.fn.popoverShow = function(mask, attachNode) {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
+  popover.popover_init(_this);
 
   var viewport = window.febs.dom.getViewPort();
   var docport = window.febs.dom.getDocumentPort();

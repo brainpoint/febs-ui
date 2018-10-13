@@ -1,5 +1,6 @@
 
 var maskPrevent = require('../domHelper').maskPreventEvent;
+var actionsheet = require('../controls/actionsheet');
 
 // function resizeActionsheet() {
 //   var ee = $('actionsheet');
@@ -71,6 +72,7 @@ $.fn.actionsheetIsVisible = function() {
 $.fn.actionsheetShow = function() {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
+  actionsheet.actionsheet_init(_this);
 
   for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
