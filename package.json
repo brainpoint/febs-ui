@@ -1,7 +1,7 @@
 {
   "description": "Some UI in common use",
   "dependencies": {
-    "febs-browser": "^0.8.48"
+    "febs-browser": "^0.8.50"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -83,5 +83,5 @@
     "prepare": "node scripts/webpack.build.js"
   },
   "name": "febs-ui",
-  "version": "0.12.54"
+  "version": "0.12.55"
 }
