@@ -19,8 +19,8 @@ export class dom {
 
   /** dialog */
   isDialog(): boolean;
-  dialogShow(): dom;
-  dialogHide(): dom;
+  dialogShow(cb:()=>{}): dom;
+  dialogHide(cb:()=>{}): dom;
 
   /** switch */
   isSwitch(): boolean;

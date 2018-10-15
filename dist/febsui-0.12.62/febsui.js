@@ -2106,6 +2106,8 @@ function swiper_animation() {
   if (dataAutotick > 0 && this.isVisible()) {
     // un visible can't do next.
     setTimeout(swiper_animation.bind(this), dataAutotick);
+  } else {
+    this.removeClass('febsui-swiper-animate-timer');
   }
 }
 
@@ -2218,6 +2220,7 @@ function swiper_init(elem) {
     dataShowDots = window.febs.string.isEmpty(dataShowDots) ? true : 'true' == dataShowDots;
     dataLoop = window.febs.string.isEmpty(dataLoop) ? true : 'true' == dataLoop;
 
+    dom.children('.febsui-swiper-dots').remove();
     var domChildren = dom.children();
     {
 
@@ -2228,11 +2231,18 @@ function swiper_init(elem) {
       var page0;
 
       var needDealLoopPage = true;
+      var reInit = false;
 
       if (domChildren.hasClass('febsui-swiper-pages')) {
         pages = $(domChildren[0]);
-        domChildren = domChildren.children();
-        needDealLoopPage = false;
+
+        var loopPage = pages.children('.febsui-swiper-page-loop');
+        loopPage.remove();
+
+        domChildren = pages.children();
+        // needDealLoopPage = false;
+        needDealLoopPage = true;
+        reInit = true;
       } else {
         pages = $("<div class='febsui-swiper-pages'></div>");
       }
@@ -2250,7 +2260,7 @@ function swiper_init(elem) {
           page0 = domChildren[j];
           var page0Obj = $(page0);
 
-          if (needDealLoopPage) {
+          if (needDealLoopPage && !reInit) {
             pages.append(domChildren[j]);
           }
           pagesCount++;
@@ -2263,8 +2273,8 @@ function swiper_init(elem) {
 
       // loop.
       if (needDealLoopPage && pagesCount > 1 && dataLoop) {
-        pages.prepend(page0.cloneNode(true));
-        pages.append(page1.cloneNode(true));
+        pages.prepend($(page0.cloneNode(true)).addClass('febsui-swiper-page-loop'));
+        pages.append($(page1.cloneNode(true)).addClass('febsui-swiper-page-loop'));
       }
 
       if (needDealLoopPage) {
@@ -2294,8 +2304,10 @@ function swiper_init(elem) {
           dots.children('span').css('background-color', dataDotColor);
         }
 
-        dom.html('');
-        dom.append(pages);
+        if (!reInit) dom.html('');
+        if (!reInit) {
+          dom.append(pages);
+        }
         dom.append(dots);
         dom.attr('data-current', 0);
 
@@ -2359,38 +2371,40 @@ function swiper_init(elem) {
 
 
       // 记录最大的偏移位置.
-      var maxOffset = 0;
-      var pageChildren = pages.children('.febsui-swiper-page');
-      var pagesLength = dataLoop ? pageChildren.length - 1 : pageChildren.length;
-      if (dom.hasClass('febsui-swiper-vertical')) {
-        for (var j = 0; j < pagesLength; j++) {
-          maxOffset += pageChildren[j].clientHeight;
+      setTimeout(function () {
+        var maxOffset = 0;
+        var pageChildren = pages.children('.febsui-swiper-page');
+        var pagesLength = dataLoop ? pageChildren.length - 1 : pageChildren.length;
+        if (dom.hasClass('febsui-swiper-vertical')) {
+          for (var j = 0; j < pagesLength; j++) {
+            maxOffset += pageChildren[j].clientHeight;
+          }
+          maxOffset -= dom[0].clientHeight;
+        } else {
+          for (var j = 0; j < pagesLength; j++) {
+            maxOffset += pageChildren[j].clientWidth;
+          }
+          maxOffset -= dom[0].clientWidth;
+        } // if.
+
+        if (maxOffset < 0) {
+          maxOffset = 0;
         }
-        maxOffset -= dom[0].clientHeight;
-      } else {
-        for (var j = 0; j < pagesLength; j++) {
-          maxOffset += pageChildren[j].clientWidth;
+
+        if (dataAlign != 'center') {
+          maxOffset += parseInt(dataAlign);
         }
-        maxOffset -= dom[0].clientWidth;
-      } // if.
+        dom[0].__swiper_maxOffset = maxOffset;
+        pages[0].__swiper_maxOffset = maxOffset;
 
-      if (maxOffset < 0) {
-        maxOffset = 0;
-      }
+        if (needDealLoopPage) {
+          pages[0].__swiper_loop = !!dataLoop;
 
-      if (dataAlign != 'center') {
-        maxOffset += parseInt(dataAlign);
-      }
-      dom[0].__swiper_maxOffset = maxOffset;
-      pages[0].__swiper_maxOffset = maxOffset;
-
-      if (needDealLoopPage) {
-        pages[0].__swiper_loop = !!dataLoop;
-
-        setTimeout(function () {
-          this.dom.swiperTo(this.dataActiveIndex, false);
-        }.bind({ dom: dom, dataActiveIndex: dataActiveIndex }), 100);
-      }
+          setTimeout(function () {
+            this.dom.swiperTo(this.dataActiveIndex, false);
+          }.bind({ dom: dom, dataActiveIndex: dataActiveIndex }), 100);
+        }
+      }, 5);
     }
   } // for.
 }
@@ -2616,6 +2630,8 @@ exports.resizeDialog = resizeDialog;
 var maskPrevent = __webpack_require__(0).maskPreventEvent;
 var dialogs = __webpack_require__(14);
 
+var dialogAnimateDurtion = 300;
+
 /**
 * @desc: 屏幕旋转事件.
 */
@@ -2654,7 +2670,7 @@ $.fn.isDialog = function () {
   return false;
 };
 
-$.fn.dialogShow = function () {
+$.fn.dialogShow = function (cb) {
 
   var _this = typeof this.length === 'undefined' ? $(this) : this;
   dialogs.dialog_init(_this);
@@ -2685,11 +2701,15 @@ $.fn.dialogShow = function () {
     }
   }
 
+  if (cb) {
+    if (_this.length > 0) setTimeout(cb, dialogAnimateDurtion + 1);else cb();
+  }
+
   resizeDialog();
   return this;
 };
 
-$.fn.dialogHide = function () {
+$.fn.dialogHide = function (cb) {
 
   var _this = typeof this.length === 'undefined' ? $(this) : this;
 
@@ -2709,6 +2729,11 @@ $.fn.dialogHide = function () {
       ee.removeClass('febsui-visible').addClass('febsui-invisible');
     }
   }
+
+  if (cb) {
+    if (_this.length > 0) setTimeout(cb, dialogAnimateDurtion + 1);else cb();
+  }
+
   return this;
 };
 
@@ -5867,6 +5892,10 @@ $.fn.swiperTo = function (index, animation, trigger, directNext) {
         indexp = nindex;
       }
 
+      if (pages.length < indexp + 1) {
+        continue;
+      }
+
       for (var j = 0; j < indexp; j++) {
         if (directionVertical) {
           offset += pages[j].clientHeight;
@@ -5895,7 +5924,7 @@ $.fn.swiperTo = function (index, animation, trigger, directNext) {
 
         if (directionVertical) {
           if (align == 'center') {
-            offset -= (elem[0].clientHeight - pages[indexp].clientHeight) / 2;
+            offset -= (elem[0].clientHeight - (pages[indexp] && pages[indexp].clientHeight) || 0) / 2;
           } else {
             if (offset > elem[0].__swiper_maxOffset) {
               offset = elem[0].__swiper_maxOffset;
@@ -5917,7 +5946,7 @@ $.fn.swiperTo = function (index, animation, trigger, directNext) {
           ie9_animation_obj[ie9_animation_obj.length - 1].offsetCur = offsetCur;
         } else {
           if (align == 'center') {
-            offset -= (elem[0].clientWidth - pages[indexp].clientWidth) / 2;
+            offset -= (elem[0].clientWidth - (pages[indexp] && pages[indexp].clientWidth) || 0) / 2;
           } else {
             if (offset > elem[0].__swiper_maxOffset) {
               offset = elem[0].__swiper_maxOffset;
@@ -5941,7 +5970,7 @@ $.fn.swiperTo = function (index, animation, trigger, directNext) {
       } else {
         if (directionVertical) {
           if (align == 'center') {
-            offset -= (elem[0].clientHeight - pages[indexp].clientHeight) / 2.0;
+            offset -= (elem[0].clientHeight - (pages[indexp] && pages[indexp].clientHeight) || 0) / 2.0;
           } else {
             if (offset > elem[0].__swiper_maxOffset) {
               offset = elem[0].__swiper_maxOffset;
@@ -5955,7 +5984,7 @@ $.fn.swiperTo = function (index, animation, trigger, directNext) {
           pagesContainer.css('transform', 'translate3d(0px, ' + -offset + 'px, 0px)');
         } else {
           if (align == 'center') {
-            offset -= (elem[0].clientWidth - pages[indexp].clientWidth) / 2.0;
+            offset -= (elem[0].clientWidth - (pages[indexp] && pages[indexp].clientWidth) || 0) / 2.0;
           } else {
             if (offset > elem[0].__swiper_maxOffset) {
               offset = elem[0].__swiper_maxOffset;

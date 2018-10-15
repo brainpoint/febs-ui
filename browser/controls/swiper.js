@@ -497,6 +497,8 @@ function swiper_animation() {
   dataAutotick = dataAutotick === 0 ? 0 : (dataAutotick ? dataAutotick : default_swiper_auto);
   if (dataAutotick > 0 && this.isVisible()) { // un visible can't do next.
     setTimeout(swiper_animation.bind(this), dataAutotick);
+  } else {
+    this.removeClass('febsui-swiper-animate-timer');
   }
 }
 
@@ -609,6 +611,7 @@ function swiper_init(elem) {
     dataShowDots = window.febs.string.isEmpty(dataShowDots) ? true : ('true' == dataShowDots);
     dataLoop = window.febs.string.isEmpty(dataLoop) ? true : ('true' == dataLoop);
 
+    dom.children('.febsui-swiper-dots').remove();
     var domChildren = dom.children();
     {
 
@@ -619,11 +622,19 @@ function swiper_init(elem) {
       var page0;
 
       var needDealLoopPage = true;
+      var reInit = false;
 
       if (domChildren.hasClass('febsui-swiper-pages')) {
         pages = $(domChildren[0]);
-        domChildren = domChildren.children();
-        needDealLoopPage = false;
+        
+        let loopPage = pages.children('.febsui-swiper-page-loop');
+        loopPage.remove();
+
+
+        domChildren = pages.children();
+        // needDealLoopPage = false;
+        needDealLoopPage = true;
+        reInit = true;
       } else {
         pages = $("<div class='febsui-swiper-pages'></div>");
       }
@@ -641,7 +652,7 @@ function swiper_init(elem) {
           page0 = domChildren[j];
           var page0Obj = $(page0);
 
-          if (needDealLoopPage) {
+          if (needDealLoopPage && !reInit) {
             pages.append(domChildren[j]);
           }
           pagesCount ++;
@@ -654,8 +665,8 @@ function swiper_init(elem) {
 
       // loop.
       if (needDealLoopPage && pagesCount > 1 && dataLoop) {
-        pages.prepend(page0.cloneNode(true));
-        pages.append(page1.cloneNode(true));
+        pages.prepend($(page0.cloneNode(true)).addClass('febsui-swiper-page-loop'));
+        pages.append($(page1.cloneNode(true)).addClass('febsui-swiper-page-loop'));
       }
 
       if (needDealLoopPage) {
@@ -687,8 +698,11 @@ function swiper_init(elem) {
           dots.children('span').css('background-color', dataDotColor);
         }
 
-        dom.html('');
-        dom.append(pages);
+        if (!reInit)
+          dom.html('');
+        if (!reInit) {
+          dom.append(pages);
+        }
         dom.append(dots);
         dom.attr('data-current', 0);
 
@@ -754,39 +768,41 @@ function swiper_init(elem) {
 
 
       // 记录最大的偏移位置.
-      var maxOffset = 0;
-      var pageChildren = pages.children('.febsui-swiper-page');
-      var pagesLength = dataLoop? pageChildren.length-1: pageChildren.length;
-      if (dom.hasClass('febsui-swiper-vertical')) {
-        for (var j = 0; j < pagesLength; j++) {
-          maxOffset += pageChildren[j].clientHeight;
+      setTimeout(function(){
+        var maxOffset = 0;
+        var pageChildren = pages.children('.febsui-swiper-page');
+        var pagesLength = dataLoop? pageChildren.length-1: pageChildren.length;
+        if (dom.hasClass('febsui-swiper-vertical')) {
+          for (var j = 0; j < pagesLength; j++) {
+            maxOffset += pageChildren[j].clientHeight;
+          }
+          maxOffset -= dom[0].clientHeight;
         }
-        maxOffset -= dom[0].clientHeight;
-      }
-      else {
-        for (var j = 0; j < pagesLength; j++) {
-          maxOffset += pageChildren[j].clientWidth;
+        else {
+          for (var j = 0; j < pagesLength; j++) {
+            maxOffset += pageChildren[j].clientWidth;
+          }
+          maxOffset -= dom[0].clientWidth;
+        } // if.
+  
+        if (maxOffset < 0) {
+          maxOffset = 0;
         }
-        maxOffset -= dom[0].clientWidth;
-      } // if.
- 
-      if (maxOffset < 0) {
-        maxOffset = 0;
-      }
 
-      if (dataAlign != 'center') {
-        maxOffset += parseInt(dataAlign);
-      }
-      dom[0].__swiper_maxOffset = maxOffset;
-      pages[0].__swiper_maxOffset = maxOffset;
+        if (dataAlign != 'center') {
+          maxOffset += parseInt(dataAlign);
+        }
+        dom[0].__swiper_maxOffset = maxOffset;
+        pages[0].__swiper_maxOffset = maxOffset;
 
-      if (needDealLoopPage) {
-        pages[0].__swiper_loop = !!dataLoop;
+        if (needDealLoopPage) {
+          pages[0].__swiper_loop = !!dataLoop;
 
-        setTimeout(function() {
-          this.dom.swiperTo(this.dataActiveIndex, false);
-        }.bind({dom,dataActiveIndex}), 100);
-      }
+          setTimeout(function() {
+            this.dom.swiperTo(this.dataActiveIndex, false);
+          }.bind({dom,dataActiveIndex}), 100);
+        }
+      }, 5);
     }
   } // for.
 }

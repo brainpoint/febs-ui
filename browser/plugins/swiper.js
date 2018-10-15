@@ -315,6 +315,10 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
         indexp = nindex;
       }
 
+      if (pages.length < indexp+1) {
+        continue;
+      }
+
       for (var j = 0; j < indexp; j++) {
         if (directionVertical) {
           offset += pages[j].clientHeight;
@@ -344,7 +348,7 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
 
         if (directionVertical) {
           if (align == 'center') {
-            offset -= (elem[0].clientHeight - pages[indexp].clientHeight) / 2;
+            offset -= (elem[0].clientHeight - (pages[indexp]&&pages[indexp].clientHeight)||0) / 2;
           } else {
             if (offset > elem[0].__swiper_maxOffset) {
               offset = elem[0].__swiper_maxOffset;
@@ -365,7 +369,7 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
         }
         else {
           if (align == 'center') {
-            offset -= (elem[0].clientWidth - pages[indexp].clientWidth) / 2;
+            offset -= (elem[0].clientWidth - (pages[indexp]&&pages[indexp].clientWidth)||0) / 2;
           } else {
             if (offset > elem[0].__swiper_maxOffset) {
               offset = elem[0].__swiper_maxOffset;
@@ -388,7 +392,7 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
       else {
         if (directionVertical) {
           if (align == 'center') {
-            offset -= (elem[0].clientHeight - pages[indexp].clientHeight) / 2.0;
+            offset -= (elem[0].clientHeight - (pages[indexp]&&pages[indexp].clientHeight)||0) / 2.0;
           } else {
             if (offset > elem[0].__swiper_maxOffset) {
               offset = elem[0].__swiper_maxOffset;
@@ -403,7 +407,7 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
         }
         else {
           if (align == 'center') {
-            offset -= (elem[0].clientWidth - pages[indexp].clientWidth) / 2.0;
+            offset -= (elem[0].clientWidth - (pages[indexp]&&pages[indexp].clientWidth)||0) / 2.0;
           } else {
             if (offset > elem[0].__swiper_maxOffset) {
               offset = elem[0].__swiper_maxOffset;

@@ -4,6 +4,7 @@ exports.resizeDialog = resizeDialog;
 var maskPrevent = require('../domHelper').maskPreventEvent;
 var dialogs = require('../controls/dialog');
 
+var dialogAnimateDurtion = 300;
 
 /**
 * @desc: 屏幕旋转事件.
@@ -43,7 +44,7 @@ $.fn.isDialog = function() {
   return false;
 }
 
-$.fn.dialogShow = function() {
+$.fn.dialogShow = function(cb) {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
   dialogs.dialog_init(_this);
@@ -76,11 +77,18 @@ $.fn.dialogShow = function() {
     }
   }
 
+  if (cb) {
+    if (_this.length > 0)
+      setTimeout(cb, dialogAnimateDurtion+1);
+    else
+      cb();
+  }
+
   resizeDialog();
   return this;
 }
 
-$.fn.dialogHide = function() {
+$.fn.dialogHide = function(cb) {
 
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
 
@@ -101,5 +109,13 @@ $.fn.dialogHide = function() {
       ee.removeClass('febsui-visible').addClass('febsui-invisible');
     }
   }
+
+  if (cb) {
+    if (_this.length > 0)
+      setTimeout(cb, dialogAnimateDurtion+1);
+    else
+      cb();
+  }
+
   return this;
 }

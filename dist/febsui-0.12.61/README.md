@@ -448,12 +448,12 @@ $('.febsui-dialog').isDialog();
 /**
  * @desc 显示dialog
  */
-$('.febsui-dialog').dialogShow();
+$('.febsui-dialog').dialogShow(cb:()=>{});
 
 /**
  * @desc 隐藏dialog;
  */
-$('.febsui-dialog').dialogHide();
+$('.febsui-dialog').dialogHide(cb:()=>{});
 ```
 
 
