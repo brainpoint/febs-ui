@@ -824,6 +824,14 @@ ul {
         background-position: top;
         background-image: linear-gradient(180deg, #ccc 50%, transparent 50%, transparent); } }
 
+.febsui-dialog .febsui-dialog-container .febsui-dialog-ok {
+  cursor: pointer;
+  font-weight: 400; }
+
+.febsui-dialog .febsui-dialog-container .febsui-dialog-cancel {
+  cursor: pointer;
+  font-weight: 600; }
+
 /** black bg */
 .febsui-dialog .febsui-dialog-container-black {
   background-color: rgba(0, 0, 0, 0.8);
@@ -857,14 +865,6 @@ ul {
     .febsui-dialog .febsui-dialog-container-black {
       background-color: #292929; } }
 
-.febsui-dialog .febsui-dialog-container .febsui-dialog-ok {
-  cursor: pointer;
-  font-weight: 400; }
-
-.febsui-dialog .febsui-dialog-container .febsui-dialog-cancel {
-  cursor: pointer;
-  font-weight: 600; }
-
 @media only screen and (min-width: 1170px) {
   .febsui-dialog .febsui-dialog-container {
     margin: 12em auto; } }
@@ -881,7 +881,7 @@ ul {
   position: relative; }
   .febsui-dialog.febsui-dialog-custom .febsui-dialog-container .febsui-dialog-content {
     padding-bottom: 46px;
-    overflow: hidden; }
+    overflow: auto; }
   .febsui-dialog.febsui-dialog-custom .febsui-dialog-container .febsui-dialog-buttons {
     margin-left: auto;
     margin-right: auto;
@@ -889,6 +889,12 @@ ul {
     left: 0;
     right: 0;
     bottom: 0; }
+
+.febsui-dialog.febsui-dialog-custom .febsui-dialog-container .febsui-dialog-buttons li {
+  background-color: #ffffff; }
+
+.febsui-dialog.febsui-dialog-custom .febsui-dialog-container.febsui-dialog-container-black .febsui-dialog-buttons li {
+  background-color: #222222; }
 
 /* switch
 /****************************************************/

@@ -247,6 +247,17 @@ ul {
   }
 }
 
+.febsui-dialog .febsui-dialog-container {
+  .febsui-dialog-ok {
+    cursor: pointer;
+    font-weight: 400;
+  }
+  .febsui-dialog-cancel {
+    cursor: pointer;
+    font-weight: 600;
+  }
+}
+
 /** black bg */
 
 .febsui-dialog .febsui-dialog-container-black {
@@ -267,17 +278,6 @@ ul {
 
   @supports not (backdrop-filter: blur(2px)) {
     background-color: $blackBgColorNotBlur;
-  }
-}
-
-.febsui-dialog .febsui-dialog-container {
-  .febsui-dialog-ok {
-    cursor: pointer;
-    font-weight: 400;
-  }
-  .febsui-dialog-cancel {
-    cursor: pointer;
-    font-weight: 600;
   }
 }
 
@@ -302,7 +302,7 @@ ul {
 
     .febsui-dialog-content {
       padding-bottom: 46px;
-      overflow: hidden;
+      overflow: auto;
     }
 
     .febsui-dialog-buttons {
@@ -313,5 +313,17 @@ ul {
       right: 0;
       bottom: 0;
     }  
+  }
+
+  .febsui-dialog-container {
+    .febsui-dialog-buttons li {
+      background-color: #ffffff;
+    }
+
+    &.febsui-dialog-container-black {
+      .febsui-dialog-buttons li {
+        background-color: #222222;
+      }
+    }
   }
 }
