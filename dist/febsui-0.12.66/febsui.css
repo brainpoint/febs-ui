@@ -545,7 +545,7 @@ label {
   left: 0;
   top: 0;
   width: 100%;
-  z-index: 20001;
+  z-index: 30001;
   touch-action: none;
   pointer-events: none; }
   .febsui-toast .febsui-toast-container {
@@ -882,6 +882,8 @@ ul {
   .febsui-dialog.febsui-dialog-custom .febsui-dialog-container .febsui-dialog-content {
     padding-bottom: 46px;
     overflow: auto; }
+  .febsui-dialog.febsui-dialog-custom .febsui-dialog-container.febsui-dialog-container-noButtons .febsui-dialog-content {
+    padding-bottom: 12px; }
   .febsui-dialog.febsui-dialog-custom .febsui-dialog-container .febsui-dialog-buttons {
     margin-left: auto;
     margin-right: auto;

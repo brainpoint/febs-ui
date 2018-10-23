@@ -305,6 +305,12 @@ ul {
       overflow: auto;
     }
 
+    &.febsui-dialog-container-noButtons {
+      .febsui-dialog-content {
+        padding-bottom: 12px;
+      }  
+    }
+    
     .febsui-dialog-buttons {
       margin-left: auto;
       margin-right: auto;

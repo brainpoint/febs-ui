@@ -703,6 +703,11 @@ function dialog_init(elem) {
     if (!dom.hasClass('febsui-dialog-init')) {
       dom.addClass('febsui-dialog-container').removeClass('febsui-dialog');
 
+      // 判断是否有按钮.
+      if (!dom.children('.febsui-dialog-buttons')[0]) {
+        dom.addClass('febsui-dialog-container-noButtons');
+      }
+
       var domid = dom.attr('id');
       if (febs.string.isEmpty(domid)) {
         throw new Error('must have a "id" attribute in custom febsui-dialog');
@@ -2695,7 +2700,8 @@ $.fn.dialogShow = function (cb) {
         ee.removeClass('febsui-mask');
       }
 
-      maskPrevent(ee);
+      // TODO: 临时关闭.
+      // maskPrevent(ee);
 
       ee.removeClass('febsui-invisible').addClass('febsui-visible');
     }

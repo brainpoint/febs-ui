@@ -71,7 +71,8 @@ $.fn.dialogShow = function(cb) {
         ee.removeClass('febsui-mask');
       }
 
-      maskPrevent(ee);
+      // TODO: 临时关闭.
+      // maskPrevent(ee);
 
       ee.removeClass('febsui-invisible').addClass('febsui-visible');
     }
