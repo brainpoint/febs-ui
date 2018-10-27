@@ -62,6 +62,8 @@ $.fn.dialogShow = function(cb) {
         ee = $('.febsui-dialog[data-id="'+domid+'"]');
         if (!ee[0])
           continue;
+        ee.removeClass('febsui-invisible');
+        ee = ee.parent();
       }
 
       if (!$('.febsui-mask').hasVisible()) {
@@ -105,6 +107,7 @@ $.fn.dialogHide = function(cb) {
         ee = $('.febsui-dialog[data-id="'+domid+'"]');
         if (!ee[0])
           continue;
+        ee = ee.parent();
       }
       
       ee.removeClass('febsui-visible').addClass('febsui-invisible');
