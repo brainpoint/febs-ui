@@ -591,8 +591,6 @@ function swiper_init(elem) {
       continue;
     }
 
-    dom.addClass('febsui-swiper-inited');
-
     // attri data.
     var dataActiveIndex = parseInt(dom.attr('data-current')) || 0;
     var dataShowDots = dom.attr('data-dots');
@@ -698,25 +696,9 @@ function swiper_init(elem) {
           dots.children('span').css('background-color', dataDotColor);
         }
 
-        if (!reInit)
-          dom.html('');
-        if (!reInit) {
-          dom.append(pages);
-        }
-        dom.append(dots);
-        dom.attr('data-current', 0);
-
-        if (dom.hasClass('febsui-swiper-vertical')) {
-          pages[0].__swiper_vertical = true;
-          pages.css('touch-action', 'pan-y');
-          dom.css('touch-action', 'pan-y');
-        } else {
-          // dom.css('touch-action', 'pan-x');
-        }
-
         // 解决小数问题.
         var swiperPageArray = pages.children('.febsui-swiper-page');
-        setTimeout(function(){
+        (function(){
           for (var j = 0; j < this.childPages.length; j++) {
             if ($(this.childPages[j]).hasClass('febsui-swiper-page')) {
               var page0Obj = $(this.childPages[j]);
@@ -757,7 +739,23 @@ function swiper_init(elem) {
               }
             }
           }
-        }.bind({childPages:swiperPageArray, childNeedDealLoopPage:needDealLoopPage, childDom: dom}), 0);
+        }).bind({childPages:swiperPageArray, childNeedDealLoopPage:needDealLoopPage, childDom: dom})();
+
+        if (!reInit)
+          dom.html('');
+        if (!reInit) {
+          dom.append(pages);
+        }
+        dom.append(dots);
+        dom.attr('data-current', 0);
+
+        if (dom.hasClass('febsui-swiper-vertical')) {
+          pages[0].__swiper_vertical = true;
+          pages.css('touch-action', 'pan-y');
+          dom.css('touch-action', 'pan-y');
+        } else {
+          // dom.css('touch-action', 'pan-x');
+        }
 
         setTimeout(function(){
           this.addClass('febsui-swiper-animation');
@@ -766,43 +764,44 @@ function swiper_init(elem) {
         swiper_init_event(dom);
       } // if.
 
+      dom.addClass('febsui-swiper-inited');
 
       // 记录最大的偏移位置.
       setTimeout(function(){
         var maxOffset = 0;
-        var pageChildren = pages.children('.febsui-swiper-page');
-        var pagesLength = dataLoop? pageChildren.length-1: pageChildren.length;
-        if (dom.hasClass('febsui-swiper-vertical')) {
+        var pageChildren = this.pages.children('.febsui-swiper-page');
+        var pagesLength = this.dataLoop? pageChildren.length-1: pageChildren.length;
+        if (this.dom.hasClass('febsui-swiper-vertical')) {
           for (var j = 0; j < pagesLength; j++) {
             maxOffset += pageChildren[j].clientHeight;
           }
-          maxOffset -= dom[0].clientHeight;
+          maxOffset -= this.dom[0].clientHeight;
         }
         else {
           for (var j = 0; j < pagesLength; j++) {
             maxOffset += pageChildren[j].clientWidth;
           }
-          maxOffset -= dom[0].clientWidth;
+          maxOffset -= this.dom[0].clientWidth;
         } // if.
   
         if (maxOffset < 0) {
           maxOffset = 0;
         }
 
-        if (dataAlign != 'center') {
-          maxOffset += parseInt(dataAlign);
+        if (this.dataAlign != 'center') {
+          maxOffset += parseInt(this.dataAlign);
         }
-        dom[0].__swiper_maxOffset = maxOffset;
-        pages[0].__swiper_maxOffset = maxOffset;
+        this.dom[0].__swiper_maxOffset = maxOffset;
+        this.pages[0].__swiper_maxOffset = maxOffset;
 
-        if (needDealLoopPage) {
-          pages[0].__swiper_loop = !!dataLoop;
+        // if (needDealLoopPage) {
+          this.pages[0].__swiper_loop = !!this.dataLoop;
 
           setTimeout(function() {
             this.dom.swiperTo(this.dataActiveIndex, false);
-          }.bind({dom,dataActiveIndex}), 100);
-        }
-      }, 5);
+          }.bind({dom:this.dom,dataActiveIndex: this.dataActiveIndex}), 100);
+        // }
+      }.bind({dom, pages, dataLoop, dataAlign, dataActiveIndex}), 1);
     }
   } // for.
 }

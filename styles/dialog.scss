@@ -67,7 +67,9 @@
 <div class="febsui-dialog febsui-dialog-custom" role="alert">
   <div style="" class="febsui-dialog-container">
     <div class="febsui-dialog-content">
-      {{html}}
+      <div>
+        {{html}}
+      </div>
     </div>
     <ul class="febsui-dialog-buttons">
       <li><button class="febsui-dialog-cancel">cancel</button></li>
@@ -205,6 +207,9 @@ ul {
       display: table;
       clear: both;
     }
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+
     li {
       float: left;
       width: 50%;
@@ -293,22 +298,29 @@ ul {
     margin: 0;
     margin-left: auto;
     margin-right: auto;
-    /* overflow: auto;
-    max-height: 80%; */
+    overflow: hidden;
+    // max-height: initial;
     display: block;
     border: none;
     max-width: inherit !important;
     position: relative;
 
-    .febsui-dialog-content {
-      padding-bottom: 46px;
+    .febsui-dialog-content-wrap {
+      height: calc( 100% - 46px );
+      // padding-bottom: 46px;
       overflow: auto;
+      max-height: initial;
+    }
+
+    .febsui-dialog-content {
+      max-height: initial;
     }
 
     &.febsui-dialog-container-noButtons {
-      .febsui-dialog-content {
-        padding-bottom: 12px;
-      }  
+      .febsui-dialog-content-wrap {
+        height: calc( 100% - 12px );
+        // padding-bottom: 12px;
+      }
     }
     
     .febsui-dialog-buttons {
