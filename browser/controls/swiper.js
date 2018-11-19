@@ -768,6 +768,9 @@ function swiper_init(elem) {
         swiper_init_event(dom);
       } // if.
 
+      if (dataLoop) {
+        dom.swiperTo(0, false, false);
+      }
       dom.addClass('febsui-swiper-inited');
 
       // 记录最大的偏移位置.
