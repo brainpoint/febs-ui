@@ -642,7 +642,8 @@ function swiper_init(elem) {
       page0 = null;
 
       for (var j = 0; j < domChildren.length; j++) {
-        if ($(domChildren[j]).hasClass('febsui-swiper-page')) {
+        var domChildrendom = $(domChildren[j]);
+        if (domChildrendom.hasClass('febsui-swiper-page')) {
           // $(domChildren[j]).attr('data-ispage', '1');
           if (!page1) {
             page1 = domChildren[j];
@@ -652,7 +653,9 @@ function swiper_init(elem) {
 
           if (needDealLoopPage && !reInit) {
             pages.append(domChildren[j]);
+            domChildrendom.addClass('febsui-invisible');
           }
+
           pagesCount ++;
         }
       }
@@ -698,6 +701,7 @@ function swiper_init(elem) {
 
         // 解决小数问题.
         var swiperPageArray = pages.children('.febsui-swiper-page');
+        
         (function(){
           for (var j = 0; j < this.childPages.length; j++) {
             if ($(this.childPages[j]).hasClass('febsui-swiper-page')) {
@@ -799,6 +803,7 @@ function swiper_init(elem) {
 
           setTimeout(function() {
             this.dom.swiperTo(this.dataActiveIndex, false);
+            this.dom.children('.febsui-swiper-pages').children('.febsui-swiper-page').removeClass('febsui-invisible').addClass('febsui-visible');
           }.bind({dom:this.dom,dataActiveIndex: this.dataActiveIndex}), 100);
         // }
       }.bind({dom, pages, dataLoop, dataAlign, dataActiveIndex}), 1);
