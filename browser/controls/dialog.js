@@ -382,8 +382,13 @@ function dialog_init(elem) {
       // var ddd = $("<div class='febsui-dialog febsui-dialog-init' style='display:none !important;'></div>");
       // ddd.insertBefore(dom);
 
+      var maskZIndex = dom.attr('data-mask-zindex');
+
       $('.febsui-dialog[data-id="'+domid+'"]').remove();
       var dd = $("<div class='febsui-dialog febsui-dialog-init febsui-dialog-custom"+ ' id-'+domid +"' role='alert' data-id='"+domid+"'></div>");
+      if (!isNaN(parseInt(maskZIndex))) {
+        dd.css('z-index', parseInt(maskZIndex));
+      }
       $('body').append(dd);
       dd.append(dom);
 

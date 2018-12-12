@@ -436,6 +436,7 @@ febsui.page_init(elem, curPage, pageCount, totalCount, pageCallback)
 | 属性 | 说明 | 值 |
 |----|----|----|
 | data-mask-close | 表明点击空白处是否关闭对话框. (默认false) | 允许的值为: true, false  |
+| data-mask-zindex | dialog 的父mask层的 z-index | 默认值为 20000  |
 
 
 方法
