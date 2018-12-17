@@ -302,11 +302,25 @@ ul {
     // max-height: initial;
     display: block;
     border: none;
-    max-width: inherit !important;
+    max-width: 800px;
     position: relative;
+    height: 200px;
+    width: 80%;
 
+    .febsui-dialog-title {
+      height: 25px;
+      line-height: 25px;
+    }
+    
     .febsui-dialog-content-wrap {
       height: calc( 100% - 46px );
+      // padding-bottom: 46px;
+      overflow: auto;
+      max-height: initial;
+    }
+
+    .febsui-dialog-content-wrap-title {
+      height: calc( 100% - 81px);
       // padding-bottom: 46px;
       overflow: auto;
       max-height: initial;
@@ -320,6 +334,11 @@ ul {
       .febsui-dialog-content-wrap {
         height: calc( 100% - 12px );
         // padding-bottom: 12px;
+      }
+
+      .febsui-dialog-content-wrap-title {
+        height: calc( 100% - 47px);
+        // padding-bottom: 46px;
       }
     }
     

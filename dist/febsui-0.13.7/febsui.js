@@ -705,7 +705,13 @@ function dialog_init(elem) {
 
       // 内容.
       var content = dom.children('.febsui-dialog-content');
-      dom.prepend($('<div class="febsui-dialog-content-wrap"></div>').append(content));
+      var title = dom.children('.febsui-dialog-title');
+
+      var contentWrap = title[0] ? '<div class="febsui-dialog-content-wrap febsui-dialog-content-wrap-title"></div>' : '<div class="febsui-dialog-content-wrap"></div>';
+      dom.prepend($(contentWrap).append(content));
+      if (title[0]) {
+        dom.prepend(title);
+      }
 
       // 判断是否有按钮.
       if (!dom.children('.febsui-dialog-buttons')[0]) {
