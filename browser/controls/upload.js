@@ -44,6 +44,7 @@ var ajaxSubmit = require('../ajaxSubmit').ajaxSubmit;
  *                crossDomain: true,     // 跨域, 默认为true
  *                withCredentials: true, // 是否附带cookie, 默认为true,
  *                checkoutCrc32: true,   // 是否上传 crc32,size,ajaxmark(防止chrome优化) 三个参数.
+ *                timeout,
  *              }
  */
 
@@ -121,6 +122,7 @@ function upload(cfg) {
 
     var formObj = cfg.formObj;
     var fileObj = cfg.fileObj;
+    var timeout = cfg.timeout;
 
     function uploadFile() {
       let urlpath;
@@ -128,12 +130,13 @@ function upload(cfg) {
         urlpath = this.control_upload_url + 'crc32=' + this.crc + '&size=' + this.fileObj[0].files[0].size + (this.data ? '&data='+this.data : '');
       }
       else {
-        urlpath = this.control_upload_url;
+        urlpath = this.control_upload_url + 'size=' + this.fileObj[0].files[0].size;
       }
 
       try {
         let ctx = this;
         var con = ajaxSubmit(this.formObj, this.fileObj, {
+          timeout:      this.timeout,
           method:       'POST',
           url:          urlpath,
           progress:     function(percentComplete){ if (ctx.control_upload_progress_cb) ctx.control_upload_progress_cb(ctx.fileObj, percentComplete?percentComplete.toFixed(1):0 ); },
@@ -166,6 +169,7 @@ function upload(cfg) {
           this.fileObj[0].value="";
         }
       }.bind({
+        timeout:      timeout,
         checkoutCrc32: cfg.checkoutCrc32,
         control_upload_url: control_upload_url,
         fileObj: cfg.fileObj,
@@ -181,6 +185,7 @@ function upload(cfg) {
     }
     else {
       uploadFile.bind({
+        timeout:      timeout,
         checkoutCrc32: cfg.checkoutCrc32,
         control_upload_url: control_upload_url,
         fileObj: cfg.fileObj,

@@ -355,6 +355,14 @@ exports.mergeMap = utils.mergeMap;
 exports.isNull = utils.isNull;
 
 /**
+* @desc: 创建promise，但函数中的this可以为指定值.
+*         例如: yield denodeify(fs.exists)(path);
+* @param self: 指定的对象.s
+* @return: promise.
+*/
+exports.denodeify = utils.denodeify;
+
+/**
  * @desc: 判断是否是ie.
  */
 exports.browserIsIE = function () {
@@ -1418,6 +1426,32 @@ exports.getTimeStringFromNow = function (time, strFmt) {
 };
 
 /**
+ * @desc: 通过字符串获取date. getTime('2012-05-09 11:10:12')
+ * @param strTime: 时间字符串. '2012-05-09 11:10:12' 
+ * @return: Date.
+ */
+exports.getTime = function (strTime) {
+  var date = new Date();
+  date.setFullYear(parseInt(strTime.substr(0, 4)), parseInt(strTime.substr(5, 2), 10) - 1, parseInt(strTime.substr(8, 2)));
+  date.setHours(parseInt(strTime.substr(11, 2)) || 0, parseInt(strTime.substr(14, 2)) || 0, parseInt(strTime.substr(17, 2)) || 0, 0);
+  return date;
+};
+
+/**
+ * @desc: 通过时间获取date. getTime2('20120509111012')
+ * @param strTime: 时间字符串. '20120509111012' 
+ * @return: Date.
+ */
+exports.getTime2 = function (strTime) {
+  var date = new Date();
+
+  date.setFullYear(parseInt(strTime.substr(0, 4)), parseInt(strTime.substr(4, 2), 10) - 1, parseInt(strTime.substr(6, 2)));
+  date.setHours(parseInt(strTime.substr(8, 2)) || 0, parseInt(strTime.substr(10, 2)) || 0, parseInt(strTime.substr(12, 2)) || 0, 0);
+
+  return date;
+};
+
+/**
  * @desc: getDate('2012-05-09')
  * @return: Date.
  */
@@ -1519,7 +1553,7 @@ exports.getDate2FromUTC = function (strDateUTC) {
 exports.getTimeFromUTC = function (strTimeUTC) {
   var date = new Date();
   date.setUTCFullYear(parseInt(strTimeUTC.substr(0, 4)), parseInt(strTimeUTC.substr(5, 2), 10) - 1, parseInt(strTimeUTC.substr(8, 2)));
-  date.setUTCHours(parseInt(strTimeUTC.substr(11, 2)), parseInt(strTimeUTC.substr(14, 2)), parseInt(strTimeUTC.substr(17, 2)), 0);
+  date.setUTCHours(parseInt(strTimeUTC.substr(11, 2)) || 0, parseInt(strTimeUTC.substr(14, 2)) || 0, parseInt(strTimeUTC.substr(17, 2)) || 0, 0);
   return date;
 };
 
@@ -1532,7 +1566,7 @@ exports.getTime2FromUTC = function (strTimeUTC) {
   var date = new Date();
 
   date.setUTCFullYear(parseInt(strTimeUTC.substr(0, 4)), parseInt(strTimeUTC.substr(4, 2), 10) - 1, parseInt(strTimeUTC.substr(6, 2)));
-  date.setUTCHours(parseInt(strTimeUTC.substr(8, 2)), parseInt(strTimeUTC.substr(10, 2)), parseInt(strTimeUTC.substr(12, 2)), 0);
+  date.setUTCHours(parseInt(strTimeUTC.substr(8, 2)) || 0, parseInt(strTimeUTC.substr(10, 2)) || 0, parseInt(strTimeUTC.substr(12, 2)) || 0, 0);
 
   return date;
 };
@@ -1807,6 +1841,8 @@ exports.getTimeString = date.getTimeString;
 exports.getUTCTimeString = date.getUTCTimeString;
 exports.getTimeStringFromNow = date.getTimeStringFromNow;
 exports.getTimeFromUTC = date.getTimeFromUTC;
+exports.getTime = date.getTime;
+exports.getTime2 = date.getTime2;
 
 /***/ }),
 /* 64 */
@@ -5203,6 +5239,28 @@ exports.getTimeString = utilsDate.getTimeString;
 exports.getTimeStringFromNow = utilsDate.getTimeStringFromNow;
 exports.getDate = utilsDate.getDate;
 exports.getDate2 = utilsDate.getDate2;
+
+/**
+* @desc: 创建promise，但函数中的this可以为指定值.
+*         例如: yield denodeify(fs.exists)(path);
+* @param self: 指定的对象.s
+* @return: promise.
+*/
+exports.denodeify = function (fn, self, argumentCount) {
+  argumentCount = argumentCount || Infinity;
+  return function () {
+    var args = Array.prototype.slice.call(arguments, 0, argumentCount > 0 ? argumentCount : 0);
+    return new PromiseLib(function (resolve, reject) {
+      args.push(function (err, res) {
+        if (err) reject(err);else resolve(res);
+      });
+      var res = fn.apply(self, args);
+      if (res && ((typeof res === 'undefined' ? 'undefined' : _typeof(res)) === 'object' || typeof res === 'function') && typeof res.then === 'function') {
+        resolve(res);
+      }
+    });
+  };
+};
 
 /***/ }),
 /* 119 */

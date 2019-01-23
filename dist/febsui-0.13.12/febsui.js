@@ -2487,6 +2487,7 @@ var ajaxSubmit = __webpack_require__(80).ajaxSubmit;
  *                crossDomain: true,     // 跨域, 默认为true
  *                withCredentials: true, // 是否附带cookie, 默认为true,
  *                checkoutCrc32: true,   // 是否上传 crc32,size,ajaxmark(防止chrome优化) 三个参数.
+ *                timeout,
  *              }
  */
 
@@ -2556,6 +2557,7 @@ function upload(cfg) {
       try {
         var ctx = this;
         var con = ajaxSubmit(this.formObj, this.fileObj, {
+          timeout: this.timeout,
           method: 'POST',
           url: urlpath,
           progress: function progress(percentComplete) {
@@ -2603,6 +2605,7 @@ function upload(cfg) {
 
     var formObj = cfg.formObj;
     var fileObj = cfg.fileObj;
+    var timeout = cfg.timeout;
 
     if (cfg.checkoutCrc32) {
       crypt.crc32_file(fileObj[0].files[0], function (crc) {
@@ -2613,6 +2616,7 @@ function upload(cfg) {
           this.fileObj[0].value = "";
         }
       }.bind({
+        timeout: timeout,
         checkoutCrc32: cfg.checkoutCrc32,
         control_upload_url: control_upload_url,
         fileObj: cfg.fileObj,
@@ -2627,6 +2631,7 @@ function upload(cfg) {
       }));
     } else {
       uploadFile.bind({
+        timeout: timeout,
         checkoutCrc32: cfg.checkoutCrc32,
         control_upload_url: control_upload_url,
         fileObj: cfg.fileObj,
@@ -4497,6 +4502,9 @@ function uploader_init(elem) {
       var dataAccept = dom.attr('data-accept');
       var dataFilename = dom.attr('data-filename');
       var dataApi = dom.attr('data-api');
+      var dataMultiple = dom.attr('data-multiple');
+      dataMultiple = dataMultiple == 'false' ? ' ' : ' multiple="multiple" ';
+
       if (window.febs.string.isEmpty(dataApi)) {
         throw new Error("uploader need attribute: data-api");
       }
@@ -4511,7 +4519,7 @@ function uploader_init(elem) {
         submitHtml = '<input type="submit" value="submit">';
       }
 
-      var htmlForm = '<form id="' + uid + '-form" method="post" role="form" enctype="multipart/form-data" style="display:none">\n  <input id="' + uid + '" type="file" name="file" multiple' + (dataAccept ? ' accept="' + dataAccept + '"' : '') + '>\n  ' + submitHtml + '\n</form>';
+      var htmlForm = '<form id="' + uid + '-form" method="post" role="form" enctype="multipart/form-data" style="display:none">\n  <input id="' + uid + '" type="file" name="file"' + dataMultiple + (dataAccept ? ' accept="' + dataAccept + '"' : '') + '>\n  ' + submitHtml + '\n</form>';
       dom.append($(htmlForm));
 
       var html = '<label id="' + uid + '-label" for="' + uid + '" data-for="' + uid + '"><div class="btn">' + html + '</div>';
@@ -4572,6 +4580,7 @@ function uploader_init(elem) {
         var _dataFinish = uploader.attr('data-finish');
         var _dataError = uploader.attr('data-error');
         var _dataProgress = uploader.attr('data-progress');
+        var _dataTimeout = parseInt(uploader.attr('data-timeout')) || 5000;
 
         // if ($('#'+_uid)[0].files) {
 
@@ -4603,6 +4612,7 @@ function uploader_init(elem) {
           _dataError = null;
           if (cancelControl) cancelControl.abort();
           cancelControl = null;
+          delete window["febsui-uploader-controller-" + _uid];
         });
 
         // 上传.
@@ -4611,6 +4621,7 @@ function uploader_init(elem) {
           fileObj: $('#' + _uid),
           uploadUrl: _dataApi,
           maxFileSize: _dataMaxSize,
+          timeout: _dataTimeout,
           beginCB: function beginCB(fileObj, uploader) {
             cancelControl = uploader;
 
@@ -4655,7 +4666,9 @@ function uploader_init(elem) {
               }
             }
 
-            window["febsui-uploader-controller-" + uid].trigger('uploadBegin', { filename: filename });
+            if (window["febsui-uploader-controller-" + uid]) {
+              window["febsui-uploader-controller-" + uid].trigger('uploadBegin', { filename: filename });
+            }
           },
           finishCB: function finishCB(err, fileObj, serverData) {
             if (err) {
@@ -4683,15 +4696,16 @@ function uploader_init(elem) {
                 if (i >= _dataError.length) {
                   err = err.toString();
                   err = window.febs.string.replace(err, '"', '\"');
-                  eval(_dataError + ('(window["febsui-uploader-controller-' + uid + '"], "\'+err+\'")'));
+                  eval(_dataError + ('(window["febsui-uploader-controller-' + uid + '"], "') + err + '")');
                 } else {
                   eval(_dataError);
                 }
               }
 
-              window["febsui-uploader-controller-" + uid].trigger('uploadError', { err: err });
-              delete window["febsui-uploader-controller-" + uid];
-
+              if (window["febsui-uploader-controller-" + uid]) {
+                window["febsui-uploader-controller-" + uid].trigger('uploadError', { err: err });
+                delete window["febsui-uploader-controller-" + uid];
+              }
               // reset.
               cancel.trigger('click');
               cancel.off('click');
@@ -4758,7 +4772,9 @@ function uploader_init(elem) {
               }
             }
 
-            window["febsui-uploader-controller-" + uid].trigger('uploadProgress', { progress: parseFloat(pp) });
+            if (window["febsui-uploader-controller-" + uid]) {
+              window["febsui-uploader-controller-" + uid].trigger('uploadProgress', { progress: parseFloat(pp) });
+            }
           }
         });
         // } // if.

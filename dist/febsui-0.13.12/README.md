@@ -905,7 +905,8 @@ $('#actionsheet1').actionsheetHide();
           data-begin="onUploadBegin"
          data-finish="febsui.dialog_showAlert('upload ok')"
          data-progress="onUploadProgress"
-         data-error="onUploadError">上传图片</div>
+         data-error="onUploadError"
+         data-multiple="true">上传图片</div>
   
   <script>
     function onUploadBegin(uploaderController, filename) {
@@ -955,6 +956,8 @@ $('.febsui-uploader').on('uploadFinish', function(event, data) {
 | data-progress | 上传进度的回调  | (可选) function(uploader, percent) {} |
 | data-error | 上传错误的回调  | (可选) function(uploader, err) {}; err可能的值有:  <br> febsui.uploadErr.nofile - 未选择文件<br> febsui.uploadErr.sizeExceed - 文件太大<br> febsui.uploadErr.crc32 - 计算本地文件hash值时错误<br> febsui.uploadErr.net - ajax上传时出错<br> 其他 |
 | data-maxsize | 最大的文件字节大小 | (可选) 10240 |
+| data-multiple | 是否多选 | (可选) false / true |
+| data-timeout | 发送的timeout; ms | (可选) 5000 |
 
 事件.
 
