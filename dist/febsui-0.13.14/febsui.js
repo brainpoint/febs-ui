@@ -2336,7 +2336,9 @@ function swiper_init(elem) {
               var pageSize;
               pageSize = page0Obj.attr('data-size-height');
               if (!window.febs.string.isEmpty(pageSize)) {
-                page0Obj.css('height', pageSize);
+                if (this.childDom[0].clientHeight != 0) {
+                  page0Obj.css('height', pageSize);
+                }
               } else {
                 if (!this.childNeedDealLoopPage) {
                   page0Obj.css('height', this.childDom[0].clientHeight + 'px');
@@ -2345,7 +2347,11 @@ function swiper_init(elem) {
                   if (window.febs.string.isEmpty(pageCssHeight)) {
                     page0Obj.css('height', this.childDom[0].clientHeight + 'px');
                   } else {
-                    page0Obj.attr('data-size-height', pageCssHeight);
+                    if (pageCssHeight != '0px' && pageCssHeight != '0') {
+                      page0Obj.attr('data-size-height', pageCssHeight);
+                    } else {
+                      page0Obj.attr('data-size-height', '100%');
+                    }
                   }
                 }
               }
@@ -2355,13 +2361,19 @@ function swiper_init(elem) {
                 page0Obj.css('width', pageSize);
               } else {
                 if (!this.childNeedDealLoopPage) {
-                  page0Obj.css('width', this.childDom[0].clientWidth + 'px');
+                  if (this.childDom[0].clientWidth != 0) {
+                    page0Obj.css('width', this.childDom[0].clientWidth + 'px');
+                  }
                 } else {
                   var pageCssWidth = page0Obj.css('width');
                   if (window.febs.string.isEmpty(pageCssWidth)) {
                     page0Obj.css('width', this.childDom[0].clientWidth + 'px');
                   } else {
-                    page0Obj.attr('data-size-width', pageCssWidth);
+                    if (pageCssWidth != '0px' && pageCssWidth != '0') {
+                      page0Obj.attr('data-size-width', pageCssWidth);
+                    } else {
+                      page0Obj.attr('data-size-width', '100%');
+                    }
                   }
                 }
               }
@@ -2551,7 +2563,7 @@ function upload(cfg) {
       if (this.checkoutCrc32) {
         urlpath = this.control_upload_url + 'crc32=' + this.crc + '&size=' + this.fileObj[0].files[0].size + (this.data ? '&data=' + this.data : '');
       } else {
-        urlpath = this.control_upload_url;
+        urlpath = this.control_upload_url + 'size=' + this.fileObj[0].files[0].size;
       }
 
       try {
@@ -2682,7 +2694,7 @@ function resizeDialog() {
 //   $(window).on('orientationchange', resizeDialog);
 // }
 // else {
-$(window).on('resize', resizeDialog);
+$(window).off('resize', resizeDialog).on('resize', resizeDialog);
 // }
 
 $.fn.isDialog = function () {
@@ -4844,7 +4856,7 @@ var actionsheet = __webpack_require__(40);
 //   $(window).on('orientationchange', resizeActionsheet);
 // }
 // else {
-//   $(window).on('resize', resizeActionsheet);
+//   $(window).off('resize', resizeActionsheet).on('resize', resizeActionsheet);
 // }
 
 $.fn.isActionsheet = function () {
@@ -5158,9 +5170,9 @@ function resizePopover() {
 
 // 是否支持orientationchange事件
 if ('orientation' in window && 'onorientationchange' in window) {
-  $(window).on('orientationchange', resizePopover);
+  $(window).off('orientationchange', resizePopover).on('orientationchange', resizePopover);
 } else {
-  $(window).on('resize', resizePopover);
+  $(window).off('resize', resizePopover).on('resize', resizePopover);
 }
 
 $.fn.isPopover = function () {
@@ -5692,9 +5704,9 @@ function resizeSwiper() {
 
 // 是否支持orientationchange事件
 if ('orientation' in window && 'onorientationchange' in window) {
-  $(window).on('orientationchange', resizeSwiper);
+  $(window).off('orientationchange', resizeSwiper).on('orientationchange', resizeSwiper);
 } else {
-  $(window).on('resize', resizeSwiper);
+  $(window).off('resize', resizeSwiper).on('resize', resizeSwiper);
 }
 
 $.fn.isSwiper = function () {

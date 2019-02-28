@@ -17,7 +17,7 @@ var actionsheet = require('../controls/actionsheet');
 //   $(window).on('orientationchange', resizeActionsheet);
 // }
 // else {
-//   $(window).on('resize', resizeActionsheet);
+//   $(window).off('resize', resizeActionsheet).on('resize', resizeActionsheet);
 // }
 
 $.fn.isActionsheet = function() {

@@ -24,7 +24,7 @@ function resizeDialog(){
 //   $(window).on('orientationchange', resizeDialog);
 // }
 // else {
-  $(window).on('resize', resizeDialog);
+  $(window).off('resize', resizeDialog).on('resize', resizeDialog);
 // }
 
 $.fn.isDialog = function() {

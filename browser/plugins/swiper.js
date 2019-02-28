@@ -62,10 +62,10 @@ function resizeSwiper() {
 // 是否支持orientationchange事件
 if ('orientation' in window && 'onorientationchange' in window)
 {
-  $(window).on('orientationchange', resizeSwiper);
+  $(window).off('orientationchange', resizeSwiper).on('orientationchange', resizeSwiper);
 }
 else {
-  $(window).on('resize', resizeSwiper);
+  $(window).off('resize', resizeSwiper).on('resize', resizeSwiper);
 }
 
 

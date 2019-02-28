@@ -9,10 +9,10 @@ function resizePopover() {
 // 是否支持orientationchange事件
 if ('orientation' in window && 'onorientationchange' in window)
 {
-  $(window).on('orientationchange', resizePopover);
+  $(window).off('orientationchange', resizePopover).on('orientationchange', resizePopover);
 }
 else {
-  $(window).on('resize', resizePopover);
+  $(window).off('resize', resizePopover).on('resize', resizePopover);
 }
 
 

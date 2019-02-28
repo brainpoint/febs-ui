@@ -710,7 +710,9 @@ function swiper_init(elem) {
               var pageSize;
               pageSize = page0Obj.attr('data-size-height');
               if (!window.febs.string.isEmpty(pageSize)) {
-                page0Obj.css('height', pageSize);
+                if (this.childDom[0].clientHeight != 0) {
+                  page0Obj.css('height', pageSize);
+                }
               }
               else {
                 if (!this.childNeedDealLoopPage) {
@@ -720,7 +722,12 @@ function swiper_init(elem) {
                   if (window.febs.string.isEmpty(pageCssHeight)) {
                     page0Obj.css('height', this.childDom[0].clientHeight+'px');
                   } else {
-                    page0Obj.attr('data-size-height', pageCssHeight);
+                    if (pageCssHeight != '0px' && pageCssHeight != '0') {
+                      page0Obj.attr('data-size-height', pageCssHeight);
+                    }
+                    else {
+                      page0Obj.attr('data-size-height', '100%');
+                    }
                   }
                 }
               }
@@ -731,13 +738,20 @@ function swiper_init(elem) {
               }
               else {
                 if (!this.childNeedDealLoopPage) {
-                  page0Obj.css('width', this.childDom[0].clientWidth+'px');
+                  if (this.childDom[0].clientWidth != 0) {
+                    page0Obj.css('width', this.childDom[0].clientWidth+'px');
+                  }
                 } else {
                   var pageCssWidth = page0Obj.css('width');
                   if (window.febs.string.isEmpty(pageCssWidth)) {
                     page0Obj.css('width', this.childDom[0].clientWidth+'px');
                   } else {
-                    page0Obj.attr('data-size-width', pageCssWidth);
+                    if (pageCssWidth != '0px' && pageCssWidth != '0') {
+                      page0Obj.attr('data-size-width', pageCssWidth);
+                    }
+                    else {
+                      page0Obj.attr('data-size-width', '100%');
+                    }
                   }
                 }
               }
