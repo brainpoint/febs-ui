@@ -822,6 +822,15 @@ ul {
           background-repeat: no-repeat;
           background-position: top;
           background-image: linear-gradient(180deg, #ccc 50%, transparent 50%, transparent); } }
+    .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons li:nth-last-child(1):first-child {
+      width: 100%; }
+    .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons li:nth-last-child(2):first-child,
+    .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons li:nth-last-child(2):first-child ~ li {
+      width: 50%; }
+    .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons li:nth-last-child(3):first-child,
+    .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons li:nth-last-child(3):first-child ~ li:nth-last-child(1),
+    .febsui-dialog .febsui-dialog-container .febsui-dialog-buttons li:nth-last-child(3):first-child ~ li:nth-last-child(2) {
+      width: 33.33333%; }
 
 .febsui-dialog .febsui-dialog-container .febsui-dialog-ok {
   cursor: pointer;

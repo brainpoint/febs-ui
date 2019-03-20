@@ -248,6 +248,19 @@ ul {
         @include borderTop($whiteBgBorderColor);
         border-left: none;
       }
+
+      &:nth-last-child(1):first-child {
+        width: 100%;
+      }
+      &:nth-last-child(2):first-child,
+      &:nth-last-child(2):first-child ~ li {
+        width: 50%;
+      }
+      &:nth-last-child(3):first-child,
+      &:nth-last-child(3):first-child ~ li:nth-last-child(1),
+      &:nth-last-child(3):first-child ~ li:nth-last-child(2) {
+        width: 33.33333%;
+      }
     }
   }
 }

@@ -75,3 +75,8 @@
 0.12.39
 =================
   - [enhancement] swiper data-size.
+
+
+0.13.15
+=================
+  - [bugfix] dialog button width.
