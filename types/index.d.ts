@@ -1,7 +1,6 @@
 // Type definitions for febs
 
 /// <reference types="node" />
-/// <reference path="febs-browser" />
 
 export class dom {
 
@@ -48,7 +47,7 @@ export class dom {
   swiperTotal(): number;
   swiperTo(index: number, animation?: boolean, trigger?: boolean): dom;
   swiper(cb?: (e: any) => void): dom;
-  swiperMoving(cb: (percent:number)=>void);
+  swiperMoving(cb: (percent:number)=>void): dom;
 
   /** checkbox */
   isCheckbox(): boolean;
@@ -103,7 +102,7 @@ export function toast(ctx: { content?: string, durable?: number, icon?: 'ok' | '
 /**
  * @desc 手动隐藏toast.
  */
-export function toast_hide();
+export function toast_hide(): void;
 
 /**
 * @desc: 隐藏对话框
