@@ -3,7 +3,7 @@
  * Author: lipengxiang
  * Desc:
  */
-var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
+var touchEventPrevent = require('../utils/domHelper').mobile_preventTouchEvent;
 
 'use strict';
 

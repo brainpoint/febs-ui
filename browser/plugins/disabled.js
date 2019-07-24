@@ -2,41 +2,43 @@
 /**
  * 仅返回第一个元素的情况.
  */
-$.fn.isDisabled = function() {
-
-  var ee = this;
-
-  // switch.
-  if (ee.isSwitch())
-    return ee.switchIsDisabled();
+$.fn.isDisable = function() {
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
   
-  // checkbox.
-  if (ee.isCheckbox()) {
-    return ee.checkboxIsDisabled();
+  if (_this.length > 0) {
+    // switch.
+    if (_this.isSwitch && _this.isSwitch())
+      return _this.switchIsDisabled();
+
+    // checkbox.
+    if (_this.isCheckbox && _this.isCheckbox()) {
+      return _this.checkboxIsDisabled();
+    }
+
+    var dis = _this.attr('disabled');
+    return !!dis;
   }
-
-
-  var dis = ee.attr('disabled');
-  return !!dis;
 }
 
-$.fn.setDisabled = function(isDisable) {
+$.fn.setDisable = function(isDisable) {
 
-  var ee = this;
+  var _this = (typeof this.length === 'undefined') ? $(this) : this;
+  if (_this.length > 0) {
 
-  // switch.
-  if (ee.isSwitch())
-    return ee.switchDisabled(isDisable);
+    // switch.
+    if (_this.isSwitch())
+      return _this.switchDisabled(isDisable);
 
-  // checkbox.
-  if (ee.isCheckbox())
-    return ee.checkboxDisabled(isDisable);
+    // checkbox.
+    if (_this.isCheckbox())
+      return _this.checkboxDisabled(isDisable);
 
-  if (isDisable) {
-    ee.attr('disabled', 'disabled');
-  }
-  else {
-    ee.removeAttr('disabled');
+    if (isDisable) {
+      _this.attr('disabled', 'disabled');
+    }
+    else {
+      _this.removeAttr('disabled');
+    }
   }
   return this;
 }

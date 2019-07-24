@@ -1,5 +1,5 @@
 
-var maskPrevent = require('../domHelper').maskPreventEvent;
+var maskPrevent = require('../utils/domHelper').maskPreventEvent;
 var actionsheet = require('../controls/actionsheet');
 
 // function resizeActionsheet() {

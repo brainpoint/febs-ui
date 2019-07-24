@@ -1,5 +1,5 @@
 var resizeDialog = require('../plugins/dialog').resizeDialog;
-var maskPrevent = require('../domHelper').maskPreventEvent;
+var maskPrevent = require('../utils/domHelper').maskPreventEvent;
 
 exports.hide = hide;
 exports.showAlert = showAlert;

@@ -1,5 +1,5 @@
 
-var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
+var touchEventPrevent = require('../utils/domHelper').mobile_preventTouchEvent;
 
 exports.switch_init = switch_init;
 exports.switch_init_event = switch_init_event;

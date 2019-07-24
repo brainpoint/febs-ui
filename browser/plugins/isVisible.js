@@ -1,4 +1,6 @@
 
+var domHelper = require('../utils/domHelper');
+
 
 /**
  * 仅返回第一个元素的情况.
@@ -24,7 +26,7 @@ $.fn.isVisible = function() {
       return false;
     }
     else {
-      var style = window.getComputedStyle(_this[0]);
+      var style = domHelper.getComputedStyle(_this[0]);
       return style.width !== 0 &&
       style.height !== 0 &&
       style.opacity !== 0 &&
@@ -49,7 +51,7 @@ $.fn._isVisible = function() {
       return false;
     }
     else {
-      var style = window.getComputedStyle(_this[0]);
+      var style = domHelper.getComputedStyle(_this[0]);
       return style.width !== 0 &&
       style.height !== 0 &&
       style.opacity !== 0 &&

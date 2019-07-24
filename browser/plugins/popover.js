@@ -1,5 +1,5 @@
 
-var maskPrevent = require('../domHelper').maskPreventEvent;
+var maskPrevent = require('../utils/domHelper').maskPreventEvent;
 var popover = require('../controls/popover');
 
 function resizePopover() {

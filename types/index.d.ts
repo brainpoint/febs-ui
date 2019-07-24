@@ -5,8 +5,8 @@
 export class dom {
 
   /** common */
-  setDisabled(isDisable: boolean): dom;
-  isDisabled(): boolean;
+  setDisable(isDisable: boolean): dom;
+  isDisable(): boolean;
   /**
    * 判断第一个元素是否可见.
    */
@@ -24,6 +24,10 @@ export class dom {
   /** switch */
   isSwitch(): boolean;
   switchIsOn(): boolean;
+
+  /**
+  * @desc: 方法在ie8下无效, 使用 on('switch') 监听.
+  */
   switch(cb?: (e: any) => void): dom;
   switchOn(isOn: boolean, trigger?: boolean): dom;
 

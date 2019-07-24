@@ -23,11 +23,10 @@ module.exports = function(main, output, outputDir){
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('browser'), resolve('browser/controls'), resolve('third-party'), resolve('dist/febsui')],
+        include: [resolve('browser/utils'), resolve('browser/controls'), resolve('browser/plugins'), resolve('third-party'), resolve('dist/febsui')],
         query: {
           presets:['es2015', 'stage-0', 'es2015-loose'],
           plugins: [
-            'transform-runtime',
             'transform-es3-property-literals',
             'transform-es3-member-expression-literals',
             'transform-es2015-modules-simple-commonjs',
@@ -36,7 +35,7 @@ module.exports = function(main, output, outputDir){
       },
       {
         test: /\.js$/,
-        include: [resolve('browser'), resolve('browser/controls'), resolve('third-party'), resolve('dist/febsui')],
+        include: [resolve('browser/utils'), resolve('browser/controls'), resolve('browser/plugins'), resolve('third-party'), resolve('dist/febsui')],
         enforce: 'post', // post-loader处理
         loader: 'es3ify-loader'
       },

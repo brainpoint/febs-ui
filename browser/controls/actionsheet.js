@@ -1,4 +1,4 @@
-var domHelper = require('../domHelper');
+var domHelper = require('../utils/domHelper');
 
 exports.actionsheet_init = actionsheet_init;
 

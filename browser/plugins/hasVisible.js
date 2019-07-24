@@ -1,4 +1,5 @@
 
+var domHelper = require('../utils/domHelper');
 
 /**
  * 元素中是否存在可见的.
@@ -13,7 +14,7 @@ $.fn.hasVisible = function() {
       continue;
     }
     else {
-      var style = window.getComputedStyle(_this[i]);
+      var style = domHelper.getComputedStyle(_this[i]);
       if ( style.width !== 0 &&
       style.height !== 0 &&
       style.opacity !== 0 &&

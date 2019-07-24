@@ -1,6 +1,6 @@
-var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
+var touchEventPrevent = require('../utils/domHelper').mobile_preventTouchEvent;
 
-var domHelper = require('../domHelper');
+var domHelper = require('../utils/domHelper');
 
 exports.popover_init = popover_init;
 

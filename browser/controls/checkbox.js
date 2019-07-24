@@ -1,6 +1,6 @@
 
-var domHelper = require('../domHelper');
-var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
+var domHelper = require('../utils/domHelper');
+var touchEventPrevent = require('../utils/domHelper').mobile_preventTouchEvent;
 
 exports.checkbox_init = checkbox_init;
 exports.checkbox_init_event = checkbox_init_event;

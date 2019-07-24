@@ -9,8 +9,8 @@
     <div class="febsui-uploader-progress-cancel"><div class="febsui-icon febsui-icon-error"></div></div>
   </div>
 </div> */}
-var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
-var escape_string = require('../escape').escape_string;
+var touchEventPrevent = require('../utils/domHelper').mobile_preventTouchEvent;
+var escape_string = require('../utils/escape').escape_string;
 
 var upload = require('./upload');
 var uploadErr = require('./upload.err');

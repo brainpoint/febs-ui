@@ -11,9 +11,9 @@
   <meta name="apple-touch-fullscreen" content="yes" /> 
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <link rel="stylesheet" type="text/css" href="./febsui-0.13.14/febsui.css" />
-  <script charset='UTF-8' type="text/javascript" src="./febs-0.8.67/febs.js"></script>
-  <script charset='UTF-8' type="text/javascript" src="./febsui-0.13.15/febsui.js"></script>
+  <link rel="stylesheet" type="text/css" href="./febsui-0.13.17/febsui.css" />
+  <script charset='UTF-8' type="text/javascript" src="./febs-0.8.71/febs.ie8.js"></script>
+  <script charset='UTF-8' type="text/javascript" src="./febsui-0.13.17/febsui.js"></script>
   
   <script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
 	<script type="text/javascript" src="./syntaxhighlighter-3.0.83/scripts/shCore.js"></script>
@@ -488,12 +488,12 @@
       ]]></script>
 
       <script type="syntaxhighlighter" class="brush: js"><![CDATA[
-        $('.febsui-switch').switch(function () {
+        $('.febsui-switch').on('switch', function () {
           var isSwitch = $(this).switchIsOn();
         });
 
         $('.febsui-switch').switchOn(true);
-        $('.febsui-switch').setDisabled(true);
+        $('.febsui-switch').setDisable(true);
       ]]></script>
     </div>
     <ul class="febsui-dialog-buttons"><li style="width:100%;"><button class="febsui-dialog-cancel">确定</button></li></ul>
@@ -510,7 +510,7 @@
 
   <script type="text/javascript">
     $(function () {
-      $('.febsui-switch').switch(function (env) {
+      $('.febsui-switch').on('switch', function (env) {
         var isSwitch = $(env.target).switchIsOn();
         febsui.toast('switch is: ' + (isSwitch ? 'on' : 'off'));
       });
@@ -526,7 +526,7 @@
     function switchDisable() {
       var switchs = $('.febsui-switch');
       for (var i = 0; i < switchs.length; i++) {
-        $(switchs[i]).setDisabled(!$(switchs[i]).isDisabled());
+        $(switchs[i]).setDisable(!$(switchs[i]).isDisable());
       }
     }
   </script>

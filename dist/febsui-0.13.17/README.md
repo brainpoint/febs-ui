@@ -83,12 +83,12 @@ febsui.dialog_showToast({content:'即将开始', icon:'ok'});
 /**
  * @desc 设置为disable (对input, button等元素有效).
  */
-$('').setDisabled(isDisable);
+$('').setDisable(isDisable);
 
 /**
  * @desc 返回当前控件是否为disable状态.
  */
-$('').isDisabled();
+$('').isDisable();
 /**
  * @desc 判断第一个元素是否可见.
  */
@@ -498,6 +498,8 @@ $('.febsui-switch').isSwitch();
 /**
  * @desc 监听变化事件
  */
+
+// 此方法在ie8下无效, 建议使用 on监听.
 $('.febsui-switch').switch(function(){
   // 
 });

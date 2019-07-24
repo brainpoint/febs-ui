@@ -8,7 +8,7 @@
 
 var crypt = window.febs.crypt;
 var err = require('./upload.err');
-var ajaxSubmit = require('../ajaxSubmit').ajaxSubmit;
+var ajaxSubmit = require('../utils/ajaxSubmit').ajaxSubmit;
 
 // var responseText = $('iframe')[0].contentDocument.body.textContent;
 //     var responseData = JSON.parse(responseText) || {};
@@ -125,7 +125,7 @@ function upload(cfg) {
     var timeout = cfg.timeout;
 
     function uploadFile() {
-      let urlpath;
+      var urlpath;
       if (this.checkoutCrc32) {
         urlpath = this.control_upload_url + 'crc32=' + this.crc + '&size=' + this.fileObj[0].files[0].size + (this.data ? '&data='+this.data : '');
       }
@@ -134,7 +134,7 @@ function upload(cfg) {
       }
 
       try {
-        let ctx = this;
+        var ctx = this;
         var con = ajaxSubmit(this.formObj, this.fileObj, {
           timeout:      this.timeout,
           method:       'POST',

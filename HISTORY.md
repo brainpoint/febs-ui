@@ -80,3 +80,9 @@
 0.13.15
 =================
   - [bugfix] dialog button width.
+
+0.14.0
+=================
+  - [feature] $().isDisabled rename to $().isDisable
+  - [feature] $().setDisabled rename to $().setDisable
+

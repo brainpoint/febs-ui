@@ -19,7 +19,7 @@ $.fn.checkboxChecked = function(checked, trigger) {
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
 
   var o = {};
-  for (let i = 0; i < _this.length; i++) {
+  for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
     if (ee.isCheckbox()) {
       

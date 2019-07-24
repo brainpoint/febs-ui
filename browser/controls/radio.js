@@ -1,6 +1,6 @@
 
-var domHelper = require('../domHelper');
-var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
+var domHelper = require('../utils/domHelper');
+var touchEventPrevent = require('../utils/domHelper').mobile_preventTouchEvent;
 
 exports.radio_init = radio_init;
 exports.radio_init_event = radio_init_event;

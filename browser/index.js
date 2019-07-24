@@ -50,7 +50,7 @@ require('./plugins/hasVisible');
 
 var febsui = require('./controls');
 
-febsui.preventEvent = require('./domHelper').maskPreventEvent;
+febsui.preventEvent = require('./utils/domHelper').maskPreventEvent;
 
 window['febsui'] = febsui;
 

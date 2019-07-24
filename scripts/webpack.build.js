@@ -94,6 +94,12 @@ function formatDotDefault() {
         buf = febs.string.replace(buf, '.default)', '[\'default\'])');
         buf = febs.string.replace(buf, '{ default:', '{ \'default\':');
 
+        buf = febs.string.replace(buf, '.default}', '[\'default\']}');
+        buf = febs.string.replace(buf, '.default,', '[\'default\'],');
+        buf = febs.string.replace(buf, '.default&&', '[\'default\']&&');
+        buf = febs.string.replace(buf, '.default?', '[\'default\']?');
+        buf = febs.string.replace(buf, '.default;', '[\'default\'];');
+        
         buf = febs.string.replace(buf, '.return ', '[\'return\'] ');
         buf = febs.string.replace(buf, '.return.', '[\'return\'].');
         buf = febs.string.replace(buf, '.return=', '[\'return\']=');

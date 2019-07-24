@@ -1,5 +1,5 @@
 
-var touchEventPrevent = require('../domHelper').mobile_preventTouchEvent;
+var touchEventPrevent = require('../utils/domHelper').mobile_preventTouchEvent;
 
 exports.button_init = button_init;
 exports.button_init_event = button_init_event;

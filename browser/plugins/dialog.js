@@ -1,7 +1,7 @@
 
 exports.resizeDialog = resizeDialog;
 
-var maskPrevent = require('../domHelper').maskPreventEvent;
+var maskPrevent = require('../utils/domHelper').maskPreventEvent;
 var dialogs = require('../controls/dialog');
 
 var dialogAnimateDurtion = 300;
