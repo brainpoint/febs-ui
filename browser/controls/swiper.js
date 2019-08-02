@@ -536,7 +536,7 @@ function swiper_init_event(dom) {
   // event.
   var pages = dom[0]; // dom.children('.febsui-swiper-pages')[0];
   if (pages) {
-    let namestart, namemove, nameend, namecancel;
+    var namestart, namemove, nameend, namecancel;
     if (typeof pages.ontouchstart !== 'undefined') {
       namestart = 'touchstart';
       namemove = 'touchmove';
@@ -625,7 +625,7 @@ function swiper_init(elem) {
       if (domChildren.hasClass('febsui-swiper-pages')) {
         pages = $(domChildren[0]);
         
-        let loopPage = pages.children('.febsui-swiper-page-loop');
+        var loopPage = pages.children('.febsui-swiper-page-loop');
         loopPage.remove();
 
 

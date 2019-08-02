@@ -206,7 +206,7 @@ export function upload(cfg: {
   maxFileSize?: number,
   fileType?: string,
   beginCB?: (uploader: { abort: () => void }) => void,
-  finishCB?: (err: any, fileObj: any, serverData: any) => void,
+  finishCB?: (err: any, fileObj: any, serverData: any, xhr?:any) => void,
   progressCB?: (fileObj: any, percent: number) => void,
   headers?: any,
   crossDomain?: boolean,

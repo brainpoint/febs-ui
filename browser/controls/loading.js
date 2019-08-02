@@ -18,7 +18,7 @@ var is_IE9 = window.febs.utils.browserIEVer() <= 9;
 
 'use strict';
 
-const loading_tag_name = 'febsui_loading_span_s23153dd12ax1';
+var loading_tag_name = 'febsui_loading_span_s23153dd12ax1';
 var control_loading_index = 0;
 var control_loading_timer;
 var control_loading_text_elemFunc;

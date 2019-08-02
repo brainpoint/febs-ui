@@ -26,7 +26,7 @@ $.fn.radioGetValue = function() {
     }
 
     var elem = $('input[name="'+_this.attr('name')+'"]');
-    for (let i = 0; i < elem.length; i++) {
+    for (var i = 0; i < elem.length; i++) {
       if (elem[i].checked) {
         return elem[i].value;
       }
@@ -41,7 +41,7 @@ $.fn.radioSetValue = function(value, trigger) {
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
 
   var o = {};
-  for (let i = 0; i < _this.length; i++) {
+  for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
     if (ee.isRadio()) {
       
@@ -54,7 +54,7 @@ $.fn.radioSetValue = function(value, trigger) {
         continue;
       o[group] = true;
       var elem = $('input[name="'+group+'"]');
-      for (let i = 0; i < elem.length; i++) {
+      for (var i = 0; i < elem.length; i++) {
         if (elem[i].value == value) {
           if (!elem[i].checked)
             elem[i].checked = true;
@@ -73,7 +73,7 @@ $.fn.radioChecked = function(checked, trigger) {
   var _this = (typeof this.length === 'undefined') ? $(this) : this;
 
   var o = {};
-  for (let i = 0; i < _this.length; i++) {
+  for (var i = 0; i < _this.length; i++) {
     var ee = $(_this[i]);
     if (ee.isRadio()) {
       

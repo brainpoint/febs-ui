@@ -31,7 +31,7 @@ var ajaxSubmit = require('../ajaxSubmit').ajaxSubmit;
  *                maxFileSize:    , // 允许上传的最大文件.0表示无限制.默认为0
  *                fileType:     , // 允许的文件类型.  如: image/gif,image/jpeg,image/x-png
  *                beginCB:     , // 上传开始的回调. function(fieObj, uploader); 调用uploader.abort() 可以停止上传.
- *                finishCB:    , // 上传完成后的回调. function(err, fileObj, serverData)
+ *                finishCB:    , // 上传完成后的回调. function(err, fileObj, serverData, xhr=null)
  *                               //                   err:  - uploadErr.nofile      未选择文件.
  *                               //                         - uploadErr.sizeExceed  文件太大.
  *                               //                         - uploadErr.crc32       计算本地文件hash值时错误.
@@ -125,7 +125,7 @@ function upload(cfg) {
     var timeout = cfg.timeout;
 
     function uploadFile() {
-      let urlpath;
+      var urlpath;
       if (this.checkoutCrc32) {
         urlpath = this.control_upload_url + 'crc32=' + this.crc + '&size=' + this.fileObj[0].files[0].size + (this.data ? '&data='+this.data : '');
       }
@@ -134,7 +134,7 @@ function upload(cfg) {
       }
 
       try {
-        let ctx = this;
+        var ctx = this;
         var con = ajaxSubmit(this.formObj, this.fileObj, {
           timeout:      this.timeout,
           method:       'POST',
@@ -148,6 +148,14 @@ function upload(cfg) {
 
             if (ctx.control_upload_cb)  ctx.control_upload_cb(null, ctx.fileObj, r);
             ctx.fileObj[0].value="";
+          },
+          complete:     function(xhr, responseText) {
+            if (xhr.status != 200) {
+              try {
+                if (ctx.control_upload_cb)  ctx.control_upload_cb(err.net, ctx.fileObj, responseText, xhr); ctx.fileObj[0].value="";
+              }
+              catch (e) {}
+            }
           },
           crossDomain:this.crossDomain, 
           headers: this.headers,

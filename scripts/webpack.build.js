@@ -79,14 +79,14 @@ buildSrc(webpackConfig('browser/index.build.js', 'febsui.js', 'dist/'+dir))
 */
 function formatDotDefault() {
 
-  let assetsRoot = path.join(root, `dist/${dir}`);
+  var assetsRoot = path.join(root, `dist/${dir}`);
 
   // 查找所有css.
-  let alljs = febs.file.dirExplorerFilesRecursive(assetsRoot);
-  for (let i = 0; alljs && i < alljs.length; i++) {
+  var alljs = febs.file.dirExplorerFilesRecursive(assetsRoot);
+  for (var i = 0; alljs && i < alljs.length; i++) {
     alljs[i] = path.join(assetsRoot, alljs[i]);
     if (febs.file.fileIsExist(alljs[i])) {
-      let buf = fs.readFileSync(alljs[i], 'utf-8');
+      var buf = fs.readFileSync(alljs[i], 'utf-8');
       if (buf) {
         buf = febs.string.replace(buf, '.default ', '[\'default\'] ');
         buf = febs.string.replace(buf, '.default.', '[\'default\'].');

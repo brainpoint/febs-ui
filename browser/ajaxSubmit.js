@@ -68,6 +68,7 @@ exports.ajaxSubmit = function ajaxSubmit(formObj, fileObj, options) {
         options.error(err);
       }
     },
+    complete: options.complete,
     progress: options.progress
   });
 }
