@@ -397,7 +397,7 @@ label {
       text-align: center;
       min-width: inherit;
       max-width: 200px;
-      min-height: 25px; }
+      overflow-wrap: break-word; }
   .febsui-loading-c .febsui-loading-white {
     color: #252525;
     background-color: rgba(255, 255, 255, 0.8); }
