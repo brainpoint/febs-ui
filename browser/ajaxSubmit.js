@@ -57,7 +57,7 @@ exports.ajaxSubmit = function ajaxSubmit(formObj, fileObj, options) {
     processData: false,
     data: options.data,
     timeout: options.timeout,
-    withCredentials: options.credentials,
+    withCredentials: options.withCredentials,
     success: function(data) {
       if (options.success) {
         options.success(data);
