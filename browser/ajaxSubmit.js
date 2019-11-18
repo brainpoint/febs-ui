@@ -10,6 +10,8 @@
  *                   timeout: 5000,
  *                   withCredentials: true,
  *                   crossDomain: true,
+ *                   sliceOffset:  this.sliceOffset,
+ *                   sliceLength:  this.sliceLength,
  *                 }
  */
 exports.ajaxSubmit = function ajaxSubmit(formObj, fileObj, options) {
@@ -31,7 +33,7 @@ exports.ajaxSubmit = function ajaxSubmit(formObj, fileObj, options) {
     if ('files' in fileObj[0] && fileObj[0].files.length > 0) {
       // ToDo: Support Multiple on any input? 
       // Just need a loop here..
-      formData.append(fileObj[0].name, fileObj[0].files[0]);
+      formData.append(fileObj[0].name, fileObj[0].files[0].slice(options.sliceOffset, options.sliceOffset+options.sliceLength));
     }
 
     options.data = formData;

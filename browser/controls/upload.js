@@ -45,6 +45,8 @@ var ajaxSubmit = require('../ajaxSubmit').ajaxSubmit;
  *                withCredentials: true, // 是否附带cookie, 默认为true,
  *                checkoutCrc32: true,   // 是否上传 crc32,size,ajaxmark(防止chrome优化) 三个参数.
  *                timeout,
+*                sliceOffset: 0,       // 上传数据偏移地址.
+*                sliceLength: -1,     // 上传数据段长度 (-1表示到结尾).
  *              }
  */
 
@@ -54,6 +56,9 @@ function upload(cfg) {
   var control_upload_begin_cb = cfg.beginCB;
   var control_upload_url = cfg.uploadUrl;
   var control_upload_maxFileSize = (!cfg.maxFileSize) ? Infinity : cfg.maxFileSize;
+
+  var control_sliceOffset = cfg.sliceOffset||0;
+  var control_sliceLength = cfg.sliceLength||-1;
 
   cfg.fileObj = $(cfg.fileObj);
   cfg.formObj = $(cfg.formObj);
@@ -125,17 +130,31 @@ function upload(cfg) {
     var timeout = cfg.timeout;
 
     function uploadFile() {
+
+      var filesize = this.fileObj[0].files[0].size;
+      if (this.sliceOffset !== 0 || this.sliceLength !== -1) {
+        filesize = filesize - this.sliceOffset;
+        if (this.sliceLength > filesize) {
+          this.sliceLength = filesize;
+        }
+        else {
+          filesize = this.sliceLength;
+        }
+      }
+
       var urlpath;
       if (this.checkoutCrc32) {
-        urlpath = this.control_upload_url + 'crc32=' + this.crc + '&size=' + this.fileObj[0].files[0].size + (this.data ? '&data='+this.data : '');
+        urlpath = this.control_upload_url + 'crc32=' + this.crc + '&size=' + filesize + (this.data ? '&data='+this.data : '');
       }
       else {
-        urlpath = this.control_upload_url + 'size=' + this.fileObj[0].files[0].size;
+        urlpath = this.control_upload_url + 'size=' + filesize;
       }
 
       try {
         var ctx = this;
         var con = ajaxSubmit(this.formObj, this.fileObj, {
+          sliceOffset:  this.sliceOffset,
+          sliceLength:  this.sliceLength,
           timeout:      this.timeout,
           method:       'POST',
           url:          urlpath,
@@ -169,7 +188,7 @@ function upload(cfg) {
     } // function.
   
     if (cfg.checkoutCrc32) {
-      crypt.crc32_file(fileObj[0].files[0], function(crc){
+      crypt.crc32_fileSegment(fileObj[0].files[0], control_sliceOffset, control_sliceLength, function(crc){
         if (crc) {
           uploadFile.bind(window.febs.utils.mergeMap(this, {crc:crc}))();
         } else {
@@ -189,6 +208,8 @@ function upload(cfg) {
         headers: cfg.headers,
         withCredentials: cfg.withCredentials,
         control_upload_begin_cb: control_upload_begin_cb,
+        sliceOffset: control_sliceOffset,
+        sliceLength: control_sliceLength,
       }));
     }
     else {
@@ -205,6 +226,8 @@ function upload(cfg) {
         headers: cfg.headers,
         withCredentials: cfg.withCredentials,
         control_upload_begin_cb: control_upload_begin_cb,
+        sliceOffset: control_sliceOffset,
+        sliceLength: control_sliceLength,
       })();
     }
   } // if..else.
