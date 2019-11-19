@@ -132,7 +132,11 @@ function upload(cfg) {
     function uploadFile() {
 
       var filesize = this.fileObj[0].files[0].size;
-      if (this.sliceOffset !== 0 || this.sliceLength !== -1) {
+      if (this.sliceLength == -1) {
+        this.sliceLength = filesize-this.sliceOffset;
+      }
+
+      if (this.sliceOffset !== 0) {
         filesize = filesize - this.sliceOffset;
         if (this.sliceLength > filesize) {
           this.sliceLength = filesize;
