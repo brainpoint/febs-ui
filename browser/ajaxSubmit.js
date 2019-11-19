@@ -31,9 +31,11 @@ exports.ajaxSubmit = function ajaxSubmit(formObj, fileObj, options) {
     var formData = new FormData();
 
     if ('files' in fileObj[0] && fileObj[0].files.length > 0) {
+      var blobSlice = File.prototype.mozSlice || File.prototype.webkitSlice || File.prototype.slice;
+
       // ToDo: Support Multiple on any input? 
       // Just need a loop here..
-      formData.append(fileObj[0].name, fileObj[0].files[0].slice(options.sliceOffset, options.sliceOffset+options.sliceLength));
+      formData.append(fileObj[0].name, blobSlice.call(fileObj[0].files[0], options.sliceOffset, options.sliceOffset+options.sliceLength));
     }
 
     options.data = formData;

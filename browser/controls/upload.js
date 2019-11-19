@@ -136,16 +136,14 @@ function upload(cfg) {
         this.sliceLength = filesize-this.sliceOffset;
       }
 
-      if (this.sliceOffset !== 0) {
-        filesize = filesize - this.sliceOffset;
-        if (this.sliceLength > filesize) {
-          this.sliceLength = filesize;
-        }
-        else {
-          filesize = this.sliceLength;
-        }
+      filesize = filesize - this.sliceOffset;
+      if (this.sliceLength > filesize) {
+        this.sliceLength = filesize;
       }
-
+      else {
+        filesize = this.sliceLength;
+      }
+      
       var urlpath;
       if (this.checkoutCrc32) {
         urlpath = this.control_upload_url + 'crc32=' + this.crc + '&size=' + filesize + (this.data ? '&data='+this.data : '');
