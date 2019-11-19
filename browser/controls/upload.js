@@ -152,6 +152,9 @@ function upload(cfg) {
         urlpath = this.control_upload_url + 'size=' + filesize;
       }
 
+      let per = this.sliceOffset / this.fileObj[0].files[0].size;
+      let per2 = this.sliceLength / this.fileObj[0].files[0].size;
+
       try {
         var ctx = this;
         var con = ajaxSubmit(this.formObj, this.fileObj, {
@@ -160,7 +163,11 @@ function upload(cfg) {
           timeout:      this.timeout,
           method:       'POST',
           url:          urlpath,
-          progress:     function(percentComplete){ if (ctx.control_upload_progress_cb) ctx.control_upload_progress_cb(ctx.fileObj, percentComplete?percentComplete.toFixed(1):0 ); },
+          progress:     function(percentComplete){
+              percentComplete = percentComplete? parseFloat(percentComplete.toFixed(2)):0;
+              percentComplete = per + per2*percentComplete;
+              percentComplete = parseFloat(percentComplete.toFixed(2));
+             if (ctx.control_upload_progress_cb) ctx.control_upload_progress_cb(ctx.fileObj, percentComplete); },
           error:        function(){ if (ctx.control_upload_cb)  ctx.control_upload_cb(err.net, ctx.fileObj, null); ctx.fileObj[0].value=""; },
           success:      function(r) {
             try {
