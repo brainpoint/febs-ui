@@ -1038,8 +1038,6 @@ $('.febsui-uploader').uploaderReset();
 ```
 > 使用 sliceOffset, sliceLength 字段可以进行断点续传.
 
-> 上传完成后, 如果需要清空文件选择框, 调用 ctx.fileObj.value=""
-
 例子
 后台:
 ```js

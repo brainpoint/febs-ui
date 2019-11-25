@@ -168,19 +168,22 @@ function upload(cfg) {
               percentComplete = per + per2*percentComplete;
               percentComplete = parseFloat(percentComplete.toFixed(2));
              if (ctx.control_upload_progress_cb) ctx.control_upload_progress_cb(ctx.fileObj, percentComplete); },
-          error:        function(){ if (ctx.control_upload_cb)  ctx.control_upload_cb(err.net, ctx.fileObj, null); ctx.fileObj[0].value=""; },
+          error:        function(){ if (ctx.control_upload_cb)  ctx.control_upload_cb(err.net, ctx.fileObj, null); 
+            // ctx.fileObj[0].value="";
+          },
           success:      function(r) {
             try {
               r = JSON.parse(r);
             } catch(e) { r = {}; }
 
             if (ctx.control_upload_cb)  ctx.control_upload_cb(null, ctx.fileObj, r);
-            ctx.fileObj[0].value="";
+            // ctx.fileObj[0].value="";
           },
           complete:     function(xhr, responseText) {
             if (xhr.status != 200) {
               try {
-                if (ctx.control_upload_cb)  ctx.control_upload_cb(err.net, ctx.fileObj, responseText, xhr); ctx.fileObj[0].value="";
+                if (ctx.control_upload_cb)  ctx.control_upload_cb(err.net, ctx.fileObj, responseText, xhr); 
+                // ctx.fileObj[0].value="";
               }
               catch (e) {}
             }
@@ -192,7 +195,7 @@ function upload(cfg) {
         if (this.control_upload_begin_cb) this.control_upload_begin_cb(this.fileObj, con);
       } catch (e) {
         if (this.control_upload_cb)  this.control_upload_cb(e, this.fileObj, null);
-        this.fileObj[0].value="";
+        // this.fileObj[0].value="";
       }
     } // function.
   
@@ -202,7 +205,7 @@ function upload(cfg) {
           uploadFile.bind(window.febs.utils.mergeMap(this, {crc:crc}))();
         } else {
           if (this.control_upload_cb)  this.control_upload_cb(err.crc32, this.fileObj, null);
-          this.fileObj[0].value="";
+          // this.fileObj[0].value="";
         }
       }.bind({
         timeout:      timeout,

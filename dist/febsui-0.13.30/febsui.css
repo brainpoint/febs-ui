@@ -761,8 +761,7 @@ ul {
   text-align: center;
   max-height: 80%;
   overflow: auto;
-  color: inherit;
-  word-break: break-all; }
+  color: inherit; }
 
 .febsui-dialog .febsui-dialog-container .febsui-dialog-edit {
   width: 100%;
