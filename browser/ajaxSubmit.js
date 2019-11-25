@@ -35,7 +35,17 @@ exports.ajaxSubmit = function ajaxSubmit(formObj, fileObj, options) {
 
       // ToDo: Support Multiple on any input? 
       // Just need a loop here..
-      formData.append(fileObj[0].name, blobSlice.call(fileObj[0].files[0], options.sliceOffset, options.sliceOffset+options.sliceLength));
+      var filename = fileObj[0].value;
+      var i_filename = filename.lastIndexOf('/');
+      if (i_filename >= 0) {
+        filename = filename.substr(i_filename+1);
+      }
+      i_filename = filename.lastIndexOf('\\');
+      if (i_filename >= 0) {
+        filename = filename.substr(i_filename+1);
+      }
+      var blob = blobSlice.call(fileObj[0].files[0], options.sliceOffset, options.sliceOffset+options.sliceLength);
+      formData.append('file', blob, filename);
     }
 
     options.data = formData;
