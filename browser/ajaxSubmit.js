@@ -8,6 +8,7 @@
  *                   method: 'post',
  *                   headers: {},
  *                   timeout: 5000,
+ *                   fileIndex: 0,
  *                   withCredentials: true,
  *                   crossDomain: true,
  *                   sliceOffset:  this.sliceOffset,
@@ -44,7 +45,7 @@ exports.ajaxSubmit = function ajaxSubmit(formObj, fileObj, options) {
       if (i_filename >= 0) {
         filename = filename.substr(i_filename+1);
       }
-      var blob = blobSlice.call(fileObj[0].files[0], options.sliceOffset, options.sliceOffset+options.sliceLength);
+      var blob = blobSlice.call(fileObj[0].files[options.fileIndex], options.sliceOffset, options.sliceOffset+options.sliceLength);
       formData.append('file', blob, filename);
     }
 

@@ -179,6 +179,7 @@ export namespace uploadErr {
 *                data:       , // 上传到服务器的任意字符串数据.
 *                formObj:    , // 含有enctype="multipart/form-data"的form
 *                fileObj:    , // form中的file对象
+*                fileIndex:  , // 选中的file文件的索引; 默认为0;
 *                uploadUrl:  , // 上传文件内容的url. 系统将自动使用 uploadUrl?crc32=&size=的方式来上传.
 *                maxFileSize:    , // 允许上传的最大文件.0表示无限制.默认为0
 *                fileType:     , // 允许的文件类型.  如: image/gif,image/jpeg,image/x-png
@@ -196,12 +197,15 @@ export namespace uploadErr {
 *                crossDomain: true,     // 跨域, 默认为true
 *                withCredentials: true, // 是否附带cookie, 默认为true
 *                checkoutCrc32: true,   // 是否上传 crc32,size,ajaxmark(防止chrome优化) 三个参数.
+*                sliceOffset: 0,       // 上传数据偏移地址. (ie9及以下不支持).
+*                sliceLength: -1,     // 上传数据段长度 (-1表示到结尾). (ie9及以下不支持).
 *              }
 */
 export function upload(cfg: {
   data?: string,
   formObj: any,
   fileObj: any,
+  fileIndex?:  number,
   uploadUrl: string,
   maxFileSize?: number,
   fileType?: string,
@@ -211,6 +215,8 @@ export function upload(cfg: {
   headers?: any,
   crossDomain?: boolean,
   withCredentials?: boolean,
+  sliceOffset?: number,
+  sliceLength?: number,
 }): void;
 
 /**

@@ -27,6 +27,7 @@ var ajaxSubmit = require('../ajaxSubmit').ajaxSubmit;
  *                data:       , // 上传到服务器的任意字符串数据.
  *                formObj:    , // 含有enctype="multipart/form-data"的form
  *                fileObj:    , // form中的file对象
+ *                fileIndex:  , // 选中的file文件的索引; 默认为0;
  *                uploadUrl:  , // 上传文件内容的url. 系统将自动使用 uploadUrl?crc32=&size=的方式来上传.
  *                maxFileSize:    , // 允许上传的最大文件.0表示无限制.默认为0
  *                fileType:     , // 允许的文件类型.  如: image/gif,image/jpeg,image/x-png
@@ -59,6 +60,8 @@ function upload(cfg) {
 
   var control_sliceOffset = cfg.sliceOffset||0;
   var control_sliceLength = cfg.sliceLength||-1;
+
+  var control_fileIndex = cfg.fileIndex||0;
 
   cfg.fileObj = $(cfg.fileObj);
   cfg.formObj = $(cfg.formObj);
@@ -107,12 +110,12 @@ function upload(cfg) {
   }
   else {
 
-    if (!cfg.fileObj[0].files[0])
+    if (!cfg.fileObj[0].files[control_fileIndex])
     {
       if (control_upload_cb)  control_upload_cb(err.nofile, cfg.fileObj, null);
       return;
     }
-    if (cfg.fileObj[0].files[0].size > control_upload_maxFileSize)
+    if (cfg.fileObj[0].files[control_fileIndex].size > control_upload_maxFileSize)
     {
       if (control_upload_cb)  control_upload_cb(err.sizeExceed, cfg.fileObj, null);
       return;
@@ -131,7 +134,7 @@ function upload(cfg) {
 
     function uploadFile() {
 
-      var filesize = this.fileObj[0].files[0].size;
+      var filesize = this.fileObj[0].files[this.control_fileIndex].size;
       if (this.sliceLength == -1) {
         this.sliceLength = filesize-this.sliceOffset;
       }
@@ -152,14 +155,15 @@ function upload(cfg) {
         urlpath = this.control_upload_url + 'size=' + filesize;
       }
 
-      let per = this.sliceOffset / this.fileObj[0].files[0].size;
-      let per2 = this.sliceLength / this.fileObj[0].files[0].size;
+      let per = this.sliceOffset / this.fileObj[0].files[this.control_fileIndex].size;
+      let per2 = this.sliceLength / this.fileObj[0].files[this.control_fileIndex].size;
 
       try {
         var ctx = this;
         var con = ajaxSubmit(this.formObj, this.fileObj, {
           sliceOffset:  this.sliceOffset,
           sliceLength:  this.sliceLength,
+          fileIndex:    this.control_fileIndex,
           timeout:      this.timeout,
           method:       'POST',
           url:          urlpath,
@@ -200,7 +204,7 @@ function upload(cfg) {
     } // function.
   
     if (cfg.checkoutCrc32) {
-      crypt.crc32_fileSegment(fileObj[0].files[0], control_sliceOffset, control_sliceLength, function(crc){
+      crypt.crc32_fileSegment(fileObj[0].files[control_fileIndex], control_sliceOffset, control_sliceLength, function(crc){
         if (crc) {
           uploadFile.bind(window.febs.utils.mergeMap(this, {crc:crc}))();
         } else {
@@ -216,6 +220,7 @@ function upload(cfg) {
         formObj: cfg.formObj,
         control_upload_progress_cb: control_upload_progress_cb,
         control_upload_cb: control_upload_cb,
+        control_fileIndex: control_fileIndex,
         crossDomain: cfg.crossDomain,
         headers: cfg.headers,
         withCredentials: cfg.withCredentials,
@@ -234,6 +239,7 @@ function upload(cfg) {
         formObj: cfg.formObj,
         control_upload_progress_cb: control_upload_progress_cb,
         control_upload_cb: control_upload_cb,
+        control_fileIndex: control_fileIndex,
         crossDomain: cfg.crossDomain,
         headers: cfg.headers,
         withCredentials: cfg.withCredentials,
