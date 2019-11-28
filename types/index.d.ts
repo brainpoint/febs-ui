@@ -120,11 +120,12 @@ export function dialog_hide(selector?: any, finishCb?:()=>{}): void;
 * ctx.title:    标题.
 * ctx.content:	内容文字.
 * ctx.contentHtml: html格式的内容 (与content二选一)
-* ctx.confirm: function(){}	// 点击确认键的回调.
+* ctx.confirm: function(dialog:any){}	// 点击确认键的回调.
 * ctx.okText
 * }
+* @return 返回当前窗口的句柄
 */
-export function dialog_showAlert(ctx: { cssClass?: string, blackBg?: boolean, title?: string, content?: string, contentHtml?: string, confirm?: () => void, okText?: string }): void;
+export function dialog_showAlert(ctx: { cssClass?: string, blackBg?: boolean, title?: string, content?: string, contentHtml?: string, confirm?: (dialog:any) => void, okText?: string }): any;
 
 /**
  * @desc: 显示确认对话框. (回调函数的上下文为当前窗口)
@@ -134,13 +135,14 @@ export function dialog_showAlert(ctx: { cssClass?: string, blackBg?: boolean, ti
 * ctx.title:    标题.
 * ctx.content:	内容文字.
 * ctx.contentHtml: html格式的内容 (与content二选一)
-* ctx.confirm: function(){}	// 点击确认键的回调.
-* ctx.cancel: function(){}	// 点击取消键的回调.
+* ctx.confirm: function(dialog:any){}	// 点击确认键的回调.
+* ctx.cancel: function(dialog:any){}	// 点击取消键的回调.
 * ctx.okText 确认按钮文字
 * ctx.cancelText: 取消按钮文字
 * }
+* @return 返回当前窗口的句柄
 */
-export function dialog_showConfirm(ctx: { cssClass?: string, blackBg?: boolean, title?: string, content?: string, contentHtml?: string, confirm?: () => void, cancel?: () => void, okText?: string, cancelText?: string }): void;
+export function dialog_showConfirm(ctx: { cssClass?: string, blackBg?: boolean, title?: string, content?: string, contentHtml?: string, confirm?: (dialog:any) => void, cancel?: (dialog:any) => void, okText?: string, cancelText?: string }): any;
 
 
 /**
@@ -152,13 +154,14 @@ export function dialog_showConfirm(ctx: { cssClass?: string, blackBg?: boolean, 
 * ctx.content:		 内容文字.
 * ctx.contentHtml: html格式的内容 (与content二选一)
 * ctx.editText:		 输入框文字.
-* ctx.confirm: function(text){}	// 点击确认键的回调.
-* ctx.cancel:  function(){} // 点击取消键的回调.
+* ctx.confirm: function(text, dialog:any){}	// 点击确认键的回调.
+* ctx.cancel:  function(dialog:any){} // 点击取消键的回调.
 * ctx.okText:
 * ctx.cancelText:
 * }
+* @return 返回当前窗口的句柄
 */
-export function dialog_showConfirmEdit(ctx: { cssClass?: string, blackBg?: boolean, title?: string, content?: string, contentHtml?: string, editText?: string, confirm?: (text: string) => void, cancel?: () => void, okText?: string, cancelText?: string }): void;
+export function dialog_showConfirmEdit(ctx: { cssClass?: string, blackBg?: boolean, title?: string, content?: string, contentHtml?: string, editText?: string, confirm?: (text: string, dialog:any) => void, cancel?: (dialog:any) => void, okText?: string, cancelText?: string }): any;
 
 export namespace uploadErr {
   /** 未选择文件 */

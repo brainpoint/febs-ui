@@ -98,7 +98,7 @@ function hide(selector, finishCb) {
 * ctx.cssClass: 自定义扩展样式.
 * ctx.content:	内容文字.
 * ctx.contentHtml: 使用html方式的内容.
-* ctx.confirm: function(){}	// 点击确认键的回调.
+* ctx.confirm: function(dialog){}	// 点击确认键的回调.
 * ctx.okText
 */
 function showAlert(ctx) {
@@ -150,10 +150,12 @@ function showAlert(ctx) {
 	ele.on('click', function (event) {
 		if ($(event.target).hasClass('febsui-dialog-cancel') /*|| $(event.target).hasClass('febsui-dialog')*/) {
 			event.preventDefault();
-			if (ctx.confirm) ctx.confirm.bind(ele)();
+			if (ctx.confirm) ctx.confirm(ele);
 			hide(ele);
 		}
   });
+
+  return eee;
   
   //close popup when clicking the esc keyboard button
   // (document).addEventListener('keyup', function (event) {
@@ -174,8 +176,8 @@ function showAlert(ctx) {
 * ctx.cssClass: 自定义扩展样式.
 * ctx.content:		 内容文字.
 * ctx.contentHtml: html方式的内容.
-* ctx.confirm: function(){}	// 点击确认键的回调.
-* ctx.cancel:  function(){} // 点击取消键的回调.
+* ctx.confirm: function(dialog){}	// 点击确认键的回调.
+* ctx.cancel:  function(dialog){} // 点击取消键的回调.
 * ctx.okText:
 * ctx.cancelText:
 */
@@ -228,11 +230,11 @@ function showConfirm(ctx) {
 	ele.on('click', function (event) {
 		if ($(event.target).hasClass('febsui-dialog-ok')) {
 			event.preventDefault();
-			if (ctx.confirm) ctx.confirm.bind(ele)();
+			if (ctx.confirm) ctx.confirm(ele);
 		}
 		else if ($(event.target).hasClass('febsui-dialog-cancel')) {
 			event.preventDefault();
-			if (ctx.cancel) ctx.cancel.bind(ele)();
+			if (ctx.cancel) ctx.cancel(ele);
 			hide(ele);
 		}
   });
@@ -250,7 +252,9 @@ function showConfirm(ctx) {
 	// 		if (ctx.cancel) ctx.cancel.bind(ele)();
 	// 		hide(ele);
 	// 	}
-	// });
+  // });
+  
+  return ele;
 }
 
 
@@ -261,8 +265,8 @@ function showConfirm(ctx) {
 * ctx.content:		 内容文字.
 * ctx.contentHtml: html方式的内容.
 * ctx.editText:		 输入框文字.
-* ctx.confirm: function(text){}	// 点击确认键的回调.
-* ctx.cancel:  function(){} // 点击取消键的回调.
+* ctx.confirm: function(text, dialog){}	// 点击确认键的回调.
+* ctx.cancel:  function(dialog){} // 点击取消键的回调.
 * ctx.okText:
 * ctx.cancelText:
 */
@@ -317,11 +321,11 @@ function showConfirmEdit(ctx) {
 	ele.on('click', function (event) {
 		if ($(event.target).hasClass('febsui-dialog-ok')) {
 			event.preventDefault();
-			if (ctx.confirm) ctx.confirm.bind(ele)( $('#'+uid + ' .febsui-dialog-edit .febsui-input-text-noborder').val() );
+			if (ctx.confirm) ctx.confirm( $('#'+uid + ' .febsui-dialog-edit .febsui-input-text-noborder').val(), ele );
 		}
 		else if ($(event.target).hasClass('febsui-dialog-cancel')) {
 			event.preventDefault();
-			if (ctx.cancel) ctx.cancel.bind(ele)();
+			if (ctx.cancel) ctx.cancel(ele);
 			hide(ele);
 		}
   });
@@ -339,7 +343,9 @@ function showConfirmEdit(ctx) {
 	// 		if (ctx.cancel) ctx.cancel.bind(ele)();
 	// 		hide(ele);
 	// 	}
-	// });
+  // });
+  
+  return ele;
 }
 
 
