@@ -80,7 +80,7 @@ function upload(cfg) {
     cfg.formObj.attr('action', control_upload_url);
     cfg.formObj.attr('method', 'post');
 
-    var iframeDom = `<iframe id="${uid}" name="${uid}" style="display:none;"></iframe>`;
+    var iframeDom = '<iframe id="'+uid+'" name="'+uid+'" style="display:none;"></iframe>';
     $('body').prepend(iframeDom);
 
     $('#'+uid).on('load', function() {

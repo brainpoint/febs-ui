@@ -71,28 +71,27 @@ function uploader_init(elem) {
 
       var submitHtml = '';
       if (is_IE9) {
-        submitHtml = `<input type="submit" value="submit">`;
+        submitHtml = '<input type="submit" value="submit">';
       }
 
       var htmlForm = 
-`<form id="${uid}-form" method="post" role="form" enctype="multipart/form-data" style="display:none">
-  <input id="${uid}" type="file" name="file"${dataMultiple}${dataAccept?' accept="'+dataAccept+'"': ''}>
-  ${submitHtml}
-</form>`;
+'<form id="'+uid+'-form" method="post" role="form" enctype="multipart/form-data" style="display:none">' +
+  '<input id="'+uid+'" type="file" name="file" '+dataMultiple+(dataAccept?' accept="'+dataAccept+'"':'') + '>' +
+  submitHtml+
+'</form>';
       dom.append($(htmlForm));
 
-      var html = `<label id="${uid}-label" for="${uid}" data-for="${uid}"><div class="btn">${html}</div>`;
+      var html = '<label id="'+uid+'-label" for="'+uid+'" data-for="'+uid+'"><div class="btn">'+html+'</div>';
       
-      var htmlFilename = dataFilename==='true' ? `<span id="${uid}-filename" class="febsui-uploader-filename febsui-ellipsis"></span>` : '';
+      var htmlFilename = dataFilename==='true' ? '<span id="'+uid+'-filename" class="febsui-uploader-filename febsui-ellipsis"></span>' : '';
 
       var htmlPro = 
-`<div id="${uid}-progress" class="febsui-uploader-progress" style="display:none;">
-  ${htmlFilename}<div class="febsui-uploader-progress-bg" style="width:0%;"></div>
-  <span${dataFilename==='true'?' class="febsui-uploader-right"':''}>10%</span>
-</div>
-</label>
-<div class="febsui-uploader-progress-cancel"></div>
-`;
+'<div id="'+uid+'-progress" class="febsui-uploader-progress" style="display:none;">' +
+  htmlFilename + '<div class="febsui-uploader-progress-bg" style="width:0%;"></div>' +
+  '<span ' + (dataFilename==='true'?' class="febsui-uploader-right"':'') + '>10%</span>' +
+'</div>' +
+'</label>' +
+'<div class="febsui-uploader-progress-cancel"></div>';
       html += htmlPro;
 
 //       var htmlPro = 
@@ -210,12 +209,12 @@ function uploader_init(elem) {
     
                 filename = indexsp;
                 filename = escape_string(filename);
-                $(`#${_uid}-filename`).html(filename);
+                $('#'+_uid+'-filename').html(filename);
               }
               else {
                 filename = $('#'+_uid)[0].files[0].name;
                 filename = escape_string(filename);
-                $(`#${_uid}-filename`).html(filename);
+                $('#'+_uid+'-filename').html(filename);
               }
               filename = window.febs.string.replace(filename, '"', '\"');
 
@@ -231,7 +230,7 @@ function uploader_init(elem) {
                 if (i >= _dataBegin.length) {
                   var controlId = 'febsui-cancel-'+febs.crypt.uuid();
 
-                  eval(_dataBegin+`(window["febsui-uploader-controller-${uid}"], "${filename}")`);
+                  eval(_dataBegin+'(window["febsui-uploader-controller-'+uid+'"], "'+filename+'")');
                 }
                 else {
                   eval(_dataBegin);
@@ -274,7 +273,7 @@ function uploader_init(elem) {
                   if (i >= _dataError.length) {
                     err = err.toString();
                     err = window.febs.string.replace(err, '"', '\"');
-                    eval(_dataError+`(window["febsui-uploader-controller-${uid}"], "`+err+`")`);
+                    eval(_dataError+'(window["febsui-uploader-controller-'+uid+'"], "'+err+'")');
                   }
                   else {
                     eval(_dataError);
@@ -318,7 +317,7 @@ function uploader_init(elem) {
                     var finishData = 'febsui-finish-'+febs.crypt.uuid();
                     window[finishData] = serverData;
 
-                    eval(_dataFinish+`(window["febsui-uploader-controller-${uid}"], window["${finishData}"])`);
+                    eval(_dataFinish+'(window["febsui-uploader-controller-'+uid+'"], window["'+finishData+'"])');
                     delete window[finishData];
                   }
                   else {
@@ -351,7 +350,7 @@ function uploader_init(elem) {
                 }
 
                 if (i >= _dataProgress.length) {
-                  eval(_dataProgress+`(window["febsui-uploader-controller-${uid}"], parseFloat(${pp}))`);
+                  eval(_dataProgress+'(window["febsui-uploader-controller-'+uid+'"], parseFloat('+pp+'))');
                 }
                 else {
                   eval(_dataProgress);

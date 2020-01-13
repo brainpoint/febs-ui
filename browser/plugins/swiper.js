@@ -16,7 +16,7 @@ if (is_IE9) {
     if (elpase >= ie9_animation_durtion) {
       for (var i = 0; i < ie9_animation_obj.length; i++) {
         var obj = ie9_animation_obj[i];
-        obj.obj.css('-ms-transform', obj.vertical ? `translateY(${obj.offset}px)` : `translateX(${obj.offset}px)`);
+        obj.obj.css('-ms-transform', obj.vertical ? 'translateY('+obj.offset+'px)' : 'translateX('+obj.offset+'px)');
       }
       ie9_animation_obj = [];
       ie9_animation_frame = null;
@@ -27,7 +27,7 @@ if (is_IE9) {
       var obj = ie9_animation_obj[i];
 
       var offset = obj.offsetCur + (obj.offset-obj.offsetCur) * elpase / ie9_animation_durtion;
-      obj.obj.css('-ms-transform', obj.vertical ? `translateY(${offset}px)` : `translateX(${offset}px)`);
+      obj.obj.css('-ms-transform', obj.vertical ? 'translateY('+offset+'px)' : 'translateX('+offset+'px)');
     } // for.
 
     ie9_animation_frame = requestAnimationFrame(ie9_animation_foo);
@@ -242,7 +242,7 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
     ie9_animation_frame = null;
     for (var i = 0; i < ie9_animation_obj.length; i++) {
       var obj = ie9_animation_obj[i];
-      obj.obj.css('-ms-transform', obj.vertical ? `translateY(${obj.offset}px)` : `translateX(${obj.offset}px)`);
+      obj.obj.css('-ms-transform', obj.vertical ? 'translateY('+obj.offset+'px)' : 'translateX('+obj.offset+'px)');
     }
   }
 
@@ -400,10 +400,10 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
               offset -= align;
             }
           }
-          pagesContainer.css('-webkit-transform', `translate3d(0px, ${-offset}px, 0px)`);
-          pagesContainer.css('-moz-transform', `translate3d(0px, ${-offset}px, 0px)`);
-          pagesContainer.css('-ms-transform', `translateY(${-offset}px)`);
-          pagesContainer.css('transform', `translate3d(0px, ${-offset}px, 0px)`);
+          pagesContainer.css('-webkit-transform', 'translate3d(0px, '+(-offset||0)+'px, 0px)');
+          pagesContainer.css('-moz-transform', 'translate3d(0px, '+(-offset||0)+'px, 0px)');
+          pagesContainer.css('-ms-transform', 'translateY('+(-offset||0)+'px)');
+          pagesContainer.css('transform', 'translate3d(0px, '+(-offset||0)+'px, 0px)');
         }
         else {
           if (align == 'center') {
@@ -415,10 +415,10 @@ $.fn.swiperTo = function(index, animation, trigger, directNext) {
               offset -= align;
             }
           }
-          pagesContainer.css('-webkit-transform', `translate3d(${-offset}px, 0px, 0px)`);
-          pagesContainer.css('-moz-transform', `translate3d(${-offset}px, 0px, 0px)`);
-          pagesContainer.css('-ms-transform', `translateX(${-offset}px)`);
-          pagesContainer.css('transform', `translate3d(${-offset}px, 0px, 0px)`);
+          pagesContainer.css('-webkit-transform', 'translate3d('+(-offset||0)+'px, 0px, 0px)');
+          pagesContainer.css('-moz-transform', 'translate3d('+(-offset||0)+'px, 0px, 0px)');
+          pagesContainer.css('-ms-transform', 'translateX('+(-offset||0)+'px)');
+          pagesContainer.css('transform', 'translate3d('+(-offset||0)+'px, 0px, 0px)');
         }
       } // if.
 

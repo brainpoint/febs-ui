@@ -249,17 +249,17 @@ function mobile_onTouchmove(event) {
 
     if (target.__swiper_vertical) {
       offset += off;
-      target.style['-webkit-transform'] = `translate3d(0px, ${-offset}px, 0px)`;
-      target.style['-moz-transform'] = `translate3d(0px, ${-offset}px, 0px)`;
-      target.style['-ms-transform'] = `translateY(${-offset}px)`;
-      target.style['transform'] = `translate3d(0px, ${-offset}px, 0px)`;
+      target.style['-webkit-transform'] = 'translate3d(0px, ' + (-offset||0) + 'px, 0px)';
+      target.style['-moz-transform'] = 'translate3d(0px, ' + (-offset||0) + 'px, 0px)';
+      target.style['-ms-transform'] = 'translateY(' + (-offset||0) + 'px)';
+      target.style['transform'] = 'translate3d(0px, ' + (-offset||0) + 'px, 0px)';
     }
     else {
       offset += off;
-      target.style['-webkit-transform'] = `translate3d(${-offset}px, 0px, 0px)`;
-      target.style['-moz-transform'] = `translate3d(${-offset}px, 0px, 0px)`;
-      target.style['-ms-transform'] = `translateX(${-offset}px)`;
-      target.style['transform'] = `translate3d(${-offset}px, 0px, 0px)`;
+      target.style['-webkit-transform'] = 'translate3d(' + (-offset||0) + 'px, 0px, 0px)';
+      target.style['-moz-transform'] = 'translate3d(' + (-offset||0) + 'px, 0px, 0px)';
+      target.style['-ms-transform'] = 'translateX(' + (-offset||0) + 'px)';
+      target.style['transform'] = 'translate3d(' + (-offset||0) + 'px, 0px, 0px)';
     }
 
     if (target.parentNode.__swiperMoving) {

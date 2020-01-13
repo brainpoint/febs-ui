@@ -440,7 +440,7 @@ function hide(selector, finishCb) {
 * ctx.cssClass: 自定义扩展样式.
 * ctx.content:	内容文字.
 * ctx.contentHtml: 使用html方式的内容.
-* ctx.confirm: function(){}	// 点击确认键的回调.
+* ctx.confirm: function(dialog){}	// 点击确认键的回调.
 * ctx.okText
 */
 function showAlert(ctx) {
@@ -492,7 +492,7 @@ function showAlert(ctx) {
   ele.on('click', function (event) {
     if ($(event.target).hasClass('febsui-dialog-cancel') /*|| $(event.target).hasClass('febsui-dialog')*/) {
         event.preventDefault();
-        if (ctx.confirm) ctx.confirm.bind(ele)();
+        if (ctx.confirm) ctx.confirm(ele);
         hide(ele);
       }
   });
@@ -518,8 +518,8 @@ function showAlert(ctx) {
 * ctx.cssClass: 自定义扩展样式.
 * ctx.content:		 内容文字.
 * ctx.contentHtml: html方式的内容.
-* ctx.confirm: function(){}	// 点击确认键的回调.
-* ctx.cancel:  function(){} // 点击取消键的回调.
+* ctx.confirm: function(dialog){}	// 点击确认键的回调.
+* ctx.cancel:  function(dialog){} // 点击取消键的回调.
 * ctx.okText:
 * ctx.cancelText:
 */
@@ -572,10 +572,10 @@ function showConfirm(ctx) {
   ele.on('click', function (event) {
     if ($(event.target).hasClass('febsui-dialog-ok')) {
       event.preventDefault();
-      if (ctx.confirm) ctx.confirm.bind(ele)();
+      if (ctx.confirm) ctx.confirm(ele);
     } else if ($(event.target).hasClass('febsui-dialog-cancel')) {
       event.preventDefault();
-      if (ctx.cancel) ctx.cancel.bind(ele)();
+      if (ctx.cancel) ctx.cancel(ele);
       hide(ele);
     }
   });
@@ -605,8 +605,8 @@ function showConfirm(ctx) {
 * ctx.content:		 内容文字.
 * ctx.contentHtml: html方式的内容.
 * ctx.editText:		 输入框文字.
-* ctx.confirm: function(text){}	// 点击确认键的回调.
-* ctx.cancel:  function(){} // 点击取消键的回调.
+* ctx.confirm: function(text, dialog){}	// 点击确认键的回调.
+* ctx.cancel:  function(dialog){} // 点击取消键的回调.
 * ctx.okText:
 * ctx.cancelText:
 */
@@ -661,10 +661,10 @@ function showConfirmEdit(ctx) {
   ele.on('click', function (event) {
     if ($(event.target).hasClass('febsui-dialog-ok')) {
       event.preventDefault();
-      if (ctx.confirm) ctx.confirm.bind(ele)($('#' + uid + ' .febsui-dialog-edit .febsui-input-text-noborder').val());
+      if (ctx.confirm) ctx.confirm($('#' + uid + ' .febsui-dialog-edit .febsui-input-text-noborder').val(), ele);
     } else if ($(event.target).hasClass('febsui-dialog-cancel')) {
       event.preventDefault();
-      if (ctx.cancel) ctx.cancel.bind(ele)();
+      if (ctx.cancel) ctx.cancel(ele);
       hide(ele);
     }
   });
@@ -1896,16 +1896,16 @@ function mobile_onTouchmove(event) {
 
     if (target.__swiper_vertical) {
       offset += off;
-      target.style['-webkit-transform'] = 'translate3d(0px, ' + -offset + 'px, 0px)';
-      target.style['-moz-transform'] = 'translate3d(0px, ' + -offset + 'px, 0px)';
-      target.style['-ms-transform'] = 'translateY(' + -offset + 'px)';
-      target.style['transform'] = 'translate3d(0px, ' + -offset + 'px, 0px)';
+      target.style['-webkit-transform'] = 'translate3d(0px, ' + (-offset || 0) + 'px, 0px)';
+      target.style['-moz-transform'] = 'translate3d(0px, ' + (-offset || 0) + 'px, 0px)';
+      target.style['-ms-transform'] = 'translateY(' + (-offset || 0) + 'px)';
+      target.style['transform'] = 'translate3d(0px, ' + (-offset || 0) + 'px, 0px)';
     } else {
       offset += off;
-      target.style['-webkit-transform'] = 'translate3d(' + -offset + 'px, 0px, 0px)';
-      target.style['-moz-transform'] = 'translate3d(' + -offset + 'px, 0px, 0px)';
-      target.style['-ms-transform'] = 'translateX(' + -offset + 'px)';
-      target.style['transform'] = 'translate3d(' + -offset + 'px, 0px, 0px)';
+      target.style['-webkit-transform'] = 'translate3d(' + (-offset || 0) + 'px, 0px, 0px)';
+      target.style['-moz-transform'] = 'translate3d(' + (-offset || 0) + 'px, 0px, 0px)';
+      target.style['-ms-transform'] = 'translateX(' + (-offset || 0) + 'px)';
+      target.style['transform'] = 'translate3d(' + (-offset || 0) + 'px, 0px, 0px)';
     }
 
     if (target.parentNode.__swiperMoving) {
@@ -4595,14 +4595,14 @@ function uploader_init(elem) {
         submitHtml = '<input type="submit" value="submit">';
       }
 
-      var htmlForm = '<form id="' + uid + '-form" method="post" role="form" enctype="multipart/form-data" style="display:none">\n  <input id="' + uid + '" type="file" name="file"' + dataMultiple + (dataAccept ? ' accept="' + dataAccept + '"' : '') + '>\n  ' + submitHtml + '\n</form>';
+      var htmlForm = '<form id="' + uid + '-form" method="post" role="form" enctype="multipart/form-data" style="display:none">' + '<input id="' + uid + '" type="file" name="file" ' + dataMultiple + (dataAccept ? ' accept="' + dataAccept + '"' : '') + '>' + submitHtml + '</form>';
       dom.append($(htmlForm));
 
       var html = '<label id="' + uid + '-label" for="' + uid + '" data-for="' + uid + '"><div class="btn">' + html + '</div>';
 
       var htmlFilename = dataFilename === 'true' ? '<span id="' + uid + '-filename" class="febsui-uploader-filename febsui-ellipsis"></span>' : '';
 
-      var htmlPro = '<div id="' + uid + '-progress" class="febsui-uploader-progress" style="display:none;">\n  ' + htmlFilename + '<div class="febsui-uploader-progress-bg" style="width:0%;"></div>\n  <span' + (dataFilename === 'true' ? ' class="febsui-uploader-right"' : '') + '>10%</span>\n</div>\n</label>\n<div class="febsui-uploader-progress-cancel"></div>\n';
+      var htmlPro = '<div id="' + uid + '-progress" class="febsui-uploader-progress" style="display:none;">' + htmlFilename + '<div class="febsui-uploader-progress-bg" style="width:0%;"></div>' + '<span ' + (dataFilename === 'true' ? ' class="febsui-uploader-right"' : '') + '>10%</span>' + '</div>' + '</label>' + '<div class="febsui-uploader-progress-cancel"></div>';
       html += htmlPro;
 
       //       var htmlPro = 
@@ -4736,7 +4736,7 @@ function uploader_init(elem) {
               if (i >= _dataBegin.length) {
                 var controlId = 'febsui-cancel-' + febs.crypt.uuid();
 
-                eval(_dataBegin + ('(window["febsui-uploader-controller-' + uid + '"], "' + filename + '")'));
+                eval(_dataBegin + '(window["febsui-uploader-controller-' + uid + '"], "' + filename + '")');
               } else {
                 eval(_dataBegin);
               }
@@ -4772,7 +4772,7 @@ function uploader_init(elem) {
                 if (i >= _dataError.length) {
                   err = err.toString();
                   err = window.febs.string.replace(err, '"', '\"');
-                  eval(_dataError + ('(window["febsui-uploader-controller-' + uid + '"], "') + err + '")');
+                  eval(_dataError + '(window["febsui-uploader-controller-' + uid + '"], "' + err + '")');
                 } else {
                   eval(_dataError);
                 }
@@ -4812,7 +4812,7 @@ function uploader_init(elem) {
                     var finishData = 'febsui-finish-' + febs.crypt.uuid();
                     window[finishData] = serverData;
 
-                    eval(_dataFinish + ('(window["febsui-uploader-controller-' + uid + '"], window["' + finishData + '"])'));
+                    eval(_dataFinish + '(window["febsui-uploader-controller-' + uid + '"], window["' + finishData + '"])');
                     delete window[finishData];
                   } else {
                     eval(_dataFinish);
@@ -4842,7 +4842,7 @@ function uploader_init(elem) {
               }
 
               if (i >= _dataProgress.length) {
-                eval(_dataProgress + ('(window["febsui-uploader-controller-' + uid + '"], parseFloat(' + pp + '))'));
+                eval(_dataProgress + '(window["febsui-uploader-controller-' + uid + '"], parseFloat(' + pp + '))');
               } else {
                 eval(_dataProgress);
               }
@@ -6101,10 +6101,10 @@ $.fn.swiperTo = function (index, animation, trigger, directNext) {
               offset -= align;
             }
           }
-          pagesContainer.css('-webkit-transform', 'translate3d(0px, ' + -offset + 'px, 0px)');
-          pagesContainer.css('-moz-transform', 'translate3d(0px, ' + -offset + 'px, 0px)');
-          pagesContainer.css('-ms-transform', 'translateY(' + -offset + 'px)');
-          pagesContainer.css('transform', 'translate3d(0px, ' + -offset + 'px, 0px)');
+          pagesContainer.css('-webkit-transform', 'translate3d(0px, ' + (-offset || 0) + 'px, 0px)');
+          pagesContainer.css('-moz-transform', 'translate3d(0px, ' + (-offset || 0) + 'px, 0px)');
+          pagesContainer.css('-ms-transform', 'translateY(' + (-offset || 0) + 'px)');
+          pagesContainer.css('transform', 'translate3d(0px, ' + (-offset || 0) + 'px, 0px)');
         } else {
           if (align == 'center') {
             offset -= (elem[0].clientWidth - (pages[indexp] && pages[indexp].clientWidth) || 0) / 2.0;
@@ -6115,10 +6115,10 @@ $.fn.swiperTo = function (index, animation, trigger, directNext) {
               offset -= align;
             }
           }
-          pagesContainer.css('-webkit-transform', 'translate3d(' + -offset + 'px, 0px, 0px)');
-          pagesContainer.css('-moz-transform', 'translate3d(' + -offset + 'px, 0px, 0px)');
-          pagesContainer.css('-ms-transform', 'translateX(' + -offset + 'px)');
-          pagesContainer.css('transform', 'translate3d(' + -offset + 'px, 0px, 0px)');
+          pagesContainer.css('-webkit-transform', 'translate3d(' + (-offset || 0) + 'px, 0px, 0px)');
+          pagesContainer.css('-moz-transform', 'translate3d(' + (-offset || 0) + 'px, 0px, 0px)');
+          pagesContainer.css('-ms-transform', 'translateX(' + (-offset || 0) + 'px)');
+          pagesContainer.css('transform', 'translate3d(' + (-offset || 0) + 'px, 0px, 0px)');
         }
       } // if.
 
