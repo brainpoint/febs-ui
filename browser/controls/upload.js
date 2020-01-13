@@ -155,8 +155,8 @@ function upload(cfg) {
         urlpath = this.control_upload_url + 'size=' + filesize;
       }
 
-      let per = this.sliceOffset / this.fileObj[0].files[this.control_fileIndex].size;
-      let per2 = this.sliceLength / this.fileObj[0].files[this.control_fileIndex].size;
+      var per = this.sliceOffset / this.fileObj[0].files[this.control_fileIndex].size;
+      var per2 = this.sliceLength / this.fileObj[0].files[this.control_fileIndex].size;
 
       try {
         var ctx = this;
