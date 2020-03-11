@@ -102,7 +102,7 @@ $.fn.actionsheetShow = function() {
         ee.removeClass('febsui-mask');
       }
 
-      maskPrevent(ee);
+      // maskPrevent(ee);
 
       ee.one('click', function(){
         $(this).actionsheetHide();
